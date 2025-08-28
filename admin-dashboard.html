@@ -1,4 +1,27 @@
-<!DOCTYPE html>
+<!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalBookings">0</div>
+                <div class="stat-label">إجمالي الحجوزات</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">😔</div>
+                <div class="stat-number" id="totalExcuses">0</div>
+                <div class="stat-label">إجمالي الاعتذارات</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number" id="availableSlots">400</div>
+                <div class="stat-label">المقاعد المتاحة</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number" id="occupancyRate">0%</div>
+                <div class="stat-label">نسب<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -507,9 +530,9 @@
             </div>
             
             <div class="stat-card">
-                <div class="stat-icon">📅</div>
-                <div class="stat-number" id="activeDays">5</div>
-                <div class="stat-label">الأيام المتاحة</div>
+                <div class="stat-icon">😔</div>
+                <div class="stat-number" id="totalExcuses">0</div>
+                <div class="stat-label">إجمالي الاعتذارات</div>
             </div>
             
             <div class="stat-card">
@@ -580,20 +603,22 @@
         function updateStatistics() {
             let totalBookings = 0;
             let totalCapacity = 0;
-            let activeDays = 0;
+            let totalExcuses = 0;
             
             for (const dayKey in DAYS_DATA) {
                 const dayBookings = bookingsData[dayKey] || [];
                 totalBookings += dayBookings.length;
                 totalCapacity += DAYS_DATA[dayKey].max;
-                if (dayBookings.length > 0) activeDays++;
             }
+            
+            // حساب الاعتذارات
+            totalExcuses = bookingsData.excuses ? bookingsData.excuses.length : 0;
             
             const availableSlots = totalCapacity - totalBookings;
             const occupancyRate = totalCapacity > 0 ? Math.round((totalBookings / totalCapacity) * 100) : 0;
             
             document.getElementById('totalBookings').textContent = totalBookings;
-            document.getElementById('activeDays').textContent = Object.keys(DAYS_DATA).length;
+            document.getElementById('totalExcuses').textContent = totalExcuses;
             document.getElementById('availableSlots').textContent = availableSlots;
             document.getElementById('occupancyRate').textContent = occupancyRate + '%';
         }
@@ -649,6 +674,8 @@
         
         // عرض التقرير المفصل
         function showDetailedReport() {
+            const totalExcuses = bookingsData.excuses ? bookingsData.excuses.length : 0;
+            
             let reportHTML = `
                 <div class="summary-section">
                     <h3 class="summary-title">📈 ملخص الإحصائيات</h3>
@@ -658,8 +685,8 @@
                             <div class="summary-label">إجمالي الحجوزات</div>
                         </div>
                         <div class="summary-item">
-                            <div class="summary-number">${getTotalCapacity()}</div>
-                            <div class="summary-label">إجمالي المقاعد</div>
+                            <div class="summary-number">${totalExcuses}</div>
+                            <div class="summary-label">إجمالي الاعتذارات</div>
                         </div>
                         <div class="summary-item">
                             <div class="summary-number">${getTotalAvailable()}</div>
@@ -705,6 +732,43 @@
             }
             
             reportHTML += '</tbody></table>';
+            
+            // إضافة قسم الاعتذارات
+            if (totalExcuses > 0) {
+                reportHTML += `
+                    <div style="margin: 30px 0; padding: 25px; background: #fff3cd; border-radius: 15px; border: 2px solid #ffc107;">
+                        <h3 style="color: #856404; margin-bottom: 20px; text-align: center;">
+                            😔 الاعتذارات (${totalExcuses})
+                        </h3>
+                        <table class="report-table" style="font-size: 14px;">
+                            <thead>
+                                <tr style="background: linear-gradient(135deg, #ffc107, #e0a800); color: #000;">
+                                    <th>#</th>
+                                    <th>اسم الطالب</th>
+                                    <th>اسم ولي الأمر</th>
+                                    <th>رقم الجوال</th>
+                                    <th>سبب الاعتذار</th>
+                                    <th>وقت التسجيل</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                bookingsData.excuses.forEach((excuse, index) => {
+                    reportHTML += `
+                        <tr style="background: ${index % 2 === 0 ? '#fff3cd' : 'white'};">
+                            <td>${index + 1}</td>
+                            <td><strong>${excuse.studentName}</strong></td>
+                            <td>${excuse.parentName}</td>
+                            <td style="direction: ltr;">${excuse.phoneNumber}</td>
+                            <td style="max-width: 200px; word-wrap: break-word; font-size: 13px;">${excuse.excuseReason}</td>
+                            <td style="font-size: 12px;">${excuse.timestamp}</td>
+                        </tr>
+                    `;
+                });
+                
+                reportHTML += '</tbody></table></div>';
+            }
             
             // إضافة تفاصيل الحجوزات لكل يوم
             reportHTML += '<h3 style="margin-top: 30px; color: #0d5c0d;">📋 تفاصيل الحجوزات</h3>';
@@ -765,13 +829,21 @@
         
         // تصدير إلى Excel
         function exportToExcel() {
-            let csvContent = "اليوم,التاريخ,اسم الطالب,اسم ولي الأمر,رقم الجوال,وقت التسجيل\n";
+            let csvContent = "نوع البيان,اليوم,التاريخ,اسم الطالب,اسم ولي الأمر,رقم الجوال,سبب الاعتذار,وقت التسجيل\n";
             
+            // إضافة الحجوزات
             for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
                 const bookings = bookingsData[dayKey] || [];
                 
                 bookings.forEach(booking => {
-                    csvContent += `"${dayInfo.name}","${dayInfo.date}","${booking.studentName}","${booking.parentName}","${booking.phoneNumber}","${booking.timestamp}"\n`;
+                    csvContent += `"حجز","${dayInfo.name}","${dayInfo.date}","${booking.studentName}","${booking.parentName}","${booking.phoneNumber}","","${booking.timestamp}"\n`;
+                });
+            }
+            
+            // إضافة الاعتذارات
+            if (bookingsData.excuses && bookingsData.excuses.length > 0) {
+                bookingsData.excuses.forEach(excuse => {
+                    csvContent += `"اعتذار","","","${excuse.studentName}","${excuse.parentName}","${excuse.phoneNumber}","${excuse.excuseReason}","${excuse.timestamp}"\n`;
                 });
             }
             
@@ -779,7 +851,7 @@
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
-            link.setAttribute('download', `اجتماع_أولياء_الأمور_${new Date().toLocaleDateString('ar-SA')}.csv`);
+            link.setAttribute('download', `اجتماع_أولياء_الأمور_شامل_${new Date().toLocaleDateString('ar-SA')}.csv`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
@@ -828,6 +900,7 @@
                     <div class="summary">
                         <h3>ملخص الإحصائيات:</h3>
                         <p>إجمالي الحجوزات: ${getTotalBookings()}</p>
+                        <p>إجمالي الاعتذارات: ${bookingsData.excuses ? bookingsData.excuses.length : 0}</p>
                         <p>إجمالي المقاعد: ${getTotalCapacity()}</p>
                         <p>المقاعد المتاحة: ${getTotalAvailable()}</p>
                         <p>نسبة الإشغال: ${getOccupancyRate()}%</p>
@@ -887,6 +960,43 @@
                         </p>
                     `;
                 }
+            }
+            
+            // إضافة الاعتذارات
+            const excuses = bookingsData.excuses || [];
+            if (excuses.length > 0) {
+                tableHTML += `
+                    <h3 style="color: #856404; margin-top: 40px; background: #fff3cd; padding: 10px; border-radius: 5px;">
+                        😔 الاعتذارات (${excuses.length})
+                    </h3>
+                    <table style="border: 2px solid #ffc107;">
+                        <thead>
+                            <tr style="background: #ffc107; color: #000;">
+                                <th>#</th>
+                                <th>اسم الطالب</th>
+                                <th>اسم ولي الأمر</th>
+                                <th>رقم الجوال</th>
+                                <th>سبب الاعتذار</th>
+                                <th>وقت التسجيل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                excuses.forEach((excuse, index) => {
+                    tableHTML += `
+                        <tr style="background: ${index % 2 === 0 ? '#fff3cd' : 'white'};">
+                            <td>${index + 1}</td>
+                            <td>${excuse.studentName}</td>
+                            <td>${excuse.parentName}</td>
+                            <td>${excuse.phoneNumber}</td>
+                            <td style="font-size: 11px; max-width: 150px; word-wrap: break-word;">${excuse.excuseReason}</td>
+                            <td style="font-size: 10px;">${excuse.timestamp}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += '</tbody></table>';
             }
             
             return tableHTML;
