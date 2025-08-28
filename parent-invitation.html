@@ -357,6 +357,120 @@
             font-weight: 500;
         }
         
+        /* تصميم قسم الاعتذار */
+        .excuse-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .excuse-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .excuse-section:hover::before {
+            left: 100%;
+        }
+        
+        .excuse-header {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .excuse-main-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            color: #856404;
+            transition: all 0.3s ease;
+        }
+        
+        .excuse-main-label:hover {
+            color: #533f03;
+            transform: translateX(5px);
+        }
+        
+        .excuse-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-left: 15px;
+            cursor: pointer;
+            transform: scale(1.3);
+            accent-color: #ffc107;
+        }
+        
+        .excuse-text {
+            user-select: none;
+        }
+        
+        .excuse-details {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #ffc107;
+            animation: slideDown 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .excuse-textarea {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ffc107;
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+        
+        .excuse-textarea:focus {
+            border-color: #e0a800;
+            background: white;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+        }
+        
+        .excuse-textarea::placeholder {
+            color: #856404;
+            font-style: italic;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                max-height: 200px;
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+                max-height: 200px;
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+                max-height: 0;
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -445,7 +559,7 @@
                     <div class="form-group">
                         <label for="meetingDay" class="form-label">اختر اليوم المناسب للحضور</label>
                         <div class="select-wrapper">
-                            <select id="meetingDay" name="meetingDay" class="form-select" required>
+                            <select id="meetingDay" name="meetingDay" class="form-select">
                                 <option value="">-- اختر اليوم المناسب --</option>
                                 <option value="sunday">الأحد - 15/3/1447هـ</option>
                                 <option value="monday">الاثنين - 16/3/1447هـ</option>
@@ -453,6 +567,24 @@
                                 <option value="wednesday">الأربعاء - 18/3/1447هـ</option>
                                 <option value="thursday">الخميس - 19/3/1447هـ</option>
                             </select>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم الاعتذار -->
+                    <div class="excuse-section">
+                        <div class="excuse-header">
+                            <label class="excuse-main-label">
+                                <input type="checkbox" id="excuseCheckbox" class="excuse-checkbox">
+                                <span class="excuse-text">😔 أعتذر عن الحضور</span>
+                            </label>
+                        </div>
+                        
+                        <div class="excuse-details" id="excuseDetails" style="display: none;">
+                            <div class="form-group">
+                                <label for="excuseReason" class="form-label">سبب الاعتذار</label>
+                                <textarea id="excuseReason" name="excuseReason" class="form-input excuse-textarea" 
+                                         rows="4" placeholder="يرجى كتابة سبب عدم القدرة على الحضور..."></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -470,8 +602,8 @@
             </button>
             
             <div class="success-message" id="successMessage">
-                <strong>تم تأكيد حضورك بنجاح!</strong><br>
-                سيتم التواصل معك قريباً لتأكيد الموعد
+                <strong>تم تأكيد بياناتك بنجاح!</strong><br>
+                <span id="successDetails">سيتم التواصل معك قريباً لتأكيد الموعد</span>
             </div>
             
             <div class="error-message" id="errorMessage">
@@ -535,12 +667,20 @@
         
         // التحقق من عدم تكرار حجز نفس الطالب
         function isStudentAlreadyBooked(studentName) {
+            // التحقق من الحجوزات العادية
             for (const day in bookingsData) {
-                if (bookingsData[day].some(booking => 
+                if (day !== 'excuses' && bookingsData[day].some(booking => 
                     booking.studentName.toLowerCase() === studentName.toLowerCase())) {
                     return true;
                 }
             }
+            
+            // التحقق من الاعتذارات
+            if (bookingsData.excuses && bookingsData.excuses.some(excuse => 
+                excuse.studentName.toLowerCase() === studentName.toLowerCase())) {
+                return true;
+            }
+            
             return false;
         }
         
@@ -556,19 +696,39 @@
             localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
         }
         
+        // حفظ الاعتذار
+        function saveExcuse(excuseData) {
+            if (!bookingsData.excuses) {
+                bookingsData.excuses = [];
+            }
+            
+            bookingsData.excuses.push(excuseData);
+            localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
+        }
+        
         // عرض رسالة النجاح
-        function showSuccess() {
+        function showSuccess(isExcuse) {
             const successMsg = document.getElementById('successMessage');
+            const successDetails = document.getElementById('successDetails');
             const errorMsg = document.getElementById('errorMessage');
             
             errorMsg.style.display = 'none';
+            
+            if (isExcuse) {
+                successMsg.querySelector('strong').textContent = '📝 تم تسجيل اعتذارك بنجاح!';
+                successDetails.textContent = 'شكراً لإعلامنا بعدم قدرتك على الحضور. نتفهم ظروفك تماماً.';
+            } else {
+                successMsg.querySelector('strong').textContent = '🎉 تم تأكيد حضورك بنجاح!';
+                successDetails.textContent = 'سيتم التواصل معك قريباً لتأكيد الموعد النهائي.';
+            }
+            
             successMsg.style.display = 'block';
             successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // إخفاء الرسالة بعد 5 ثوانٍ
+            // إخفاء الرسالة بعد 7 ثوانٍ
             setTimeout(() => {
                 successMsg.style.display = 'none';
-            }, 5000);
+            }, 7000);
         }
         
         // عرض رسالة الخطأ
@@ -586,7 +746,52 @@
             }, 5000);
         }
         
-        // معالجة إرسال النموذج
+        // معالجة خانة الاعتذار
+        document.getElementById('excuseCheckbox').addEventListener('change', function() {
+            const excuseDetails = document.getElementById('excuseDetails');
+            const meetingDaySelect = document.getElementById('meetingDay');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (this.checked) {
+                // إظهار قسم الاعتذار
+                excuseDetails.style.display = 'block';
+                excuseDetails.style.animation = 'slideDown 0.4s ease';
+                
+                // إلغاء اختيار اليوم وجعله غير مطلوب
+                meetingDaySelect.value = '';
+                meetingDaySelect.disabled = true;
+                meetingDaySelect.style.opacity = '0.5';
+                meetingDaySelect.removeAttribute('required');
+                
+                // تغيير نص الزر
+                submitBtn.textContent = '📝 تسجيل الاعتذار';
+                submitBtn.style.background = 'linear-gradient(135deg, #ffc107, #e0a800)';
+                submitBtn.style.color = '#000';
+                
+                // جعل حقل السبب مطلوباً
+                document.getElementById('excuseReason').setAttribute('required', 'required');
+            } else {
+                // إخفاء قسم الاعتذار
+                excuseDetails.style.animation = 'slideUp 0.4s ease';
+                setTimeout(() => {
+                    excuseDetails.style.display = 'none';
+                }, 400);
+                
+                // تفعيل اختيار اليوم
+                meetingDaySelect.disabled = false;
+                meetingDaySelect.style.opacity = '1';
+                meetingDaySelect.setAttribute('required', 'required');
+                
+                // إعادة تعيين نص الزر
+                submitBtn.textContent = '✅ تأكيد الحضور';
+                submitBtn.style.background = 'linear-gradient(135deg, #2d8f2d, #0d5c0d)';
+                submitBtn.style.color = 'white';
+                
+                // إلغاء وجوب حقل السبب
+                document.getElementById('excuseReason').removeAttribute('required');
+                document.getElementById('excuseReason').value = '';
+            }
+        });
         document.getElementById('parentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -685,7 +890,7 @@
         
         // حفظ مسودة أثناء الكتابة
         let draftTimer;
-        document.querySelectorAll('.form-input, .form-select').forEach(input => {
+        document.querySelectorAll('.form-input, .form-select, .excuse-checkbox, .excuse-textarea').forEach(input => {
             input.addEventListener('input', function() {
                 clearTimeout(draftTimer);
                 draftTimer = setTimeout(saveDraft, 1000);
@@ -698,6 +903,8 @@
                 parentName: document.getElementById('parentName').value,
                 phoneNumber: document.getElementById('phoneNumber').value,
                 meetingDay: document.getElementById('meetingDay').value,
+                isExcuse: document.getElementById('excuseCheckbox').checked,
+                excuseReason: document.getElementById('excuseReason').value,
                 timestamp: Date.now()
             };
             localStorage.setItem('parentFormDraft', JSON.stringify(draft));
@@ -709,7 +916,14 @@
                 if (draft.studentName) document.getElementById('studentName').value = draft.studentName;
                 if (draft.parentName) document.getElementById('parentName').value = draft.parentName;
                 if (draft.phoneNumber) document.getElementById('phoneNumber').value = draft.phoneNumber;
-                if (draft.meetingDay) document.getElementById('meetingDay').value = draft.meetingDay;
+                if (draft.meetingDay && !draft.isExcuse) document.getElementById('meetingDay').value = draft.meetingDay;
+                if (draft.excuseReason) document.getElementById('excuseReason').value = draft.excuseReason;
+                
+                // استعادة حالة الاعتذار
+                if (draft.isExcuse) {
+                    document.getElementById('excuseCheckbox').checked = true;
+                    document.getElementById('excuseCheckbox').dispatchEvent(new Event('change'));
+                }
             }
         }
         
