@@ -623,7 +623,7 @@
                             </select>
                         </div>
                         <div class="form-help">
-                            💡 <strong>تلميح:</strong> الأيام المكتملة ستظهر باللون الأحمر
+                            💡 <strong>تلميح:</strong> الأيام المكتملة ستظهر باللون الأحمر. عند الاعتذار لا حاجة لاختيار يوم.
                         </div>
                     </div>
                     
@@ -785,12 +785,22 @@
         
         // حفظ الاعتذار
         function saveExcuse(excuseData) {
+            console.log('بدء حفظ الاعتذار:', excuseData);
+            
+            // التأكد من وجود مصفوفة الاعتذارات
             if (!bookingsData.excuses) {
                 bookingsData.excuses = [];
+                console.log('إنشاء مصفوفة اعتذارات جديدة');
             }
             
+            // إضافة الاعتذار
             bookingsData.excuses.push(excuseData);
+            
+            // حفظ البيانات في localStorage
             localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
+            
+            console.log('تم حفظ الاعتذار بنجاح. العدد الكلي للاعتذارات:', bookingsData.excuses.length);
+            console.log('البيانات المحفوظة:', JSON.parse(localStorage.getItem('parentMeetingBookings')));
         }
         
         // عرض رسالة النجاح
@@ -973,6 +983,9 @@
             // تحديث خيارات الأيام عند تحميل الصفحة
             updateDayOptions();
             
+            // جعل حقل اليوم مطلوباً بشكل افتراضي
+            document.getElementById('meetingDay').setAttribute('required', 'required');
+            
             // إضافة تأثيرات بصرية للنموذج
             const inputs = document.querySelectorAll('.form-input, .form-select');
             inputs.forEach(input => {
@@ -987,6 +1000,9 @@
             
             // تحميل المسودة المحفوظة
             loadDraft();
+            
+            // اختبار معالج الاعتذار
+            console.log('معالج الاعتذار تم تحميله');
         });
         
         // حفظ مسودة أثناء الكتابة
