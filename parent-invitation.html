@@ -1010,9 +1010,6 @@
             // تحديث خيارات الأيام عند تحميل الصفحة
             updateDayOptions();
             
-            // جعل حقل اليوم مطلوباً بشكل افتراضي
-            document.getElementById('meetingDay').setAttribute('required', 'required');
-            
             // إضافة تأثيرات بصرية للنموذج
             const inputs = document.querySelectorAll('.form-input, .form-select');
             inputs.forEach(input => {
@@ -1027,9 +1024,6 @@
             
             // تحميل المسودة المحفوظة
             loadDraft();
-            
-            // اختبار معالج الاعتذار
-            console.log('معالج الاعتذار تم تحميله');
         });
         
         // حفظ مسودة أثناء الكتابة
