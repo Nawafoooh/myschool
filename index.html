@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج التوقيع الإلكتروني - متوسطة المنذر بن عمرو الأنصاري</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 50%, #1e4d3b 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            border: 3px solid #0f6b47;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-50px) translateY(-50px); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .ministry-logo {
+            font-size: 60px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .ministry-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        
+        .ministry-subtitle {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.95;
+            color: #e8f5f0;
+        }
+        
+        .school-name {
+            font-size: 24px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.15);
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 15px auto;
+            display: inline-block;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-title {
+            font-size: 18px;
+            margin-top: 15px;
+            color: #e8f5f0;
+        }
+        
+        .form-content {
+            padding: 35px;
+            background: #fafbfc;
+        }
+        
+        .circular-notice {
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5f0 100%);
+            border: 3px solid #0f6b47;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .circular-notice::before {
+            content: '📋';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 80px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .circular-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #0f6b47;
+        }
+        
+        .circular-number {
+            background: #0f6b47;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        
+        .circular-date {
+            color: #1e4d3b;
+            font-weight: bold;
+        }
+        
+        .circular-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border-right: 5px solid #0f6b47;
+            line-height: 1.8;
+            color: #2c3e50;
+            box-shadow: 0 3px 10px rgba(15, 107, 71, 0.1);
+        }
+        
+        .circular-subject {
+            font-weight: bold;
+            color: #0f6b47;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #1e4d3b;
+            font-size: 16px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #d5e8d4;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0f6b47;
+            box-shadow: 0 0 0 4px rgba(15, 107, 71, 0.1);
+            background: #f8fffe;
+        }
+        
+        .signature-area {
+            border: 3px dashed #0f6b47;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5f0 100%);
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .signature-area::before {
+            content: '✍️';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-size: 24px;
+            border: 2px solid #0f6b47;
+        }
+        
+        .signature-canvas {
+            border: 2px solid #0f6b47;
+            border-radius: 10px;
+            cursor: crosshair;
+            display: block;
+            margin: 20px auto;
+            background: white;
+            touch-action: none;
+            box-shadow: 0 3px 15px rgba(15, 107, 71, 0.2);
+        }
+        
+        .signature-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            border: 2px solid #7f8c8d;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(149, 165, 166, 0.3);
+        }
+        
+        .confirmation-area {
+            background: linear-gradient(135deg, #e8f8f0 0%, #d4edd8 100%);
+            border: 3px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .confirmation-area::before {
+            content: '✅';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-size: 24px;
+            border: 2px solid #27ae60;
+        }
+        
+        .confirmation-area h4 {
+            color: #1e4d3b;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #27ae60;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-group:hover {
+            background: #f8fff9;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(39, 174, 96, 0.1);
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-left: 15px;
+            transform: scale(1.5);
+            accent-color: #0f6b47;
+        }
+        
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 0;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
+            color: white;
+            width: 100%;
+            padding: 18px;
+            font-size: 20px;
+            margin-top: 30px;
+            border: 3px solid #0f6b47;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(15, 107, 71, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            border-color: #95a5a6;
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 25px;
+            text-align: center;
+            display: none;
+            border: 3px solid #27ae60;
+            position: relative;
+        }
+        
+        .success-message::before {
+            content: '🎉';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 30px;
+            border: 3px solid #27ae60;
+        }
+        
+        .success-message h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+            color: #0f6b47;
+        }
+        
+        .success-message p {
+            margin-bottom: 10px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        
+        .required {
+            color: #e74c3c;
+            font-size: 18px;
+        }
+        
+        .saudi-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M20 0L30 10L20 20L10 10Z" fill="%230f6b47"/><path d="M0 20L10 30L20 20L10 10Z" fill="%231e4d3b"/><path d="M20 20L30 30L20 40L10 30Z" fill="%230f6b47"/><path d="M20 20L40 20L30 10L30 30Z" fill="%231e4d3b"/></svg>');
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .form-content {
+                padding: 25px;
+            }
+            
+            .header {
+                padding: 25px;
+            }
+            
+            .ministry-logo {
+                font-size: 50px;
+            }
+            
+            .ministry-title {
+                font-size: 20px;
+            }
+            
+            .school-name {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+            
+            .signature-canvas {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .signature-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 200px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .circular-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .circular-number {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+            
+            .ministry-title {
+                font-size: 18px;
+            }
+            
+            .ministry-subtitle {
+                font-size: 14px;
+            }
+            
+            .school-name {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="saudi-pattern"></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="ministry-logo">🇸🇦</div>
+                <div class="ministry-title">المملكة العربية السعودية</div>
+                <div class="ministry-subtitle">وزارة التعليم</div>
+                <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
+                <div class="form-title">📋 نموذج التوقيع الإلكتروني</div>
+            </div>
+        </div>
+        
+        <div class="form-content">
+            <div class="circular-notice">
+                <div class="circular-header">
+                    <div class="circular-number">تعميم رقم: 001</div>
+                    <div class="circular-date">التاريخ: <span id="currentDate"></span></div>
+                </div>
+                <div class="circular-content">
+                    <div class="circular-subject">الموضوع: تطبيق نظام التوقيع الإلكتروني الجديد</div>
+                    <p><strong>السلام عليكم ورحمة الله وبركاته،</strong></p>
+                    <p>يُرجى من جميع المعلمين والمعلمات الكرام في متوسطة المنذر بن عمرو الأنصاري الاطلاع على هذا التعميم والتوقيع إلكترونياً لتأكيد الاستلام والمشاهدة.</p>
+                    <p>هذا النظام الجديد سيضمن التوثيق الدقيق والسريع لجميع التعاميم الإدارية والتعليمية، مما يساهم في تحسين كفاءة العمل الإداري وتوفير الوقت والجهد.</p>
+                    <p><strong>نشكركم على تعاونكم المستمر وجهودكم المبذولة في خدمة التعليم.</strong></p>
+                </div>
+            </div>
+            
+            <form id="signatureForm">
+                <div class="form-group">
+                    <label for="fullName">الاسم الثلاثي <span class="required">*</span></label>
+                    <input type="text" id="fullName" required placeholder="أدخل الاسم الثلاثي كاملاً">
+                </div>
+                
+                <div class="form-group">
+                    <label for="employeeId">الرقم الوظيفي <span class="required">*</span></label>
+                    <input type="text" id="employeeId" required placeholder="أدخل الرقم الوظيفي">
+                </div>
+                
+                <div class="form-group">
+                    <label for="position">المسمى الوظيفي <span class="required">*</span></label>
+                    <input type="text" id="position" required placeholder="مثال: معلم، معلمة، وكيل، مرشد طلابي...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">التخصص/المادة (للمعلمين)</label>
+                    <input type="text" id="subject" placeholder="مثال: الرياضيات، العلوم، اللغة العربية...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">رقم الجوال (اختياري)</label>
+                    <input type="tel" id="phone" placeholder="05xxxxxxxx">
+                </div>
+                
+                <div class="confirmation-area">
+                    <h4>تأكيد المشاهدة والاستلام</h4>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="readConfirm" required>
+                            أؤكد أنني اطلعت على التعميم كاملاً ومحتوياته <span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="understandConfirm" required>
+                            أؤكد أنني فهمت المضمون والتعليمات المطلوبة <span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="implementConfirm" required>
+                            أؤكد التزامي بتطبيق التعليمات والتوجيهات الواردة <span class="required">*</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>التوقيع الرقمي <span class="required">*</span></label>
+                    <div class="signature-area">
+                        <p><strong>📝 اختر طريقة التوقيع:</strong></p>
+                        
+                        <!-- خيارات التوقيع -->
+                        <div style="display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-secondary" onclick="showSignatureCanvas()" id="canvasBtn">
+                                ✍️ الرسم باليد
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="showTextSignature()" id="textBtn">
+                                ⌨️ كتابة الاسم
+                            </button>
+                        </div>
+                        
+                        <!-- منطقة الرسم -->
+                        <div id="canvasArea" style="display: none;">
+                            <p style="color: #0f6b47; margin: 10px 0;"><strong>ارسم توقيعك باستخدام الإصبع أو القلم الرقمي:</strong></p>
+                            <canvas id="signatureCanvas" class="signature-canvas" width="500" height="180"></canvas>
+                            <div class="signature-buttons">
+                                <button type="button" class="btn btn-secondary" onclick="clearSignature()">
+                                    🗑️ مسح التوقيع
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- منطقة النص -->
+                        <div id="textArea" style="display: none;">
+                            <p style="color: #0f6b47; margin: 10px 0;"><strong>اكتب اسمك الكامل كتوقيع نصي:</strong></p>
+                            <input type="text" id="textSignature" placeholder="اكتب اسمك الكامل هنا..." 
+                                   style="width: 100%; padding: 15px; border: 2px solid #0f6b47; border-radius: 10px; 
+                                          font-size: 24px; text-align: center; font-weight: bold; color: #1e4d3b;
+                                          background: #f8fffe;">
+                        </div>
+                        
+                        <p style="color: #666; font-size: 14px; margin-top: 15px;">
+                            💡 <strong>نصيحة:</strong> إذا واجهت صعوبة في الرسم، يمكنك اختيار "كتابة الاسم" للتوقيع النصي
+                        </p>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn submit-btn" id="submitBtn">
+                    ✅ تأكيد التوقيع وإرسال النموذج
+                </button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <h3>تم الإرسال بنجاح!</h3>
+                <p><strong>🙏 شكراً لكم على تعاونكم المستمر</strong></p>
+                <p>تم تسجيل توقيع الأستاذ/ة <strong><span id="teacherName"></span></strong> وتأكيد استلام التعميم بنجاح</p>
+                <p><strong>📅 تاريخ ووقت التوقيع:</strong> <span id="submissionTime"></span></p>
+                <p><strong>🔢 رقم المرجع:</strong> <span id="referenceNumber"></span></p>
+                <div style="margin-top: 20px; padding: 15px; background: rgba(15, 107, 71, 0.1); border-radius: 10px;">
+                    <p style="color: #0f6b47; font-weight: bold;">
+                        ✅ تم حفظ بياناتك في سجل المدرسة الإلكتروني
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تعيين التاريخ الحالي بالتقويم الهجري والميلادي
+        const currentDate = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            calendar: 'islamic-umalqura',
+            locale: 'ar-SA'
+        };
+        
+        try {
+            const hijriDate = currentDate.toLocaleDateString('ar-SA-u-ca-islamic', options);
+            const gregorianDate = currentDate.toLocaleDateString('ar-SA');
+            document.getElementById('currentDate').innerHTML = `${hijriDate}<br>الموافق: ${gregorianDate}`;
+        } catch (e) {
+            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('ar-SA');
+        }
+        
+        // إعداد التوقيع الرقمي
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentSignatureMode = 'none'; // 'canvas' or 'text' or 'none'
+
+        // إظهار منطقة الرسم
+        function showSignatureCanvas() {
+            document.getElementById('canvasArea').style.display = 'block';
+            document.getElementById('textArea').style.display = 'none';
+            document.getElementById('canvasBtn').style.background = '#0f6b47';
+            document.getElementById('canvasBtn').style.color = 'white';
+            document.getElementById('textBtn').style.background = '#95a5a6';
+            document.getElementById('textBtn').style.color = 'white';
+            currentSignatureMode = 'canvas';
+            setupCanvas();
+            document.getElementById('textSignature').value = '';
+        }
+
+        // إظهار منطقة النص
+        function showTextSignature() {
+            document.getElementById('textArea').style.display = 'block';
+            document.getElementById('canvasArea').style.display = 'none';
+            document.getElementById('textBtn').style.background = '#0f6b47';
+            document.getElementById('textBtn').style.color = 'white';
+            document.getElementById('canvasBtn').style.background = '#95a5a6';
+            document.getElementById('canvasBtn').style.color = 'white';
+            currentSignatureMode = 'text';
+            clearSignature();
+            document.getElementById('textSignature').focus();
+        }
+
+        // تحسين دقة الكانفاس للشاشات عالية الدقة
+        function setupCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const ratio = window.devicePixelRatio || 1;
+            canvas.width = rect.width * ratio;
+            canvas.height = rect.height * ratio;
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+            ctx.scale(ratio, ratio);
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#1e4d3b';
+        }
+
+        // تحديث الكانفاس عند تغيير حجم الشاشة
+        window.addEventListener('resize', setupCanvas);
+
+        // وظائف الرسم للماوس
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // وظائف الرسم للمس
+        canvas.addEventListener('touchstart', handleTouch);
+        canvas.addEventListener('touchmove', handleTouch);
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+            
+            lastX = currentX;
+            lastY = currentY;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            if (!touch) return;
+            
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                            e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        function clearSignature() {
+            if (currentSignatureMode === 'canvas') {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            } else if (currentSignatureMode === 'text') {
+                document.getElementById('textSignature').value = '';
+            }
+        }
+
+        // التحقق من وجود توقيع
+        function hasSignature() {
+            if (currentSignatureMode === 'canvas') {
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                return imageData.data.some(pixel => pixel !== 0);
+            } else if (currentSignatureMode === 'text') {
+                return document.getElementById('textSignature').value.trim().length > 0;
+            }
+            return false;
+        }
+
+        // الحصول على التوقيع (صورة أو نص)
+        function getSignatureData() {
+            if (currentSignatureMode === 'canvas') {
+                return {
+                    type: 'canvas',
+                    data: canvas.toDataURL('image/png')
+                };
+            } else if (currentSignatureMode === 'text') {
+                const textSignature = document.getElementById('textSignature').value.trim();
+                // إنشاء صورة للتوقيع النصي
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = 500;
+                tempCanvas.height = 180;
+                const tempCtx = tempCanvas.getContext('2d');
+                
+                // تصميم التوقيع النصي
+                tempCtx.fillStyle = 'white';
+                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+                tempCtx.fillStyle = '#1e4d3b';
+                tempCtx.font = 'bold 32px Arial, sans-serif';
+                tempCtx.textAlign = 'center';
+                tempCtx.textBaseline = 'middle';
+                tempCtx.fillText(textSignature, tempCanvas.width/2, tempCanvas.height/2);
+                
+                // إضافة خط تحت النص
+                tempCtx.beginPath();
+                tempCtx.moveTo(50, tempCanvas.height/2 + 40);
+                tempCtx.lineTo(tempCanvas.width - 50, tempCanvas.height/2 + 40);
+                tempCtx.strokeStyle = '#0f6b47';
+                tempCtx.lineWidth = 2;
+                tempCtx.stroke();
+                
+                return {
+                    type: 'text',
+                    text: textSignature,
+                    data: tempCanvas.toDataURL('image/png')
+                };
+            }
+            return null;
+        }
+
+        // إنشاء رقم مرجع فريد
+        function generateReferenceNumber() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+            return `MAN-${year}${month}${day}-${random}`;
+        }
+
+        // معالج إرسال النموذج
+        document.getElementById('signatureForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // التحقق من التوقيع
+            if (currentSignatureMode === 'none' || !hasSignature()) {
+                alert('⚠️ يرجى اختيار طريقة التوقيع وإضافة توقيعك قبل الإرسال');
+                return;
+            }
+            
+            const signatureData = getSignatureData();
+            
+            // جمع البيانات
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                employeeId: document.getElementById('employeeId').value,
+                position: document.getElementById('position').value,
+                subject: document.getElementById('subject').value,
+                phone: document.getElementById('phone').value,
+                readConfirm: document.getElementById('readConfirm').checked,
+                understandConfirm: document.getElementById('understandConfirm').checked,
+                implementConfirm: document.getElementById('implementConfirm').checked,
+                signature: signatureData,
+                timestamp: new Date().toLocaleString('ar-SA'),
+                referenceNumber: generateReferenceNumber(),
+                school: 'متوسطة المنذر بن عمرو الأنصاري'
+            };
+            
+            // محاكاة الإرسال (يمكن ربطها بقاعدة بيانات)
+            console.log('بيانات النموذج:', formData);
+            
+            // إظهار رسالة النجاح
+            document.getElementById('teacherName').textContent = formData.fullName;
+            document.getElementById('submissionTime').textContent = formData.timestamp;
+            document.getElementById('referenceNumber').textContent = formData.referenceNumber;
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('signatureForm').style.display = 'none';
+            
+            // حفظ البيانات محلياً مع رقم مرجع فريد
+            localStorage.setItem('signature_' + formData.referenceNumber, JSON.stringify(formData));
+            
+            // مسح المسودة بعد الإرسال الناجح
+            localStorage.removeItem('draft_signature');
+            
+            // إرسال إشعار (يمكن تطويره لإرسال بريد إلكتروني)
+            setTimeout(() => {
+                // تمرير الصفحة إلى رسالة النجاح
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        });
+
+        // وظيفة لعرض جميع التوقيعات المحفوظة (للمدير)
+        function viewAllSignatures() {
+            const signatures = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('signature_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        signatures.push(data);
+                    } catch (e) {
+                        console.error('خطأ في قراءة البيانات:', e);
+                    }
+                }
+            }
+            return signatures.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        }
+
+        // وظيفة لتصدير البيانات إلى CSV
+        function exportToCSV() {
+            const signatures = viewAllSignatures();
+            if (signatures.length === 0) {
+                alert('لا توجد توقيعات لتصديرها');
+                return;
+            }
+
+            const csvHeaders = [
+                'م',
+                'الاسم الثلاثي',
+                'الرقم الوظيفي', 
+                'المسمى الوظيفي',
+                'التخصص/المادة',
+                'رقم الجوال',
+                'طريقة التوقيع',
+                'تاريخ التوقيع',
+                'رقم المرجع',
+                'حالة التأكيد'
+            ];
+
+            const csvData = signatures.map((sig, index) => [
+                index + 1,
+                sig.fullName,
+                sig.employeeId,
+                sig.position,
+                sig.subject || 'غير محدد',
+                sig.phone || 'غير محدد',
+                sig.signature?.type === 'text' ? 'توقيع نصي' : 'توقيع مرسوم',
+                sig.timestamp,
+                sig.referenceNumber,
+                (sig.readConfirm && sig.understandConfirm && sig.implementConfirm) ? 'مكتمل' : 'غير مكتمل'
+            ]);
+
+            const csvContent = [csvHeaders, ...csvData]
+                .map(row => row.map(field => `"${field}"`).join(','))
+                .join('\n');
+
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `توقيعات_التعميم_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // وظيفة لطباعة تقرير التوقيعات
+        function printSignaturesReport() {
+            const signatures = viewAllSignatures();
+            if (signatures.length === 0) {
+                alert('لا توجد توقيعات لطباعة التقرير');
+                return;
+            }
+
+            const reportWindow = window.open('', '_blank');
+            const reportHTML = `
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>تقرير التوقيعات الإلكترونية</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #0f6b47; padding-bottom: 20px; }
+                        .logo { font-size: 24px; color: #0f6b47; margin-bottom: 10px; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+                        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+                        th { background-color: #0f6b47; color: white; }
+                        .summary { background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+                        @media print { body { margin: 0; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="logo">🇸🇦 المملكة العربية السعودية - وزارة التعليم</div>
+                        <h2>متوسطة المنذر بن عمرو الأنصاري</h2>
+                        <h3>تقرير التوقيعات الإلكترونية للتعميم رقم: 001</h3>
+                        <p>تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}</p>
+                    </div>
+                    
+                    <div class="summary">
+                        <h4>ملخص التوقيعات:</h4>
+                        <p><strong>إجمالي عدد التوقيعات:</strong> ${signatures.length}</p>
+                        <p><strong>التوقيعات المكتملة:</strong> ${signatures.filter(s => s.readConfirm && s.understandConfirm && s.implementConfirm).length}</p>
+                        <p><strong>وقت إنشاء التقرير:</strong> ${new Date().toLocaleString('ar-SA')}</p>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>م</th>
+                                <th>الاسم الثلاثي</th>
+                                <th>الرقم الوظيفي</th>
+                                <th>المسمى الوظيفي</th>
+                                <th>التخصص/المادة</th>
+                                <th>طريقة التوقيع</th>
+                                <th>تاريخ التوقيع</th>
+                                <th>رقم المرجع</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${signatures.map((sig, index) => `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${sig.fullName}</td>
+                                    <td>${sig.employeeId}</td>
+                                    <td>${sig.position}</td>
+                                    <td>${sig.subject || 'غير محدد'}</td>
+                                    <td>${sig.signature?.type === 'text' ? '📝 نصي' : '✍️ مرسوم'}</td>
+                                    <td>${sig.timestamp}</td>
+                                    <td>${sig.referenceNumber}</td>
+                                    <td>${(sig.readConfirm && sig.understandConfirm && sig.implementConfirm) ? '✅ مكتمل' : '⚠️ غير مكتمل'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </body>
+                </html>
+            `;
+
+            reportWindow.document.write(reportHTML);
+            reportWindow.document.close();
+            setTimeout(() => reportWindow.print(), 500);
+        }
+
+        // إضافة أزرار الإدارة (تظهر فقط في بيئة التطوير أو للمدير)
+        function addAdminControls() {
+            if (localStorage.getItem('admin_access') === 'true' || 
+                location.hostname === 'localhost' || 
+                location.hostname === '127.0.0.1' ||
+                location.href.includes('github.io')) {
+                
+                const adminPanel = document.createElement('div');
+                adminPanel.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    background: rgba(15, 107, 71, 0.95);
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                    z-index: 9999;
+                    font-size: 14px;
+                    backdrop-filter: blur(10px);
+                `;
+                
+                adminPanel.innerHTML = `
+                    <h4 style="margin: 0 0 10px 0;">🛠️ لوحة الإدارة</h4>
+                    <button onclick="console.table(viewAllSignatures())" style="display: block; margin: 5px 0; padding: 5px 10px; border: none; border-radius: 5px; background: white; color: #0f6b47; cursor: pointer; width: 100%;">عرض التوقيعات</button>
+                    <button onclick="exportToCSV()" style="display: block; margin: 5px 0; padding: 5px 10px; border: none; border-radius: 5px; background: white; color: #0f6b47; cursor: pointer; width: 100%;">تصدير CSV</button>
+                    <button onclick="printSignaturesReport()" style="display: block; margin: 5px 0; padding: 5px 10px; border: none; border-radius: 5px; background: white; color: #0f6b47; cursor: pointer; width: 100%;">طباعة التقرير</button>
+                    <button onclick="localStorage.setItem('admin_access', 'true')" style="display: block; margin: 5px 0; padding: 5px 10px; border: none; border-radius: 5px; background: #27ae60; color: white; cursor: pointer; width: 100%;">تفعيل الإدارة</button>
+                    <button onclick="localStorage.clear(); location.reload();" style="display: block; margin: 5px 0; padding: 5px 10px; border: none; border-radius: 5px; background: #e74c3c; color: white; cursor: pointer; width: 100%;">مسح البيانات</button>
+                    <button onclick="this.parentElement.style.display='none'" style="display: block; margin: 5px 0; padding: 5px 10px; border: none; border-radius: 5px; background: #95a5a6; color: white; cursor: pointer; width: 100%;">إخفاء</button>
+                `;
+                
+                document.body.appendChild(adminPanel);
+            }
+        }
+
+        // حفظ البيانات تلقائياً كل 30 ثانية (مسودة)
+        setInterval(function() {
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                employeeId: document.getElementById('employeeId').value,
+                position: document.getElementById('position').value,
+                subject: document.getElementById('subject').value,
+                phone: document.getElementById('phone').value
+            };
+            
+            if (formData.fullName || formData.employeeId) {
+                localStorage.setItem('draft_signature', JSON.stringify({
+                    ...formData,
+                    lastSaved: new Date().toISOString()
+                }));
+            }
+        }, 30000);
+
+        // استرجاع المسودة عند تحميل الصفحة
+        window.addEventListener('load', function() {
+            const draft = localStorage.getItem('draft_signature');
+            if (draft) {
+                try {
+                    const data = JSON.parse(draft);
+                    const lastSaved = new Date(data.lastSaved);
+                    const now = new Date();
+                    
+                    // إذا كانت المسودة محفوظة خلال آخر 24 ساعة
+                    if (now - lastSaved < 24 * 60 * 60 * 1000) {
+                        if (confirm('تم العثور على بيانات محفوظة مسبقاً. هل تريد استرجاعها؟')) {
+                            document.getElementById('fullName').value = data.fullName || '';
+                            document.getElementById('employeeId').value = data.employeeId || '';
+                            document.getElementById('position').value = data.position || '';
+                            document.getElementById('subject').value = data.subject || '';
+                            document.getElementById('phone').value = data.phone || '';
+                        }
+                    }
+                } catch (e) {
+                    console.error('خطأ في استرجاع المسودة:', e);
+                }
+            }
+        });
+
+        // تشغيل لوحة الإدارة عند تحميل الصفحة
+        window.addEventListener('load', addAdminControls);
+
+        // إضافة رسائل التأكيد للإجراءات المهمة
+        window.addEventListener('beforeunload', function(e) {
+            const form = document.getElementById('signatureForm');
+            if (form.style.display !== 'none') {
+                const fullName = document.getElementById('fullName').value;
+                const employeeId = document.getElementById('employeeId').value;
+                
+                if (fullName || employeeId || hasSignature()) {
+                    e.preventDefault();
+                    e.returnValue = 'هل أنت متأكد من أنك تريد مغادرة الصفحة؟ ستفقد البيانات غير المحفوظة.';
+                    return e.returnValue;
+                }
+            }
+        });
+
+        console.log('✅ تم تحميل نظام التوقيع الإلكتروني لمتوسطة المنذر بن عمرو الأنصاري بنجاح');
+    </script>
+</body>
+</html>
