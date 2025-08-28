@@ -601,17 +601,17 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="studentName" class="form-label">اسم الطالب</label>
-                        <input type="text" id="studentName" name="studentName" class="form-input" required placeholder="أدخل الاسم الكامل للطالب">
+                        <input type="text" id="studentName" name="studentName" class="form-input" placeholder="أدخل الاسم الكامل للطالب">
                     </div>
                     
                     <div class="form-group">
                         <label for="parentName" class="form-label">اسم ولي الأمر</label>
-                        <input type="text" id="parentName" name="parentName" class="form-input" required placeholder="أدخل الاسم الكامل لولي الأمر">
+                        <input type="text" id="parentName" name="parentName" class="form-input" placeholder="أدخل الاسم الكامل لولي الأمر">
                     </div>
                     
                     <div class="form-group">
                         <label for="phoneNumber" class="form-label">رقم الجوال</label>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" required placeholder="05xxxxxxxxx" pattern="[0-9]{10}" maxlength="10">
+                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="05xxxxxxxxx" pattern="[0-9]{10}" maxlength="10">
                     </div>
                     
                     <div class="form-group">
@@ -647,7 +647,8 @@
                 </div>
                 
                 <p class="required-note">
-                    جميع الحقول مطلوبة ومميزة بالرمز ●
+                    جميع الحقول مطلوبة ومميزة بالرمز ● <br>
+                    <small>عند اختيار الاعتذار، لا حاجة لاختيار يوم للحضور</small>
                 </p>
             </form>
         </div>
@@ -783,7 +784,33 @@
             localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
         }
         
-        // حفظ الاعتذار
+        // دالة إعادة تعيين النموذج
+        function resetForm() {
+            setTimeout(() => {
+                console.log('إعادة تعيين النموذج');
+                
+                // إعادة تعيين الحقول
+                document.getElementById('parentForm').reset();
+                document.getElementById('excuseDetails').style.display = 'none';
+                document.getElementById('excuseCheckbox').checked = false;
+                
+                // إعادة تفعيل قائمة الأيام
+                const meetingDaySelect = document.getElementById('meetingDay');
+                meetingDaySelect.disabled = false;
+                meetingDaySelect.style.opacity = '1';
+                
+                // تحديث قائمة الأيام
+                updateDayOptions();
+                
+                // إعادة تعيين الزر
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.textContent = '✅ تأكيد الحضور';
+                submitBtn.style.background = 'linear-gradient(135deg, #2d8f2d, #0d5c0d)';
+                submitBtn.style.color = 'white';
+                
+                console.log('تم إعادة تعيين النموذج بنجاح');
+            }, 2000);
+        }
         function saveExcuse(excuseData) {
             console.log('بدء حفظ الاعتذار:', excuseData);
             
