@@ -802,11 +802,15 @@
             errorMsg.style.display = 'none';
             
             if (isExcuse) {
-                successMsg.querySelector('strong').textContent = '📝 تم تسجيل اعتذارك بنجاح!';
-                successDetails.textContent = 'شكراً لإعلامنا بعدم قدرتك على الحضور. نتفهم ظروفك تماماً.';
+                successMsg.querySelector('strong').textContent = '😔 تم تسجيل اعتذارك بنجاح';
+                successDetails.textContent = 'شكراً لإعلامنا بعدم قدرتك على الحضور. نتفهم ظروفك ونقدر تواصلك معنا.';
+                successMsg.style.background = 'linear-gradient(135deg, #fff3cd, #ffeaa7)';
+                successMsg.style.borderColor = '#ffc107';
             } else {
                 successMsg.querySelector('strong').textContent = '🎉 تم تأكيد حضورك بنجاح!';
-                successDetails.textContent = 'سيتم التواصل معك قريباً لتأكيد الموعد النهائي.';
+                successDetails.textContent = 'سيتم التواصل معك قريباً لتأكيد الموعد النهائي. نتطلع لرؤيتك في الاجتماع.';
+                successMsg.style.background = 'linear-gradient(135deg, #d4edda, #c3e6cb)';
+                successMsg.style.borderColor = '#28a745';
             }
             
             successMsg.style.display = 'block';
@@ -850,6 +854,9 @@
                 meetingDaySelect.style.opacity = '0.5';
                 meetingDaySelect.removeAttribute('required');
                 
+                // إضافة رسالة في القائمة
+                meetingDaySelect.innerHTML = '<option value="">-- لا حاجة لاختيار يوم (معتذر) --</option>';
+                
                 // تغيير نص الزر
                 submitBtn.textContent = '📝 تسجيل الاعتذار';
                 submitBtn.style.background = 'linear-gradient(135deg, #ffc107, #e0a800)';
@@ -868,6 +875,9 @@
                 meetingDaySelect.disabled = false;
                 meetingDaySelect.style.opacity = '1';
                 meetingDaySelect.setAttribute('required', 'required');
+                
+                // تحديث قائمة الأيام
+                updateDayOptions();
                 
                 // إعادة تعيين نص الزر
                 submitBtn.textContent = '✅ تأكيد الحضور';
