@@ -1,1077 +1,1034 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نموذج دعوة حضور أولياء الأمور - متوسطة المنذر بن عمرو الأنصاري</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0d5c0d, #1a7a1a, #2d8f2d);
-            min-height: 100vh;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #0d5c0d, #1a7a1a);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
-        
-        .coat-of-arms {
-            width: 120px;
-            height: 120px;
-            background: white;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            margin-bottom: 20px;
-            border: 4px solid #2d8f2d;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .official-header {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .country {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .ministry {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            opacity: 0.95;
-        }
-        
-        .education-office {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 6px;
-            opacity: 0.9;
-        }
-        
-        .school-name {
-            font-size: 22px;
-            font-weight: bold;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid rgba(255,255,255,0.3);
-        }
-        
-        .form-title {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 30px;
-            text-align: center;
-            border-bottom: 4px solid #0d5c0d;
-        }
-        
-        .title-text {
-            font-size: 32px;
-            color: #0d5c0d;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .meeting-time {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            display: inline-block;
-            margin-top: 10px;
-        }
-        
-        .time-label {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-        
-        .time-value {
-            font-size: 28px;
-            color: #0d5c0d;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .form-section {
-            padding: 40px 30px;
-        }
-        
-        .form-grid {
-            display: grid;
-            gap: 25px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .form-group {
-            position: relative;
-        }
-        
-        .form-label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #0d5c0d;
-            font-size: 18px;
-            position: relative;
-            padding-right: 25px;
-        }
-        
-        .form-label::before {
-            content: '●';
-            position: absolute;
-            right: 0;
-            color: #2d8f2d;
-            font-size: 20px;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 18px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            background: #fafafa;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #2d8f2d;
-            box-shadow: 0 0 20px rgba(45, 143, 45, 0.15);
-            background: white;
-            transform: translateY(-2px);
-        }
-        
-        .form-help {
-            font-size: 14px;
-            color: #666;
-            margin-top: 8px;
-            padding: 8px 12px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            border-left: 3px solid #0d5c0d;
-        }
-        
-        .loading-message {
-            text-align: center;
-            color: #0d5c0d;
-            font-size: 16px;
-            margin: 20px 0;
-            padding: 15px;
-            background: #f0fff0;
-            border-radius: 10px;
-            border: 1px solid #d4edda;
-        }
-        
-        .select-wrapper {
-            position: relative;
-        }
-        
-        .select-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 20px;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 6px solid #0d5c0d;
-            pointer-events: none;
-            transition: transform 0.3s ease;
-        }
-        
-        .form-select:focus + .select-wrapper::after {
-            transform: translateY(-50%) rotate(180deg);
-        }
-        
-        .form-select {
-            width: 100%;
-            padding: 18px 50px 18px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            font-family: inherit;
-            background: #fafafa;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            appearance: none;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%230d5c0d"><path d="M7 10l5 5 5-5z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: left 15px center;
-            background-size: 20px;
-            color: #333;
-        }
-        
-        .form-select:focus {
-            outline: none;
-            border-color: #2d8f2d;
-            box-shadow: 0 0 20px rgba(45, 143, 45, 0.15);
-            background-color: white;
-            transform: translateY(-2px);
-        }
-        
-        .form-select option {
-            padding: 10px 15px;
-            font-size: 16px;
-            color: #333;
-            background: white;
-        }
-        
-        .form-select option:disabled {
-            color: #dc3545;
-            background: #f8d7da;
-            font-weight: bold;
-        }
-        
-        .form-select option:not(:disabled):hover {
-            background: #f0fff0;
-            color: #0d5c0d;
-        }
-        
-        .submit-section {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }
-        
-        .submit-btn {
-            background: linear-gradient(135deg, #2d8f2d, #0d5c0d);
-            color: white;
-            padding: 20px 50px;
-            border: none;
-            border-radius: 15px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(45, 143, 45, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s ease;
-        }
-        
-        .submit-btn:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(45, 143, 45, 0.4);
-        }
-        
-        .submit-btn:active {
-            transform: translateY(-2px);
-        }
-        
-        .success-message {
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
-            border: 2px solid #28a745;
-            color: #155724;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 18px;
-            margin-top: 20px;
-            display: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .success-message::before {
-            content: '✅';
-            font-size: 40px;
-            display: block;
-            margin-bottom: 15px;
-        }
-        
-        .error-message {
-            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
-            border: 2px solid #dc3545;
-            color: #721c24;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 18px;
-            margin-top: 20px;
-            display: none;
-            position: relative;
-        }
-        
-        .error-message::before {
-            content: '❌';
-            font-size: 40px;
-            display: block;
-            margin-bottom: 15px;
-        }
-        
-        .footer {
-            background: #0d5c0d;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .day-option {
-            background: linear-gradient(135deg, #ffffff, #f8f9fa);
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 15px 20px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .day-option:hover {
-            border-color: #2d8f2d;
-            background: linear-gradient(135deg, #f0fff0, #f8f9fa);
-        }
-        
-        .day-name {
-            font-weight: 600;
-            color: #0d5c0d;
-        }
-        
-        .day-date {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .required-note {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 30px;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        /* تصميم قسم الاعتذار */
-        .excuse-section {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            border: 2px solid #ffc107;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .excuse-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
-            transition: left 0.6s;
-        }
-        
-        .excuse-section:hover::before {
-            left: 100%;
-        }
-        
-        .excuse-header {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .excuse-main-label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            color: #856404;
-            transition: all 0.3s ease;
-        }
-        
-        .excuse-main-label:hover {
-            color: #533f03;
-            transform: translateX(5px);
-        }
-        
-        .excuse-checkbox {
-            width: 20px;
-            height: 20px;
-            margin-left: 15px;
-            cursor: pointer;
-            transform: scale(1.3);
-            accent-color: #ffc107;
-        }
-        
-        .excuse-text {
-            user-select: none;
-        }
-        
-        .excuse-details {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px dashed #ffc107;
-            animation: slideDown 0.4s ease;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .excuse-textarea {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #ffc107;
-            min-height: 100px;
-            resize: vertical;
-            font-family: inherit;
-            line-height: 1.6;
-        }
-        
-        .excuse-textarea:focus {
-            border-color: #e0a800;
-            background: white;
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
-        }
-        
-        .excuse-textarea::placeholder {
-            color: #856404;
-            font-style: italic;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-                max-height: 0;
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-                max-height: 200px;
-            }
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-                max-height: 200px;
-            }
-            to {
-                opacity: 0;
-                transform: translateY(-20px);
-                max-height: 0;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 15px;
-            }
-            
-            .header {
-                padding: 30px 20px;
-            }
-            
-            .country {
-                font-size: 20px;
-            }
-            
-            .ministry {
-                font-size: 17px;
-            }
-            
-            .school-name {
-                font-size: 18px;
-            }
-            
-            .title-text {
-                font-size: 26px;
-            }
-            
-            .form-section {
-                padding: 30px 20px;
-            }
-            
-            .time-value {
-                font-size: 24px;
-            }
-            
-            .submit-btn {
-                padding: 18px 40px;
-                font-size: 18px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نموذج دعوة حضور أولياء الأمور - متوسطة المنذر بن عمرو الأنصاري</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0d5c0d, #1a7a1a, #2d8f2d);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    overflow: hidden;
+    position: relative;
+}
+.header {
+    background: linear-gradient(135deg, #0d5c0d, #1a7a1a);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+.coat-of-arms {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    margin-bottom: 20px;
+    border: 4px solid #2d8f2d;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.official-header {
+    position: relative;
+    z-index: 1;
+}
+.country {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+.ministry {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    opacity: 0.95;
+}
+.education-office {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    opacity: 0.9;
+}
+.school-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid rgba(255,255,255,0.3);
+}
+.form-title {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 30px;
+    text-align: center;
+    border-bottom: 4px solid #0d5c0d;
+}
+.title-text {
+    font-size: 32px;
+    color: #0d5c0d;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+.meeting-time {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    display: inline-block;
+    margin-top: 10px;
+}
+.time-label {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 8px;
+}
+.time-value {
+    font-size: 28px;
+    color: #0d5c0d;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.form-section {
+    padding: 40px 30px;
+}
+.form-grid {
+    display: grid;
+    gap: 25px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.form-group {
+    position: relative;
+}
+.form-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #0d5c0d;
+    font-size: 18px;
+    position: relative;
+    padding-right: 25px;
+}
+.form-label::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    color: #2d8f2d;
+    font-size: 20px;
+}
+.form-input {
+    width: 100%;
+    padding: 18px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background: #fafafa;
+}
+.form-input:focus {
+    outline: none;
+    border-color: #2d8f2d;
+    box-shadow: 0 0 20px rgba(45, 143, 45, 0.15);
+    background: white;
+    transform: translateY(-2px);
+}
+.form-help {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #0d5c0d;
+}
+.loading-message {
+    text-align: center;
+    color: #0d5c0d;
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #f0fff0;
+    border-radius: 10px;
+    border: 1px solid #d4edda;
+}
+.select-wrapper {
+    position: relative;
+}
+.select-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #0d5c0d;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+.form-select:focus + .select-wrapper::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+.form-select {
+    width: 100%;
+    padding: 18px 50px 18px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    background: #fafafa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%230d5c0d"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    background-size: 20px;
+    color: #333;
+}
+.form-select:focus {
+    outline: none;
+    border-color: #2d8f2d;
+    box-shadow: 0 0 20px rgba(45, 143, 45, 0.15);
+    background-color: white;
+    transform: translateY(-2px);
+}
+.form-select option {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #333;
+    background: white;
+}
+.form-select option:disabled {
+    color: #dc3545;
+    background: #f8d7da;
+    font-weight: bold;
+}
+.form-select option:not(:disabled):hover {
+    background: #f0fff0;
+    color: #0d5c0d;
+}
+.submit-section {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+.submit-btn {
+    background: linear-gradient(135deg, #2d8f2d, #0d5c0d);
+    color: white;
+    padding: 20px 50px;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(45, 143, 45, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.submit-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s ease;
+}
+.submit-btn:hover::before {
+    width: 400px;
+    height: 400px;
+}
+.submit-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(45, 143, 45, 0.4);
+}
+.submit-btn:active {
+    transform: translateY(-2px);
+}
+.success-message {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: 2px solid #28a745;
+    color: #155724;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    display: none;
+    position: relative;
+    overflow: hidden;
+}
+.success-message::before {
+    content: "✓";
+    font-size: 40px;
+    display: block;
+    margin-bottom: 15px;
+}
+.error-message {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    border: 2px solid #dc3545;
+    color: #721c24;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    display: none;
+    position: relative;
+}
+.error-message::before {
+    content: 'X';
+    font-size: 40px;
+    display: block;
+    margin-bottom: 15px;
+}
+.footer {
+    background: #0d5c0d;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+.day-option {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.day-option:hover {
+    border-color: #2d8f2d;
+    background: linear-gradient(135deg, #f0fff0, #f8f9fa);
+}
+.day-name {
+    font-weight: 600;
+    color: #0d5c0d;
+}
+.day-date {
+    color: #666;
+    font-size: 14px;
+}
+.required-note {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 30px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* تصميم قسم الاعتذار */
+.excuse-section {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border: 2px solid #ffc107;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.excuse-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+    transition: left 0.6s;
+}
+.excuse-section:hover::before {
+    left: 100%;
+}
+.excuse-header {
+    position: relative;
+    z-index: 1;
+}
+.excuse-main-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #856404;
+    transition: all 0.3s ease;
+}
+.excuse-main-label:hover {
+    transform: translateX(5px);
+    color: #533f03;
+}
+.excuse-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    cursor: pointer;
+    transform: scale(1.3);
+    accent-color: #ffc107;
+}
+
+.excuse-text {
+    user-select: none;
+}
+
+.excuse-details {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed #ffc107;
+    animation: slideDown 0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.excuse-textarea {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ffc107;
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+.excuse-textarea:focus {
+    border-color: #e0a800;
+    background: white;
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+}
+
+.excuse-textarea::placeholder {
+    color: #856404;
+    font-style: italic;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 15px;
+    }
+
+    .header {
+        padding: 30px 20px;
+    }
+
+    .country {
+        font-size: 20px;
+    }
+
+    .ministry {
+        font-size: 17px;
+    }
+
+    .school-name {
+        font-size: 18px;
+    }
+
+    .title-text {
+        font-size: 26px;
+    }
+
+    .form-section {
+        padding: 30px 20px;
+    }
+
+    .time-value {
+        font-size: 24px;
+    }
+
+    .submit-btn {
+        padding: 18px 40px;
+        font-size: 18px;
+    }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- الهيدر الرسمي -->
-        <div class="header">
-            <div class="coat-of-arms">🇸🇦</div>
-            <div class="official-header">
-                <div class="country">المملكة العربية السعودية</div>
-                <div class="ministry">وزارة التعليم</div>
-                <div class="education-office">مكتب تعليم العوالي</div>
-                <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
-            </div>
-        </div>
-        
-        <!-- عنوان النموذج -->
-        <div class="form-title">
-            <h1 class="title-text">نموذج دعوة حضور أولياء الأمور</h1>
-            <div class="meeting-time">
-                <div class="time-label">وقت الاجتماع</div>
-                <div class="time-value">
-                    <span>🕐</span>
-                    <span>12:30 - 1:00 ظهراً</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- قسم النموذج -->
-        <div class="form-section">
-            <form id="parentForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="studentName" class="form-label">اسم الطالب</label>
-                        <input type="text" id="studentName" name="studentName" class="form-input" placeholder="أدخل الاسم الكامل للطالب">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="parentName" class="form-label">اسم ولي الأمر</label>
-                        <input type="text" id="parentName" name="parentName" class="form-input" placeholder="أدخل الاسم الكامل لولي الأمر">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phoneNumber" class="form-label">رقم الجوال</label>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="05xxxxxxxxx" pattern="[0-9]{10}" maxlength="10">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="meetingDay" class="form-label">اختر اليوم المناسب للحضور</label>
-                        <div class="select-wrapper">
-                            <select id="meetingDay" name="meetingDay" class="form-select">
-                                <option value="">-- اختر اليوم المناسب --</option>
-                                <!-- سيتم إنشاء الخيارات بواسطة JavaScript -->
-                            </select>
-                        </div>
-                        <div class="form-help">
-                            💡 <strong>تلميح:</strong> الأيام المكتملة ستظهر باللون الأحمر. عند الاعتذار لا حاجة لاختيار يوم.
-                        </div>
-                    </div>
-                    
-                    <!-- قسم الاعتذار -->
-                    <div class="excuse-section">
-                        <div class="excuse-header">
-                            <label class="excuse-main-label">
-                                <input type="checkbox" id="excuseCheckbox" class="excuse-checkbox">
-                                <span class="excuse-text">😔 أعتذر عن الحضور</span>
-                            </label>
-                        </div>
-                        
-                        <div class="excuse-details" id="excuseDetails" style="display: none;">
-                            <div class="form-group">
-                                <label for="excuseReason" class="form-label">سبب الاعتذار</label>
-                                <textarea id="excuseReason" name="excuseReason" class="form-input excuse-textarea" 
-                                         rows="4" placeholder="يرجى كتابة سبب عدم القدرة على الحضور..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="required-note">
-                    جميع الحقول مطلوبة ومميزة بالرمز ● <br>
-                    <small>عند اختيار الاعتذار، لا حاجة لاختيار يوم للحضور</small>
-                </p>
-            </form>
-        </div>
-        
-        <!-- قسم الإرسال -->
-        <div class="submit-section">
-            <button type="submit" form="parentForm" class="submit-btn" id="submitBtn">
-                تأكيد الحضور
-            </button>
-            
-            <div class="success-message" id="successMessage">
-                <strong>تم تأكيد بياناتك بنجاح!</strong><br>
-                <span id="successDetails">سيتم التواصل معك قريباً لتأكيد الموعد</span>
-            </div>
-            
-            <div class="error-message" id="errorMessage">
-                عذراً، حدث خطأ أثناء إرسال البيانات. يرجى المحاولة مرة أخرى.
-            </div>
-        </div>
-        
-        <!-- الفوتر -->
-        <div class="footer">
-            © 1447هـ - متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي
-        </div>
-    </div>
-    
-    <script>
-        // بيانات الأيام مع التحقق من الامتلاء
-        const DAYS_CAPACITY = {
-            sunday: { name: 'الأحد', date: '15/3/1447هـ', max: 80 },
-            monday: { name: 'الاثنين', date: '16/3/1447هـ', max: 80 },
-            tuesday: { name: 'الثلاثاء', date: '17/3/1447هـ', max: 80 },
-            wednesday: { name: 'الأربعاء', date: '18/3/1447هـ', max: 80 },
-            thursday: { name: 'الخميس', date: '19/3/1447هـ', max: 80 }
+<div class="container">
+<div class="header">
+<div class="coat-of-arms">🇸🇦</div>
+<div class="official-header">
+<div class="country">المملكة العربية السعودية</div>
+<div class="ministry">وزارة التعليم</div>
+<div class="education-office">مكتب تعليم العوالي</div>
+<div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
+</div>
+</div>
+
+<div class="form-title">
+<h1 class="title-text">نموذج دعوة حضور أولياء الأمور</h1>
+<div class="meeting-time">
+<div class="time-label">وقت الاجتماع</div>
+<div class="time-value">
+<span>12:30 - 1:00</span>
+<span>ظهرًا</span>
+</div>
+</div>
+</div>
+
+<div class="form-section">
+<form id="parentForm">
+<div class="form-grid">
+<div class="form-group">
+<label for="studentName" class="form-label">اسم الطالب</label>
+<input type="text" id="studentName" name="studentName" class="form-input" placeholder="أدخل الاسم الكامل للطالب" required>
+</div>
+
+<div class="form-group">
+<label for="parentName" class="form-label">اسم ولي الأمر</label>
+<input type="text" id="parentName" name="parentName" class="form-input" placeholder="أدخل الاسم الكامل لولي الأمر" required>
+</div>
+
+<div class="form-group">
+<label for="phoneNumber" class="form-label">رقم الجوال</label>
+<input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="05xxxxxxxxx" pattern="[0-9]{10}" maxlength="10" required>
+</div>
+
+<div class="form-group">
+<label for="meetingDay" class="form-label">اختر اليوم المناسب للحضور</label>
+<div class="select-wrapper">
+<select id="meetingDay" name="meetingDay" class="form-select" required>
+<option value="">-- اختر اليوم المناسب --</option>
+</select>
+</div>
+
+<div class="form-help">
+<strong>تلميح:</strong> الأيام المكتملة ستظهر باللون الأحمر. عند الاعتذار لا حاجة لاختيار يوم.
+</div>
+</div>
+
+<div class="excuse-section">
+<div class="excuse-header">
+<label class="excuse-main-label">
+<input type="checkbox" id="excuseCheckbox" class="excuse-checkbox">
+<span class="excuse-text">أعتذر عن الحضور</span>
+</label>
+</div>
+
+<div class="excuse-details" id="excuseDetails" style="display: none;">
+<div class="form-group">
+<label for="excuseReason" class="form-label">سبب الاعتذار</label>
+<textarea id="excuseReason" name="excuseReason" class="form-input excuse-textarea" rows="4" placeholder="يرجى كتابة سبب عدم القدرة على الحضور..."></textarea>
+</div>
+</div>
+</div>
+</div>
+
+<p class="required-note">
+جميع الحقول المطلوبة ومميزة بالرمز <br>
+<small>عند اختيار الاعتذار، لا حاجة لاختيار يوم للحضور</small>
+</p>
+</form>
+</div>
+
+<div class="submit-section">
+<button type="submit" form="parentForm" class="submit-btn" id="submitBtn">
+تأكيد الحضور
+</button>
+
+<div class="success-message" id="successMessage">
+<strong>تم تأكيد بياناتك بنجاح!</strong><br>
+<span id="successDetails">سيتم التواصل معك قريباً لتأكيد الموعد النهائي.</span>
+</div>
+
+<div class="error-message" id="errorMessage">
+عذراً، حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.
+</div>
+</div>
+
+<div class="footer">
+© 1447هـ - متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي
+</div>
+</div>
+
+<script>
+// بيانات الأيام مع التحقق من الامتلاء 
+const DAYS_CAPACITY = {
+    sunday: { name: 'الأحد', date: '15/3/1447هـ', max: 80 },
+    monday: { name: 'الاثنين', date: '16/3/1447هـ', max: 80 },
+    tuesday: { name: 'الثلاثاء', date: '17/3/1447هـ', max: 80 },
+    wednesday: { name: 'الأربعاء', date: '18/3/1447هـ', max: 80 },
+    thursday: { name: 'الخميس', date: '19/3/1447هـ', max: 80 }
+};
+
+// استرجاع بيانات الحجوزات من التخزين المحلي 
+let bookingsData = JSON.parse(localStorage.getItem('parentMeetingBookings') || '{}');
+
+// التحقق من عدد الحجوزات لكل يوم وتعطيل الأيام المكتملة 
+function updateDayOptions() {
+    const selectElement = document.getElementById('meetingDay');
+
+    // إظهار رسالة تحميل 
+    selectElement.innerHTML = '<option value="">جاري تحديث الأيام المتاحة...</option>';
+    selectElement.disabled = true;
+
+    // محاكاة التحديث (في الحالة الحقيقية قد نحتاج لجلب البيانات من الخادم)
+    setTimeout(() => {
+        // إعادة إنشاء الخيارات 
+        selectElement.innerHTML = '<option value="">-- اختر اليوم المناسب --</option>';
+
+        // إضافة خيارات الأيام 
+        const dayOptions = [
+            { value: 'sunday', text: 'الأحد - 15/3/1447هـ' },
+            { value: 'monday', text: 'الاثنين - 16/3/1447هـ' },
+            { value: 'tuesday', text: 'الثلاثاء - 17/3/1447هـ' },
+            { value: 'wednesday', text: 'الأربعاء - 18/3/1447هـ' },
+            { value: 'thursday', text: 'الخميس - 19/3/1447هـ' }
+        ];
+
+        dayOptions.forEach(dayOption => {
+            const option = document.createElement('option');
+            option.value = dayOption.value;
+
+            if (DAYS_CAPACITY[dayOption.value]) {
+                const bookedCount = getBookedCount(dayOption.value);
+                const available = DAYS_CAPACITY[dayOption.value].max - bookedCount;
+
+                if (available <= 0) {
+                    option.disabled = true;
+                    option.textContent = dayOption.text + ' (مكتمل)';
+                    option.style.color = '#dc3545';
+                    option.style.background = '#f8d7da';
+                } else if (available <= 10) {
+                    option.textContent = dayOption.text + ` (متبقي: ${available} مقاعد فقط)`;
+                    option.style.color = '#856404';
+                    option.style.background = '#fff3cd';
+                } else {
+                    option.textContent = dayOption.text + ` (متاح: ${available} مقعد)`;
+                    option.disabled = false;
+                }
+            } else {
+                option.textContent = dayOption.text;
+            }
+
+            selectElement.appendChild(option);
+        });
+
+        // تفعيل القائمة مرة أخرى 
+        selectElement.disabled = false;
+    }, 500);
+}
+
+// حساب عدد الحجوزات لكل يوم 
+function getBookedCount(day) {
+    return bookingsData[day] ? bookingsData[day].length : 0;
+}
+
+// التحقق من صحة رقم الجوال السعودي 
+function isValidSaudiPhone(phone) {
+    return /^05[0-9]{8}$/.test(phone);
+}
+
+// التحقق من عدم تكرار حجز نفس الطالب 
+function isStudentAlreadyBooked(studentName) {
+    // التحقق من الحجوزات العادية 
+    for (const day in bookingsData) {
+        if (day !== 'excuses' && Array.isArray(bookingsData[day]) && bookingsData[day].some(booking => booking.studentName.toLowerCase() === studentName.toLowerCase())) {
+            return true;
+        }
+    }
+
+    // التحقق من الاعتذارات 
+    if (bookingsData.excuses && Array.isArray(bookingsData.excuses) && bookingsData.excuses.some(excuse => excuse.studentName.toLowerCase() === studentName.toLowerCase())) {
+        return true;
+    }
+
+    return false;
+}
+
+// حفظ بيانات الحجز 
+function saveBooking(bookingData) {
+    const day = bookingData.selectedDay;
+    if (!bookingsData[day]) {
+        bookingsData[day] = [];
+    }
+    bookingsData[day].push(bookingData);
+    localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
+}
+
+// دالة إعادة تعيين النموذج
+function resetForm() {
+    setTimeout(() => {
+        console.log('إعادة تعيين النموذج');
+
+        // إعادة تعيين الحقول 
+        document.getElementById('parentForm').reset();
+        document.getElementById('excuseDetails').style.display = 'none';
+        document.getElementById('excuseCheckbox').checked = false;
+
+        // إعادة تفعيل قائمة الأيام 
+        const meetingDaySelect = document.getElementById('meetingDay');
+        meetingDaySelect.disabled = false;
+        meetingDaySelect.style.opacity = '1';
+
+        // تحديث قائمة الأيام 
+        updateDayOptions();
+
+        // إعادة تعيين الزر 
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.textContent = 'تأكيد الحضور';
+        submitBtn.style.background = 'linear-gradient(135deg, #2d8f2d, #0d5c0d)';
+        submitBtn.style.color = 'white';
+
+        console.log('تم إعادة تعيين النموذج بنجاح');
+    }, 2000);
+}
+
+function saveExcuse(excuseData) {
+    console.log('بدء حفظ الاعتذار:', excuseData);
+
+    // التأكد من وجود مصفوفة الاعتذارات 
+    if (!bookingsData.excuses) {
+        bookingsData.excuses = [];
+        console.log('إنشاء مصفوفة اعتذارات جديدة');
+    }
+
+    // إضافة الاعتذار 
+    bookingsData.excuses.push(excuseData);
+
+    // حفظ البيانات في localStorage 
+    localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
+
+    console.log('تم حفظ الاعتذار بنجاح. العدد الكلي للاعتذارات:', bookingsData.excuses.length);
+    console.log('البيانات المحفوظة:', JSON.parse(localStorage.getItem('parentMeetingBookings')));
+}
+
+// عرض رسالة النجاح
+function showSuccess(isExcuse) {
+    const successMsg = document.getElementById('successMessage');
+    const successDetails = document.getElementById('successDetails');
+    const errorMsg = document.getElementById('errorMessage');
+
+    errorMsg.style.display = 'none';
+    if (isExcuse) {
+        successMsg.querySelector('strong').textContent = 'تم تسجيل اعتذارك بنجاح';
+        successDetails.textContent = 'نقدر تواصلك معنا بعدم قدرتك على الحضور. نتمى لك دوام العافية.';
+        successMsg.style.background = 'linear-gradient(135deg, #fff3cd, #ffeaa7)';
+        successMsg.style.borderColor = '#ffc107';
+    } else {
+        successMsg.querySelector('strong').textContent = 'تم تأكيد حضورك بنجاح!';
+        successDetails.textContent = 'سيتم التواصل معك قريباً لتأكيد الموعد النهائي. نتطلع لرؤيتك في الاجتماع.';
+        successMsg.style.background = 'linear-gradient(135deg, #d4edda, #c3e6cb)';
+        successMsg.style.borderColor = '#28a745';
+    }
+
+    successMsg.style.display = 'block';
+    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+
+    // إخفاء الرسالة بعد 7 ثوانٍ
+    setTimeout(() => {
+        successMsg.style.display = 'none';
+    }, 7000);
+}
+
+// عرض رسالة الخطأ 
+function showError(message) {
+    const errorMsg = document.getElementById('errorMessage');
+    const successMsg = document.getElementById('successMessage');
+    successMsg.style.display = 'none';
+    errorMsg.innerHTML = `<br><strong>خطأ:</strong> ${message}`;
+    errorMsg.style.display = 'block';
+    errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+        errorMsg.style.display = 'none';
+    }, 5000);
+}
+
+// معالجة خانة الاعتذار 
+document.getElementById('excuseCheckbox').addEventListener('change', function() {
+    const excuseDetails = document.getElementById('excuseDetails');
+    const meetingDaySelect = document.getElementById('meetingDay');
+    const excuseReasonTextarea = document.getElementById('excuseReason');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (this.checked) {
+        // إظهار قسم الاعتذار 
+        excuseDetails.style.display = 'block';
+        excuseDetails.style.animation = 'slideDown 0.4s ease';
+
+        // إلغاء اختيار اليوم وجعله غير مطلوب
+        meetingDaySelect.value = '';
+        meetingDaySelect.disabled = true;
+        meetingDaySelect.style.opacity = '0.5';
+        meetingDaySelect.removeAttribute('required');
+
+        // إضافة رسالة في القائمة 
+        meetingDaySelect.innerHTML = '<option value="">-- لا حاجة لاختيار يوم (معتذر) --</option>';
+
+        // تغيير نص الزر
+        submitBtn.textContent = 'تسجيل الاعتذار';
+        submitBtn.style.background = 'linear-gradient(135deg, #ffc107, #e0a800)';
+        submitBtn.style.color = '#000';
+
+        // جعل حقل السبب مطلوب
+        excuseReasonTextarea.setAttribute('required', 'required');
+    } else {
+        // إخفاء قسم الاعتذار 
+        excuseDetails.style.animation = 'slideUp 0.4s ease';
+        setTimeout(() => {
+            excuseDetails.style.display = 'none';
+        }, 400);
+
+        // تفعيل اختيار اليوم 
+        meetingDaySelect.disabled = false;
+        meetingDaySelect.style.opacity = '1';
+        meetingDaySelect.setAttribute('required', 'required');
+
+        // تحديث قائمة الأيام 
+        updateDayOptions();
+
+        // إعادة تعيين نص الزر 
+        submitBtn.textContent = 'تأكيد الحضور';
+        submitBtn.style.background = 'linear-gradient(135deg, #2d8f2d, #0d5c0d)';
+        submitBtn.style.color = 'white';
+
+        // إلغاء وجوب حقل السبب
+        excuseReasonTextarea.removeAttribute('required');
+        excuseReasonTextarea.value = '';
+    }
+});
+
+document.getElementById('parentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const studentName = document.getElementById('studentName').value.trim();
+    const parentName = document.getElementById('parentName').value.trim();
+    const phoneNumber = document.getElementById('phoneNumber').value.trim();
+    const excuseCheckbox = document.getElementById('excuseCheckbox');
+    const excuseReason = document.getElementById('excuseReason').value.trim();
+    const meetingDay = document.getElementById('meetingDay').value;
+
+    // التحقق من البيانات 
+    if (!studentName || !parentName || !phoneNumber) {
+        showError('يرجى ملء جميع الحقول المطلوبة.');
+        return;
+    }
+
+    if (!isValidSaudiPhone(phoneNumber)) {
+        showError('يرجى إدخال رقم جوال سعودي صحيح (يبدأ بـ 05 ويتكون من 10 أرقام).');
+        return;
+    }
+
+    if (isStudentAlreadyBooked(studentName)) {
+        showError('هذا الطالب مسجل مسبقًا في الاجتماع.');
+        return;
+    }
+
+    if (excuseCheckbox.checked) {
+        // حالة الاعتذار
+        if (!excuseReason) {
+            showError('يرجى كتابة سبب الاعتذار.');
+            return;
+        }
+
+        const excuseData = {
+            studentName,
+            parentName,
+            phoneNumber,
+            reason: excuseReason,
+            timestamp: new Date().toLocaleString('ar-SA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }),
         };
-        
-        // استرجاع بيانات الحجوزات من التخزين المحلي
-        let bookingsData = JSON.parse(localStorage.getItem('parentMeetingBookings') || '{}');
-        
-        // التحقق من عدد الحجوزات لكل يوم وتعطيل الأيام المكتملة
-        function updateDayOptions() {
-            const selectElement = document.getElementById('meetingDay');
-            
-            // إظهار رسالة تحميل
-            selectElement.innerHTML = '<option value="">🔄 جاري تحديث الأيام المتاحة...</option>';
-            selectElement.disabled = true;
-            
-            // محاكاة التحديث (في الحالة الحقيقية قد نحتاج لجلب البيانات من الخادم)
-            setTimeout(() => {
-                // إعادة إنشاء الخيارات
-                selectElement.innerHTML = '<option value="">-- اختر اليوم المناسب --</option>';
-                
-                // إضافة خيارات الأيام
-                const dayOptions = [
-                    { value: 'sunday', text: 'الأحد - 15/3/1447هـ' },
-                    { value: 'monday', text: 'الاثنين - 16/3/1447هـ' },
-                    { value: 'tuesday', text: 'الثلاثاء - 17/3/1447هـ' },
-                    { value: 'wednesday', text: 'الأربعاء - 18/3/1447هـ' },
-                    { value: 'thursday', text: 'الخميس - 19/3/1447هـ' }
-                ];
-                
-                dayOptions.forEach(dayOption => {
-                    const option = document.createElement('option');
-                    option.value = dayOption.value;
-                    
-                    if (DAYS_CAPACITY[dayOption.value]) {
-                        const bookedCount = getBookedCount(dayOption.value);
-                        const available = DAYS_CAPACITY[dayOption.value].max - bookedCount;
-                        
-                        if (available <= 0) {
-                            option.disabled = true;
-                            option.textContent = dayOption.text + ' (مكتمل ❌)';
-                            option.style.color = '#dc3545';
-                            option.style.background = '#f8d7da';
-                        } else if (available <= 10) {
-                            option.textContent = dayOption.text + ` (متبقي: ${available} مقاعد فقط ⚠️)`;
-                            option.style.color = '#856404';
-                            option.style.background = '#fff3cd';
-                        } else {
-                            option.textContent = dayOption.text + ` (متاح: ${available} مقعد ✅)`;
-                            option.disabled = false;
-                        }
-                    } else {
-                        option.textContent = dayOption.text;
-                    }
-                    
-                    selectElement.appendChild(option);
-                });
-                
-                // تفعيل القائمة مرة أخرى
-                selectElement.disabled = false;
-            }, 500);
+        saveExcuse(excuseData);
+        showSuccess(true);
+        resetForm();
+    } else {
+        // حالة الحضور
+        if (!meetingDay) {
+            showError('يرجى اختيار يوم للحضور.');
+            return;
         }
-        
-        // حساب عدد الحجوزات لكل يوم
-        function getBookedCount(day) {
-            return bookingsData[day] ? bookingsData[day].length : 0;
-        }
-        
-        // التحقق من صحة رقم الجوال السعودي
-        function isValidSaudiPhone(phone) {
-            return /^05[0-9]{8}$/.test(phone);
-        }
-        
-        // التحقق من عدم تكرار حجز نفس الطالب
-        function isStudentAlreadyBooked(studentName) {
-            // التحقق من الحجوزات العادية
-            for (const day in bookingsData) {
-                if (day !== 'excuses' && bookingsData[day].some(booking => 
-                    booking.studentName.toLowerCase() === studentName.toLowerCase())) {
-                    return true;
-                }
-            }
-            
-            // التحقق من الاعتذارات
-            if (bookingsData.excuses && bookingsData.excuses.some(excuse => 
-                excuse.studentName.toLowerCase() === studentName.toLowerCase())) {
-                return true;
-            }
-            
-            return false;
-        }
-        
-        // حفظ بيانات الحجز
-        function saveBooking(bookingData) {
-            const day = bookingData.selectedDay;
-            
-            if (!bookingsData[day]) {
-                bookingsData[day] = [];
-            }
-            
-            bookingsData[day].push(bookingData);
-            localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
-        }
-        
-        // دالة إعادة تعيين النموذج
-        function resetForm() {
-            setTimeout(() => {
-                console.log('إعادة تعيين النموذج');
-                
-                // إعادة تعيين الحقول
-                document.getElementById('parentForm').reset();
-                document.getElementById('excuseDetails').style.display = 'none';
-                document.getElementById('excuseCheckbox').checked = false;
-                
-                // إعادة تفعيل قائمة الأيام
-                const meetingDaySelect = document.getElementById('meetingDay');
-                meetingDaySelect.disabled = false;
-                meetingDaySelect.style.opacity = '1';
-                
-                // تحديث قائمة الأيام
-                updateDayOptions();
-                
-                // إعادة تعيين الزر
-                const submitBtn = document.getElementById('submitBtn');
-                submitBtn.textContent = '✅ تأكيد الحضور';
-                submitBtn.style.background = 'linear-gradient(135deg, #2d8f2d, #0d5c0d)';
-                submitBtn.style.color = 'white';
-                
-                console.log('تم إعادة تعيين النموذج بنجاح');
-            }, 2000);
-        }
-        function saveExcuse(excuseData) {
-            console.log('بدء حفظ الاعتذار:', excuseData);
-            
-            // التأكد من وجود مصفوفة الاعتذارات
-            if (!bookingsData.excuses) {
-                bookingsData.excuses = [];
-                console.log('إنشاء مصفوفة اعتذارات جديدة');
-            }
-            
-            // إضافة الاعتذار
-            bookingsData.excuses.push(excuseData);
-            
-            // حفظ البيانات في localStorage
-            localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
-            
-            console.log('تم حفظ الاعتذار بنجاح. العدد الكلي للاعتذارات:', bookingsData.excuses.length);
-            console.log('البيانات المحفوظة:', JSON.parse(localStorage.getItem('parentMeetingBookings')));
-        }
-        
-        // عرض رسالة النجاح
-        function showSuccess(isExcuse) {
-            const successMsg = document.getElementById('successMessage');
-            const successDetails = document.getElementById('successDetails');
-            const errorMsg = document.getElementById('errorMessage');
-            
-            errorMsg.style.display = 'none';
-            
-            if (isExcuse) {
-                successMsg.querySelector('strong').textContent = '😔 تم تسجيل اعتذارك بنجاح';
-                successDetails.textContent = 'شكراً لإعلامنا بعدم قدرتك على الحضور. نتفهم ظروفك ونقدر تواصلك معنا.';
-                successMsg.style.background = 'linear-gradient(135deg, #fff3cd, #ffeaa7)';
-                successMsg.style.borderColor = '#ffc107';
-            } else {
-                successMsg.querySelector('strong').textContent = '🎉 تم تأكيد حضورك بنجاح!';
-                successDetails.textContent = 'سيتم التواصل معك قريباً لتأكيد الموعد النهائي. نتطلع لرؤيتك في الاجتماع.';
-                successMsg.style.background = 'linear-gradient(135deg, #d4edda, #c3e6cb)';
-                successMsg.style.borderColor = '#28a745';
-            }
-            
-            successMsg.style.display = 'block';
-            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // إخفاء الرسالة بعد 7 ثوانٍ
-            setTimeout(() => {
-                successMsg.style.display = 'none';
-            }, 7000);
-        }
-        
-        // عرض رسالة الخطأ
-        function showError(message) {
-            const errorMsg = document.getElementById('errorMessage');
-            const successMsg = document.getElementById('successMessage');
-            
-            successMsg.style.display = 'none';
-            errorMsg.innerHTML = `❌<br><strong>خطأ:</strong> ${message}`;
-            errorMsg.style.display = 'block';
-            errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            setTimeout(() => {
-                errorMsg.style.display = 'none';
-            }, 5000);
-        }
-        
-        // معالجة خانة الاعتذار
-        document.getElementById('excuseCheckbox').addEventListener('change', function() {
-            const excuseDetails = document.getElementById('excuseDetails');
-            const meetingDaySelect = document.getElementById('meetingDay');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            if (this.checked) {
-                // إظهار قسم الاعتذار
-                excuseDetails.style.display = 'block';
-                excuseDetails.style.animation = 'slideDown 0.4s ease';
-                
-                // إلغاء اختيار اليوم وجعله غير مطلوب
-                meetingDaySelect.value = '';
-                meetingDaySelect.disabled = true;
-                meetingDaySelect.style.opacity = '0.5';
-                meetingDaySelect.removeAttribute('required');
-                
-                // إضافة رسالة في القائمة
-                meetingDaySelect.innerHTML = '<option value="">-- لا حاجة لاختيار يوم (معتذر) --</option>';
-                
-                // تغيير نص الزر
-                submitBtn.textContent = '📝 تسجيل الاعتذار';
-                submitBtn.style.background = 'linear-gradient(135deg, #ffc107, #e0a800)';
-                submitBtn.style.color = '#000';
-                
-                // جعل حقل السبب مطلوباً
-                document.getElementById('excuseReason').setAttribute('required', 'required');
-            } else {
-                // إخفاء قسم الاعتذار
-                excuseDetails.style.animation = 'slideUp 0.4s ease';
-                setTimeout(() => {
-                    excuseDetails.style.display = 'none';
-                }, 400);
-                
-                // تفعيل اختيار اليوم
-                meetingDaySelect.disabled = false;
-                meetingDaySelect.style.opacity = '1';
-                meetingDaySelect.setAttribute('required', 'required');
-                
-                // تحديث قائمة الأيام
-                updateDayOptions();
-                
-                // إعادة تعيين نص الزر
-                submitBtn.textContent = '✅ تأكيد الحضور';
-                submitBtn.style.background = 'linear-gradient(135deg, #2d8f2d, #0d5c0d)';
-                submitBtn.style.color = 'white';
-                
-                // إلغاء وجوب حقل السبب
-                document.getElementById('excuseReason').removeAttribute('required');
-                document.getElementById('excuseReason').value = '';
-            }
-        });
-        document.getElementById('parentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const studentName = document.getElementById('studentName').value.trim();
-            const parentName = document.getElementById('parentName').value.trim();
-            const phoneNumber = document.getElementById('phoneNumber').value.trim();
-            const meetingDay = document.getElementById('meetingDay').value;
-            
-            // التحقق من البيانات
-            if (!studentName || !parentName || !phoneNumber || !meetingDay) {
-                showError('يرجى ملء جميع الحقول المطلوبة');
-                return;
-            }
-            
-            if (!isValidSaudiPhone(phoneNumber)) {
-                showError('يرجى إدخال رقم جوال سعودي صحيح (يبدأ بـ 05 ويتكون من 10 أرقام)');
-                return;
-            }
-            
-            // التحقق من عدم تكرار الطالب
-            if (isStudentAlreadyBooked(studentName)) {
-                showError('هذا الطالب مسجل مسبقاً في الاجتماع');
-                return;
-            }
-            
-            // التحقق من توفر مقاعد في اليوم المختار
-            const bookedCount = getBookedCount(meetingDay);
-            if (bookedCount >= DAYS_CAPACITY[meetingDay].max) {
-                showError(`عذراً، اليوم المختار مكتمل. يرجى اختيار يوم آخر`);
-                updateDayOptions();
-                return;
-            }
-            
-            // إنشاء بيانات الحجز
-            const bookingData = {
-                studentName,
-                parentName,
-                phoneNumber,
-                selectedDay: meetingDay,
-                selectedDayName: DAYS_CAPACITY[meetingDay].name + ' - ' + DAYS_CAPACITY[meetingDay].date,
-                timestamp: new Date().toLocaleString('ar-SA', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                }),
-                id: Date.now() // معرف فريد للحجز
-            };
-            
-            // حفظ البيانات
-            saveBooking(bookingData);
-            
-            // عرض رسالة النجاح
-            showSuccess();
-            
-            // تحديث خيارات الأيام
+
+        const bookedCount = getBookedCount(meetingDay);
+        if (bookedCount >= DAYS_CAPACITY[meetingDay].max) {
+            showError('عذرًا، اليوم المختار مكتمل. يرجى اختيار يوم آخر.');
             updateDayOptions();
-            
-            // إعادة تعيين النموذج
-            document.getElementById('parentForm').reset();
-        });
-        
-        // تحديد رقم الجوال ليبدأ بـ 05 تلقائياً
-        document.getElementById('phoneNumber').addEventListener('input', function() {
-            let value = this.value.replace(/\D/g, ''); // إزالة كل شيء غير الأرقام
-            
-            if (value.length > 0 && !value.startsWith('05')) {
-                if (value.startsWith('5')) {
-                    value = '0' + value;
-                } else if (!value.startsWith('0')) {
-                    value = '05' + value;
-                }
-            }
-            
-            this.value = value.substring(0, 10); // الحد الأقصى 10 أرقام
-        });
-        
-        // تشغيل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            // تحديث خيارات الأيام عند تحميل الصفحة
-            updateDayOptions();
-            
-            // إضافة تأثيرات بصرية للنموذج
-            const inputs = document.querySelectorAll('.form-input, .form-select');
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.style.transform = 'scale(1.02)';
-                });
-                
-                input.addEventListener('blur', function() {
-                    this.parentElement.style.transform = 'scale(1)';
-                });
-            });
-            
-            // تحميل المسودة المحفوظة
-            loadDraft();
-        });
-        
-        // حفظ مسودة أثناء الكتابة
-        let draftTimer;
-        document.querySelectorAll('.form-input, .form-select, .excuse-checkbox, .excuse-textarea').forEach(input => {
-            input.addEventListener('input', function() {
-                clearTimeout(draftTimer);
-                draftTimer = setTimeout(saveDraft, 1000);
-            });
-        });
-        
-        function saveDraft() {
-            const draft = {
-                studentName: document.getElementById('studentName').value,
-                parentName: document.getElementById('parentName').value,
-                phoneNumber: document.getElementById('phoneNumber').value,
-                meetingDay: document.getElementById('meetingDay').value,
-                isExcuse: document.getElementById('excuseCheckbox').checked,
-                excuseReason: document.getElementById('excuseReason').value,
-                timestamp: Date.now()
-            };
-            localStorage.setItem('parentFormDraft', JSON.stringify(draft));
+            return;
         }
-        
-        function loadDraft() {
-            const draft = JSON.parse(localStorage.getItem('parentFormDraft') || '{}');
-            if (draft.timestamp && (Date.now() - draft.timestamp) < 24 * 60 * 60 * 1000) {
-                if (draft.studentName) document.getElementById('studentName').value = draft.studentName;
-                if (draft.parentName) document.getElementById('parentName').value = draft.parentName;
-                if (draft.phoneNumber) document.getElementById('phoneNumber').value = draft.phoneNumber;
-                if (draft.meetingDay && !draft.isExcuse) document.getElementById('meetingDay').value = draft.meetingDay;
-                if (draft.excuseReason) document.getElementById('excuseReason').value = draft.excuseReason;
-                
-                // استعادة حالة الاعتذار
-                if (draft.isExcuse) {
-                    document.getElementById('excuseCheckbox').checked = true;
-                    document.getElementById('excuseCheckbox').dispatchEvent(new Event('change'));
-                }
-            }
+
+        const bookingData = {
+            studentName,
+            parentName,
+            phoneNumber,
+            selectedDay: meetingDay,
+            selectedDayName: DAYS_CAPACITY[meetingDay].name + ' - ' + DAYS_CAPACITY[meetingDay].date,
+            timestamp: new Date().toLocaleString('ar-SA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }),
+        };
+        saveBooking(bookingData);
+        showSuccess(false);
+        resetForm();
+    }
+});
+
+
+// تحديد رقم الجوال ليبدأ بـ 05 تلقائيًا
+document.getElementById('phoneNumber').addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, ''); // إزالة كل شيء غير الأرقام
+
+    if (value.length > 0 && !value.startsWith('05')) {
+        if (value.startsWith('5')) {
+            value = '0' + value;
+        } else if (!value.startsWith('0')) {
+            value = '05' + value;
         }
-        
-        // تحميل المسودة عند بدء الصفحة
-        window.addEventListener('load', loadDraft);
-        
-        // حذف المسودة عند الإرسال الناجح
-        document.getElementById('parentForm').addEventListener('submit', function() {
-            localStorage.removeItem('parentFormDraft');
+    }
+
+    this.value = value.substring(0, 10); // الحد الأقصى 10 أرقام
+});
+
+// تشغيل الصفحة 
+document.addEventListener('DOMContentLoaded', function() {
+    // تحديث خيارات الأيام عند تحميل الصفحة 
+    updateDayOptions();
+
+    // إضافة تأثيرات بصرية للنموذج 
+    const inputs = document.querySelectorAll('.form-input, .form-select');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
         });
-    </script>
+
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    });
+
+    // تحميل المسودة المحفوظة 
+    loadDraft();
+});
+
+// حفظ مسودة أثناء الكتابة 
+let draftTimer;
+document.querySelectorAll('.form-input, .form-select, .excuse-checkbox, .excuse-textarea').forEach(input => {
+    input.addEventListener('input', function() {
+        clearTimeout(draftTimer);
+        draftTimer = setTimeout(saveDraft, 1000);
+    });
+});
+
+function saveDraft() {
+    const draft = {
+        studentName: document.getElementById('studentName').value,
+        parentName: document.getElementById('parentName').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        meetingDay: document.getElementById('meetingDay').value,
+        isExcuse: document.getElementById('excuseCheckbox').checked,
+        excuseReason: document.getElementById('excuseReason').value,
+        timestamp: Date.now()
+    };
+    localStorage.setItem('parentFormDraft', JSON.stringify(draft));
+}
+
+function loadDraft() {
+    const draft = JSON.parse(localStorage.getItem('parentFormDraft') || '{}');
+    if (draft.timestamp && (Date.now() - draft.timestamp) < 24 * 60 * 60 * 1000) {
+        if (draft.studentName) document.getElementById('studentName').value = draft.studentName;
+        if (draft.parentName) document.getElementById('parentName').value = draft.parentName;
+        if (draft.phoneNumber) document.getElementById('phoneNumber').value = draft.phoneNumber;
+        if (draft.meetingDay && !draft.isExcuse) document.getElementById('meetingDay').value = draft.meetingDay;
+        if (draft.excuseReason) document.getElementById('excuseReason').value = draft.excuseReason;
+
+        // استعادة حالة الاعتذار 
+        if (draft.isExcuse) {
+            document.getElementById('excuseCheckbox').checked = true;
+            document.getElementById('excuseCheckbox').dispatchEvent(new Event('change'));
+        }
+    }
+}
+
+// تحميل المسودة عند بدء الصفحة 
+window.addEventListener('load', loadDraft);
+// حذف المسودة عند الإرسال الناجح 
+document.getElementById('parentForm').addEventListener('submit', function() {
+    localStorage.removeItem('parentFormDraft');
+});
+</script>
 </body>
 </html>
