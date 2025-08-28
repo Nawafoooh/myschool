@@ -1,4 +1,104 @@
-<!-- Statistics Cards -->
+<div class="dashboard-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="admin-info">
+                <h1 class="admin-title">🎯 لوحة إدارة اجتماع أولياء الأمور</h1>
+                <p class="admin-subtitle">متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي</p>
+                <div class="admin-name">👨‍💼 مدير المدرسة: خالد سعود المطيري</div>
+                <div class="current-date" id="currentDate">📅 اليوم: الخميس 28 أغسطس 2025</div>
+            </div>
+        </div>
+        
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card bookings">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalBookings">0</div>
+                <div class="stat-label">إجمالي الحجوزات</div>
+                <div class="stat-description">عدد أولياء الأمور المسجلين للحضور</div>
+            </div>
+            
+            <div class="stat-card excuses">
+                <div class="stat-icon">😔</div>
+                <div class="stat-number" id="totalExcuses">0</div>
+                <div class="stat-label">إجمالي الاعتذارات</div>
+                <div class="stat-description">عدد أولياء الأمور المعتذرين</div>
+            </div>
+            
+            <div class="stat-card available">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number" id="availableSlots">400</div>
+                <div class="stat-label">المقاعد المتاحة</div>
+                <div class="stat-description">المقاعد المتبقية للحجز</div>
+            </div>
+            
+            <div class="stat-card occupancy">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number" id="occupancyRate">0%</div>
+                <div class="stat-label">نسبة الإشغال</div>
+                <div class="stat-description">نسبة المقاعد المحجوزة</div>
+            </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <h3 class="quick-stats-title">📈 إحصائيات سريعة</h3>
+            <div class="quick-stats-grid">
+                <div class="quick-stat-item">
+                    <div class="quick-stat-number" id="busyDays">0</div>
+                    <div class="quick-stat-label">أيام مشغولة</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-number" id="fullDays">0</div>
+                    <div class="quick-stat-label">أيام مكتملة</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-number" id="avgPerDay">0</div>
+                    <div class="quick-stat-label">متوسط يومي</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-number" id="responseRate">0%</div>
+                    <div class="quick-stat-label">معدل الاستجابة</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Grid -->
+        <div class="main-content">
+            <!-- Days Overview -->
+            <div class="days-overview">
+                <h2 class="overview-title">📅 نظرة عامة على الأيام</h2>
+                <div class="days-grid" id="daysGrid">
+                    <!-- سيتم إنشاؤها ديناميكياً بواسطة JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Control Panel -->
+            <div class="controls-panel">
+                <h3 class="controls-title">🛠️ أدوات الإدارة</h3>
+                <button class="control-btn btn-primary" onclick="showDetailedReport()">
+                    📋 تقرير مفصل
+                </button>
+                <button class="control-btn btn-secondary" onclick="exportToExcel()">
+                    📤 تصدير Excel
+                </button>
+                <button class="control-btn btn-warning" onclick="printReport()">
+                    🖨️ طباعة
+                </button>
+                <button class="control-btn btn-danger" onclick="resetAllData()">
+                    🗑️ إعادة تعيين
+                </button>
+                
+                <div class="quick-stats" style="margin-top: 25px; padding: 20px; box-shadow: none; border: 2px solid #f0f0f0;">
+                    <h4 style="font-size: 16px; margin-bottom: 15px; color: #0d5c0d;">⚡ تحديث مباشر</h4>
+                    <div style="font-size: 14px; color: #666; text-align: center;">
+                        <div>آخر تحديث:</div>
+                        <div id="lastUpdate" style="color: #0d5c0d; font-weight: 600;">الآن</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        <!-- Statistics Cards -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">👥</div>
@@ -36,27 +136,28 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0d5c0d, #1a7a1a, #2d8f2d);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             min-height: 100vh;
             color: #333;
             line-height: 1.6;
         }
         
         .dashboard-container {
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         .header {
             background: linear-gradient(135deg, #0d5c0d, #1a7a1a);
             color: white;
-            padding: 30px;
-            border-radius: 20px 20px 0 0;
+            padding: 40px 30px;
+            border-radius: 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
         }
         
         .header::before {
@@ -66,49 +167,58 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="7.5" cy="7.5" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+        
+        .admin-info {
+            position: relative;
+            z-index: 1;
         }
         
         .admin-title {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .admin-subtitle {
             font-size: 18px;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
+            opacity: 0.95;
+            margin-bottom: 10px;
         }
         
-        .admin-info {
+        .admin-name {
             font-size: 20px;
             margin-top: 15px;
             padding-top: 15px;
             border-top: 2px solid rgba(255,255,255,0.3);
-            position: relative;
-            z-index: 1;
+            font-weight: 600;
+        }
+        
+        .current-date {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-top: 10px;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
         
         .stat-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
             text-align: center;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
         }
         
         .stat-card::before {
@@ -117,9 +227,9 @@
             top: 0;
             left: -100%;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(45, 143, 45, 0.05), transparent);
-            transition: left 0.6s;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--card-color), transparent);
+            transition: left 0.6s ease;
         }
         
         .stat-card:hover::before {
@@ -127,72 +237,107 @@
         }
         
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        
+        .stat-card.bookings {
+            --card-color: #28a745;
+        }
+        
+        .stat-card.excuses {
+            --card-color: #ffc107;
+        }
+        
+        .stat-card.available {
+            --card-color: #17a2b8;
+        }
+        
+        .stat-card.occupancy {
+            --card-color: #6f42c1;
         }
         
         .stat-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 15px;
-            background: linear-gradient(135deg, #2d8f2d, #0d5c0d);
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: var(--card-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
             color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
         
         .stat-number {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: bold;
-            color: #0d5c0d;
-            margin-bottom: 8px;
+            color: var(--card-color);
+            margin-bottom: 10px;
+            line-height: 1;
         }
         
         .stat-label {
             font-size: 16px;
             color: #666;
             font-weight: 500;
+            margin-bottom: 5px;
         }
         
-        .controls-section {
+        .stat-description {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.4;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            align-items: start;
+        }
+        
+        .controls-panel {
             background: white;
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 20px;
         }
         
         .controls-title {
-            font-size: 24px;
+            font-size: 20px;
             color: #0d5c0d;
             font-weight: bold;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: center;
-            border-bottom: 3px solid #0d5c0d;
-            padding-bottom: 10px;
-        }
-        
-        .control-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
         }
         
         .control-btn {
-            padding: 15px 25px;
+            width: 100%;
+            padding: 15px 20px;
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 12px;
             position: relative;
             overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .control-btn:last-child {
+            margin-bottom: 0;
         }
         
         .control-btn::before {
@@ -214,143 +359,302 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #2d8f2d, #0d5c0d);
+            background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
         }
         
         .btn-secondary {
             background: linear-gradient(135deg, #17a2b8, #138496);
             color: white;
+            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
         }
         
         .btn-warning {
             background: linear-gradient(135deg, #ffc107, #e0a800);
             color: #000;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
         }
         
         .btn-danger {
             background: linear-gradient(135deg, #dc3545, #c82333);
             color: white;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
         }
         
         .control-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
         
         .days-overview {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .overview-title {
+            font-size: 24px;
+            color: #0d5c0d;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #0d5c0d;
+        }
+        
+        .days-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 30px;
         }
         
         .day-card {
-            background: white;
+            background: #f8f9fa;
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
         
-        .day-header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #0d5c0d;
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0d5c0d, #28a745);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
         
-        .day-name {
-            font-size: 22px;
+        .day-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .day-card:hover {
+            border-color: #0d5c0d;
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .day-info h3 {
+            font-size: 20px;
+            color: #0d5c0d;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .day-info .date {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .day-stats {
+            text-align: center;
+        }
+        
+        .stats-number {
+            font-size: 24px;
             font-weight: bold;
             color: #0d5c0d;
             margin-bottom: 5px;
         }
         
-        .day-date {
-            font-size: 16px;
-            color: #666;
+        .stats-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .day-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .booked-count {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2d8f2d;
-        }
-        
-        .available-count {
-            font-size: 16px;
-            color: #666;
+        .progress-section {
+            margin: 20px 0;
         }
         
         .progress-bar {
             width: 100%;
-            height: 10px;
+            height: 12px;
             background: #e9ecef;
-            border-radius: 5px;
+            border-radius: 6px;
             overflow: hidden;
-            margin: 15px 0;
+            margin-bottom: 10px;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #28a745, #20c997);
-            border-radius: 5px;
-            transition: width 0.8s ease;
+            border-radius: 6px;
+            transition: width 1s ease;
+            position: relative;
         }
         
         .progress-fill.full {
             background: linear-gradient(90deg, #dc3545, #c82333);
         }
         
-        .bookings-list {
-            max-height: 200px;
+        .progress-fill.warning {
+            background: linear-gradient(90deg, #ffc107, #e0a800);
+        }
+        
+        .progress-text {
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+        }
+        
+        .bookings-preview {
+            max-height: 150px;
             overflow-y: auto;
             border: 1px solid #e9ecef;
             border-radius: 8px;
             padding: 10px;
+            background: white;
         }
         
         .booking-item {
             padding: 8px 12px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             background: #f8f9fa;
             border-radius: 6px;
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-size: 13px;
+            border-left: 3px solid #28a745;
         }
         
         .booking-item:last-child {
             margin-bottom: 0;
         }
         
-        .student-info {
+        .student-name {
             font-weight: 600;
             color: #0d5c0d;
+            margin-bottom: 2px;
         }
         
-        .parent-info {
+        .parent-name {
             color: #666;
-            font-size: 13px;
+            font-size: 12px;
         }
         
-        .phone-info {
-            color: #17a2b8;
+        .empty-day {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 30px 20px;
+            background: white;
+            border: 2px dashed #e9ecef;
+            border-radius: 8px;
+        }
+        
+        .quick-stats {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .quick-stats-title {
+            font-size: 18px;
+            color: #0d5c0d;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .quick-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .quick-stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .quick-stat-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0d5c0d;
+            margin-bottom: 5px;
+        }
+        
+        .quick-stat-label {
             font-size: 12px;
-            direction: ltr;
+            color: #666;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-panel {
+                position: static;
+                order: -1;
+            }
+            
+            .control-btn {
+                display: inline-flex;
+                width: auto;
+                margin: 5px;
+                padding: 12px 20px;
+            }
+            
+            .controls-title {
+                margin-bottom: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 10px;
+            }
+            
+            .admin-title {
+                font-size: 24px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .stat-card {
+                padding: 20px 15px;
+            }
+            
+            .stat-number {
+                font-size: 32px;
+            }
+            
+            .stat-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         .modal {
@@ -604,11 +908,16 @@
             let totalBookings = 0;
             let totalCapacity = 0;
             let totalExcuses = 0;
+            let busyDays = 0;
+            let fullDays = 0;
             
             for (const dayKey in DAYS_DATA) {
                 const dayBookings = bookingsData[dayKey] || [];
                 totalBookings += dayBookings.length;
                 totalCapacity += DAYS_DATA[dayKey].max;
+                
+                if (dayBookings.length > 0) busyDays++;
+                if (dayBookings.length >= DAYS_DATA[dayKey].max) fullDays++;
             }
             
             // حساب الاعتذارات
@@ -616,16 +925,33 @@
             
             const availableSlots = totalCapacity - totalBookings;
             const occupancyRate = totalCapacity > 0 ? Math.round((totalBookings / totalCapacity) * 100) : 0;
+            const avgPerDay = Math.round(totalBookings / Object.keys(DAYS_DATA).length);
+            const totalResponses = totalBookings + totalExcuses;
+            const responseRate = totalResponses > 0 ? Math.round((totalResponses / (totalResponses + availableSlots)) * 100) : 0;
             
+            // تحديث البطاقات الرئيسية
             document.getElementById('totalBookings').textContent = totalBookings;
             document.getElementById('totalExcuses').textContent = totalExcuses;
             document.getElementById('availableSlots').textContent = availableSlots;
             document.getElementById('occupancyRate').textContent = occupancyRate + '%';
+            
+            // تحديث الإحصائيات السريعة
+            document.getElementById('busyDays').textContent = busyDays;
+            document.getElementById('fullDays').textContent = fullDays;
+            document.getElementById('avgPerDay').textContent = avgPerDay;
+            document.getElementById('responseRate').textContent = responseRate + '%';
+            
+            // تحديث وقت آخر تحديث
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('ar-SA', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
         }
         
         // إنشاء عرض الأيام
         function createDaysOverview() {
-            const container = document.getElementById('daysOverview');
+            const container = document.getElementById('daysGrid');
             container.innerHTML = '';
             
             for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
@@ -636,34 +962,43 @@
                 
                 const dayCard = document.createElement('div');
                 dayCard.className = 'day-card';
+                
+                let progressClass = '';
+                if (progressPercent >= 100) progressClass = 'full';
+                else if (progressPercent >= 80) progressClass = 'warning';
+                
                 dayCard.innerHTML = `
                     <div class="day-header">
-                        <div class="day-name">${dayInfo.name}</div>
-                        <div class="day-date">${dayInfo.date}</div>
+                        <div class="day-info">
+                            <h3>${dayInfo.name}</h3>
+                            <div class="date">${dayInfo.date}</div>
+                        </div>
+                        <div class="day-stats">
+                            <div class="stats-number">${bookedCount}/${dayInfo.max}</div>
+                            <div class="stats-label">محجوز</div>
+                        </div>
                     </div>
                     
-                    <div class="day-stats">
-                        <div class="booked-count">المحجوز: ${bookedCount}</div>
-                        <div class="available-count">المتاح: ${availableCount}</div>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill ${progressClass}" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="progress-text">${availableCount} مقعد متاح</div>
                     </div>
                     
-                    <div class="progress-bar">
-                        <div class="progress-fill ${progressPercent >= 100 ? 'full' : ''}" 
-                             style="width: ${progressPercent}%"></div>
-                    </div>
-                    
-                    <div class="bookings-list">
+                    <div class="bookings-preview">
                         ${bookings.length > 0 ? 
-                            bookings.map((booking, index) => `
+                            bookings.slice(0, 4).map((booking, index) => `
                                 <div class="booking-item">
                                     <div>
-                                        <div class="student-info">${index + 1}. ${booking.studentName}</div>
-                                        <div class="parent-info">👨‍💼 ${booking.parentName}</div>
-                                        <div class="phone-info">📱 ${booking.phoneNumber}</div>
+                                        <div class="student-name">${index + 1}. ${booking.studentName}</div>
+                                        <div class="parent-name">👨‍💼 ${booking.parentName}</div>
                                     </div>
                                 </div>
-                            `).join('') :
-                            '<div style="text-align: center; color: #999; font-style: italic; padding: 20px;">لا توجد حجوزات</div>'
+                            `).join('') + 
+                            (bookings.length > 4 ? `<div style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;">و ${bookings.length - 4} آخرين...</div>` : '')
+                            :
+                            '<div class="empty-day">لا توجد حجوزات</div>'
                         }
                     </div>
                 `;
@@ -1191,6 +1526,16 @@
             updateStatistics();
             createDaysOverview();
             
+            // تحديث التاريخ الحالي
+            const now = new Date();
+            document.getElementById('currentDate').textContent = 
+                `📅 ${now.toLocaleDateString('ar-SA', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                })}`;
+            
             // تحديث تلقائي كل 30 ثانية
             setInterval(autoRefresh, 30000);
             
@@ -1198,16 +1543,26 @@
             const statCards = document.querySelectorAll('.stat-card');
             statCards.forEach((card, index) => {
                 setTimeout(() => {
-                    card.style.animation = 'slideInUp 0.6s ease forwards';
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(30px)';
+                    card.style.transition = 'all 0.6s ease';
                     
                     setTimeout(() => {
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
                     }, 100);
-                }, index * 100);
+                }, index * 150);
             });
+            
+            // تحديث مؤشر الوقت كل ثانية
+            setInterval(() => {
+                document.getElementById('lastUpdate').textContent = 
+                    new Date().toLocaleTimeString('ar-SA', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+            }, 1000);
         });
         
         // إضافة رسوم متحركة للبطاقات
