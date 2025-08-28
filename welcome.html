@@ -1,460 +1,4 @@
-.motivation-card h4 {
-            color: #0f4c75;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .motivation-card p {
-            color: #555;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .health-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .health-card {
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .health-card.safety {
-            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
-            border-top: 4px solid #4caf50;
-        }
-
-        .health-card.flexibility {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-top: 4px solid #2196f3;
-        }
-
-        .health-card.education {
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-            border-top: 4px solid #ff9800;
-        }
-
-        .health-card.independence {
-            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-            border-top: 4px solid #9c27b0;
-        }
-
-        .health-card.pressure {
-            background: linear-gradient(135deg, #ffebee, #ffcdd2);
-            border-top: 4px solid #f44336;
-        }
-
-        .health-card.behavior {
-            background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
-            border-top: 4px solid #009688;
-        }
-
-        .health-card h4 {
-            color: #0f4c75;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .health-card p {
-            color: #555;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .closing-message {
-            background: linear-gradient(135deg, #4CAF50, #66BB6A);
-            color: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            margin-top: 30px;
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
-        }
-
-        .closing-message h4 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 25px;
-        }
-
-        .closing-message p {
-            font-size: 18px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        @media (max-width: 768px) {
-            .school-name {
-                font-size: 22px;
-            }
-            
-            .welcome-message {
-                font-size: 16px;
-            }
-            
-            .container {
-                padding: 15px;
-            }
-            
-            .header, .welcome-section, .contact-section, .family-section {
-                padding: 20px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .tab-buttons {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .tab-btn {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-            
-            .family-hero h2 {
-                font-size: 24px;
-            }
-            
-            .axis-title {
-                font-size: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header class="header animate-fade">
-            <div class="logo-section">
-                <div class="logo">م</div>
-                <div class="header-text">
-                    <div class="ministry-info">
-                        المملكة العربية السعودية<br>
-                        وزارة التعليم<br>
-                        مكتب تعليم العوالي
-                    </div>
-                    <h1 class="school-name">متوسطة المنذر بن عمرو الأنصاري</h1>
-                    <div class="director-info">مدير المدرسة: خالد سعود المطيري</div>
-                </div>
-            </div>
-        </header>
-
-        <section class="welcome-section animate-fade">
-            <h2 class="welcome-title">مرحباً بكم في عام دراسي جديد</h2>
-            <div class="welcome-message">
-                <div class="bismillah" style="text-align: center; font-size: 20px; font-weight: 700; color: #0f4c75; margin-bottom: 25px;">بسم الله الرحمن الرحيم</div>
-                
-                <p><strong>أولياء أمورنا الكرام، أبنائي الطلاب الأعزاء، السلام عليكم ورحمة الله وبركاته،</strong></p>
-                
-                <p>نستقبل اليوم عاماً دراسياً جديداً، يحمل في طياته آمالاً واسعة، وفرصاً ثمينة لبناء مستقبل يليق بطموحاتكم. إن مقاعد الدراسة ليست مجرد مكان نتلقى فيه المعلومة، بل هي منطلق لصناعة الرجال، وغرس القيم، وتشكيل العقول القادرة على الإبداع والعطاء.</p>
-                
-                <p>أبنائي الطلاب، قد تشعرون في بداية الطريق بشيء من القلق أو التردد، وهذا طبيعي، لكن تذكروا أن كل رحلة عظمى تبدأ بخطوة، وأن التميز لا يناله إلا من صبر واجتهد وثابر. إن مدرستكم هي بيتكم الثاني، وأساتذتكم الأفاضل هم سندكم ورفقاء دربكم، فلا تترددوا في طلب العون والنصيحة، ولا تتركوا يوماً يمرّ دون أن تضيفوا فيه لبنة جديدة في صرح نجاحكم.</p>
-                
-                <p>وليكن شعارنا هذا العام: <strong>انضباطٌ في السلوك، جدٌّ في العمل، وسموٌّ في الطموح</strong>. فالانضباط يفتح أبواب التوفيق، والعمل يثمر إنجازاً، والطموح يصنع فارقاً بين العادي والمتميز.</p>
-                
-                <p>فلنجعل من هذا العام سجلاً حافلاً بالعلم والمعرفة، وميداناً للجد والاجتهاد، وموسماً تُكتب فيه قصص نجاحكم بأيديكم.</p>
-                
-                <p>والله أسأل أن يكون عاماً دراسياً مباركاً، عامراً بالعزائم والإنجازات.</p>
-                
-                <div style="text-align: left; margin-top: 25px; font-weight: 600; color: #0f4c75;">
-                    <p>مدير المدرسة<br>
-                    خالد سعود المطيري</p>
-                </div>
-            </div>
-            <div class="quote">
-                "الغد مرآة ما نصنعه اليوم، فليكن عملكم الآن هو زاد نجاحكم القادم"
-            </div>
-        </section>
-
-        <div class="features-grid">
-            <div class="feature-card animate-fade">
-                <div class="feature-icon">📚</div>
-                <h3 class="feature-title">التعليم المتميز</h3>
-                <p class="feature-desc">نقدم تعليماً عالي الجودة يواكب أحدث المناهج والطرق التعليمية</p>
-            </div>
-            
-            <div class="feature-card animate-fade">
-                <div class="feature-icon">🎯</div>
-                <h3 class="feature-title">بناء الشخصية</h3>
-                <p class="feature-desc">نهتم ببناء شخصية الطالب وتنمية مواهبه وقدراته المختلفة</p>
-            </div>
-            
-            <div class="feature-card animate-fade family-role" onclick="showFamilySection()">
-                <div class="feature-icon family-icon">👨‍👩‍👧‍👦</div>
-                <h3 class="feature-title">دور الأسرة في التعليم</h3>
-                <p class="feature-desc">شراكة فعّالة بين البيت والمدرسة لضمان نجاح الطلاب</p>
-                <div class="click-indicator">▶</div>
-            </div>
-        </div>
-
-        <section class="family-section animate-fade" id="family-section">
-            <div class="family-hero">
-                <h2>👨‍👩‍👧‍👦 دور الأسرة في دعم رحلة الطالب التعليمية</h2>
-                <p>شراكة ولي الأمر</p>
-                <div class="partnership-banner">
-                    <p><strong>عزيزي ولي الأمر</strong> لرحلة تعليمية ممتعة ومتكاملة، علينا أن نراعي الجوانب التالية:</p>
-                </div>
-            </div>
-
-            <div class="axes-grid">
-                <!-- المحور الأول -->
-                <div class="axis-card axis-1">
-                    <h3 class="axis-title">المحور الأول: دور الأسرة في تهيئة الأبناء مع بداية العام الدراسي</h3>
-                    <div class="points-grid">
-                        <div class="point-item">
-                            <div class="point-number">01</div>
-                            <p class="point-text">تهيئة الأبناء على الانفعال التدريجي عن المنزل وعن اللهجة الذكية، وتقديم الدعم المناسب لهم</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">02</div>
-                            <p class="point-text">إشراك الأبناء في إدراك المسئوليات والأدوات المدرسية و تدريبهم على اليوم المدرسي</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">03</div>
-                            <p class="point-text">المشاركة في برامج التهيئة النفسية المعززة للتكيف والاندماج المدرسي</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">04</div>
-                            <p class="point-text">تعزيز اللائحات الإيجابية لدى الأبناء نحو البيئة المدرسية</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">05</div>
-                            <p class="point-text">تزويد الوجود الطلابي بالثقافة السلوكية والنفسية وذلك لتقديم الدعم المناسب لهم</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- المحور الثاني -->
-                <div class="axis-card axis-2">
-                    <h3 class="axis-title">المحور الثاني: دور الأسرة في تعزيز القيم والسلوك الإيجابي</h3>
-                    <div class="values-grid-family">
-                        <div class="family-value-item">
-                            <div class="family-value-number">1</div>
-                            <p class="family-value-text">توجيه الأبناء على التعامل الإيجابي مع الآخرين والمشاعر التي تخدم المجتمع</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">2</div>
-                            <p class="family-value-text">غرس قيم الإسلام في نفوس الأبناء والساعيد والإخوان والآخرين وآداب الحوار</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">3</div>
-                            <p class="family-value-text">إرشاد جانب السلوك التربية الإيجابية الداعمة لتنمية الإرادة الهادفة لدى الأبناء</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">4</div>
-                            <p class="family-value-text">تعميق الهوية الوطنية لدى الأبناء والتطوير لتنمية الولاء والمحافظة على ممتلكاته ومقدراته</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">5</div>
-                            <p class="family-value-text">توجيه الأبناء إلى المشاركة في الأنشطة النافعة في المجتمع التي تخدم المجتمع</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">6</div>
-                            <p class="family-value-text">مساعدة الأبناء على تنظيم الوقت وحسن إدارته</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">7</div>
-                            <p class="family-value-text">تشجيع الأبناء على ممارسة هواياتهم وتطوير مهاراتهم</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">8</div>
-                            <p class="family-value-text">تعويد الأبناء على تحمل المسؤولية وإتقان العمل وتقوير النفس لإظهار الإيجابية لديهم نحو العمل</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">9</div>
-                            <p class="family-value-text">توفير البيانات والبرامج التعليمية النافعة</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">10</div>
-                            <p class="family-value-text">تعويد الأبناء على ضبط انفعالاتهم</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">11</div>
-                            <p class="family-value-text">التعاون مع المدرسة لتعزيز القيم والسلوك الإيجابي لدى الأبناء</p>
-                        </div>
-                        <div class="family-value-item">
-                            <div class="family-value-number">12</div>
-                            <p class="family-value-text">المشاركة في الأنشطة والفعاليات التي تقدمها المدرسة لتعزيز القيم</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- المحور الثالث -->
-                <div class="axis-card axis-3">
-                    <h3 class="axis-title">المحور الثالث: دور الأسرة في تنمية الدافعية للتعلم</h3>
-                    <div class="motivation-cards">
-                        <div class="motivation-card red">
-                            <div class="motivation-icon">🎯</div>
-                            <h4>توجيه الأبناء لعادات الدراسة وتشمل ما يلي:</h4>
-                            <p>التنظيم وتحديد الأولويات وتقسيم الوقت وتحديد الأوقات وتنظيم الواجبات. الإشراف المباشر على الطالب ومدى انجازه وتحصيله التعليمي. يضع الواقع للدراسة مساء وقبل التمدرس وبعد المدرسة. إدارة الوضعية للدراسة في قيمة الأداء المهم. الرقابة التطبيقية والعملي على المستقبل</p>
-                        </div>
-                        <div class="motivation-card orange">
-                            <div class="motivation-icon">📝</div>
-                            <h4>تعويد الأبناء على وضع وتحديد الأهداف والسعي لتحقيقها:</h4>
-                            <p>وضع تدريبهم على وضع وتحديد الأهداف، ضمن القدرة المدى أو قصيرة المدى. وأضحال مؤسسة المدى التي يما القسم التي عتبره عن طريقة عملي في المدرسة للاشتغال من الأنواع سنخطار في المرحلة القاديمة. وأضراب قبيدة المدى أثناء يحكموا في مستحدثان في</p>
-                        </div>
-                        <div class="motivation-card green">
-                            <div class="motivation-icon">🌟</div>
-                            <h4>تعزيز الشغفات المعنية على التعلم وذلك من خلال:</h4>
-                            <p>تعزيز مهاراتهم النفسية والمعرفية والشخصية. مراقبة القدرة التربية ينعكس ومساعدتهم على حل مشاكلهم</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- المحور الرابع -->
-                <div class="axis-card axis-4">
-                    <h3 class="axis-title">المحور الرابع: دور الأسرة في تعزيز الانضباط المدرسي</h3>
-                    <div class="points-grid">
-                        <div class="point-item">
-                            <div class="point-number">1</div>
-                            <p class="point-text">حث الأبناء على الانتظام في الحضور الى المدرسة</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">2</div>
-                            <p class="point-text">تعزيز التزام بأنظمة المدرسة وتعليم الأبناء</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">3</div>
-                            <p class="point-text">تنظيم أوقات النوم والجداول العامة بحيث يكون خلال فترة الإجازات الرسمية</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">4</div>
-                            <p class="point-text">التواصل المستمر والمشاركة في مجالس أولياء الأمور</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">5</div>
-                            <p class="point-text">تشجيع الأبناء على المشاركة في الفعاليات والأنشطة المدرسية</p>
-                        </div>
-                        <div class="point-item">
-                            <div class="point-number">6</div>
-                            <p class="point-text">مساعدة الأبناء على تنظيم وقيمهم بعيداً عن المشتتات المختلفة</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- المحور الخامس -->
-                <div class="axis-card axis-5">
-                    <h3 class="axis-title">المحور الخامس: دور الأسرة في تعزيز الصحة النفسية</h3>
-                    <div class="health-categories">
-                        <div class="health-card safety">
-                            <h4>🛡️ توفير البيئة الآمنة والداعمة:</h4>
-                            <p>فالأسرة المتماسكة والآمنة نفسياً توفر لأبنائها بيئة خالية تشبع حاجاتهم الأساسية من الحب والاهتمام والشعور بالانتماء مما يسهم في تنمية الثقة بالنفس والاستقرار العاطفي</p>
-                        </div>
-                        <div class="health-card flexibility">
-                            <h4>🤸 المرونة والقدرة على التكيف:</h4>
-                            <p>فالأسرة المرنة التي تتعامل بحكمة مع الضغوطات والمشكلات، وتشجع أبناءها على المواجهة الإيجابية، وتساعدهم على اكتساب المرونة النفسية والقدرة على التكيف مع المتغيرات</p>
-                        </div>
-                        <div class="health-card education">
-                            <h4>📚 التنشئة السليمة:</h4>
-                            <p>طريقة تربية الأبناء وتنشيئهم من قبل الوالدين لها تأثير كبير على صحتهم النفسية، فاستخدام الأساليب التربوية المتوازنة تعزز من نموذج الشخص السليم</p>
-                        </div>
-                        <div class="health-card independence">
-                            <h4>🎯 تعزيز الاستقلالية والثقة بالنفس:</h4>
-                            <p>تشجيع الأبناء على اتخاذ القرارات وتحمل المسؤولية - إظهار الثقة والاحترام لآرائهم وخياراتهم - تجنب التدخل المفرط في السيطرة المفرطة</p>
-                        </div>
-                        <div class="health-card pressure">
-                            <h4>💪 إدارة الضغوط والأزمات:</h4>
-                            <p>تزويد الأبناء بأساليب مواجهة الضغوط النفسية - معالجة المشكلات الأسرية بطريقة راعية - توفير بيئة آمنة لمناقشة المخاوف والقلق</p>
-                        </div>
-                        <div class="health-card behavior">
-                            <h4>🧠 نمذجة السلوكيات:</h4>
-                            <p>قدوة الوالدين والأسرة في ممارسة السلوكيات الإيجابية والتعامل الصحي مع التحديات، تساعد الأبناء على اكتساب تلك السلوكيات في نفس تعاملاتهم</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="closing-message">
-                <h4>عزيزي ولي الأمر</h4>
-                <p><strong>فكن الداعم الأول واستثمر في تعليم أبنائك وشجعهم على الانضباط المدرسي فأنت شريكنا الأول في تحقيق الرؤى الطموحة التي تهدف إلى تطوير وتقدم أبناء الوطن.</strong></p>
-                <p><strong>عزيزي ولي الأمر</strong> دوركم جوهري في بناء جيل منضبط ومسؤول، متفائلين لأبنائنا الطلبة مستقبلاً واعداً، في ظل وطن مزدهر وآمن.</p>
-            </div>
-        </section>
-
-        <section class="rules-section animate-fade">
-            <div class="rules-header">
-                <h2 class="rules-title">📋 قواعد السلوك والمواظبة</h2>
-                <p class="rules-subtitle">الإصدار الخامس 1447هـ - للمرحلة المتوسطة</p>
-            </div>
-
-            <div class="behavior-system">
-                <div class="system-card">
-                    <h3 class="system-title">🎯 نظام تقييم السلوك</h3>
-                    <div class="score-breakdown">
-                        <div class="score-item positive">
-                            <span class="score-number">80</span>
-                            <span class="score-label">درجة السلوك الإيجابي</span>
-                        </div>
-                        <div class="score-item excellent">
-                            <span class="score-number">20</span>
-                            <span class="score-label">درجة السلوك المتميز</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="rules-tabs">
-                <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="showTab('attendance', this)">📅 المواظبة</button>
-                    <button class="tab-btn" onclick="showTab('behavior', this)">🎭 مستويات السلوك</button>
-                    <button class="tab-btn" onclick="showTab('excellent', this)">⭐ السلوك المتميز</button>
-                    <button class="tab-btn" onclick="showTab('excuses', this)">📝 الأعذار المقبولة</button>
-                    <button class="tab-btn" onclick="showTab('values', this)">🌟 قيمنا</button>
-                </div>
-
-                <div id="attendance" class="tab-content active">
-                    <div class="attendance-grid">
-                        <div class="attendance-card critical">
-                            <div class="card-header">
-                                <h4>🚨 تجاوز 10% خلال العام</h4>
-                            </div>
-                            <p>حرمان من الانتقال للعام التالي (المتوسطة) أو للفصل التالي (الثانوية)</p>
-                        </div>
-                        
-                        <div class="attendance-card warning">
-                            <div class="card-header">
-                                <h4>📞 عند 10 أيام</h4>
-                            </div>
-                            <p>مخاطبة الجهات المختصة وإشعار إدارة التعليم</p>
-                        </div>
-                        
-                        <div class="attendance-card moderate">
-                            <div class="card-header">
-                                <h4>🔔 عند 5 أيام</h4>
-                            </div>
-                            <p>استدعاء ولي الأمر وإحالة للجنة التوجيه الطلابي</p>
-                        </div>
-                        
-                        <div class="attendance-card mild">
-                            <div class="card-header">
-                                <h4>📋 عند 3 أيام</h4>
-                            </div>
-                            <p>تحويل للموجه الطلابي واستدعاء ولي الأمر وأخذ تعهد</p>
-                        </div>
-                    </div>
-                </div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -631,7 +175,7 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -645,19 +189,11 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.18);
             transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-card.family-role {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(129, 199, 132, 0.1));
-            border: 2px solid #4CAF50;
         }
 
         .feature-icon {
@@ -673,13 +209,6 @@
             font-size: 24px;
         }
 
-        .feature-icon.family-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #4CAF50, #81C784);
-            font-size: 32px;
-        }
-
         .feature-title {
             color: #0f4c75;
             font-size: 18px;
@@ -690,28 +219,6 @@
         .feature-desc {
             color: #666;
             font-size: 14px;
-        }
-
-        .click-indicator {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: #4CAF50;
-            color: white;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
         }
 
         .footer {
@@ -965,63 +472,6 @@
             text-align: center;
         }
 
-        .excellent-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .excellent-card li {
-            padding: 8px 0;
-            color: #555;
-            font-size: 14px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .excellent-card li:last-child {
-            border-bottom: none;
-        }
-
-        /* Fix button styles */
-        .tab-btn {
-            padding: 12px 20px;
-            background: rgba(15, 76, 117, 0.1);
-            color: #0f4c75;
-            border: 2px solid #0f4c75;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-family: 'Cairo', sans-serif;
-            outline: none;
-        }
-
-        .tab-btn:focus {
-            outline: 2px solid #0f4c75;
-            outline-offset: 2px;
-        }
-
-        /* Fix family section toggle */
-        .family-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .family-section.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         .excuses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1237,196 +687,467 @@
             line-height: 1.6;
         }
 
-        /* Family Role Section */
-        .family-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            display: none;
-        }
-
-        .family-section.active {
-            display: block;
-        }
-
-        .family-hero {
-            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+        .school-info-footer {
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
             color: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 15px;
             text-align: center;
-            margin-bottom: 40px;
         }
 
-        .family-hero h2 {
-            font-size: 32px;
+        .director-message h4 {
+            font-size: 22px;
             font-weight: 700;
             margin-bottom: 20px;
         }
 
-        .family-hero p {
-            font-size: 18px;
-            opacity: 0.9;
+        .director-message p {
+            font-size: 16px;
+            margin-bottom: 10px;
         }
 
-        .partnership-banner {
-            background: linear-gradient(45deg, #4CAF50, #81C784);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 30px;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .axes-grid {
-            display: grid;
-            gap: 30px;
+        .animate-fade {
+            animation: fadeInUp 0.6s ease-out;
         }
 
-        .axis-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            border-top: 5px solid;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        @media (max-width: 768px) {
+            .school-name {
+                font-size: 22px;
+            }
+            
+            .welcome-message {
+                font-size: 16px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .header, .welcome-section, .contact-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header animate-fade">
+            <div class="logo-section">
+                <div class="logo">م</div>
+                <div class="header-text">
+                    <div class="ministry-info">
+                        المملكة العربية السعودية<br>
+                        وزارة التعليم<br>
+                        مكتب تعليم العوالي
+                    </div>
+                    <h1 class="school-name">متوسطة المنذر بن عمرو الأنصاري</h1>
+                    <div class="director-info">مدير المدرسة: خالد سعود المطيري</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="welcome-section animate-fade">
+            <h2 class="welcome-title">مرحباً بكم في عام دراسي جديد</h2>
+            <div class="welcome-message">
+                <div class="bismillah" style="text-align: center; font-size: 20px; font-weight: 700; color: #0f4c75; margin-bottom: 25px;">بسم الله الرحمن الرحيم</div>
+                
+                <p><strong>أولياء أمورنا الكرام، أبنائي الطلاب الأعزاء، السلام عليكم ورحمة الله وبركاته،</strong></p>
+                
+                <p>نستقبل اليوم عاماً دراسياً جديداً، يحمل في طياته آمالاً واسعة، وفرصاً ثمينة لبناء مستقبل يليق بطموحاتكم. إن مقاعد الدراسة ليست مجرد مكان نتلقى فيه المعلومة، بل هي منطلق لصناعة الرجال، وغرس القيم، وتشكيل العقول القادرة على الإبداع والعطاء.</p>
+                
+                <p>أبنائي الطلاب، قد تشعرون في بداية الطريق بشيء من القلق أو التردد، وهذا طبيعي، لكن تذكروا أن كل رحلة عظمى تبدأ بخطوة، وأن التميز لا يناله إلا من صبر واجتهد وثابر. إن مدرستكم هي بيتكم الثاني، وأساتذتكم الأفاضل هم سندكم ورفقاء دربكم، فلا تترددوا في طلب العون والنصيحة، ولا تتركوا يوماً يمرّ دون أن تضيفوا فيه لبنة جديدة في صرح نجاحكم.</p>
+                
+                <p>وليكن شعارنا هذا العام: <strong>انضباطٌ في السلوك، جدٌّ في العمل، وسموٌّ في الطموح</strong>. فالانضباط يفتح أبواب التوفيق، والعمل يثمر إنجازاً، والطموح يصنع فارقاً بين العادي والمتميز.</p>
+                
+                <p>فلنجعل من هذا العام سجلاً حافلاً بالعلم والمعرفة، وميداناً للجد والاجتهاد، وموسماً تُكتب فيه قصص نجاحكم بأيديكم.</p>
+                
+                <p>والله أسأل أن يكون عاماً دراسياً مباركاً، عامراً بالعزائم والإنجازات.</p>
+                
+                <div style="text-align: left; margin-top: 25px; font-weight: 600; color: #0f4c75;">
+                    <p>مدير المدرسة<br>
+                    خالد سعود المطيري</p>
+                </div>
+            </div>
+            <div class="quote">
+                "الغد مرآة ما نصنعه اليوم، فليكن عملكم الآن هو زاد نجاحكم القادم"
+            </div>
+        </section>
+
+        <div class="features-grid">
+            <div class="feature-card animate-fade">
+                <div class="feature-icon">📚</div>
+                <h3 class="feature-title">التعليم المتميز</h3>
+                <p class="feature-desc">نقدم تعليماً عالي الجودة يواكب أحدث المناهج والطرق التعليمية</p>
+            </div>
+            
+            <div class="feature-card animate-fade">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">بناء الشخصية</h3>
+                <p class="feature-desc">نهتم ببناء شخصية الطالب وتنمية مواهبه وقدراته المختلفة</p>
+            </div>
+            
+            <div class="feature-card animate-fade">
+                <div class="feature-icon">🤝</div>
+                <h3 class="feature-title">التعاون المجتمعي</h3>
+                <p class="feature-desc">نعمل بشراكة مع أولياء الأمور لتحقيق أفضل النتائج للطلاب</p>
+            </div>
+        </div>
+
+        <section class="rules-section animate-fade">
+            <div class="rules-header">
+                <h2 class="rules-title">📋 قواعد السلوك والمواظبة</h2>
+                <p class="rules-subtitle">الإصدار الخامس 1447هـ - للمرحلة المتوسطة</p>
+            </div>
+
+            <div class="behavior-system">
+                <div class="system-card">
+                    <h3 class="system-title">🎯 نظام تقييم السلوك</h3>
+                    <div class="score-breakdown">
+                        <div class="score-item positive">
+                            <span class="score-number">80</span>
+                            <span class="score-label">درجة السلوك الإيجابي</span>
+                        </div>
+                        <div class="score-item excellent">
+                            <span class="score-number">20</span>
+                            <span class="score-label">درجة السلوك المتميز</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rules-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showTab('attendance')">📅 المواظبة</button>
+                    <button class="tab-btn" onclick="showTab('behavior')">🎭 مستويات السلوك</button>
+                    <button class="tab-btn" onclick="showTab('excellent')">⭐ السلوك المتميز</button>
+                    <button class="tab-btn" onclick="showTab('excuses')">📝 الأعذار المقبولة</button>
+                    <button class="tab-btn" onclick="showTab('values')">🌟 قيمنا</button>
+                </div>
+
+                <div id="attendance" class="tab-content active">
+                    <div class="attendance-grid">
+                        <div class="attendance-card critical">
+                            <div class="card-header">
+                                <h4>🚨 تجاوز 10% خلال العام</h4>
+                            </div>
+                            <p>حرمان من الانتقال للعام التالي (المتوسطة) أو للفصل التالي (الثانوية)</p>
+                        </div>
+                        
+                        <div class="attendance-card warning">
+                            <div class="card-header">
+                                <h4>📞 عند 10 أيام</h4>
+                            </div>
+                            <p>مخاطبة الجهات المختصة وإشعار إدارة التعليم</p>
+                        </div>
+                        
+                        <div class="attendance-card moderate">
+                            <div class="card-header">
+                                <h4>🔔 عند 5 أيام</h4>
+                            </div>
+                            <p>استدعاء ولي الأمر وإحالة للجنة التوجيه الطلابي</p>
+                        </div>
+                        
+                        <div class="attendance-card mild">
+                            <div class="card-header">
+                                <h4>📋 عند 3 أيام</h4>
+                            </div>
+                            <p>تحويل للموجه الطلابي واستدعاء ولي الأمر وأخذ تعهد</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="behavior" class="tab-content">
+                    <div class="behavior-levels">
+                        <div class="level-card level-1">
+                            <h4>المستوى الأول - حسم درجة واحدة</h4>
+                            <ul>
+                                <li>التأخر الصباحي</li>
+                                <li>عدم حضور الاصطفاف</li>
+                                <li>التأخر عن الحصص</li>
+                                <li>إعاقة سير الحصص</li>
+                                <li>النوم داخل الفصل</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-card level-2">
+                            <h4>المستوى الثاني - حسم درجتان</h4>
+                            <ul>
+                                <li>عدم حضور الحصة أو الهروب منها</li>
+                                <li>الدخول والخروج دون استئذان</li>
+                                <li>إثارة الفوضى</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-card level-3">
+                            <h4>المستوى الثالث - حسم 3 درجات</h4>
+                            <ul>
+                                <li>عدم التقيد بالزي الرسمي</li>
+                                <li>الشجار أو المضاربة</li>
+                                <li>الكلمات النابية</li>
+                                <li>العبث بتجهيزات المدرسة</li>
+                                <li>حيازة السجائر</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-card level-4">
+                            <h4>المستوى الرابع - حسم 10 درجات</h4>
+                            <ul>
+                                <li>الاعتداء بالضرب</li>
+                                <li>السرقة</li>
+                                <li>التصوير أو التسجيل</li>
+                                <li>التدخين</li>
+                                <li>الهروب من المدرسة</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-card level-5">
+                            <h4>المستوى الخامس - حسم 15 درجة والرفع لإدارة التعليم</h4>
+                            <ul>
+                                <li>الإساءة لشعائر الإسلام</li>
+                                <li>التحرش الجنسي</li>
+                                <li>حيازة الأسلحة</li>
+                                <li>المخدرات والمسكرات</li>
+                                <li>الجرائم المعلوماتية</li>
+                                <li>التنمر والابتزاز</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="excellent" class="tab-content">
+                    <div class="excellent-behaviors">
+                        <div class="excellent-card high-reward">
+                            <h4>⭐ 6 درجات</h4>
+                            <ul>
+                                <li>الانضباط وعدم التغيب بدون عذر</li>
+                                <li>المشاركة في الخدمة المجتمعية</li>
+                                <li>المشاركة في البرامج التوعوية</li>
+                            </ul>
+                        </div>
+
+                        <div class="excellent-card medium-reward">
+                            <h4>🌟 4 درجات</h4>
+                            <ul>
+                                <li>مهارات الاتصال والقيادة</li>
+                                <li>المهارات الرقمية</li>
+                                <li>مهارة إدارة الوقت</li>
+                            </ul>
+                        </div>
+
+                        <div class="excellent-card low-reward">
+                            <h4>✨ درجتان</h4>
+                            <ul>
+                                <li>كتابة رسائل الشكر</li>
+                                <li>المشاركة في الإذاعة</li>
+                                <li>التعاون مع الزملاء</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="excuses" class="tab-content">
+                    <div class="excuses-grid">
+                        <div class="excuse-category medical">
+                            <h4>🏥 الأعذار الطبية</h4>
+                            <ul>
+                                <li>الإجازة المرضية</li>
+                                <li>مراجعة المستشفيات</li>
+                                <li>المرافقة الصحية</li>
+                                <li>الظروف الصحية الخاصة</li>
+                            </ul>
+                        </div>
+
+                        <div class="excuse-category social">
+                            <h4>👨‍👩‍👧‍👦 الأعذار الاجتماعية</h4>
+                            <ul>
+                                <li>وفاة الأقارب حتى الدرجة الثالثة</li>
+                                <li>مرافقة الأقارب للجهات الرسمية</li>
+                                <li>الظروف الأسرية الطارئة</li>
+                            </ul>
+                        </div>
+
+                        <div class="excuse-category official">
+                            <h4>🏛️ الأعذار الرسمية</h4>
+                            <ul>
+                                <li>مراجعة الجهات الرسمية</li>
+                                <li>المشاركة في المسابقات</li>
+                                <li>الكوارث والحرائق</li>
+                                <li>ما تقرره أنظمة حماية الطفل</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="values" class="tab-content">
+                    <div class="values-hero">
+                        <div class="values-logo">
+                            <div class="logo-character">📚</div>
+                            <h2>قيمنا</h2>
+                        </div>
+                        <p class="values-intro">نعمل بأمانة ونُدرك حجم مسؤوليتنا</p>
+                    </div>
+
+                    <div class="school-vision">
+                        <div class="vision-card">
+                            <h3>🎯 رؤية المدرسة</h3>
+                            <p>مؤسسة تعليمية عالمية من أجل تقديم مجتمع مدرسي معبر لتحقيق رؤية المملكة 2030</p>
+                        </div>
+                        
+                        <div class="mission-card">
+                            <h3>📋 رسالة المدرسة</h3>
+                            <p>تحقيق ثقافة التغيير والتطوير والإبداع للتميز</p>
+                        </div>
+                    </div>
+
+                    <div class="values-grid">
+                        <div class="value-card excellence">
+                            <div class="value-icon">🌟</div>
+                            <h4>الأمانة</h4>
+                            <p>نعمل بأمانة ونُدرك حجم مسؤوليتنا</p>
+                        </div>
+
+                        <div class="value-card professionalism">
+                            <div class="value-icon">⚖️</div>
+                            <h4>العدل</h4>
+                            <p>نلتزم بالعدل وأرقى المعايير الأخلاقية في كل تعاملاتنا</p>
+                        </div>
+
+                        <div class="value-card citizenship">
+                            <div class="value-icon">🇸🇦</div>
+                            <h4>المواطنة</h4>
+                            <p>نرعى معتقداتنا ونحافظ على مقدراتنا ونجعل من أنفسنا قدوة للآخرين</p>
+                        </div>
+
+                        <div class="value-card excellence-achievement">
+                            <div class="value-icon">🎯</div>
+                            <h4>التميز</h4>
+                            <p>نسعى الى تحقيق الاستثنائي في كل عمل نؤديه</p>
+                        </div>
+
+                        <div class="value-card trust">
+                            <div class="value-icon">🤝</div>
+                            <h4>الثقة</h4>
+                            <p>نثق في قدراتنا</p>
+                        </div>
+
+                        <div class="value-card teamwork">
+                            <div class="value-icon">👥</div>
+                            <h4>العمل الجماعي</h4>
+                            <p>نعمل بروح واحدة متكاتفين لتحقيق أهدافنا بنجاح تام</p>
+                        </div>
+
+                        <div class="value-card development">
+                            <div class="value-icon">📈</div>
+                            <h4>التطوير المستمر</h4>
+                            <p>نشجع التعلم المستمر، ونطور أنفسنا الى أقصى الحدود</p>
+                        </div>
+
+                        <div class="value-card responsibility">
+                            <div class="value-icon">🎯</div>
+                            <h4>تحمل المسؤولية</h4>
+                            <p>نتحمل مسؤولية جميع ما نؤديه من الأعمال</p>
+                        </div>
+
+                        <div class="value-card safety">
+                            <div class="value-icon">🛡️</div>
+                            <h4>المحافظة على السلامة</h4>
+                            <p>نوفر بيئة آمنة فكرياً وجسمياً</p>
+                        </div>
+
+                        <div class="value-card innovation">
+                            <div class="value-icon">💡</div>
+                            <h4>التطوير</h4>
+                            <p>نعمل على تطوير أداء العمل لمنسوبي المدرسة</p>
+                        </div>
+
+                        <div class="value-card achievement">
+                            <div class="value-icon">🏆</div>
+                            <h4>الإنجاز</h4>
+                            <p>نسعى لتحقيق أعلى إنجازات بكل دقة وإتقان</p>
+                        </div>
+
+                        <div class="value-card responsibility2">
+                            <div class="value-icon">🤝</div>
+                            <h4>المسؤولية والالتزام</h4>
+                            <p>نعمل وفق المسؤولية والالتزام</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section animate-fade">
+            <h3 class="contact-title">للتواصل مع مدير المدرسة</h3>
+            <a href="#" class="whatsapp-btn" onclick="openWhatsApp()">
+                📱 التواصل عبر واتساب
+            </a>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p><strong>متوسطة المنذر بن عمرو الأنصاري</strong></p>
+                <p>هذه الصفحة قابلة للتطوير والتحديث المستمر</p>
+            </div>
+            <div class="developer-credit">
+                تطوير وتصميم: Nawaf Alsubhi 2025
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function openWhatsApp() {
+            window.open('https://wa.me/966535876985', '_blank');
         }
 
-        .axis-card.axis-1 { border-top-color: #4CAF50; }
-        .axis-card.axis-2 { border-top-color: #2196F3; }
-        .axis-card.axis-3 { border-top-color: #FF9800; }
-        .axis-card.axis-4 { border-top-color: #9C27B0; }
-        .axis-card.axis-5 { border-top-color: #F44336; }
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
 
-        .axis-title {
-            color: #0f4c75;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            text-align: center;
+            // Remove active class from all buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab and activate button
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
         }
 
-        .points-grid {
-            display: grid;
-            gap: 15px;
-        }
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-        .point-item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-right: 4px solid;
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade');
+                }
+            });
+        }, observerOptions);
 
-        .axis-1 .point-item { border-right-color: #4CAF50; }
-        .axis-2 .point-item { border-right-color: #2196F3; }
-        .axis-3 .point-item { border-right-color: #FF9800; }
-        .axis-4 .point-item { border-right-color: #9C27B0; }
-        .axis-5 .point-item { border-right-color: #F44336; }
-
-        .point-number {
-            background: linear-gradient(45deg, #4CAF50, #66BB6A);
-            color: white;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .axis-2 .point-number { background: linear-gradient(45deg, #2196F3, #42A5F5); }
-        .axis-3 .point-number { background: linear-gradient(45deg, #FF9800, #FFB74D); }
-        .axis-4 .point-number { background: linear-gradient(45deg, #9C27B0, #BA68C8); }
-        .axis-5 .point-number { background: linear-gradient(45deg, #F44336, #EF5350); }
-
-        .point-text {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .values-grid-family {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-        }
-
-        .family-value-item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-right: 4px solid #2196F3;
-        }
-
-        .family-value-number {
-            background: linear-gradient(45deg, #2196F3, #42A5F5);
-            color: white;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .family-value-text {
-            color: #0f4c75;
-            font-weight: 600;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .motivation-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .motivation-card {
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .motivation-card.red {
-            background: linear-gradient(135deg, #ffebee, #ffcdd2);
-            border-top: 4px solid #f44336;
-        }
-
-        .motivation-card.orange {
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-            border-top: 4px solid #ff9800;
-        }
-
-        .motivation-card.green {
-            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
-            border-top: 4px solid #4caf50;
-        }
-
-        .motivation-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .motivation-card h4 {
-            color: #0f4c75;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 15px
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.feature-card, .rules-section');
+            animateElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
