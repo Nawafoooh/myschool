@@ -3,23 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مولد روابط التعاميم - متوسطة المنذر بن عمرو الأنصاري</title>
+    <title>تعميم رقم 001 - متوسطة المنذر بن عمرو الأنصاري</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 50%, #1e4d3b 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -27,540 +21,409 @@
             overflow: hidden;
             border: 3px solid #0f6b47;
         }
-        
         .header {
             background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
-        
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+        .ministry-logo { font-size: 60px; margin-bottom: 15px; }
+        .ministry-title { font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+        .ministry-subtitle { font-size: 16px; margin-bottom: 15px; opacity: 0.95; }
+        .school-name {
+            font-size: 24px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.15);
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 15px auto;
+            display: inline-block;
+            border: 2px solid rgba(255,255,255,0.3);
         }
-        
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
+        .form-title { font-size: 18px; margin-top: 15px; }
+        .form-content { padding: 35px; background: #fafbfc; }
+        .circular-notice {
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5f0 100%);
+            border: 3px solid #0f6b47;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
         }
-        
-        .content {
-            padding: 40px;
+        .circular-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #0f6b47;
         }
-        
-        .form-group {
-            margin-bottom: 25px;
+        .circular-number {
+            background: #0f6b47;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 15px;
         }
-        
+        .circular-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border-right: 5px solid #0f6b47;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+        .circular-subject { font-weight: bold; color: #0f6b47; margin-bottom: 15px; font-size: 18px; }
+        .form-group { margin-bottom: 25px; }
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: bold;
             color: #1e4d3b;
             font-size: 16px;
         }
-        
-        .form-group input,
-        .form-group textarea {
+        .form-group input {
             width: 100%;
             padding: 15px;
             border: 2px solid #d5e8d4;
             border-radius: 10px;
             font-size: 16px;
             transition: all 0.3s ease;
-            background: white;
-            font-family: inherit;
         }
-        
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group input:focus {
             outline: none;
             border-color: #0f6b47;
             box-shadow: 0 0 0 4px rgba(15, 107, 71, 0.1);
             background: #f8fffe;
         }
-        
-        .generate-btn {
-            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
-            color: white;
-            padding: 15px 30px;
+        .signature-area {
+            border: 3px dashed #0f6b47;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5f0 100%);
+            margin: 20px 0;
+        }
+        .signature-canvas {
+            border: 2px solid #0f6b47;
+            border-radius: 10px;
+            cursor: crosshair;
+            display: block;
+            margin: 20px auto;
+            background: white;
+            touch-action: none;
+        }
+        .btn {
+            padding: 12px 25px;
             border: none;
             border-radius: 25px;
-            font-size: 18px;
-            font-weight: bold;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
             transition: all 0.3s ease;
-            width: 100%;
-            margin: 20px 0;
         }
-        
-        .generate-btn:hover {
+        .btn-secondary { background: #95a5a6; color: white; }
+        .btn-secondary:hover { background: #7f8c8d; transform: translateY(-2px); }
+        .confirmation-area {
+            background: linear-gradient(135deg, #e8f8f0 0%, #d4edd8 100%);
+            border: 3px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .checkbox-group {
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #27ae60;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-left: 15px;
+            transform: scale(1.5);
+            accent-color: #0f6b47;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
+            color: white;
+            width: 100%;
+            padding: 18px;
+            font-size: 20px;
+            margin-top: 30px;
+            border: 3px solid #0f6b47;
+        }
+        .submit-btn:hover {
             background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 100%);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(15, 107, 71, 0.4);
         }
-        
-        .result-area {
-            background: linear-gradient(135deg, #f8fffe 0%, #e8f5f0 100%);
-            border: 3px solid #0f6b47;
+        .success-message {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 30px;
             border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
+            margin-top: 25px;
+            text-align: center;
             display: none;
+            border: 3px solid #27ae60;
         }
-        
-        .result-area h3 {
-            color: #0f6b47;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-        
-        .link-box {
-            background: white;
-            border: 2px solid #0f6b47;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            word-break: break-all;
-            font-family: monospace;
-            font-size: 14px;
-            position: relative;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #0f6b47;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-        
-        .copy-btn:hover {
-            background: #1e4d3b;
-            transform: scale(1.05);
-        }
-        
-        .whatsapp-message {
-            background: #e8f5e8;
-            border: 2px solid #27ae60;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            white-space: pre-line;
-            line-height: 1.6;
-        }
-        
-        .templates {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
-        }
-        
-        .templates h3 {
-            color: #1e4d3b;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-        
-        .template-btn {
-            background: #95a5a6;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .template-btn:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
-        }
-        
-        .preview-area {
-            border: 2px dashed #0f6b47;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            background: #f8fffe;
-        }
-        
-        .preview-area h4 {
-            color: #0f6b47;
-            margin-bottom: 10px;
-        }
-        
-        .info-box {
-            background: rgba(15, 107, 71, 0.1);
-            border: 2px solid #0f6b47;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .info-box h4 {
-            color: #0f6b47;
-            margin-bottom: 10px;
-        }
-        
-        .info-box ul {
-            margin-right: 20px;
-            color: #2c3e50;
-        }
-        
-        .info-box li {
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
+        .required { color: #e74c3c; font-size: 18px; }
         
         @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-            }
-            
-            .content {
-                padding: 25px;
-            }
-            
-            .header {
-                padding: 25px;
-            }
-            
-            .header h1 {
-                font-size: 24px;
-            }
-            
-            .copy-btn {
-                position: static;
-                margin-top: 10px;
-                width: 100%;
-            }
-            
-            .link-box {
-                padding-top: 15px;
-            }
+            .container { margin: 10px; }
+            .form-content { padding: 25px; }
+            .circular-header { flex-direction: column; text-align: center; }
+            .circular-number { margin-left: 0; margin-bottom: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔗 مولد روابط التعاميم</h1>
-            <p>متوسطة المنذر بن عمرو الأنصاري - نظام إدارة التعاميم الإلكترونية</p>
+            <div class="ministry-logo">🇸🇦</div>
+            <div class="ministry-title">المملكة العربية السعودية</div>
+            <div class="ministry-subtitle">وزارة التعليم</div>
+            <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
+            <div class="form-title">📋 نموذج التوقيع الإلكتروني</div>
         </div>
         
-        <div class="content">
-            <div class="info-box">
-                <h4>📋 كيفية الاستخدام:</h4>
-                <ul>
-                    <li>املأ بيانات التعميم أدناه</li>
-                    <li>اضغط "إنشاء الرابط"</li>
-                    <li>انسخ الرابط وأرسله للمعلمين عبر WhatsApp</li>
-                    <li>ستظهر التعاميم تلقائياً في الصفحة بالمحتوى الجديد</li>
-                </ul>
+        <div class="form-content">
+            <div class="circular-notice">
+                <div class="circular-header">
+                    <div class="circular-number">تعميم رقم: 001</div>
+                    <div style="color: #1e4d3b; font-weight: bold;">
+                        التاريخ: <span id="currentDate"></span>
+                    </div>
+                </div>
+                <div class="circular-content">
+                    <div class="circular-subject">الموضوع: تطبيق نظام التوقيع الإلكتروني الجديد</div>
+                    <p><strong>السلام عليكم ورحمة الله وبركاته،</strong></p>
+                    <p>يُرجى من جميع المعلمين الكرام في متوسطة المنذر بن عمرو الأنصاري الاطلاع على هذا التعميم والتوقيع إلكترونياً لتأكيد الاستلام والمشاهدة.</p>
+                    <p>هذا النظام الجديد سيضمن التوثيق الدقيق والسريع لجميع التعاميم الإدارية والتعليمية، مما يساهم في تحسين كفاءة العمل الإداري وتوفير الوقت والجهد.</p>
+                    <p><strong>نشكركم على تعاونكم المستمر وجهودكم المبذولة في خدمة التعليم.</strong></p>
+                </div>
             </div>
             
-            <form id="circularForm">
+            <form id="signatureForm">
                 <div class="form-group">
-                    <label for="circularNum">رقم التعميم:</label>
-                    <input type="text" id="circularNum" required placeholder="مثال: 001" value="001">
+                    <label for="fullName">الاسم الثلاثي <span class="required">*</span></label>
+                    <input type="text" id="fullName" required placeholder="أدخل الاسم الثلاثي كاملاً">
                 </div>
                 
                 <div class="form-group">
-                    <label for="circularSubject">موضوع التعميم:</label>
-                    <input type="text" id="circularSubject" required placeholder="مثال: تطبيق نظام التوقيع الإلكتروني الجديد">
+                    <label for="employeeId">الرقم الوظيفي <span class="required">*</span></label>
+                    <input type="text" id="employeeId" required placeholder="أدخل الرقم الوظيفي">
                 </div>
                 
                 <div class="form-group">
-                    <label for="circularContent">محتوى التعميم:</label>
-                    <textarea id="circularContent" required placeholder="اكتب محتوى التعميم هنا...
-
-مثال:
-يُرجى من جميع المعلمين والمعلمات الكرام الاطلاع على هذا التعميم والتوقيع إلكترونياً لتأكيد الاستلام والمشاهدة.
-
-هذا النظام الجديد سيضمن التوثيق الدقيق والسريع لجميع التعاميم الإدارية والتعليمية.
-
-نشكركم على تعاونكم المستمر."></textarea>
+                    <label for="position">المسمى الوظيفي <span class="required">*</span></label>
+                    <input type="text" id="position" required placeholder="مثال: معلم، وكيل، مرشد طلابي...">
                 </div>
                 
-                <button type="submit" class="generate-btn">🔗 إنشاء رابط التعميم</button>
+                <div class="form-group">
+                    <label for="subject">التخصص/المادة</label>
+                    <input type="text" id="subject" placeholder="مثال: الرياضيات، العلوم، اللغة العربية...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">رقم الجوال (اختياري)</label>
+                    <input type="tel" id="phone" placeholder="05xxxxxxxx">
+                </div>
+                
+                <div class="confirmation-area">
+                    <h4 style="color: #1e4d3b; margin-bottom: 20px; text-align: center;">تأكيد المشاهدة والاستلام</h4>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="readConfirm" required>
+                            أؤكد أنني اطلعت على التعميم كاملاً ومحتوياته <span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="understandConfirm" required>
+                            أؤكد أنني فهمت المضمون والتعليمات المطلوبة <span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="implementConfirm" required>
+                            أؤكد التزامي بتطبيق التعليمات والتوجيهات الواردة <span class="required">*</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>التوقيع الرقمي <span class="required">*</span></label>
+                    <div class="signature-area">
+                        <p><strong>📝 اختر طريقة التوقيع:</strong></p>
+                        
+                        <div style="display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-secondary" onclick="showSignatureCanvas()">
+                                ✍️ الرسم باليد
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="showTextSignature()">
+                                ⌨️ كتابة الاسم
+                            </button>
+                        </div>
+                        
+                        <div id="canvasArea" style="display: none;">
+                            <p style="color: #0f6b47; margin: 10px 0;"><strong>ارسم توقيعك:</strong></p>
+                            <canvas id="signatureCanvas" class="signature-canvas" width="500" height="180"></canvas>
+                            <button type="button" class="btn btn-secondary" onclick="clearSignature()" style="margin-top: 15px;">
+                                🗑️ مسح التوقيع
+                            </button>
+                        </div>
+                        
+                        <div id="textArea" style="display: none;">
+                            <p style="color: #0f6b47; margin: 10px 0;"><strong>اكتب اسمك كاملاً:</strong></p>
+                            <input type="text" id="textSignature" placeholder="اكتب اسمك الكامل هنا..." 
+                                   style="width: 100%; padding: 15px; border: 2px solid #0f6b47; border-radius: 10px; 
+                                          font-size: 24px; text-align: center; font-weight: bold; color: #1e4d3b;">
+                        </div>
+                        
+                        <p style="color: #666; font-size: 14px; margin-top: 15px;">
+                            💡 <strong>نصيحة:</strong> إذا واجهت صعوبة في الرسم، اختر "كتابة الاسم"
+                        </p>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn submit-btn">
+                    ✅ تأكيد التوقيع وإرسال النموذج
+                </button>
             </form>
             
-            <div class="templates">
-                <h3>📝 قوالب سريعة:</h3>
-                <button class="template-btn" onclick="useTemplate('training')">دورة تدريبية</button>
-                <button class="template-btn" onclick="useTemplate('meeting')">اجتماع</button>
-                <button class="template-btn" onclick="useTemplate('exam')">اختبارات</button>
-                <button class="template-btn" onclick="useTemplate('holiday')">إجازة</button>
-                <button class="template-btn" onclick="useTemplate('event')">فعالية</button>
-                <button class="template-btn" onclick="useTemplate('policy')">سياسة جديدة</button>
-            </div>
-            
-            <div class="result-area" id="resultArea">
-                <h3>✅ تم إنشاء الرابط بنجاح!</h3>
-                
-                <div class="preview-area">
-                    <h4>👀 معاينة التعميم:</h4>
-                    <div id="previewContent"></div>
-                </div>
-                
-                <div>
-                    <strong>🔗 رابط التعميم للمعلمين:</strong>
-                    <div class="link-box" id="teacherLink">
-                        <button class="copy-btn" onclick="copyToClipboard('teacherLink')">📋 نسخ</button>
-                        <div id="teacherLinkText"></div>
-                    </div>
-                </div>
-                
-                <div>
-                    <strong>🛠️ رابط الإدارة (لك فقط):</strong>
-                    <div class="link-box" id="adminLink">
-                        <button class="copy-btn" onclick="copyToClipboard('adminLink')">📋 نسخ</button>
-                        <div id="adminLinkText"></div>
-                    </div>
-                </div>
-                
-                <div>
-                    <strong>📱 رسالة WhatsApp جاهزة:</strong>
-                    <div class="whatsapp-message" id="whatsappMessage"></div>
-                    <button class="copy-btn" onclick="copyToClipboard('whatsappMessage')" style="position: static; width: 100%; margin-top: 10px;">📋 نسخ رسالة WhatsApp</button>
-                </div>
+            <div class="success-message" id="successMessage">
+                <h3>تم الإرسال بنجاح!</h3>
+                <p><strong>🙏 شكراً لكم على تعاونكم المستمر</strong></p>
+                <p>تم تسجيل توقيع الأستاذ <strong><span id="teacherName"></span></strong></p>
+                <p><strong>📅 تاريخ ووقت التوقيع:</strong> <span id="submissionTime"></span></p>
+                <p><strong>🔢 رقم المرجع:</strong> <span id="referenceNumber"></span></p>
             </div>
         </div>
     </div>
 
     <script>
-        // القوالب الجاهزة
-        const templates = {
-            training: {
-                subject: 'دورة تدريبية - تطوير المهارات التعليمية',
-                content: `يسرنا دعوتكم لحضور الدورة التدريبية القادمة حول تطوير المهارات التعليمية.
+        // التاريخ
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ar-SA');
+        
+        // التوقيع
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let currentMode = 'none';
 
-📅 التاريخ: [ضع التاريخ]
-🕐 الوقت: [ضع الوقت]  
-📍 المكان: [ضع المكان]
+        function showSignatureCanvas() {
+            document.getElementById('canvasArea').style.display = 'block';
+            document.getElementById('textArea').style.display = 'none';
+            currentMode = 'canvas';
+            setupCanvas();
+        }
 
-الرجاء تأكيد الحضور من خلال التوقيع الإلكتروني.
+        function showTextSignature() {
+            document.getElementById('textArea').style.display = 'block';
+            document.getElementById('canvasArea').style.display = 'none';
+            currentMode = 'text';
+        }
 
-شكراً لتعاونكم.`
-            },
-            meeting: {
-                subject: 'اجتماع دوري - مجلس المعلمين',
-                content: `يُرجى حضور الاجتماع الدوري لمجلس المعلمين.
+        function setupCanvas() {
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#1e4d3b';
+        }
 
-📅 التاريخ: [ضع التاريخ]
-🕐 الوقت: [ضع الوقت]
-📍 المكان: قاعة الاجتماعات
-
-جدول الأعمال:
-• مراجعة الخطة الفصلية
-• مناقشة نتائج الطلاب
-• متطلبات الأنشطة القادمة
-
-حضوركم مهم ومقدر.`
-            },
-            exam: {
-                subject: 'تعليمات الاختبارات النهائية',
-                content: `تعليمات مهمة خاصة بالاختبارات النهائية للفصل الدراسي الحالي.
-
-📋 التعليمات:
-• الحضور قبل موعد الاختبار بـ 15 دقيقة
-• إحضار الهوية الشخصية
-• منع استخدام الأجهزة الإلكترونية
-• الالتزام بقواعد السلوك أثناء الاختبار
-
-📅 تاريخ بداية الاختبارات: [ضع التاريخ]
-
-نتمنى لجميع الطلاب التوفيق والنجاح.`
-            },
-            holiday: {
-                subject: 'إجازة رسمية - عطلة [اسم المناسبة]',
-                content: `نحيطكم علماً بأن يوم [التاريخ] سيكون إجازة رسمية بمناسبة [المناسبة].
-
-📅 تاريخ الإجازة: [ضع التاريخ]
-🔄 العودة للدوام: [ضع تاريخ العودة]
-
-تعليمات:
-• إغلاق جميع المرافق المدرسية
-• إيقاف الأنشطة والبرامج
-• العودة للعمل في الموعد المحدد
-
-كل عام وأنتم بخير.`
-            },
-            event: {
-                subject: 'فعالية مدرسية - [اسم الفعالية]',
-                content: `يسرنا دعوتكم للمشاركة في الفعالية المدرسية القادمة.
-
-🎉 اسم الفعالية: [ضع الاسم]
-📅 التاريخ: [ضع التاريخ]
-🕐 الوقت: [ضع الوقت]
-📍 المكان: [ضع المكان]
-
-أهداف الفعالية:
-• [الهدف الأول]
-• [الهدف الثاني]
-• [الهدف الثالث]
-
-نتطلع لمشاركتكم الفعالة.`
-            },
-            policy: {
-                subject: 'سياسة جديدة - [اسم السياسة]',
-                content: `نحيطكم علماً بالسياسة الجديدة التي ستدخل حيز التنفيذ اعتباراً من [التاريخ].
-
-📋 تفاصيل السياسة:
-[اكتب تفاصيل السياسة هنا]
-
-🎯 الأهداف:
-• [الهدف الأول]
-• [الهدف الثاني]
-
-📅 تاريخ التنفيذ: [ضع التاريخ]
-
-يُرجى الاطلاع والالتزام بالسياسة الجديدة.
-
-شكراً لتعاونكم.`
-            }
-        };
-
-        // استخدام القالب
-        function useTemplate(type) {
-            const template = templates[type];
-            if (template) {
-                document.getElementById('circularSubject').value = template.subject;
-                document.getElementById('circularContent').value = template.content;
+        function clearSignature() {
+            if (currentMode === 'canvas') {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            } else {
+                document.getElementById('textSignature').value = '';
             }
         }
 
-        // معالج النموذج
-        document.getElementById('circularForm').addEventListener('submit', function(e) {
+        function hasSignature() {
+            if (currentMode === 'canvas') {
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                return imageData.data.some(pixel => pixel !== 0);
+            } else if (currentMode === 'text') {
+                return document.getElementById('textSignature').value.trim().length > 0;
+            }
+            return false;
+        }
+
+        // رسم على الكانفاس
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+
+        // اللمس للجوال
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (!isDrawing) return;
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('touchend', () => isDrawing = false);
+
+        // إرسال النموذج
+        document.getElementById('signatureForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const num = document.getElementById('circularNum').value.trim();
-            const subject = document.getElementById('circularSubject').value.trim();
-            const content = document.getElementById('circularContent').value.trim();
-            
-            if (!num || !subject || !content) {
-                alert('يرجى ملء جميع الحقول المطلوبة');
+            if (!hasSignature()) {
+                alert('⚠️ يرجى إضافة التوقيع قبل الإرسال');
                 return;
             }
             
-            generateLinks(num, subject, content);
+            const formData = {
+                circularNumber: '001',
+                fullName: document.getElementById('fullName').value,
+                employeeId: document.getElementById('employeeId').value,
+                position: document.getElementById('position').value,
+                subject: document.getElementById('subject').value,
+                phone: document.getElementById('phone').value,
+                timestamp: new Date().toLocaleString('ar-SA'),
+                referenceNumber: 'MAN-' + Date.now()
+            };
+            
+            // حفظ البيانات
+            localStorage.setItem('signature_' + formData.referenceNumber, JSON.stringify(formData));
+            
+            // عرض رسالة النجاح
+            document.getElementById('teacherName').textContent = formData.fullName;
+            document.getElementById('submissionTime').textContent = formData.timestamp;
+            document.getElementById('referenceNumber').textContent = formData.referenceNumber;
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('signatureForm').style.display = 'none';
         });
-
-        function generateLinks(num, subject, content) {
-            const baseUrl = 'https://nawafalsubhi3.github.io/myschool/';
-            
-            // ترميز المعاملات
-            const params = new URLSearchParams({
-                num: num,
-                subject: subject,
-                content: content
-            });
-            
-            const teacherLink = `${baseUrl}teacher.html?${params.toString()}`;
-            const adminLink = `${baseUrl}admin.html`;
-            
-            // عرض النتائج
-            document.getElementById('teacherLinkText').textContent = teacherLink;
-            document.getElementById('adminLinkText').textContent = adminLink;
-            
-            // معاينة المحتوى
-            document.getElementById('previewContent').innerHTML = `
-                <strong>رقم التعميم:</strong> ${num}<br>
-                <strong>الموضوع:</strong> ${subject}<br>
-                <strong>المحتوى:</strong><br>
-                <div style="background: white; padding: 15px; border-radius: 5px; margin-top: 10px; border-right: 4px solid #0f6b47;">
-                    ${content.split('\n').map(line => line.trim() ? `<p>${line}</p>` : '<br>').join('')}
-                </div>
-            `;
-            
-            // رسالة WhatsApp
-            const whatsappMessage = `🇸🇦 متوسطة المنذر بن عمرو الأنصاري
-📋 تعميم رقم: ${num}
-
-السلام عليكم أعزائي المعلمين والمعلمات
-
-يرجى الاطلاع على التعميم والتوقيع الإلكتروني:
-🔗 ${teacherLink}
-
-💡 طرق التوقيع المتاحة:
-• ✍️ الرسم باليد (للتوقيع التقليدي)
-• ⌨️ كتابة الاسم (الأسهل للجوال)
-
-⏰ آخر موعد للتوقيع: [ضع التاريخ المناسب]
-
-شكراً لتعاونكم المستمر
-إدارة المدرسة`;
-
-            document.getElementById('whatsappMessage').textContent = whatsappMessage;
-            
-            // إظهار منطقة النتائج
-            document.getElementById('resultArea').style.display = 'block';
-            
-            // التمرير إلى النتائج
-            document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // نسخ النص
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = elementId === 'whatsappMessage' 
-                ? element.textContent 
-                : element.querySelector('div').textContent;
-            
-            navigator.clipboard.writeText(text).then(function() {
-                const btn = element.querySelector('.copy-btn');
-                const originalText = btn.textContent;
-                btn.textContent = '✅ تم النسخ!';
-                btn.style.background = '#27ae60';
-                
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#0f6b47';
-                }, 2000);
-            }).catch(function() {
-                // Fallback للمتصفحات القديمة
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                alert('تم نسخ النص!');
-            });
-        }
-
-        // تحميل قيم افتراضية
-        window.addEventListener('load', function() {
-            const defaultSubject = 'تطبيق نظام التوقيع الإلكتروني الجديد';
-            const defaultContent = `يُرجى من جميع المعلمين والمعلمات الكرام في متوسطة المنذر بن عمرو الأنصاري الاطلاع على هذا التعميم والتوقيع إلكترونياً لتأكيد الاستلام والمشاهدة.
-
-هذا النظام الجديد سيضمن التوثيق الدقيق والسريع لجميع التعاميم الإدارية والتعليمية، مما يساهم في تحسين كفاءة العمل الإداري وتوفير الوقت والجهد.
-
-نشكركم على تعاونكم المستمر وجهودكم المبذولة في خدمة التعليم.`;
-            
-            document.getElementById('circularSubject').value = defaultSubject;
-            document.getElementById('circularContent').value = defaultContent;
-        });
-
-        console.log('✅ مولد روابط التعاميم جاهز');
     </script>
 </body>
 </html>
