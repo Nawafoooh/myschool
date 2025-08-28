@@ -191,13 +191,53 @@
             transform: translateY(-2px);
         }
         
+        .form-help {
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #0d5c0d;
+        }
+        
+        .loading-message {
+            text-align: center;
+            color: #0d5c0d;
+            font-size: 16px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0fff0;
+            border-radius: 10px;
+            border: 1px solid #d4edda;
+        }
+        
         .select-wrapper {
             position: relative;
         }
         
+        .select-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #0d5c0d;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .form-select:focus + .select-wrapper::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
         .form-select {
             width: 100%;
-            padding: 18px 20px;
+            padding: 18px 50px 18px 20px;
             border: 2px solid #e0e0e0;
             border-radius: 12px;
             font-size: 16px;
@@ -210,7 +250,7 @@
             background-repeat: no-repeat;
             background-position: left 15px center;
             background-size: 20px;
-            padding-left: 50px;
+            color: #333;
         }
         
         .form-select:focus {
@@ -219,6 +259,24 @@
             box-shadow: 0 0 20px rgba(45, 143, 45, 0.15);
             background-color: white;
             transform: translateY(-2px);
+        }
+        
+        .form-select option {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #333;
+            background: white;
+        }
+        
+        .form-select option:disabled {
+            color: #dc3545;
+            background: #f8d7da;
+            font-weight: bold;
+        }
+        
+        .form-select option:not(:disabled):hover {
+            background: #f0fff0;
+            color: #0d5c0d;
         }
         
         .submit-section {
@@ -561,12 +619,11 @@
                         <div class="select-wrapper">
                             <select id="meetingDay" name="meetingDay" class="form-select">
                                 <option value="">-- اختر اليوم المناسب --</option>
-                                <option value="sunday">الأحد - 15/3/1447هـ</option>
-                                <option value="monday">الاثنين - 16/3/1447هـ</option>
-                                <option value="tuesday">الثلاثاء - 17/3/1447هـ</option>
-                                <option value="wednesday">الأربعاء - 18/3/1447هـ</option>
-                                <option value="thursday">الخميس - 19/3/1447هـ</option>
+                                <!-- سيتم إنشاء الخيارات بواسطة JavaScript -->
                             </select>
+                        </div>
+                        <div class="form-help">
+                            💡 <strong>تلميح:</strong> الأيام المكتملة ستظهر باللون الأحمر
                         </div>
                     </div>
                     
@@ -633,26 +690,56 @@
         // التحقق من عدد الحجوزات لكل يوم وتعطيل الأيام المكتملة
         function updateDayOptions() {
             const selectElement = document.getElementById('meetingDay');
-            const options = selectElement.querySelectorAll('option[value]');
             
-            options.forEach(option => {
-                const day = option.value;
-                if (day && DAYS_CAPACITY[day]) {
-                    const bookedCount = getBookedCount(day);
-                    const available = DAYS_CAPACITY[day].max - bookedCount;
+            // إظهار رسالة تحميل
+            selectElement.innerHTML = '<option value="">🔄 جاري تحديث الأيام المتاحة...</option>';
+            selectElement.disabled = true;
+            
+            // محاكاة التحديث (في الحالة الحقيقية قد نحتاج لجلب البيانات من الخادم)
+            setTimeout(() => {
+                // إعادة إنشاء الخيارات
+                selectElement.innerHTML = '<option value="">-- اختر اليوم المناسب --</option>';
+                
+                // إضافة خيارات الأيام
+                const dayOptions = [
+                    { value: 'sunday', text: 'الأحد - 15/3/1447هـ' },
+                    { value: 'monday', text: 'الاثنين - 16/3/1447هـ' },
+                    { value: 'tuesday', text: 'الثلاثاء - 17/3/1447هـ' },
+                    { value: 'wednesday', text: 'الأربعاء - 18/3/1447هـ' },
+                    { value: 'thursday', text: 'الخميس - 19/3/1447هـ' }
+                ];
+                
+                dayOptions.forEach(dayOption => {
+                    const option = document.createElement('option');
+                    option.value = dayOption.value;
                     
-                    if (available <= 0) {
-                        option.disabled = true;
-                        option.textContent += ' (مكتمل ❌)';
-                        option.style.color = '#dc3545';
-                        option.style.background = '#f8d7da';
+                    if (DAYS_CAPACITY[dayOption.value]) {
+                        const bookedCount = getBookedCount(dayOption.value);
+                        const available = DAYS_CAPACITY[dayOption.value].max - bookedCount;
+                        
+                        if (available <= 0) {
+                            option.disabled = true;
+                            option.textContent = dayOption.text + ' (مكتمل ❌)';
+                            option.style.color = '#dc3545';
+                            option.style.background = '#f8d7da';
+                        } else if (available <= 10) {
+                            option.textContent = dayOption.text + ` (متبقي: ${available} مقاعد فقط ⚠️)`;
+                            option.style.color = '#856404';
+                            option.style.background = '#fff3cd';
+                        } else {
+                            option.textContent = dayOption.text + ` (متاح: ${available} مقعد ✅)`;
+                            option.disabled = false;
+                        }
                     } else {
-                        option.textContent = option.textContent.replace(' (مكتمل ❌)', '');
-                        option.textContent += ` (متاح: ${available})`;
-                        option.disabled = false;
+                        option.textContent = dayOption.text;
                     }
-                }
-            });
+                    
+                    selectElement.appendChild(option);
+                });
+                
+                // تفعيل القائمة مرة أخرى
+                selectElement.disabled = false;
+            }, 500);
         }
         
         // حساب عدد الحجوزات لكل يوم
@@ -873,6 +960,7 @@
         
         // تشغيل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
+            // تحديث خيارات الأيام عند تحميل الصفحة
             updateDayOptions();
             
             // إضافة تأثيرات بصرية للنموذج
@@ -886,6 +974,9 @@
                     this.parentElement.style.transform = 'scale(1)';
                 });
             });
+            
+            // تحميل المسودة المحفوظة
+            loadDraft();
         });
         
         // حفظ مسودة أثناء الكتابة
