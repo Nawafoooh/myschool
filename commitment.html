@@ -136,7 +136,7 @@
             text-align: justify;
         }
 
-        .qr-section {
+        .rules-link-section {
             background: rgba(15, 76, 117, 0.1);
             border-radius: 15px;
             padding: 25px;
@@ -144,35 +144,37 @@
             text-align: center;
         }
 
-        .qr-title {
+        .rules-link-section h3 {
             color: #0f4c75;
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 15px;
         }
 
-        .qr-info {
+        .rules-link-section p {
             color: #666;
             font-size: 14px;
             margin-bottom: 20px;
         }
 
-        .qr-code-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+        .rules-link-button {
             display: inline-block;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-        }
-
-        .qr-instructions {
+            padding: 15px 40px;
             background: linear-gradient(45deg, #28a745, #20c997);
             color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
             font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .rules-link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+            text-decoration: none;
         }
 
         .submit-btn {
@@ -308,7 +310,7 @@
                 font-size: 14px;
             }
             
-            .qr-section {
+            .rules-link-section {
                 padding: 20px;
             }
         }
@@ -327,20 +329,15 @@
         </header>
 
         <div class="main-content animate-fade">
-            <!-- QR Code Section -->
-            <div class="qr-section">
-                <h3 class="qr-title">قواعد السلوك والمواظبة</h3>
-                <p class="qr-info">امسح الرمز للاطلاع على القواعد الكاملة قبل تقديم التعهد</p>
-                <div class="qr-code-container">
-                    <canvas id="qrcode"></canvas>
-                </div>
-                <div class="qr-instructions">
-                    يُرجى مسح الرمز والاطلاع على قواعد السلوك والمواظبة قبل المتابعة
-                </div>
+            <div class="rules-link-section">
+                <h3>قواعد السلوك والمواظبة</h3>
+                <p>اضغط على الزر التالي للاطلاع على القواعد الكاملة قبل تقديم التعهد</p>
+                <a href="https://2u.pw/rbhFy" target="_blank" class="rules-link-button">
+                    الإطلاع على القواعد
+                </a>
             </div>
 
             <form id="commitmentForm" novalidate>
-                <!-- الحقول الإلزامية -->
                 <div class="form-row">
                     <div class="form-group">
                         <label><span class="required">*</span>اسم الطالب</label>
@@ -372,7 +369,6 @@
                     </div>
                 </div>
 
-                <!-- الحقول الاختيارية -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>الصف</label>
@@ -431,27 +427,7 @@
     </div>
 
     <script>
-        // إنشاء QR Code يعمل فعلياً
         document.addEventListener('DOMContentLoaded', function() {
-            // رابط قواعد السلوك والمواظبة (يمكنك تغييره للرابط الحقيقي)
-            const rulesURL = 'https://drive.google.com/file/d/1-9SLx98Fx2ixqlW-GmPiFAZd9u3J-Jeh/view?usp=drive_link';
-            
-            // إنشاء QR code باستخدام مكتبة qrcode.js
-            const canvas = document.getElementById('qrcode');
-            QRCode.toCanvas(canvas, rulesURL, {
-                width: 200,
-                height: 200,
-                color: {
-                    dark: '#0f4c75',
-                    light: '#ffffff'
-                },
-                margin: 2,
-                errorCorrectionLevel: 'M'
-            }, function (error) {
-                if (error) console.error('خطأ في إنشاء QR Code:', error);
-                console.log('تم إنشاء QR Code بنجاح!');
-            });
-
             // تحديد تاريخ اليوم افتراضياً
             const today = new Date().toISOString().split('T')[0];
             document.querySelector('input[name="date"]').value = today;
