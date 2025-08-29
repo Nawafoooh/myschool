@@ -160,7 +160,6 @@
             font-size: 18px;
         }
         
-        /* باقي CSS كما هو... */
         .form-group {
             margin-bottom: 25px;
         }
@@ -399,6 +398,40 @@
             font-size: 18px;
         }
         
+        .footer {
+            background: rgba(15, 76, 117, 0.9);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .status-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0f6b47;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.3s ease;
+        }
+        
+        .status-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -451,21 +484,6 @@
             }
         }
     </style>
-    <script>
-        // قراءة معلومات التعميم من URL
-        function getCircularInfo() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                number: params.get('num') || '001',
-                subject: params.get('subject') || 'تطبيق نظام التوقيع الإلكتروني الجديد',
-                content: params.get('content') || `يُرجى من جميع المعلمين والمعلمات الكرام في متوسطة المنذر بن عمرو الأنصاري الاطلاع على هذا التعميم والتوقيع إلكترونياً لتأكيد الاستلام والمشاهدة.
-
-هذا النظام الجديد سيضمن التوثيق الدقيق والسريع لجميع التعاميم الإدارية والتعليمية، مما يساهم في تحسين كفاءة العمل الإداري وتوفير الوقت والجهد.
-
-نشكركم على تعاونكم المستمر وجهودكم المبذولة في خدمة التعليم.`
-            };
-        }
-    </script>
 </head>
 <body>
     <div class="container">
@@ -549,7 +567,6 @@
                     <div class="signature-area">
                         <p><strong>📝 اختر طريقة التوقيع:</strong></p>
                         
-                        <!-- خيارات التوقيع -->
                         <div style="display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap;">
                             <button type="button" class="btn btn-secondary" onclick="showSignatureCanvas()" id="canvasBtn">
                                 ✍️ الرسم باليد
@@ -559,7 +576,6 @@
                             </button>
                         </div>
                         
-                        <!-- منطقة الرسم -->
                         <div id="canvasArea" style="display: none;">
                             <p style="color: #0f6b47; margin: 10px 0;"><strong>ارسم توقيعك باستخدام الإصبع أو القلم الرقمي:</strong></p>
                             <canvas id="signatureCanvas" class="signature-canvas" width="500" height="180"></canvas>
@@ -570,7 +586,6 @@
                             </div>
                         </div>
                         
-                        <!-- منطقة النص -->
                         <div id="textArea" style="display: none;">
                             <p style="color: #0f6b47; margin: 10px 0;"><strong>اكتب اسمك الكامل كتوقيع نصي:</strong></p>
                             <input type="text" id="textSignature" placeholder="اكتب اسمك الكامل هنا..." 
@@ -604,19 +619,28 @@
             </div>
         </div>
     </div>
+    
+    <div class="footer">
+        <p>متوسطة المنذر بن عمرو الأنصاري &copy; 2025</p>
+        <p>نظام التوقيع الإلكتروني</p>
+    </div>
+    
+    <div class="status-indicator" id="statusIndicator">
+        محفوظ تلقائياً
+    </div>
 
     <script>
-        // تحميل معلومات التعميم
-        window.addEventListener('load', function() {
-            const circularInfo = getCircularInfo();
-            
-            // تعديل محتوى التعميم
-            document.getElementById('circularNumber').textContent = `تعميم رقم: ${circularInfo.number}`;
-            document.getElementById('circularSubject').textContent = `الموضوع: ${circularInfo.subject}`;
-            document.getElementById('circularContent').innerHTML = circularInfo.content.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
-        });
+        // متغيرات عامة
+        let currentSignatureMode = 'none';
+        
+        // عناصر التوقيع
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
 
-        // تعيين التاريخ الحالي بالتقويم الهجري والميلادي
+        // تعيين التاريخ الحالي
         const currentDate = new Date();
         const options = { 
             year: 'numeric', 
@@ -633,15 +657,8 @@
         } catch (e) {
             document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('ar-SA');
         }
-        
-        // إعداد التوقيع الرقمي
-        const canvas = document.getElementById('signatureCanvas');
-        const ctx = canvas.getContext('2d');
-        let isDrawing = false;
-        let lastX = 0;
-        let lastY = 0;
-        let currentSignatureMode = 'none';
 
+        // وظائف التوقيع
         function showSignatureCanvas() {
             document.getElementById('canvasArea').style.display = 'block';
             document.getElementById('textArea').style.display = 'none';
@@ -680,13 +697,11 @@
             ctx.strokeStyle = '#1e4d3b';
         }
 
-        window.addEventListener('resize', setupCanvas);
-
+        // أحداث الرسم
         canvas.addEventListener('mousedown', startDrawing);
         canvas.addEventListener('mousemove', draw);
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
-
         canvas.addEventListener('touchstart', handleTouch);
         canvas.addEventListener('touchmove', handleTouch);
         canvas.addEventListener('touchend', stopDrawing);
@@ -790,8 +805,21 @@
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
-            const random = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
-            return `MAN-${year}${month}${day}-${random}`;
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 999).toString().padStart(3, '0');
+            return `MAN-${year}${month}${day}-${hours}${minutes}${seconds}-${random}`;
+        }
+
+        function showStatusIndicator(message, duration = 2000) {
+            const indicator = document.getElementById('statusIndicator');
+            indicator.textContent = message;
+            indicator.classList.add('show');
+            
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, duration);
         }
 
         // معالج إرسال النموذج
@@ -799,16 +827,15 @@
             e.preventDefault();
             
             if (currentSignatureMode === 'none' || !hasSignature()) {
-                alert('⚠️ يرجى اختيار طريقة التوقيع وإضافة توقيعك قبل الإرسال');
+                alert('يرجى اختيار طريقة التوقيع وإضافة توقيعك قبل الإرسال');
                 return;
             }
             
             const signatureData = getSignatureData();
-            const circularInfo = getCircularInfo();
             
             const formData = {
-                circularNumber: circularInfo.number,
-                circularSubject: circularInfo.subject,
+                circularNumber: '001',
+                circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
                 fullName: document.getElementById('fullName').value,
                 employeeId: document.getElementById('employeeId').value,
                 position: document.getElementById('position').value,
@@ -820,25 +847,109 @@
                 signature: signatureData,
                 timestamp: new Date().toLocaleString('ar-SA'),
                 referenceNumber: generateReferenceNumber(),
-                school: 'متوسطة المنذر بن عمرو الأنصاري'
+                school: 'متوسطة المنذر بن عمرو الأنصاري',
+                submissionDate: new Date().toISOString()
             };
             
-            console.log('بيانات النموذج:', formData);
-            
-            document.getElementById('teacherName').textContent = formData.fullName;
-            document.getElementById('submissionTime').textContent = formData.timestamp;
-            document.getElementById('referenceNumber').textContent = formData.referenceNumber;
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('signatureForm').style.display = 'none';
-            
-            localStorage.setItem('signature_' + formData.referenceNumber, JSON.stringify(formData));
-            
-            setTimeout(() => {
-                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
-            }, 500);
+            // حفظ البيانات
+            try {
+                localStorage.setItem('signature_' + formData.referenceNumber, JSON.stringify(formData));
+                
+                // إظهار رسالة النجاح
+                document.getElementById('teacherName').textContent = formData.fullName;
+                document.getElementById('submissionTime').textContent = formData.timestamp;
+                document.getElementById('referenceNumber').textContent = formData.referenceNumber;
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('signatureForm').style.display = 'none';
+                
+                showStatusIndicator('تم الإرسال بنجاح!', 3000);
+                
+                // مسح المسودة
+                localStorage.removeItem('draft_signature');
+                
+                setTimeout(() => {
+                    document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+                
+            } catch (error) {
+                console.error('خطأ في حفظ البيانات:', error);
+                alert('حدث خطأ في حفظ البيانات. يرجى المحاولة مرة أخرى.');
+            }
         });
 
-        console.log('✅ صفحة المعلمين جاهزة');
+        // حفظ المسودة تلقائياً
+        setInterval(function() {
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                employeeId: document.getElementById('employeeId').value,
+                position: document.getElementById('position').value,
+                subject: document.getElementById('subject').value,
+                phone: document.getElementById('phone').value
+            };
+            
+            if (formData.fullName || formData.employeeId) {
+                try {
+                    localStorage.setItem('draft_signature', JSON.stringify({
+                        ...formData,
+                        lastSaved: new Date().toISOString()
+                    }));
+                    showStatusIndicator('محفوظ تلقائياً', 1000);
+                } catch (e) {
+                    console.error('خطأ في الحفظ التلقائي:', e);
+                }
+            }
+        }, 30000);
+
+        // استرجاع المسودة
+        window.addEventListener('load', function() {
+            setupCanvas();
+            
+            const draft = localStorage.getItem('draft_signature');
+            if (draft) {
+                try {
+                    const data = JSON.parse(draft);
+                    const lastSaved = new Date(data.lastSaved);
+                    const now = new Date();
+                    
+                    if (now - lastSaved < 24 * 60 * 60 * 1000) {
+                        if (confirm('تم العثور على بيانات محفوظة مسبقاً. هل تريد استرجاعها؟')) {
+                            document.getElementById('fullName').value = data.fullName || '';
+                            document.getElementById('employeeId').value = data.employeeId || '';
+                            document.getElementById('position').value = data.position || '';
+                            document.getElementById('subject').value = data.subject || '';
+                            document.getElementById('phone').value = data.phone || '';
+                        }
+                    }
+                } catch (e) {
+                    console.error('خطأ في استرجاع المسودة:', e);
+                }
+            }
+        });
+
+        // تحذير من فقدان البيانات
+        window.addEventListener('beforeunload', function(e) {
+            const form = document.getElementById('signatureForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (form.style.display !== 'none' && successMessage.style.display === 'none') {
+                const fullName = document.getElementById('fullName').value;
+                const employeeId = document.getElementById('employeeId').value;
+                
+                if (fullName || employeeId || hasSignature()) {
+                    e.preventDefault();
+                    e.returnValue = 'هل أنت متأكد من أنك تريد مغادرة الصفحة؟ ستفقد البيانات غير المحفوظة.';
+                    return e.returnValue;
+                }
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (currentSignatureMode === 'canvas') {
+                setupCanvas();
+            }
+        });
+
+        console.log('تم تحميل نموذج التوقيع الإلكتروني بنجاح');
     </script>
 </body>
 </html>
