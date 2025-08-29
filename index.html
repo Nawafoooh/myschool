@@ -1,873 +1,4 @@
-<button class="btn btn-danger" onclick="clearAllData()">
-                        مسح جميع البيانات
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="content">
-            <div class="alert alert-info" id="systemAlert" style="display: none;">
-                <strong>تنبيه النظام:</strong> <span id="alertMessage"></span>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-number" id="totalSignatures">0</div>
-                    <div class="stat-label">إجمالي التوقيعات</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-number" id="completedSignatures">0</div>
-                    <div class="stat-label">التوقيعات المكتملة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⚠️</div>
-                    <div class="stat-number" id="pendingSignatures">0</div>
-                    <div class="stat-label">التوقيعات المعلقة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📈</div>
-                    <div class="stat-number" id="completionRate">0%</div>
-                    <div class="stat-label">معدل الإنجاز</div>
-                </div>
-            </div>
-            
-            <div class="search-filter">
-                <input type="text" id="searchName" placeholder="البحث بالاسم..." onkeyup="filterSignatures()">
-                <select id="filterStatus" onchange="filterSignatures()">
-                    <option value="">جميع الحالات</option>
-                    <option value="complete">مكتملة</option>
-                    <option value="pending">معلقة</option>
-                </select>
-                <select id="filterPosition" onchange="filterSignatures()">
-                    <option value="">جميع المناصب</option>
-                    <option value="معلم">معلم</option>
-                    <option value="معلمة">معلمة</option>
-                    <option value="وكيل">وكيل</option>
-                    <option value="مرشد">مرشد طلابي</option>
-                </select>
-                <button class="btn btn-secondary" onclick="resetFilters()">إعادة تعيين</button>
-            </div>
-            
-            <div class="signatures-table">
-                <div class="table-header">
-                    <span>قائمة التوقيعات الإلكترونية</span>
-                    <div class="table-controls">
-                        <button class="table-btn" onclick="refreshData()">تحديث</button>
-                        <button class="table-btn" onclick="exportToExcel()">تصدير</button>
-                        <button class="table-btn" onclick="printReport()">طباعة</button>
-                    </div>
-                </div>
-                
-                <div class="table-responsive">
-                    <table id="signaturesTable">
-                        <thead>
-                            <tr>
-                                <th>م</th>
-                                <th>الاسم الثلاثي</th>
-                                <th>الرقم الوظيفي</th>
-                                <th>المسمى الوظيفي</th>
-                                <th>التخصص</th>
-                                <th>تاريخ التوقيع</th>
-                                <th>الحالة</th>
-                                <th>التوقيع</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="signaturesTableBody">
-                            <tr>
-                                <td colspan="9" class="no-signatures">
-                                    <div class="no-signatures-icon">📋</div>
-                                    لا توجد توقيعات حالياً<br>
-                                    <small>انقر على "إنشاء بيانات تجريبية" لرؤية مثال على النظام</small>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <p>متوسطة المنذر بن عمرو الأنصاري &copy; 2025</p>
-        <p>نظام إدارة التوقيعات الإلكترونية</p>
-    </div>
-    
-    <!-- إشعار التوقيع الجديد -->
-    <div class="new-signature-alert" id="newSignatureAlert">
-        <strong>توقيع جديد!</strong><br>
-        <span id="newSignatureMessage"></span>
-    </div>
-    
-    <!-- مؤشر آخر تحديث -->
-    <div class="last-update" id="lastUpdate">
-        آخر تحديث: جاري التحميل...
-    </div>
-    
-    <!-- نافذة عرض التفاصيل -->
-    <div id="detailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>تفاصيل التوقيع الإلكتروني</h2>
-                <span class="close" onclick="closeModal()">&times;</span>
-            </div>
-            <div class="modal-body" id="modalContent">
-                <!-- محتوى التفاصيل سيتم إدراجه هنا -->
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // متغيرات عامة
-        let allSignatures = [];
-        let filteredSignatures = [];
-        let lastUpdateTime = null;
-
-        // تحميل البيانات عند بدء التشغيل
-        document.addEventListener('DOMContentLoaded', function() {
-            loadSignatures();
-            updateStats();
-            startAutoUpdate();
-        });
-
-        // تحميل التوقيعات من التخزين المحلي
-        function loadSignatures() {
-            allSignatures = [];
-            
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.startsWith('signature_')) {
-                    try {
-                        const signature = JSON.parse(localStorage.getItem(key));
-                        allSignatures.push(signature);
-                    } catch (e) {
-                        console.error('خطأ في قراءة التوقيع:', e);
-                    }
-                }
-            }
-            
-            // ترتيب التوقيعات حسب التاريخ
-            allSignatures.sort((a, b) => new Date(b.submissionDate || b.timestamp) - new Date(a.submissionDate || a.timestamp));
-            filteredSignatures = [...allSignatures];
-            
-            displaySignatures();
-            updateLastUpdateTime();
-        }
-
-        // عرض التوقيعات في الجدول
-        function displaySignatures() {
-            const tbody = document.getElementById('signaturesTableBody');
-            
-            if (filteredSignatures.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="9" class="no-signatures">
-                            <div class="no-signatures-icon">📋</div>
-                            ${allSignatures.length === 0 ? 
-                                'لا توجد توقيعات حالياً<br><small>انقر على "إنشاء بيانات تجريبية" لرؤية مثال على النظام</small>' : 
-                                'لا توجد نتائج تطابق معايير البحث<br><small>جرب تعديل معايير البحث أو إعادة التعيين</small>'}
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            tbody.innerHTML = filteredSignatures.map((sig, index) => {
-                const isComplete = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
-                const statusClass = isComplete ? 'status-complete' : 'status-pending';
-                const statusText = isComplete ? 'مكتملة' : 'معلقة';
-                
-                return `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong>${sig.fullName}</strong></td>
-                        <td>${sig.employeeId}</td>
-                        <td>${sig.position}</td>
-                        <td>${sig.subject || 'غير محدد'}</td>
-                        <td>${new Date(sig.timestamp).toLocaleDateString('ar-SA')}</td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        <td>
-                            ${sig.signature ? 
-                                (sig.signature.type === 'text' ? 
-                                    `<div style="font-weight: bold; color: #0f6b47; font-size: 12px; cursor: pointer;" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="انقر للعرض">📝 نصي</div>` : 
-                                    `<img src="${sig.signature.data}" class="signature-preview" alt="توقيع" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="انقر للتكبير">`) : 
-                                '<span style="color: #6c757d; font-size: 12px;">لا يوجد</span>'}
-                        </td>
-                        <td>
-                            <button class="action-btn" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="عرض التفاصيل الكاملة">
-                                عرض التفاصيل
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // تحديث الإحصائيات
-        function updateStats() {
-            const total = allSignatures.length;
-            const completed = allSignatures.filter(sig => 
-                sig.readConfirm && sig.understandConfirm && sig.implementConfirm
-            ).length;
-            const pending = total - completed;
-            const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
-            
-            // تحديث الأرقام مع تأثير العد
-            animateNumber('totalSignatures', total);
-            animateNumber('completedSignatures', completed);
-            animateNumber('pendingSignatures', pending);
-            animateNumber('completionRate', completionRate, '%');
-        }
-
-        // تأثير العد المتحرك للأرقام
-        function animateNumber(elementId, targetValue, suffix = '') {
-            const element = document.getElementById(elementId);
-            const currentValue = parseInt(element.textContent) || 0;
-            const increment = Math.max(1, Math.floor(Math.abs(targetValue - currentValue) / 20));
-            
-            if (currentValue < targetValue) {
-                const newValue = Math.min(currentValue + increment, targetValue);
-                element.textContent = newValue + suffix;
-                if (newValue < targetValue) {
-                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
-                }
-            } else if (currentValue > targetValue) {
-                const newValue = Math.max(currentValue - increment, targetValue);
-                element.textContent = newValue + suffix;
-                if (newValue > targetValue) {
-                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
-                }
-            }
-        }
-
-        // تصفية التوقيعات
-        function filterSignatures() {
-            const searchName = document.getElementById('searchName').value.toLowerCase();
-            const filterStatus = document.getElementById('filterStatus').value;
-            const filterPosition = document.getElementById('filterPosition').value;
-            
-            filteredSignatures = allSignatures.filter(sig => {
-                const matchesName = sig.fullName.toLowerCase().includes(searchName) || 
-                                   sig.employeeId.includes(searchName);
-                
-                let matchesStatus = true;
-                if (filterStatus === 'complete') {
-                    matchesStatus = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
-                } else if (filterStatus === 'pending') {
-                    matchesStatus = !(sig.readConfirm && sig.understandConfirm && sig.implementConfirm);
-                }
-                
-                const matchesPosition = !filterPosition || sig.position.includes(filterPosition);
-                
-                return matchesName && matchesStatus && matchesPosition;
-            });
-            
-            displaySignatures();
-        }
-
-        // إعادة تعيين المرشحات
-        function resetFilters() {
-            document.getElementById('searchName').value = '';
-            document.getElementById('filterStatus').value = '';
-            document.getElementById('filterPosition').value = '';
-            filteredSignatures = [...allSignatures];
-            displaySignatures();
-            showAlert('تم إعادة تعيين جميع المرشحات', 'success');
-        }
-
-        // عرض تفاصيل التوقيع
-        function viewSignatureDetails(referenceNumber) {
-            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
-            if (!signature) return;
-            
-            const isComplete = signature.readConfirm && signature.understandConfirm && signature.implementConfirm;
-            
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <div class="detail-row">
-                    <div class="detail-label">الاسم الثلاثي:</div>
-                    <div class="detail-value"><strong>${signature.fullName}</strong></div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">الرقم الوظيفي:</div>
-                    <div class="detail-value">${signature.employeeId}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">المسمى الوظيفي:</div>
-                    <div class="detail-value">${signature.position}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">التخصص/المادة:</div>
-                    <div class="detail-value">${signature.subject || 'غير محدد'}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">رقم الجوال:</div>
-                    <div class="detail-value">${signature.phone || 'غير محدد'}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">تاريخ التوقيع:</div>
-                    <div class="detail-value">${signature.timestamp}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">رقم المرجع:</div>
-                    <div class="detail-value"><code>${signature.referenceNumber}</code></div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">رقم التعميم:</div>
-                    <div class="detail-value">${signature.circularNumber || '001'}</div>
-                </div>
-                
-                <h3 style="color: #0f6b47; margin: 25px 0 15px; text-align: center;">حالة التأكيدات</h3>
-                <div class="confirmation-status">
-                    <div class="confirmation-item">
-                        <span class="confirmation-icon">${signature.readConfirm ? '✅' : '❌'}</span>
-                        <span>اطلع على التعميم كاملاً ومحتوياته</span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-icon">${signature.understandConfirm ? '✅' : '❌'}</span>
-                        <span>فهم المضمون والتعليمات المطلوبة</span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-icon">${signature.implementConfirm ? '✅' : '❌'}</span>
-                        <span>التزام بتطبيق التعليمات والتوجيهات</span>
-                    </div>
-                </div>
-                
-                <div class="detail-row">
-                    <div class="detail-label">الحالة العامة:</div>
-                    <div class="detail-value">
-                        <span class="status-badge ${isComplete ? 'status-complete' : 'status-pending'}">
-                            ${isComplete ? 'مكتملة' : 'معلقة'}
-                        </span>
-                    </div>
-                </div>
-                
-                ${signature.signature ? `
-                    <h3 style="color: #0f6b47; margin: 25px 0 15px; text-align: center;">التوقيع الإلكتروني</h3>
-                    <div class="signature-display">
-                        ${signature.signature.type === 'text' ? 
-                            `<div style="font-size: 28px; font-weight: bold; color: #1e4d3b; margin: 20px 0; font-family: serif;">${signature.signature.text}</div>
-                             <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع نصي</div>` : 
-                            `<img src="${signature.signature.data}" style="max-width: 100%; height: auto; border: 2px solid #e9ecef; border-radius: 8px; background: white;" alt="التوقيع">
-                             <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع مرسوم باليد</div>`}
-                    </div>
-                ` : '<div style="text-align: center; color: #6c757d; padding: 20px;">لا يوجد توقيع</div>'}
-                
-                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef;">
-                    <button class="btn btn-primary" onclick="printSignatureDetails('${signature.referenceNumber}')" style="margin-left: 10px;">
-                        طباعة التفاصيل
-                    </button>
-                    <button class="btn btn-secondary" onclick="closeModal()">
-                        إغلاق
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('detailsModal').style.display = 'block';
-        }
-
-        // إغلاق النافذة المنبثقة
-        function closeModal() {
-            document.getElementById('detailsModal').style.display = 'none';
-        }
-
-        // طباعة تفاصيل توقيع محدد
-        function printSignatureDetails(referenceNumber) {
-            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
-            if (!signature) return;
-            
-            const printWindow = window.open('', '_blank');
-            const isComplete = signature.readConfirm && signature.understandConfirm && signature.implementConfirm;
-            
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="ar" dir="rtl">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>تفاصيل التوقيع - ${signature.fullName}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; padding: 30px; background: white; }
-                        .header { text-align: center; color: #0f6b47; margin-bottom: 40px; border-bottom: 3px solid #0f6b47; padding-bottom: 20px; }
-                        .info-section { margin: 25px 0; }
-                        .info-row { display: flex; margin: 15px 0; padding: 12px; background: #f8f9fa; border-right: 4px solid #0f6b47; }
-                        .info-label { font-weight: bold; min-width: 200px; color: #495057; }
-                        .info-value { color: #212529; }
-                        .signature-section { text-align: center; margin: 30px 0; padding: 25px; background: #f8f9fa; border-radius: 10px; }
-                        .status-complete { background: #d4edda; color: #155724; padding: 8px 16px; border-radius: 20px; display: inline-block; }
-                        .status-pending { background: #fff3cd; color: #856404; padding: 8px 16px; border-radius: 20px; display: inline-block; }
-                        .confirmations { margin: 20px 0; }
-                        .confirmation-item { margin: 10px 0; padding: 10px; background: #f8f9fa; border-right: 4px solid #0f6b47; }
-                        @media print { body { margin: 0; } }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <h1>تفاصيل التوقيع الإلكتروني</h1>
-                        <h2>متوسطة المنذر بن عمرو الأنصاري</h2>
-                        <p>تاريخ الطباعة: ${new Date().toLocaleDateString('ar-SA')} - ${new Date().toLocaleTimeString('ar-SA')}</p>
-                    </div>
-                    
-                    <div class="info-section">
-                        <h3 style="color: #0f6b47; margin-bottom: 15px;">المعلومات الأساسية</h3>
-                        <div class="info-row">
-                            <div class="info-label">الاسم الثلاثي:</div>
-                            <div class="info-value"><strong>${signature.fullName}</strong></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">الرقم الوظيفي:</div>
-                            <div class="info-value">${signature.employeeId}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">المسمى الوظيفي:</div>
-                            <div class="info-value">${signature.position}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">التخصص/المادة:</div>
-                            <div class="info-value">${signature.subject || 'غير محدد'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">رقم الجوال:</div>
-                            <div class="info-value">${signature.phone || 'غير محدد'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">تاريخ التوقيع:</div>
-                            <div class="info-value">${signature.timestamp}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">رقم المرجع:</div>
-                            <div class="info-value">${signature.referenceNumber}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">الحالة العامة:</div>
-                            <div class="info-value">
-                                <span class="${isComplete ? 'status-complete' : 'status-pending'}">
-                                    ${isComplete ? 'مكتملة' : 'معلقة'}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="info-section">
-                        <h3 style="color: #0f6b47; margin-bottom: 15px;">حالة التأكيدات</h3>
-                        <div class="confirmations">
-                            <div class="confirmation-item">
-                                <strong>${signature.readConfirm ? '✅' : '❌'}</strong> اطلع على التعميم كاملاً ومحتوياته
-                            </div>
-                            <div class="confirmation-item">
-                                <strong>${signature.understandConfirm ? '✅' : '❌'}</strong> فهم المضمون والتعليمات المطلوبة
-                            </div>
-                            <div class="confirmation-item">
-                                <strong>${signature.implementConfirm ? '✅' : '❌'}</strong> التزام بتطبيق التعليمات والتوجيهات
-                            </div>
-                        </div>
-                    </div>
-                    
-                    ${signature.signature ? `
-                        <div class="signature-section">
-                            <h3 style="color: #0f6b47; margin-bottom: 20px;">التوقيع الإلكتروني</h3>
-                            ${signature.signature.type === 'text' ? 
-                                `<div style="font-size: 32px; font-weight: bold; color: #1e4d3b; margin: 25px 0; font-family: serif; border: 2px solid #0f6b47; padding: 20px; display: inline-block;">${signature.signature.text}</div>
-                                 <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع نصي</div>` : 
-                                `<img src="${signature.signature.data}" style="max-width: 400px; border: 2px solid #0f6b47; border-radius: 8px; background: white;" alt="التوقيع">
-                                 <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع مرسوم باليد</div>`}
-                        </div>
-                    ` : ''}
-                    
-                    <div style="text-align: center; margin-top: 50px; border-top: 3px solid #0f6b47; padding-top: 20px;">
-                        <p><strong>إدارة متوسطة المنذر بن عمرو الأنصاري</strong></p>
-                        <p>نظام التوقيع الإلكتروني</p>
-                    </div>
-                </body>
-                </html>
-            `);
-            
-            printWindow.document.close();
-            setTimeout(() => printWindow.print(), 500);
-        }
-
-        // إنشاء بيانات تجريبية
-        function generateDemoData() {
-            if (confirm('هل تريد إنشاء بيانات تجريبية؟ سيؤدي ذلك إلى إضافة توقيعات وهمية للاختبار.')) {
-                const demoData = [
-                    {
-                        circularNumber: '001',
-                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
-                        fullName: 'أحمد محمد العلي',
-                        employeeId: '12345',
-                        position: 'معلم',
-                        subject: 'الرياضيات',
-                        phone: '0501234567',
-                        readConfirm: true,
-                        understandConfirm: true,
-                        implementConfirm: true,
-                        signature: { type: 'text', text: 'أحمد محمد العلي' },
-                        timestamp: new Date().toLocaleString('ar-SA'),
-                        referenceNumber: 'MAN-20250101-120000-001',
-                        submissionDate: new Date().toISOString()
-                    },
-                    {
-                        circularNumber: '001',
-                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
-                        fullName: 'فاطمة سعد الأحمد',
-                        employeeId: '12346',
-                        position: 'معلمة',
-                        subject: 'اللغة العربية',
-                        phone: '0507654321',
-                        readConfirm: true,
-                        understandConfirm: true,
-                        implementConfirm: false,
-                        signature: { type: 'text', text: 'فاطمة سعد الأحمد' },
-                        timestamp: new Date(Date.now() - 3600000).toLocaleString('ar-SA'),
-                        referenceNumber: 'MAN-20250101-110000-002',
-                        submissionDate: new Date(Date.now() - 3600000).toISOString()
-                    },
-                    {
-                        circularNumber: '001',
-                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
-                        fullName: 'عبدالله خالد المطيري',
-                        employeeId: '12347',
-                        position: 'وكيل',
-                        subject: '',
-                        phone: '0509876543',
-                        readConfirm: true,
-                        understandConfirm: true,
-                        implementConfirm: true,
-                        signature: { type: 'text', text: 'عبدالله خالد المطيري' },
-                        timestamp: new Date(Date.now() - 7200000).toLocaleString('ar-SA'),
-                        referenceNumber: 'MAN-20250101-100000-003',
-                        submissionDate: new Date(Date.now() - 7200000).toISOString()
-                    }
-                ];
-                
-                demoData.forEach(data => {
-                    localStorage.setItem(`signature_${data.referenceNumber}`, JSON.stringify(data));
-                });
-                
-                loadSignatures();
-                updateStats();
-                showAlert('تم إنشاء البيانات التجريبية بنجاح!', 'success');
-            }
-        }
-
-        // تحديث البيانات
-        function refreshData() {
-            const previousCount = allSignatures.length;
-            loadSignatures();
-            updateStats();
-            
-            const newCount = allSignatures.length;
-            if (newCount > previousCount) {
-                const newSignatures = newCount - previousCount;
-                showNewSignatureAlert(`تم العثور على ${newSignatures} توقيع جديد!`);
-            } else {
-                showAlert('تم تحديث البيانات بنجاح', 'success');
-            }
-        }
-
-        // تصدير إلى Excel
-        function exportToExcel() {
-            if (allSignatures.length === 0) {
-                showAlert('لا توجد بيانات للتصدير', 'warning');
-                return;
-            }
-            
-            const headers = [
-                'الاسم الثلاثي',
-                'الرقم الوظيفي',
-                'المسمى الوظيفي',
-                'التخصص/المادة',
-                'رقم الجوال',
-                'تاريخ التوقيع',
-                'رقم المرجع',
-                'اطلع على التعميم',
-                'فهم المضمون',
-                'التزم بالتطبيق',
-                'نوع التوقيع',
-                'الحالة العامة'
-            ];
-            
-            const csvData = allSignatures.map(sig => [
-                sig.fullName,
-                sig.employeeId,
-                sig.position,
-                sig.subject || '',
-                sig.phone || '',
-                sig.timestamp,
-                sig.referenceNumber,
-                sig.readConfirm ? 'نعم' : 'لا',
-                sig.understandConfirm ? 'نعم' : 'لا',
-                sig.implementConfirm ? 'نعم' : 'لا',
-                sig.signature?.type === 'text' ? 'نصي' : 'مرسوم',
-                (sig.readConfirm && sig.understandConfirm && sig.implementConfirm) ? 'مكتملة' : 'معلقة'
-            ]);
-            
-            const csvContent = [headers, ...csvData]
-                .map(row => row.map(cell => `"${cell}"`).join(','))
-                .join('\n');
-            
-            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `تقرير_التوقيعات_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showAlert('تم تصدير البيانات بنجاح', 'success');
-        }
-
-        // طباعة التقرير الكامل
-        function printReport() {
-            if (allSignatures.length === 0) {
-                showAlert('لا توجد بيانات للطباعة', 'warning');
-                return;
-            }
-            
-            const completed = allSignatures.filter(sig => 
-                sig.readConfirm && sig.understandConfirm && sig.implementConfirm
-            ).length;
-            
-            const printWindow = window.open('', '_blank');
-            const printHTML = `
-                <!DOCTYPE html>
-                <html lang="ar" dir="rtl">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>تقرير التوقيعات الإلكترونية الشامل</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
-                        .header { text-align: center; margin-bottom: 40px; border-bottom: 3px solid #0f6b47; padding-bottom: 20px; }
-                        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 30px 0; }
-                        .stat-box { text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 2px solid #0f6b47; }
-                        .stat-number { font-size: 36px; font-weight: bold; color: #0f6b47; margin-bottom: 10px; }
-                        .stat-label { font-size: 14px; color: #495057; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 12px; }
-                        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-                        th { background-color: #0f6b47; color: white; font-weight: bold; }
-                        tr:nth-child(even) { background-color: #f9f9f9; }
-                        .status-complete { background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 12px; }
-                        .status-pending { background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 12px; }
-                        .summary { margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 10px; border-right: 5px solid #0f6b47; }
-                        @media print { 
-                            body { margin: 0; font-size: 11px; } 
-                            .stats { grid-template-columns: repeat(2, 1fr); }
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <h1>المملكة العربية السعودية</h1>
-                        <h2>وزارة التعليم</h2>
-                        <h2>متوسطة المنذر بن عمرو الأنصاري</h2>
-                        <h3>تقرير التوقيعات الإلكترونية الشامل</h3>
-                        <p><strong>التعميم رقم:</strong> 001 - تطبيق نظام التوقيع الإلكتروني الجديد</p>
-                        <p><strong>تاريخ التقرير:</strong> ${new Date().toLocaleDateString('ar-SA')} - ${new Date().toLocaleTimeString('ar-SA')}</p>
-                    </div>
-                    
-                    <div class="stats">
-                        <div class="stat-box">
-                            <div class="stat-number">${allSignatures.length}</div>
-                            <div class="stat-label">إجمالي التوقيعات</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number">${completed}</div>
-                            <div class="stat-label">التوقيعات المكتملة</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number">${allSignatures.length - completed}</div>
-                            <div class="stat-label">التوقيعات المعلقة</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number">${allSignatures.length > 0 ? Math.round((completed / allSignatures.length) * 100) : 0}%</div>
-                            <div class="stat-label">معدل الإنجاز</div>
-                        </div>
-                    </div>
-
-                    <div class="summary">
-                        <h3>ملخص التقرير:</h3>
-                        <ul>
-                            <li><strong>العدد الكلي للمعلمين الذين وقعوا:</strong> ${allSignatures.length} معلم/معلمة</li>
-                            <li><strong>نسبة المكتملين:</strong> ${allSignatures.length > 0 ? Math.round((completed / allSignatures.length) * 100) : 0}%</li>
-                            <li><strong>التوقيعات النصية:</strong> ${allSignatures.filter(s => s.signature?.type === 'text').length}</li>
-                            <li><strong>التوقيعات المرسومة:</strong> ${allSignatures.filter(s => s.signature?.type === 'canvas').length}</li>
-                        </ul>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>م</th>
-                                <th>الاسم الثلاثي</th>
-                                <th>الرقم الوظيفي</th>
-                                <th>المسمى الوظيفي</th>
-                                <th>التخصص</th>
-                                <th>تاريخ التوقيع</th>
-                                <th>الحالة</th>
-                                <th>رقم المرجع</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${allSignatures.map((sig, index) => {
-                                const isComplete = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
-                                const statusClass = isComplete ? 'status-complete' : 'status-pending';
-                                const statusText = isComplete ? 'مكتملة' : 'معلقة';
-                                
-                                return `
-                                    <tr>
-                                        <td>${index + 1}</td>
-                                        <td><strong>${sig.fullName}</strong></td>
-                                        <td>${sig.employeeId}</td>
-                                        <td>${sig.position}</td>
-                                        <td>${sig.subject || 'غير محدد'}</td>
-                                        <td>${new Date(sig.timestamp).toLocaleDateString('ar-SA')}</td>
-                                        <td><span class="${statusClass}">${statusText}</span></td>
-                                        <td>${sig.referenceNumber}</td>
-                                    </tr>
-                                `;
-                            }).join('')}
-                        </tbody>
-                    </table>
-                    
-                    <div style="margin-top: 40px; padding: 25px; background: #f8f9fa; border-radius: 10px; border-right: 5px solid #0f6b47;">
-                        <h3>ملاحظات مهمة:</h3>
-                        <ul>
-                            <li>جميع التوقيعات مؤرخة ومرقمة بأرقام مرجعية فريدة لضمان عدم التكرار</li>
-                            <li>التوقيعات المكتملة تشمل جميع التأكيدات الثلاثة المطلوبة</li>
-                            <li>يمكن مراجعة تفاصيل كل توقيع من خلال النظام الإلكتروني</li>
-                            <li>هذا التقرير تم إنشاؤه تلقائياً من نظام إدارة التوقيعات الإلكترونية</li>
-                        </ul>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 50px; border-top: 3px solid #0f6b47; padding-top: 30px;">
-                        <p><strong>إدارة متوسطة المنذر بن عمرو الأنصاري</strong></p>
-                        <p>نظام إدارة التوقيعات الإلكترونية</p>
-                        <p style="font-size: 12px; color: #666; margin-top: 20px;">
-                            هذا المستند تم إنشاؤه إلكترونياً ولا يحتاج لتوقيع أو ختم
-                        </p>
-                    </div>
-                </body>
-                </html>
-            `;
-
-            printWindow.document.write(printHTML);
-            printWindow.document.close();
-            setTimeout(() => printWindow.print(), 500);
-        }
-
-        // مسح جميع البيانات
-        function clearAllData() {
-            if (confirm('تحذير خطر!\n\nهل أنت متأكد من مسح جميع بيانات التوقيعات؟\n\nهذا الإجراء لا يمكن التراجع عنه وسيتم فقدان جميع البيانات نهائياً.')) {
-                if (confirm('تأكيد أخير: سيتم مسح جميع البيانات نهائياً. هل تريد المتابعة؟')) {
-                    const keys = [];
-                    for (let i = 0; i < localStorage.length; i++) {
-                        const key = localStorage.key(i);
-                        if (key && key.startsWith('signature_')) {
-                            keys.push(key);
-                        }
-                    }
-                    
-                    keys.forEach(key => localStorage.removeItem(key));
-                    
-                    allSignatures = [];
-                    filteredSignatures = [];
-                    updateStats();
-                    displaySignatures();
-                    
-                    showAlert('تم مسح جميع البيانات بنجاح', 'warning');
-                }
-            }
-        }
-
-        // عرض التنبيهات
-        function showAlert(message, type = 'info') {
-            const alertDiv = document.getElementById('systemAlert');
-            const alertMessage = document.getElementById('alertMessage');
-            
-            alertMessage.textContent = message;
-            alertDiv.className = `alert alert-${type}`;
-            alertDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                alertDiv.style.display = 'none';
-            }, 5000);
-        }
-
-        // إظهار إشعار التوقيع الجديد
-        function showNewSignatureAlert(message) {
-            const alert = document.getElementById('newSignatureAlert');
-            const alertMessage = document.getElementById('newSignatureMessage');
-            
-            alertMessage.textContent = message;
-            alert.style.display = 'block';
-            
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 6000);
-        }
-
-        // تحديث وقت آخر تحديث
-        function updateLastUpdateTime() {
-            const lastUpdateDiv = document.getElementById('lastUpdate');
-            const now = new Date();
-            lastUpdateDiv.textContent = `آخر تحديث: ${now.toLocaleTimeString('ar-SA')}`;
-            lastUpdateTime = now;
-        }
-
-        // بدء التحديث التلقائي
-        function startAutoUpdate() {
-            setInterval(() => {
-                const currentCount = allSignatures.length;
-                loadSignatures();
-                
-                if (allSignatures.length > currentCount) {
-                    updateStats();
-                    const newSignatures = allSignatures.length - currentCount;
-                    showNewSignatureAlert(`تم استلام ${newSignatures} توقيع جديد!`);
-                }
-            }, 10000); // كل 10 ثوان
-        }
-
-        // إغلاق النافذة المنبثقة عند النقر خارجها
-        window.onclick = function(event) {
-            const modal = document.getElementById('detailsModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        // اختصارات لوحة المفاتيح
-        document.addEventListener('keydown', function(e) {
-            // Ctrl + R للتحديث
-            if (e.ctrlKey && e.key === 'r') {
-                e.preventDefault();
-                refreshData();
-            }
-            
-            // Ctrl + E للتصدير
-            if (e.ctrlKey && e.key === 'e') {
-                e.preventDefault();
-                exportToExcel();
-            }
-            
-            // Ctrl + P للطباعة
-            if (e.ctrlKey && e.key === 'p') {
-                e.preventDefault();
-                printReport();
-            }
-            
-            // Escape لإغلاق النافذة المنبثقة
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        console.log('تم تحميل لوحة تحكم المدير بنجاح');
-    </script>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -928,27 +59,27 @@
         }
         
         .ministry-logo {
-            font-size: 48px;
+            font-size: 60px;
             margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .ministry-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 5px;
             color: #ffffff;
         }
         
         .ministry-subtitle {
-            font-size: 14px;
+            font-size: 16px;
             margin-bottom: 15px;
             opacity: 0.95;
             color: #e8f5f0;
         }
         
         .school-name {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             background: rgba(255,255,255,0.15);
             padding: 12px 25px;
@@ -1411,7 +542,6 @@
             color: white;
             text-align: center;
             padding: 15px;
-            margin-top: 20px;
             border-radius: 0 0 15px 15px;
         }
         
@@ -1494,24 +624,230 @@
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <div class="ministry-logo">🏛️</div>
+                <div class="ministry-logo">🇸🇦</div>
                 <div class="ministry-title">المملكة العربية السعودية</div>
                 <div class="ministry-subtitle">وزارة التعليم</div>
                 <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
-                <div class="dashboard-title">🛠️ لوحة تحكم المدير</div>
+                <div class="dashboard-title">لوحة تحكم المدير</div>
                 
                 <div class="admin-controls">
                     <button class="btn btn-success" onclick="generateDemoData()">
-                        📊 إنشاء بيانات تجريبية
+                        إنشاء بيانات تجريبية
                     </button>
                     <button class="btn btn-primary" onclick="refreshData()">
-                        🔄 تحديث البيانات
+                        تحديث البيانات
                     </button>
                     <button class="btn btn-info" onclick="exportToExcel()">
-                        📑 تصدير إلى Excel
+                        تصدير إلى Excel
                     </button>
                     <button class="btn btn-warning" onclick="printReport()">
-                        🖨️ طباعة التقرير
+                        طباعة التقرير
                     </button>
                     <button class="btn btn-danger" onclick="clearAllData()">
-                        🗑️ مسح جميع
+                        مسح جميع البيانات
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="alert alert-info" id="systemAlert" style="display: none;">
+                <strong>تنبيه النظام:</strong> <span id="alertMessage"></span>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-number" id="totalSignatures">0</div>
+                    <div class="stat-label">إجمالي التوقيعات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-number" id="completedSignatures">0</div>
+                    <div class="stat-label">التوقيعات المكتملة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-number" id="pendingSignatures">0</div>
+                    <div class="stat-label">التوقيعات المعلقة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-number" id="completionRate">0%</div>
+                    <div class="stat-label">معدل الإنجاز</div>
+                </div>
+            </div>
+            
+            <div class="search-filter">
+                <input type="text" id="searchName" placeholder="البحث بالاسم..." onkeyup="filterSignatures()">
+                <select id="filterStatus" onchange="filterSignatures()">
+                    <option value="">جميع الحالات</option>
+                    <option value="complete">مكتملة</option>
+                    <option value="pending">معلقة</option>
+                </select>
+                <select id="filterPosition" onchange="filterSignatures()">
+                    <option value="">جميع المناصب</option>
+                    <option value="معلم">معلم</option>
+                    <option value="معلمة">معلمة</option>
+                    <option value="وكيل">وكيل</option>
+                    <option value="مرشد">مرشد طلابي</option>
+                </select>
+                <button class="btn btn-secondary" onclick="resetFilters()">إعادة تعيين</button>
+            </div>
+            
+            <div class="signatures-table">
+                <div class="table-header">
+                    <span>قائمة التوقيعات الإلكترونية</span>
+                    <div class="table-controls">
+                        <button class="table-btn" onclick="refreshData()">تحديث</button>
+                        <button class="table-btn" onclick="exportToExcel()">تصدير</button>
+                        <button class="table-btn" onclick="printReport()">طباعة</button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table id="signaturesTable">
+                        <thead>
+                            <tr>
+                                <th>م</th>
+                                <th>الاسم الثلاثي</th>
+                                <th>الرقم الوظيفي</th>
+                                <th>المسمى الوظيفي</th>
+                                <th>التخصص</th>
+                                <th>تاريخ التوقيع</th>
+                                <th>الحالة</th>
+                                <th>التوقيع</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="signaturesTableBody">
+                            <tr>
+                                <td colspan="9" class="no-signatures">
+                                    <div class="no-signatures-icon">📋</div>
+                                    لا توجد توقيعات حالياً<br>
+                                    <small>انقر على "إنشاء بيانات تجريبية" لرؤية مثال على النظام</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>متوسطة المنذر بن عمرو الأنصاري © 2025</p>
+        <p>نظام إدارة التوقيعات الإلكترونية</p>
+    </div>
+    
+    <!-- إشعار التوقيع الجديد -->
+    <div class="new-signature-alert" id="newSignatureAlert">
+        <strong>توقيع جديد!</strong><br>
+        <span id="newSignatureMessage"></span>
+    </div>
+    
+    <!-- مؤشر آخر تحديث -->
+    <div class="last-update" id="lastUpdate">
+        آخر تحديث: جاري التحميل...
+    </div>
+    
+    <!-- نافذة عرض التفاصيل -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تفاصيل التوقيع الإلكتروني</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="modalContent">
+                <!-- محتوى التفاصيل سيتم إدراجه هنا -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات عامة
+        let allSignatures = [];
+        let filteredSignatures = [];
+        let lastUpdateTime = null;
+
+        // تحميل البيانات عند بدء التشغيل
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSignatures();
+            updateStats();
+            startAutoUpdate();
+        });
+
+        // تحميل التوقيعات من التخزين المحلي
+        function loadSignatures() {
+            allSignatures = [];
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('signature_')) {
+                    try {
+                        const signature = JSON.parse(localStorage.getItem(key));
+                        allSignatures.push(signature);
+                    } catch (e) {
+                        console.error('خطأ في قراءة التوقيع:', e);
+                    }
+                }
+            }
+            
+            // ترتيب التوقيعات حسب التاريخ
+            allSignatures.sort((a, b) => new Date(b.submissionDate || b.timestamp) - new Date(a.submissionDate || a.timestamp));
+            filteredSignatures = [...allSignatures];
+            
+            displaySignatures();
+            updateLastUpdateTime();
+        }
+
+        // عرض التوقيعات في الجدول
+        function displaySignatures() {
+            const tbody = document.getElementById('signaturesTableBody');
+            
+            if (filteredSignatures.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="no-signatures">
+                            <div class="no-signatures-icon">📋</div>
+                            ${allSignatures.length === 0 ? 
+                                'لا توجد توقيعات حالياً<br><small>انقر على "إنشاء بيانات تجريبية" لرؤية مثال على النظام</small>' : 
+                                'لا توجد نتائج تطابق معايير البحث<br><small>جرب تعديل معايير البحث أو إعادة التعيين</small>'}
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = filteredSignatures.map((sig, index) => {
+                const isComplete = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
+                const statusClass = isComplete ? 'status-complete' : 'status-pending';
+                const statusText = isComplete ? 'مكتملة' : 'معلقة';
+                
+                return `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${sig.fullName}</strong></td>
+                        <td>${sig.employeeId}</td>
+                        <td>${sig.position}</td>
+                        <td>${sig.subject || 'غير محدد'}</td>
+                        <td>${new Date(sig.timestamp).toLocaleDateString('ar-SA')}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            ${sig.signature ? 
+                                (sig.signature.type === 'text' ? 
+                                    `<div style="font-weight: bold; color: #0f6b47; font-size: 12px; cursor: pointer;" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="انقر للعرض">نصي</div>` : 
+                                    `<img src="${sig.signature.data}" class="signature-preview" alt="توقيع" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="انقر للتكبير">`) : 
+                                '<span style="color: #6c757d; font-size: 12px;">لا يوجد</span>'}
+                        </td>
+                        <td>
+                            <button class="action-btn" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="عرض التفاصيل الكاملة">
+                                عرض التفاصيل
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // تحديث الإ
