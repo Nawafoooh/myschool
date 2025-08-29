@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج الالتزام المدرسي - متوسطة المنذر بن عمرو الأنصاري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .ministry-info {
+            color: #0f4c75;
+            font-size: 12px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .school-name {
+            color: #0f4c75;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-title {
+            color: #3282b8;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0f4c75;
+            font-weight: 600;
+        }
+
+        .required {
+            color: #dc3545;
+            margin-right: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3282b8;
+            box-shadow: 0 0 0 3px rgba(50, 130, 184, 0.1);
+        }
+
+        .form-group input:invalid,
+        .form-group select:invalid {
+            border-color: #dc3545;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .commitment-section {
+            background: #f8f9fa;
+            border: 2px solid #0f4c75;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .commitment-title {
+            color: #0f4c75;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .commitment-text {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        .qr-section {
+            background: rgba(15, 76, 117, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .qr-title {
+            color: #0f4c75;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .qr-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .qr-code-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .qr-instructions {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            font-family: 'Cairo', sans-serif;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .admin-link {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .admin-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(45deg, #6c757d, #495057);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+
+        .footer {
+            background: rgba(15, 76, 117, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .developer-credit {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .validation-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .school-name {
+                font-size: 20px;
+            }
+            
+            .commitment-text {
+                font-size: 14px;
+            }
+            
+            .qr-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header animate-fade">
+            <div class="ministry-info">
+                المملكة العربية السعودية<br>
+                وزارة التعليم<br>
+                مكتب تعليم العوالي
+            </div>
+            <h1 class="school-name">متوسطة المنذر بن عمرو الأنصاري</h1>
+            <div class="page-title">نموذج الالتزام المدرسي</div>
+        </header>
+
+        <div class="main-content animate-fade">
+            <!-- QR Code Section -->
+            <div class="qr-section">
+                <h3 class="qr-title">قواعد السلوك والمواظبة</h3>
+                <p class="qr-info">امسح الرمز للاطلاع على القواعد الكاملة قبل تقديم التعهد</p>
+                <div class="qr-code-container">
+                    <canvas id="qrcode"></canvas>
+                </div>
+                <div class="qr-instructions">
+                    يُرجى مسح الرمز والاطلاع على قواعد السلوك والمواظبة قبل المتابعة
+                </div>
+            </div>
+
+            <form id="commitmentForm" novalidate>
+                <!-- الحقول الإلزامية -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><span class="required">*</span>اسم الطالب</label>
+                        <input type="text" name="studentName" required>
+                        <div class="validation-message">هذا الحقل إلزامي</div>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="required">*</span>المرحلة</label>
+                        <select name="grade" required>
+                            <option value="">اختر المرحلة</option>
+                            <option value="الأول المتوسط">الأول المتوسط</option>
+                            <option value="الثاني المتوسط">الثاني المتوسط</option>
+                            <option value="الثالث المتوسط">الثالث المتوسط</option>
+                        </select>
+                        <div class="validation-message">يُرجى اختيار المرحلة</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><span class="required">*</span>اسم ولي الأمر</label>
+                        <input type="text" name="guardianName" required>
+                        <div class="validation-message">هذا الحقل إلزامي</div>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="required">*</span>هاتف الجوال</label>
+                        <input type="tel" name="mobile" pattern="^05[0-9]{8}$" placeholder="05xxxxxxxx" required>
+                        <div class="validation-message">يُرجى إدخال رقم جوال صحيح (05xxxxxxxx)</div>
+                    </div>
+                </div>
+
+                <!-- الحقول الاختيارية -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>الصف</label>
+                        <input type="text" name="class" placeholder="مثال: أ">
+                    </div>
+                    <div class="form-group">
+                        <label>هاتف المنزل</label>
+                        <input type="tel" name="homePhone">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>رقم الهوية</label>
+                        <input type="text" name="idNumber" pattern="^[0-9]{10}$" placeholder="10 أرقام">
+                        <div class="validation-message">رقم الهوية يجب أن يكون 10 أرقام</div>
+                    </div>
+                    <div class="form-group">
+                        <label>التاريخ</label>
+                        <input type="date" name="date">
+                    </div>
+                </div>
+
+                <div class="commitment-section">
+                    <h3 class="commitment-title">نص التعهد</h3>
+                    <div class="commitment-text">
+                        بعد اطلاعي الكامل على محتوى <strong>قواعد السلوك والمواظبة</strong>، أتعهد بالالتزام التام بجميع الأنظمة والتعليمات الواردة فيها، والعمل بمقتضاها بما يحفظ حقوقي ويحقق أهداف العملية التعليمية.
+                        <br><br>
+                        كما أتحمل كامل المسؤولية عن صحة بيانات التواصل الموضحة أعلاه، وألتزم بتحديثها عند أي تغيير.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ملاحظات إضافية (اختياري)</label>
+                    <textarea name="notes" rows="4" placeholder="أي ملاحظات أو ظروف خاصة..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">إرسال التعهد</button>
+            </form>
+
+            <div id="successMessage" class="success-message">
+                تم إرسال التعهد بنجاح! شكراً لك على التزامك.
+            </div>
+        </div>
+
+        <div class="admin-link">
+            <a href="#" onclick="openAdminPanel()" class="admin-btn">دخول المدير</a>
+        </div>
+
+        <footer class="footer">
+            <div>متوسطة المنذر بن عمرو الأنصاري &copy; 2025</div>
+            <div class="developer-credit" style="font-family: 'Segoe UI', Arial, sans-serif; direction: ltr;">
+                Designed & Developed by Nawaf Alsubhi
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // إنشاء QR Code يعمل فعلياً
+        document.addEventListener('DOMContentLoaded', function() {
+            // رابط قواعد السلوك والمواظبة (يمكنك تغييره للرابط الحقيقي)
+            const rulesURL = 'https://drive.google.com/file/d/1-9SLx98Fx2ixqlW-GmPiFAZd9u3J-Jeh/view?usp=drive_link';
+            
+            // إنشاء QR code باستخدام مكتبة qrcode.js
+            const canvas = document.getElementById('qrcode');
+            QRCode.toCanvas(canvas, rulesURL, {
+                width: 200,
+                height: 200,
+                color: {
+                    dark: '#0f4c75',
+                    light: '#ffffff'
+                },
+                margin: 2,
+                errorCorrectionLevel: 'M'
+            }, function (error) {
+                if (error) console.error('خطأ في إنشاء QR Code:', error);
+                console.log('تم إنشاء QR Code بنجاح!');
+            });
+
+            // تحديد تاريخ اليوم افتراضياً
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelector('input[name="date"]').value = today;
+        });
+
+        // التحقق من صحة البيانات في الوقت الفعلي
+        function validateField(field) {
+            const errorMessage = field.nextElementSibling;
+            if (field.hasAttribute('required') && !field.value.trim()) {
+                field.style.borderColor = '#dc3545';
+                if (errorMessage && errorMessage.classList.contains('validation-message')) {
+                    errorMessage.style.display = 'block';
+                }
+                return false;
+            } else if (field.type === 'tel' && field.name === 'mobile' && field.value && !field.value.match(/^05[0-9]{8}$/)) {
+                field.style.borderColor = '#dc3545';
+                if (errorMessage && errorMessage.classList.contains('validation-message')) {
+                    errorMessage.style.display = 'block';
+                }
+                return false;
+            } else if (field.name === 'idNumber' && field.value && !field.value.match(/^[0-9]{10}$/)) {
+                field.style.borderColor = '#dc3545';
+                if (errorMessage && errorMessage.classList.contains('validation-message')) {
+                    errorMessage.style.display = 'block';
+                }
+                return false;
+            } else {
+                field.style.borderColor = '#28a745';
+                if (errorMessage && errorMessage.classList.contains('validation-message')) {
+                    errorMessage.style.display = 'none';
+                }
+                return true;
+            }
+        }
+
+        // إضافة مستمعي الأحداث للتحقق من صحة البيانات
+        document.querySelectorAll('input, select').forEach(field => {
+            field.addEventListener('blur', function() {
+                validateField(this);
+            });
+            
+            field.addEventListener('input', function() {
+                if (this.style.borderColor === 'rgb(220, 53, 69)') {
+                    validateField(this);
+                }
+            });
+        });
+
+        // تنسيق رقم الهوية
+        document.querySelector('input[name="idNumber"]').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').substring(0, 10);
+        });
+
+        // تنسيق رقم الجوال
+        document.querySelector('input[name="mobile"]').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 0 && !value.startsWith('05')) {
+                if (value.startsWith('5')) {
+                    value = '0' + value;
+                }
+            }
+            this.value = value.substring(0, 10);
+        });
+
+        // معالجة إرسال النموذج
+        document.getElementById('commitmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // التحقق من جميع الحقول الإلزامية
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            });
+            
+            // التحقق من الحقول الاختيارية إذا كانت محددة
+            const optionalFields = this.querySelectorAll('input[name="idNumber"]');
+            optionalFields.forEach(field => {
+                if (field.value) {
+                    if (!validateField(field)) {
+                        isValid = false;
+                    }
+                }
+            });
+            
+            if (!isValid) {
+                alert('يُرجى تصحيح الأخطاء المميزة باللون الأحمر');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const commitment = {
+                id: Date.now(),
+                studentName: formData.get('studentName'),
+                grade: formData.get('grade'),
+                class: formData.get('class') || '',
+                guardianName: formData.get('guardianName'),
+                homePhone: formData.get('homePhone') || '',
+                mobile: formData.get('mobile'),
+                idNumber: formData.get('idNumber') || '',
+                date: formData.get('date'),
+                notes: formData.get('notes') || '',
+                status: 'جديد',
+                timestamp: new Date().toLocaleString('ar-SA')
+            };
+            
+            // حفظ التعهد
+            let commitments = JSON.parse(localStorage.getItem('schoolCommitments') || '[]');
+            commitments.push(commitment);
+            localStorage.setItem('schoolCommitments', JSON.stringify(commitments));
+            
+            // عرض رسالة النجاح
+            document.getElementById('successMessage').style.display = 'block';
+            this.reset();
+            
+            // إعادة تحديد تاريخ اليوم
+            document.querySelector('input[name="date"]').value = new Date().toISOString().split('T')[0];
+            
+            // إخفاء الرسالة بعد 5 ثوانِ
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+            
+            // التمرير للأعلى
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // فتح لوحة تحكم المدير (يمكنك تغيير هذا للرابط الحقيقي)
+        function openAdminPanel() {
+            // يمكنك تغيير هذا لفتح صفحة منفصلة أو نافذة جديدة
+            const adminURL = 'admin.html'; // أو الرابط الحقيقي للوحة التحكم
+            window.open(adminURL, '_blank');
+        }
+
+        // تأثيرات الأنيميشن
+        window.addEventListener('load', function() {
+            const elements = document.querySelectorAll('.animate-fade');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
