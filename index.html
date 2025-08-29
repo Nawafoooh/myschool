@@ -772,38 +772,75 @@
 
         // تحميل البيانات عند بدء التشغيل
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('تحميل لوحة تحكم المدير...');
+            
+            // إضافة زر التشخيص
+            addDiagnosticButton();
+            
+            // تحميل التوقيعات
             loadSignatures();
             updateStats();
+            
+            // بدء الفحص التلقائي
             startAutoUpdate();
+            
+            // فحص تشخيصي أولي
+            setTimeout(() => {
+                diagnosticCheck();
+            }, 1000);
+            
+            console.log('تم تحميل لوحة تحكم المدير بنجاح');
         });
 
         // تحميل التوقيعات من التخزين المحلي
         function loadSignatures() {
             allSignatures = [];
             
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.startsWith('signature_')) {
-                    try {
-                        const signature = JSON.parse(localStorage.getItem(key));
-                        allSignatures.push(signature);
-                    } catch (e) {
-                        console.error('خطأ في قراءة التوقيع:', e);
+            try {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('signature_')) {
+                        try {
+                            const signature = JSON.parse(localStorage.getItem(key));
+                            // التحقق من صحة البيانات
+                            if (signature && signature.fullName && signature.employeeId) {
+                                allSignatures.push(signature);
+                                console.log('تم تحميل توقيع:', signature.fullName);
+                            }
+                        } catch (parseError) {
+                            console.error('خطأ في تحليل التوقيع:', key, parseError);
+                        }
                     }
                 }
+                
+                console.log(`تم تحميل ${allSignatures.length} توقيع`);
+                
+                // ترتيب التوقيعات حسب التاريخ (الأحدث أولاً)
+                allSignatures.sort((a, b) => {
+                    const dateA = new Date(a.submissionDate || a.timestamp);
+                    const dateB = new Date(b.submissionDate || b.timestamp);
+                    return dateB - dateA;
+                });
+                
+                filteredSignatures = [...allSignatures];
+                
+                displaySignatures();
+                updateLastUpdateTime();
+                
+            } catch (error) {
+                console.error('خطأ في تحميل التوقيعات:', error);
+                showAlert('حدث خطأ في تحميل البيانات', 'warning');
             }
-            
-            // ترتيب التوقيعات حسب التاريخ
-            allSignatures.sort((a, b) => new Date(b.submissionDate || b.timestamp) - new Date(a.submissionDate || a.timestamp));
-            filteredSignatures = [...allSignatures];
-            
-            displaySignatures();
-            updateLastUpdateTime();
         }
 
         // عرض التوقيعات في الجدول
         function displaySignatures() {
             const tbody = document.getElementById('signaturesTableBody');
+            
+            if (!tbody) {
+                console.error('لم يتم العثور على جدول التوقيعات');
+                return;
+            }
             
             if (filteredSignatures.length === 0) {
                 tbody.innerHTML = `
@@ -811,7 +848,7 @@
                         <td colspan="9" class="no-signatures">
                             <div class="no-signatures-icon">📋</div>
                             ${allSignatures.length === 0 ? 
-                                'لا توجد توقيعات حالياً<br><small>انقر على "إنشاء بيانات تجريبية" لرؤية مثال على النظام</small>' : 
+                                'لا توجد توقيعات حالياً<br><small>انتظر وصول التوقيعات من المعلمين أو انقر على "إنشاء بيانات تجريبية" للاختبار</small>' : 
                                 'لا توجد نتائج تطابق معايير البحث<br><small>جرب تعديل معايير البحث أو إعادة التعيين</small>'}
                         </td>
                     </tr>
@@ -819,19 +856,36 @@
                 return;
             }
             
-            tbody.innerHTML = filteredSignatures.map((sig, index) => {
+            let tableHTML = '';
+            
+            filteredSignatures.forEach((sig, index) => {
                 const isComplete = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
                 const statusClass = isComplete ? 'status-complete' : 'status-pending';
                 const statusText = isComplete ? 'مكتملة' : 'معلقة';
                 
-                return `
+                // تنسيق التاريخ
+                let formattedDate = 'غير محدد';
+                try {
+                    if (sig.timestamp) {
+                        const date = new Date(sig.submissionDate || sig.timestamp);
+                        formattedDate = date.toLocaleDateString('ar-SA', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                        });
+                    }
+                } catch (dateError) {
+                    console.warn('خطأ في تنسيق التاريخ:', dateError);
+                }
+                
+                tableHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
-                        <td><strong>${sig.fullName}</strong></td>
-                        <td>${sig.employeeId}</td>
-                        <td>${sig.position}</td>
+                        <td><strong>${sig.fullName || 'غير محدد'}</strong></td>
+                        <td>${sig.employeeId || 'غير محدد'}</td>
+                        <td>${sig.position || 'غير محدد'}</td>
                         <td>${sig.subject || 'غير محدد'}</td>
-                        <td>${new Date(sig.timestamp).toLocaleDateString('ar-SA')}</td>
+                        <td>${formattedDate}</td>
                         <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                         <td>
                             ${sig.signature ? 
@@ -841,13 +895,534 @@
                                 '<span style="color: #6c757d; font-size: 12px;">لا يوجد</span>'}
                         </td>
                         <td>
-                            <button class="action-btn" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="عرض التفاصيل الكاملة">
+                            <button class="action-btn" onclick="viewSignatureDetails('${sig.referenceNumber || 'N/A'}')" title="عرض التفاصيل الكاملة">
                                 عرض التفاصيل
                             </button>
                         </td>
                     </tr>
                 `;
-            }).join('');
+            });
+            
+            tbody.innerHTML = tableHTML;
+            console.log(`تم عرض ${filteredSignatures.length} توقيع في الجدول`);
         }
 
-        // تحديث الإ
+        // تحديث الإحصائيات
+        function updateStats() {
+            const total = allSignatures.length;
+            const completed = allSignatures.filter(sig => 
+                sig.readConfirm && sig.understandConfirm && sig.implementConfirm
+            ).length;
+            const pending = total - completed;
+            const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            // تحديث الأرقام مع تأثير العد
+            animateNumber('totalSignatures', total);
+            animateNumber('completedSignatures', completed);
+            animateNumber('pendingSignatures', pending);
+            animateNumber('completionRate', completionRate, '%');
+        }
+
+        // تأثير العد المتحرك للأرقام
+        function animateNumber(elementId, targetValue, suffix = '') {
+            const element = document.getElementById(elementId);
+            const currentValue = parseInt(element.textContent) || 0;
+            const increment = Math.max(1, Math.floor(Math.abs(targetValue - currentValue) / 20));
+            
+            if (currentValue < targetValue) {
+                const newValue = Math.min(currentValue + increment, targetValue);
+                element.textContent = newValue + suffix;
+                if (newValue < targetValue) {
+                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
+                }
+            } else if (currentValue > targetValue) {
+                const newValue = Math.max(currentValue - increment, targetValue);
+                element.textContent = newValue + suffix;
+                if (newValue > targetValue) {
+                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
+                }
+            }
+        }
+
+        // تصفية التوقيعات
+        function filterSignatures() {
+            const searchName = document.getElementById('searchName').value.toLowerCase();
+            const filterStatus = document.getElementById('filterStatus').value;
+            const filterPosition = document.getElementById('filterPosition').value;
+            
+            filteredSignatures = allSignatures.filter(sig => {
+                const matchesName = sig.fullName.toLowerCase().includes(searchName) || 
+                                   sig.employeeId.includes(searchName);
+                
+                let matchesStatus = true;
+                if (filterStatus === 'complete') {
+                    matchesStatus = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
+                } else if (filterStatus === 'pending') {
+                    matchesStatus = !(sig.readConfirm && sig.understandConfirm && sig.implementConfirm);
+                }
+                
+                const matchesPosition = !filterPosition || sig.position.includes(filterPosition);
+                
+                return matchesName && matchesStatus && matchesPosition;
+            });
+            
+            displaySignatures();
+        }
+
+        // إعادة تعيين المرشحات
+        function resetFilters() {
+            document.getElementById('searchName').value = '';
+            document.getElementById('filterStatus').value = '';
+            document.getElementById('filterPosition').value = '';
+            filteredSignatures = [...allSignatures];
+            displaySignatures();
+            showAlert('تم إعادة تعيين جميع المرشحات', 'success');
+        }
+
+        // عرض تفاصيل التوقيع
+        function viewSignatureDetails(referenceNumber) {
+            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
+            if (!signature) return;
+            
+            const isComplete = signature.readConfirm && signature.understandConfirm && signature.implementConfirm;
+            
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">الاسم الثلاثي:</div>
+                    <div class="detail-value"><strong>${signature.fullName}</strong></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">الرقم الوظيفي:</div>
+                    <div class="detail-value">${signature.employeeId}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">المسمى الوظيفي:</div>
+                    <div class="detail-value">${signature.position}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">التخصص/المادة:</div>
+                    <div class="detail-value">${signature.subject || 'غير محدد'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">رقم الجوال:</div>
+                    <div class="detail-value">${signature.phone || 'غير محدد'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">تاريخ التوقيع:</div>
+                    <div class="detail-value">${signature.timestamp}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">رقم المرجع:</div>
+                    <div class="detail-value"><code>${signature.referenceNumber}</code></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">رقم التعميم:</div>
+                    <div class="detail-value">${signature.circularNumber || '001'}</div>
+                </div>
+                
+                <h3 style="color: #0f6b47; margin: 25px 0 15px; text-align: center;">حالة التأكيدات</h3>
+                <div class="confirmation-status">
+                    <div class="confirmation-item">
+                        <span class="confirmation-icon">${signature.readConfirm ? '✅' : '❌'}</span>
+                        <span>اطلع على التعميم كاملاً ومحتوياته</span>
+                    </div>
+                    <div class="confirmation-item">
+                        <span class="confirmation-icon">${signature.understandConfirm ? '✅' : '❌'}</span>
+                        <span>فهم المضمون والتعليمات المطلوبة</span>
+                    </div>
+                    <div class="confirmation-item">
+                        <span class="confirmation-icon">${signature.implementConfirm ? '✅' : '❌'}</span>
+                        <span>التزام بتطبيق التعليمات والتوجيهات</span>
+                    </div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">الحالة العامة:</div>
+                    <div class="detail-value">
+                        <span class="status-badge ${isComplete ? 'status-complete' : 'status-pending'}">
+                            ${isComplete ? 'مكتملة' : 'معلقة'}
+                        </span>
+                    </div>
+                </div>
+                
+                ${signature.signature ? `
+                    <h3 style="color: #0f6b47; margin: 25px 0 15px; text-align: center;">التوقيع الإلكتروني</h3>
+                    <div class="signature-display">
+                        ${signature.signature.type === 'text' ? 
+                            `<div style="font-size: 28px; font-weight: bold; color: #1e4d3b; margin: 20px 0; font-family: serif;">${signature.signature.text}</div>
+                             <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع نصي</div>` : 
+                            `<img src="${signature.signature.data}" style="max-width: 100%; height: auto; border: 2px solid #e9ecef; border-radius: 8px; background: white;" alt="التوقيع">
+                             <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع مرسوم باليد</div>`}
+                    </div>
+                ` : '<div style="text-align: center; color: #6c757d; padding: 20px;">لا يوجد توقيع</div>'}
+                
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef;">
+                    <button class="btn btn-primary" onclick="printSignatureDetails('${signature.referenceNumber}')" style="margin-left: 10px;">
+                        طباعة التفاصيل
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal()">
+                        إغلاق
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('detailsModal').style.display = 'block';
+        }
+
+        // إغلاق النافذة المنبثقة
+        function closeModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        // إنشاء بيانات تجريبية
+        function generateDemoData() {
+            if (confirm('هل تريد إنشاء بيانات تجريبية؟ سيؤدي ذلك إلى إضافة توقيعات وهمية للاختبار.')) {
+                const demoData = [
+                    {
+                        circularNumber: '001',
+                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
+                        fullName: 'أحمد محمد العلي',
+                        employeeId: '12345',
+                        position: 'معلم',
+                        subject: 'الرياضيات',
+                        phone: '0501234567',
+                        readConfirm: true,
+                        understandConfirm: true,
+                        implementConfirm: true,
+                        signature: { type: 'text', text: 'أحمد محمد العلي' },
+                        timestamp: new Date().toLocaleString('ar-SA'),
+                        referenceNumber: 'MAN-20250101-120000-001',
+                        submissionDate: new Date().toISOString()
+                    },
+                    {
+                        circularNumber: '001',
+                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
+                        fullName: 'فاطمة سعد الأحمد',
+                        employeeId: '12346',
+                        position: 'معلمة',
+                        subject: 'اللغة العربية',
+                        phone: '0507654321',
+                        readConfirm: true,
+                        understandConfirm: true,
+                        implementConfirm: false,
+                        signature: { type: 'text', text: 'فاطمة سعد الأحمد' },
+                        timestamp: new Date(Date.now() - 3600000).toLocaleString('ar-SA'),
+                        referenceNumber: 'MAN-20250101-110000-002',
+                        submissionDate: new Date(Date.now() - 3600000).toISOString()
+                    },
+                    {
+                        circularNumber: '001',
+                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
+                        fullName: 'عبدالله خالد المطيري',
+                        employeeId: '12347',
+                        position: 'وكيل',
+                        subject: '',
+                        phone: '0509876543',
+                        readConfirm: true,
+                        understandConfirm: true,
+                        implementConfirm: true,
+                        signature: { type: 'text', text: 'عبدالله خالد المطيري' },
+                        timestamp: new Date(Date.now() - 7200000).toLocaleString('ar-SA'),
+                        referenceNumber: 'MAN-20250101-100000-003',
+                        submissionDate: new Date(Date.now() - 7200000).toISOString()
+                    }
+                ];
+                
+                demoData.forEach(data => {
+                    localStorage.setItem(`signature_${data.referenceNumber}`, JSON.stringify(data));
+                });
+                
+                loadSignatures();
+                updateStats();
+                showAlert('تم إنشاء البيانات التجريبية بنجاح!', 'success');
+            }
+        }
+
+        // تحديث البيانات مع فحص دوري محسن
+        function refreshData() {
+            console.log('بدء تحديث البيانات...');
+            const previousCount = allSignatures.length;
+            const previousSignatures = [...allSignatures];
+            
+            loadSignatures();
+            updateStats();
+            
+            const newCount = allSignatures.length;
+            console.log(`العدد السابق: ${previousCount}, العدد الحالي: ${newCount}`);
+            
+            if (newCount > previousCount) {
+                const newSignatures = newCount - previousCount;
+                console.log(`تم العثور على ${newSignatures} توقيع جديد`);
+                showNewSignatureAlert(`تم العثور على ${newSignatures} توقيع جديد!`);
+                
+                // تمييز التوقيعات الجديدة
+                const newSigs = allSignatures.filter(sig => 
+                    !previousSignatures.some(prev => prev.referenceNumber === sig.referenceNumber)
+                );
+                newSigs.forEach(sig => {
+                    console.log('توقيع جديد من:', sig.fullName);
+                });
+                
+            } else if (newCount === previousCount) {
+                showAlert('لا توجد توقيعات جديدة', 'info');
+            } else {
+                showAlert('تم تحديث البيانات بنجاح', 'success');
+            }
+        }
+
+        // فحص دوري محسن للتوقيعات الجديدة
+        function startAutoUpdate() {
+            console.log('بدء الفحص التلقائي للتوقيعات الجديدة...');
+            
+            setInterval(() => {
+                const currentCount = allSignatures.length;
+                const currentSignatures = [...allSignatures];
+                
+                console.log('فحص دوري للتوقيعات الجديدة...');
+                loadSignatures();
+                
+                if (allSignatures.length > currentCount) {
+                    updateStats();
+                    const newSignatures = allSignatures.length - currentCount;
+                    console.log(`تم استلام ${newSignatures} توقيع جديد تلقائياً!`);
+                    showNewSignatureAlert(`تم استلام ${newSignatures} توقيع جديد!`);
+                    
+                    // إضافة تأثير بصري للتوقيعات الجديدة
+                    setTimeout(() => {
+                        const rows = document.querySelectorAll('#signaturesTable tbody tr');
+                        rows.forEach((row, index) => {
+                            if (index < newSignatures) {
+                                row.style.backgroundColor = '#e8f5e8';
+                                row.style.animation = 'highlight 2s ease-out';
+                            }
+                        });
+                    }, 500);
+                }
+            }, 5000); // فحص كل 5 ثوان
+        }
+
+        // إضافة ستايل CSS للتأثير البصري
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes highlight {
+                0% { background-color: #28a745; }
+                100% { background-color: #e8f5e8; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // دالة تشخيص لفحص حالة النظام
+        function diagnosticCheck() {
+            console.log('=== فحص تشخيصي للنظام ===');
+            console.log('عدد العناصر في localStorage:', localStorage.length);
+            
+            let signatureCount = 0;
+            let validSignatures = 0;
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('signature_')) {
+                    signatureCount++;
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        if (data && data.fullName && data.employeeId) {
+                            validSignatures++;
+                            console.log(`✓ توقيع صحيح: ${data.fullName} (${key})`);
+                        } else {
+                            console.warn(`⚠ توقيع ناقص البيانات: ${key}`, data);
+                        }
+                    } catch (e) {
+                        console.error(`✗ توقيع تالف: ${key}`, e);
+                    }
+                }
+            }
+            
+            console.log(`إجمالي التوقيعات: ${signatureCount}`);
+            console.log(`التوقيعات الصحيحة: ${validSignatures}`);
+            console.log('حالة المتغيرات:');
+            console.log(`- allSignatures.length: ${allSignatures.length}`);
+            console.log(`- filteredSignatures.length: ${filteredSignatures.length}`);
+            console.log('=== انتهاء الفحص التشخيصي ===');
+            
+            return {
+                total: signatureCount,
+                valid: validSignatures,
+                loaded: allSignatures.length
+            };
+        }
+
+        // إضافة زر التشخيص للمدير
+        function addDiagnosticButton() {
+            const diagnosticBtn = document.createElement('button');
+            diagnosticBtn.textContent = '🔍 فحص النظام';
+            diagnosticBtn.className = 'btn btn-info';
+            diagnosticBtn.onclick = () => {
+                const result = diagnosticCheck();
+                showAlert(`تم العثور على ${result.valid} توقيع صحيح من أصل ${result.total} في التخزين`, 'info');
+            };
+            
+            const adminControls = document.querySelector('.admin-controls');
+            if (adminControls) {
+                adminControls.appendChild(diagnosticBtn);
+            }
+        }
+
+        function exportToExcel() {
+            if (allSignatures.length === 0) {
+                showAlert('لا توجد بيانات للتصدير', 'warning');
+                return;
+            }
+            
+            const headers = [
+                'الاسم الثلاثي',
+                'الرقم الوظيفي', 
+                'المسمى الوظيفي',
+                'التخصص/المادة',
+                'رقم الجوال',
+                'تاريخ التوقيع',
+                'رقم المرجع',
+                'اطلع على التعميم',
+                'فهم المضمون',
+                'التزم بالتطبيق',
+                'نوع التوقيع',
+                'الحالة العامة'
+            ];
+            
+            const csvData = allSignatures.map(sig => [
+                sig.fullName,
+                sig.employeeId,
+                sig.position,
+                sig.subject || '',
+                sig.phone || '',
+                sig.timestamp,
+                sig.referenceNumber,
+                sig.readConfirm ? 'نعم' : 'لا',
+                sig.understandConfirm ? 'نعم' : 'لا',
+                sig.implementConfirm ? 'نعم' : 'لا',
+                sig.signature?.type === 'text' ? 'نصي' : 'مرسوم',
+                (sig.readConfirm && sig.understandConfirm && sig.implementConfirm) ? 'مكتملة' : 'معلقة'
+            ]);
+            
+            const csvContent = [headers, ...csvData]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+            
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `تقرير_التوقيعات_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showAlert('تم تصدير البيانات بنجاح', 'success');
+        }
+
+        function printReport() {
+            if (allSignatures.length === 0) {
+                showAlert('لا توجد بيانات للطباعة', 'warning');
+                return;
+            }
+            
+            window.print();
+        }
+
+        function clearAllData() {
+            if (confirm('تحذير! هل أنت متأكد من مسح جميع البيانات؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                const keys = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('signature_')) {
+                        keys.push(key);
+                    }
+                }
+                
+                keys.forEach(key => localStorage.removeItem(key));
+                
+                allSignatures = [];
+                filteredSignatures = [];
+                updateStats();
+                displaySignatures();
+                
+                showAlert('تم مسح جميع البيانات بنجاح', 'warning');
+            }
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.getElementById('systemAlert');
+            const alertMessage = document.getElementById('alertMessage');
+            
+            alertMessage.textContent = message;
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showNewSignatureAlert(message) {
+            const alert = document.getElementById('newSignatureAlert');
+            const alertMessage = document.getElementById('newSignatureMessage');
+            
+            alertMessage.textContent = message;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 6000);
+        }
+
+        function updateLastUpdateTime() {
+            const lastUpdateDiv = document.getElementById('lastUpdate');
+            const now = new Date();
+            lastUpdateDiv.textContent = `آخر تحديث: ${now.toLocaleTimeString('ar-SA')}`;
+            lastUpdateTime = now;
+        }
+
+        function startAutoUpdate() {
+            setInterval(() => {
+                const currentCount = allSignatures.length;
+                loadSignatures();
+                
+                if (allSignatures.length > currentCount) {
+                    updateStats();
+                    const newSignatures = allSignatures.length - currentCount;
+                    showNewSignatureAlert(`تم استلام ${newSignatures} توقيع جديد!`);
+                }
+            }, 10000);
+        }
+
+        function printSignatureDetails(referenceNumber) {
+            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
+            if (!signature) return;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html dir="rtl">
+                <head><title>تفاصيل التوقيع</title></head>
+                <body style="font-family: Arial; padding: 20px;">
+                    <h2>تفاصيل التوقيع - ${signature.fullName}</h2>
+                    <p><strong>الرقم الوظيفي:</strong> ${signature.employeeId}</p>
+                    <p><strong>المنصب:</strong> ${signature.position}</p>
+                    <p><strong>التاريخ:</strong> ${signature.timestamp}</p>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailsModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        console.log('تم تحميل لوحة تحكم المدير بنجاح');
+    </script>
+</body>
+</html>
