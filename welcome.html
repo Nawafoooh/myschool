@@ -121,44 +121,6 @@
             box-shadow: 0 4px 15px rgba(15, 76, 117, 0.3);
         }
 
-        .contact-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            text-align: center;
-        }
-
-        .contact-title {
-            color: #0f4c75;
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(45deg, #25d366, #128c7e);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .whatsapp-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-        }
-
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -207,28 +169,62 @@
             font-size: 14px;
         }
 
-        .footer {
-            background: rgba(15, 76, 117, 0.9);
+        .contact-section {
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            color: white;
-            text-align: center;
-            padding: 20px;
             border-radius: 15px;
-            margin-top: 30px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            text-align: center;
         }
 
-        .footer-content {
-            margin-bottom: 15px;
+        .contact-title {
+            color: #0f4c75;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
         }
 
-        .developer-credit {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding-top: 15px;
-            font-size: 14px;
-            opacity: 0.8;
+        .whatsapp-btn, .commitment-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
         }
 
-        /* Rules Section Styles */
+        .whatsapp-btn {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .commitment-btn {
+            background: linear-gradient(45deg, #0f4c75, #3282b8);
+            box-shadow: 0 4px 15px rgba(15, 76, 117, 0.3);
+        }
+
+        .whatsapp-btn:hover, .commitment-btn:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+
+        .whatsapp-btn:hover {
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .commitment-btn:hover {
+            box-shadow: 0 6px 20px rgba(15, 76, 117, 0.4);
+        }
+
         .rules-section {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -516,7 +512,6 @@
             right: 0;
         }
 
-        /* Values Section Styles */
         .values-hero {
             text-align: center;
             margin-bottom: 40px;
@@ -610,41 +605,6 @@
             border-top-color: #28a745;
         }
 
-        .value-card.excellence-achievement {
-            background: linear-gradient(135deg, #ffe6e6, #fff0f0);
-            border-top-color: #dc3545;
-        }
-
-        .value-card.trust {
-            background: linear-gradient(135deg, #f3e5f5, #faf2fb);
-            border-top-color: #6f42c1;
-        }
-
-        .value-card.teamwork {
-            background: linear-gradient(135deg, #e0f2f1, #f1f8e9);
-            border-top-color: #00695c;
-        }
-
-        .value-card.development {
-            background: linear-gradient(135deg, #fff8e1, #fffbf0);
-            border-top-color: #ff9800;
-        }
-
-        .value-card.responsibility {
-            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
-            border-top-color: #e91e63;
-        }
-
-        .value-card.safety {
-            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
-            border-top-color: #4caf50;
-        }
-
-        .value-card.innovation {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-top-color: #2196f3;
-        }
-
         .value-card.achievement {
             background: linear-gradient(135deg, #fff3e0, #ffe0b2);
             border-top-color: #ff9800;
@@ -671,25 +631,6 @@
             color: #555;
             font-size: 14px;
             line-height: 1.6;
-        }
-
-        .school-info-footer {
-            background: linear-gradient(135deg, #0f4c75, #3282b8);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .director-message h4 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .director-message p {
-            font-size: 16px;
-            margin-bottom: 10px;
         }
 
         .developer-section {
@@ -739,6 +680,17 @@
             
             .header, .welcome-section, .contact-section {
                 padding: 20px;
+            }
+
+            .contact-section div {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .whatsapp-btn, .commitment-btn {
+                margin: 5px 0;
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -1045,11 +997,15 @@
         </section>
 
         <section class="contact-section animate-fade">
-            <h3 class="contact-title">للتواصل مع المدرسة</h3>
-            <a href="https://wa.me/966XXXXXXXXX" class="whatsapp-btn">
-                <i class="fab fa-whatsapp"></i>
-                واتساب
-            </a>
+            <h3 class="contact-title">الخدمات الإلكترونية</h3>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="commitment.html" class="commitment-btn">
+                    📋 نموذج التعهد
+                </a>
+                <a href="https://wa.me/966XXXXXXXXX" class="whatsapp-btn">
+                    📱 واتساب
+                </a>
+            </div>
         </section>
 
         <section class="developer-section">
