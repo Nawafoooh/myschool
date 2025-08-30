@@ -1,44 +1,67 @@
-import React, { useState } from 'react';
-import { User, BookOpen, FileText, Award, BarChart3, Bell, Plus, Eye, Edit, Download, MapPin, Clock, Users, AlertTriangle, Settings, Shield } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { User, BookOpen, FileText, Award, BarChart3, Bell, Plus, Eye, Edit, Download, MapPin, Clock, Users, AlertTriangle, Settings, Shield, Save, Search, CheckCircle, XCircle } from 'lucide-react';
 
 const ViceDirectorPlatform = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
-  const [behaviorRecords, setBehaviorRecords] = useState([
-    {
-      id: 1,
-      studentName: 'أحمد محمد العتيبي',
-      grade: 'الصف الأول المتوسط',
-      section: '1',
-      behavior: 'التهاون في أداء الصلاة مع الجماعة',
-      location: 'المصلى',
-      rule: 'التهاون في أداء الصلاة',
-      category: 'الدرجة الثالثة',
-      pointsDeducted: 3,
-      action: 'إشعار ولي الأمر + تعهد خطي',
-      positiveAction: 'الانضباط في الصلاة لمدة أسبوعين',
-      status: 'قيد المعالجة',
-      date: '2025-08-30',
-      time: '12:30',
-      witnesses: 'أ. سالم المناوب'
-    },
-    {
-      id: 2,
-      studentName: 'سعد علي الزهراني',
-      grade: 'الصف الثاني المتوسط',
-      section: '2',
-      behavior: 'التأخر عن الطابور الصباحي والدخول بدون إذن',
-      location: 'البوابة الرئيسية',
-      rule: 'التأخر أو العبث أثناء الاصطفاف الصباحي',
-      category: 'الدرجة الأولى',
-      pointsDeducted: 1,
-      action: 'تنبيه شفهي + تسجيل في النظام',
-      positiveAction: 'الالتزام بالطابور لمدة أسبوع',
-      status: 'مكتمل',
-      date: '2025-08-30',
-      time: '07:45',
-      witnesses: 'أ. محمد المناوب'
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showAlert, setShowAlert] = useState(null);
+  
+  // تحميل البيانات من localStorage عند بدء التطبيق
+  const [behaviorRecords, setBehaviorRecords] = useState(() => {
+    const savedRecords = localStorage.getItem('behaviorRecords');
+    if (savedRecords) {
+      try {
+        return JSON.parse(savedRecords);
+      } catch (error) {
+        console.error('خطأ في تحميل البيانات:', error);
+        return getDefaultRecords();
+      }
     }
-  ]);
+    return getDefaultRecords();
+  });
+
+  function getDefaultRecords() {
+    return [
+      {
+        id: 1,
+        studentName: 'أحمد محمد العتيبي',
+        grade: 'الصف الأول المتوسط',
+        section: '1',
+        behavior: 'التهاون في أداء الصلاة مع الجماعة',
+        location: 'المصلى',
+        rule: 'التهاون في أداء الصلاة',
+        category: 'الدرجة الثالثة',
+        pointsDeducted: 3,
+        action: 'إشعار ولي الأمر + تعهد خطي',
+        positiveAction: 'الانضباط في الصلاة لمدة أسبوعين',
+        status: 'قيد المعالجة',
+        date: '2025-08-30',
+        time: '12:30',
+        witnesses: 'أ. سالم المناوب',
+        createdBy: 'نواف الصبحي',
+        lastUpdated: new Date().toISOString()
+      },
+      {
+        id: 2,
+        studentName: 'سعد علي الزهراني',
+        grade: 'الصف الثاني المتوسط',
+        section: '2',
+        behavior: 'التأخر عن الطابور الصباحي والدخول بدون إذن',
+        location: 'البوابة الرئيسية',
+        rule: 'التأخر أو العبث أثناء الاصطفاف الصباحي',
+        category: 'الدرجة الأولى',
+        pointsDeducted: 1,
+        action: 'تنبيه شفهي + تسجيل في النظام',
+        positiveAction: 'الالتزام بالطابور لمدة أسبوع',
+        status: 'مكتمل',
+        date: '2025-08-30',
+        time: '07:45',
+        witnesses: 'أ. محمد المناوب',
+        createdBy: 'نواف الصبحي',
+        lastUpdated: new Date().toISOString()
+      }
+    ];
+  }
 
   const [newRecord, setNewRecord] = useState({
     studentName: '',
@@ -57,7 +80,20 @@ const ViceDirectorPlatform = () => {
     time: ''
   });
 
-  const [showAddForm, setShowAddForm] = useState(false);
+  // حفظ البيانات في localStorage عند تغييرها
+  useEffect(() => {
+    try {
+      localStorage.setItem('behaviorRecords', JSON.stringify(behaviorRecords));
+    } catch (error) {
+      showAlertMessage('خطأ في حفظ البيانات', 'error');
+    }
+  }, [behaviorRecords]);
+
+  // عرض رسائل التنبيه
+  const showAlertMessage = (message, type = 'success') => {
+    setShowAlert({ message, type });
+    setTimeout(() => setShowAlert(null), 5000);
+  };
 
   // قواعد السلوك حسب الوثيقة الرسمية
   const behaviorRules = {
@@ -103,15 +139,15 @@ const ViceDirectorPlatform = () => {
 
   // أماكن المدرسة
   const schoolLocations = [
-    { id: 'mosque', name: 'المصلى', icon: '🕌' },
-    { id: 'entrance', name: 'البوابة الرئيسية', icon: '🚪' },
-    { id: 'yard', name: 'ساحة المدرسة', icon: '🏃' },
-    { id: 'hallway', name: 'الممرات', icon: '🚶' },
-    { id: 'cafeteria', name: 'المقصف', icon: '🍽️' },
-    { id: 'bathroom', name: 'دورات المياه', icon: '🚿' },
-    { id: 'classroom', name: 'الفصل الدراسي', icon: '📚' },
-    { id: 'lab', name: 'المختبر', icon: '🔬' },
-    { id: 'library', name: 'المكتبة', icon: '📖' }
+    { id: 'mosque', name: 'المصلى' },
+    { id: 'entrance', name: 'البوابة الرئيسية' },
+    { id: 'yard', name: 'ساحة المدرسة' },
+    { id: 'hallway', name: 'الممرات' },
+    { id: 'cafeteria', name: 'المقصف' },
+    { id: 'bathroom', name: 'دورات المياه' },
+    { id: 'classroom', name: 'الفصل الدراسي' },
+    { id: 'lab', name: 'المختبر' },
+    { id: 'library', name: 'المكتبة' }
   ];
 
   // خيارات التعويض الإيجابي
@@ -126,6 +162,24 @@ const ViceDirectorPlatform = () => {
     'تقديم مقترحات تطويرية (1 درجة)',
     'أخرى'
   ];
+
+  // التحقق من صحة البيانات
+  const validateRecord = () => {
+    const required = ['studentName', 'grade', 'section', 'behavior', 'location', 'rule', 'action'];
+    const missing = required.filter(field => !newRecord[field] || newRecord[field].trim() === '');
+    
+    if (missing.length > 0) {
+      showAlertMessage('يرجى ملء جميع الحقول المطلوبة', 'error');
+      return false;
+    }
+    
+    if (newRecord.rule === 'أخرى' && (!newRecord.customPoints || newRecord.customPoints <= 0)) {
+      showAlertMessage('يرجى إدخال الدرجة المخصومة للمخالفة المخصصة', 'error');
+      return false;
+    }
+    
+    return true;
+  };
 
   const handleRuleChange = (rule) => {
     const allRules = [
@@ -146,198 +200,246 @@ const ViceDirectorPlatform = () => {
   };
 
   const handleAddRecord = () => {
-    if (newRecord.studentName && newRecord.behavior && newRecord.rule) {
-      const finalPoints = newRecord.rule === 'أخرى' ? parseInt(newRecord.customPoints) || 0 : newRecord.pointsDeducted;
-      const finalPositiveAction = newRecord.positiveAction === 'أخرى' ? newRecord.customPositiveAction : newRecord.positiveAction;
-      
-      const record = {
-        ...newRecord,
-        id: behaviorRecords.length + 1,
-        pointsDeducted: finalPoints,
-        positiveAction: finalPositiveAction,
-        status: 'قيد المعالجة',
-        date: new Date().toISOString().split('T')[0],
-        time: newRecord.time || new Date().toLocaleTimeString('ar-SA', { hour12: false }).slice(0,5)
-      };
-      setBehaviorRecords([...behaviorRecords, record]);
-      setNewRecord({
-        studentName: '',
-        grade: '',
-        section: '',
-        behavior: '',
-        location: '',
-        rule: '',
-        category: '',
-        pointsDeducted: 0,
-        customPoints: '',
-        action: '',
-        positiveAction: '',
-        customPositiveAction: '',
-        witnesses: '',
-        time: ''
-      });
-      setShowAddForm(false);
-    }
+    if (!validateRecord()) return;
+
+    const finalPoints = newRecord.rule === 'أخرى' ? parseInt(newRecord.customPoints) || 0 : newRecord.pointsDeducted;
+    const finalPositiveAction = newRecord.positiveAction === 'أخرى' ? newRecord.customPositiveAction : newRecord.positiveAction;
+    
+    const record = {
+      ...newRecord,
+      id: Math.max(...behaviorRecords.map(r => r.id), 0) + 1,
+      pointsDeducted: finalPoints,
+      positiveAction: finalPositiveAction,
+      status: 'قيد المعالجة',
+      date: new Date().toISOString().split('T')[0],
+      time: newRecord.time || new Date().toLocaleTimeString('ar-SA', { hour12: false }).slice(0,5),
+      createdBy: 'نواف الصبحي',
+      lastUpdated: new Date().toISOString()
+    };
+    
+    setBehaviorRecords([record, ...behaviorRecords]);
+    setNewRecord({
+      studentName: '',
+      grade: '',
+      section: '',
+      behavior: '',
+      location: '',
+      rule: '',
+      category: '',
+      pointsDeducted: 0,
+      customPoints: '',
+      action: '',
+      positiveAction: '',
+      customPositiveAction: '',
+      witnesses: '',
+      time: ''
+    });
+    
+    showAlertMessage('تم حفظ المخالفة بنجاح', 'success');
+    setActiveSection('all');
   };
 
   const getStatusColor = (status) => {
     switch(status) {
-      case 'قيد المعالجة': return 'bg-yellow-100 text-yellow-800';
-      case 'يحتاج متابعة': return 'bg-red-100 text-red-800';
-      case 'مكتمل': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'قيد المعالجة': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+      case 'يحتاج متابعة': return 'bg-red-100 text-red-800 border-red-300';
+      case 'مكتمل': return 'bg-green-100 text-green-800 border-green-300';
+      default: return 'bg-gray-100 text-gray-800 border-gray-300';
     }
   };
 
   const getCategoryColor = (category) => {
     switch(category) {
-      case 'الدرجة الأولى': return 'bg-blue-100 text-blue-800';
-      case 'الدرجة الثانية': return 'bg-green-100 text-green-800';
-      case 'الدرجة الثالثة': return 'bg-yellow-100 text-yellow-800';
-      case 'الدرجة الرابعة': return 'bg-orange-100 text-orange-800';
-      case 'الدرجة الخامسة': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'الدرجة الأولى': return 'bg-blue-100 text-blue-800 border-blue-300';
+      case 'الدرجة الثانية': return 'bg-green-100 text-green-800 border-green-300';
+      case 'الدرجة الثالثة': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+      case 'الدرجة الرابعة': return 'bg-orange-100 text-orange-800 border-orange-300';
+      case 'الدرجة الخامسة': return 'bg-red-100 text-red-800 border-red-300';
+      default: return 'bg-gray-100 text-gray-800 border-gray-300';
     }
   };
 
   const updateStatus = (id, newStatus) => {
     setBehaviorRecords(behaviorRecords.map(record => 
-      record.id === id ? { ...record, status: newStatus } : record
+      record.id === id ? { ...record, status: newStatus, lastUpdated: new Date().toISOString() } : record
     ));
+    showAlertMessage('تم تحديث الحالة بنجاح', 'success');
+  };
+
+  // تصفية البيانات حسب البحث
+  const filteredRecords = behaviorRecords.filter(record => 
+    record.studentName.includes(searchTerm) ||
+    record.behavior.includes(searchTerm) ||
+    record.location.includes(searchTerm) ||
+    record.rule.includes(searchTerm)
+  );
+
+  // تصدير البيانات إلى JSON (بديل لـ Excel مؤقتاً)
+  const exportData = () => {
+    try {
+      const dataStr = JSON.stringify(behaviorRecords, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `violations_${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+      showAlertMessage('تم تصدير البيانات بنجاح', 'success');
+    } catch (error) {
+      showAlertMessage('خطأ في تصدير البيانات', 'error');
+    }
+  };
+
+  // مكون رسائل التنبيه
+  const AlertMessage = () => {
+    if (!showAlert) return null;
+    
+    return (
+      <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-lg border-2 ${
+        showAlert.type === 'success' 
+          ? 'bg-green-50 text-green-800 border-green-300' 
+          : 'bg-red-50 text-red-800 border-red-300'
+      }`}>
+        <div className="flex items-center gap-2">
+          {showAlert.type === 'success' ? 
+            <CheckCircle className="h-5 w-5" /> : 
+            <XCircle className="h-5 w-5" />
+          }
+          <span className="font-medium">{showAlert.message}</span>
+        </div>
+      </div>
+    );
   };
 
   // لوحة التحكم الرئيسية
-  const Dashboard = () => (
-    <div className="space-y-6">
-      {/* إحصائيات سريعة */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-green-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">اليوم</p>
-              <p className="text-2xl font-bold text-green-700">3</p>
-              <p className="text-xs text-gray-500">مخالفات جديدة</p>
-            </div>
-            <div className="bg-green-100 p-3 rounded-full">
-              <FileText className="h-6 w-6 text-green-600" />
+  const Dashboard = () => {
+    const today = new Date().toISOString().split('T')[0];
+    const todayViolations = behaviorRecords.filter(record => record.date === today);
+    const pendingViolations = behaviorRecords.filter(record => record.status === 'قيد المعالجة');
+    const urgentViolations = behaviorRecords.filter(record => record.status === 'يحتاج متابعة');
+    const completedViolations = behaviorRecords.filter(record => record.status === 'مكتمل');
+
+    return (
+      <div className="space-y-6">
+        {/* إحصائيات سريعة */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-green-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">اليوم</p>
+                <p className="text-2xl font-bold text-green-700">{todayViolations.length}</p>
+                <p className="text-xs text-gray-500">مخالفات جديدة</p>
+              </div>
+              <div className="bg-green-100 p-3 rounded-full">
+                <FileText className="h-6 w-6 text-green-600" />
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-yellow-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">قيد المعالجة</p>
-              <p className="text-2xl font-bold text-yellow-700">5</p>
-              <p className="text-xs text-gray-500">تحتاج إجراء</p>
+          
+          <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-yellow-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">قيد المعالجة</p>
+                <p className="text-2xl font-bold text-yellow-700">{pendingViolations.length}</p>
+                <p className="text-xs text-gray-500">تحتاج إجراء</p>
+              </div>
+              <div className="bg-yellow-100 p-3 rounded-full">
+                <Clock className="h-6 w-6 text-yellow-600" />
+              </div>
             </div>
-            <div className="bg-yellow-100 p-3 rounded-full">
-              <Clock className="h-6 w-6 text-yellow-600" />
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-red-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">تحتاج متابعة</p>
+                <p className="text-2xl font-bold text-red-700">{urgentViolations.length}</p>
+                <p className="text-xs text-gray-500">حالات خطيرة</p>
+              </div>
+              <div className="bg-red-100 p-3 rounded-full">
+                <AlertTriangle className="h-6 w-6 text-red-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-blue-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">مكتملة</p>
+                <p className="text-2xl font-bold text-blue-700">{completedViolations.length}</p>
+                <p className="text-xs text-gray-500">تم حلها</p>
+              </div>
+              <div className="bg-blue-100 p-3 rounded-full">
+                <Award className="h-6 w-6 text-blue-600" />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-red-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">تحتاج متابعة</p>
-              <p className="text-2xl font-bold text-red-700">2</p>
-              <p className="text-xs text-gray-500">حالات خطيرة</p>
-            </div>
-            <div className="bg-red-100 p-3 rounded-full">
-              <AlertTriangle className="h-6 w-6 text-red-600" />
-            </div>
+        {/* المخالفات الأخيرة */}
+        <div className="bg-white rounded-lg shadow-md">
+          <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-t-lg">
+            <h3 className="text-lg font-semibold flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              آخر المخالفات المسجلة
+            </h3>
           </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-blue-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">مكتملة</p>
-              <p className="text-2xl font-bold text-blue-700">12</p>
-              <p className="text-xs text-gray-500">هذا الأسبوع</p>
-            </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <Award className="h-6 w-6 text-blue-600" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* المخالفات الأخيرة */}
-      <div className="bg-white rounded-lg shadow-md">
-        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-t-lg">
-          <h3 className="text-lg font-semibold flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            آخر المخالفات المسجلة
-          </h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="text-right p-4 font-semibold text-gray-700">الطالب</th>
-                <th className="text-right p-4 font-semibold text-gray-700">المخالفة</th>
-                <th className="text-right p-4 font-semibold text-gray-700">المكان</th>
-                <th className="text-right p-4 font-semibold text-gray-700">الدرجة</th>
-                <th className="text-right p-4 font-semibold text-gray-700">الحالة</th>
-                <th className="text-right p-4 font-semibold text-gray-700">الوقت</th>
-                <th className="text-right p-4 font-semibold text-gray-700">إجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-              {behaviorRecords.slice(0, 5).map((record) => (
-                <tr key={record.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                  <td className="p-4">
-                    <div>
-                      <p className="font-medium text-gray-900">{record.studentName}</p>
-                      <p className="text-xs text-gray-500">{record.grade} - فصل {record.section}</p>
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <p className="text-sm max-w-xs truncate" title={record.behavior}>{record.behavior}</p>
-                    <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 font-medium ${getCategoryColor(record.category)}`}>
-                      {record.category}
-                    </span>
-                  </td>
-                  <td className="p-4">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm">{record.location}</span>
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <span className="font-bold text-red-600 text-lg">-{record.pointsDeducted}</span>
-                  </td>
-                  <td className="p-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(record.status)}`}>
-                      {record.status}
-                    </span>
-                  </td>
-                  <td className="p-4 text-sm">
-                    <div>
-                      <p>{record.date}</p>
-                      <p className="text-xs text-gray-500">{record.time}</p>
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      <button className="text-green-600 hover:text-green-800 p-1 rounded transition-colors">
-                        <Eye className="h-4 w-4" />
-                      </button>
-                      <button className="text-blue-600 hover:text-blue-800 p-1 rounded transition-colors">
-                        <Edit className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="text-right p-4 font-semibold text-gray-700">الطالب</th>
+                  <th className="text-right p-4 font-semibold text-gray-700">المخالفة</th>
+                  <th className="text-right p-4 font-semibold text-gray-700">المكان</th>
+                  <th className="text-right p-4 font-semibold text-gray-700">الدرجة</th>
+                  <th className="text-right p-4 font-semibold text-gray-700">الحالة</th>
+                  <th className="text-right p-4 font-semibold text-gray-700">الوقت</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {behaviorRecords.slice(0, 5).map((record) => (
+                  <tr key={record.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                    <td className="p-4">
+                      <div>
+                        <p className="font-medium text-gray-900">{record.studentName}</p>
+                        <p className="text-xs text-gray-500">{record.grade} - فصل {record.section}</p>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <p className="text-sm max-w-xs truncate" title={record.behavior}>{record.behavior}</p>
+                      <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 font-medium border ${getCategoryColor(record.category)}`}>
+                        {record.category}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 text-gray-400" />
+                        <span className="text-sm">{record.location}</span>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span className="font-bold text-red-600 text-lg">-{record.pointsDeducted}</span>
+                    </td>
+                    <td className="p-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(record.status)}`}>
+                        {record.status}
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm">
+                      <div>
+                        <p>{record.date}</p>
+                        <p className="text-xs text-gray-500">{record.time}</p>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // تسجيل مخالفة جديدة
   const NewViolation = () => (
@@ -363,7 +465,9 @@ const ViceDirectorPlatform = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">اسم الطالب *</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">
+                  اسم الطالب <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   value={newRecord.studentName}
@@ -376,7 +480,9 @@ const ViceDirectorPlatform = () => {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700">الصف *</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                    الصف <span className="text-red-500">*</span>
+                  </label>
                   <select
                     value={newRecord.grade}
                     onChange={(e) => setNewRecord({...newRecord, grade: e.target.value})}
@@ -391,7 +497,9 @@ const ViceDirectorPlatform = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700">القسم *</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                    القسم <span className="text-red-500">*</span>
+                  </label>
                   <select
                     value={newRecord.section}
                     onChange={(e) => setNewRecord({...newRecord, section: e.target.value})}
@@ -399,12 +507,9 @@ const ViceDirectorPlatform = () => {
                     required
                   >
                     <option value="">اختر القسم</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
+                    {[1,2,3,4,5,6].map(num => (
+                      <option key={num} value={num.toString()}>{num}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -420,7 +525,9 @@ const ViceDirectorPlatform = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">مكان المخالفة *</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">
+                  مكان المخالفة <span className="text-red-500">*</span>
+                </label>
                 <select
                   value={newRecord.location}
                   onChange={(e) => setNewRecord({...newRecord, location: e.target.value})}
@@ -430,7 +537,7 @@ const ViceDirectorPlatform = () => {
                   <option value="">اختر المكان</option>
                   {schoolLocations.map((location) => (
                     <option key={location.id} value={location.name}>
-                      {location.icon} {location.name}
+                      {location.name}
                     </option>
                   ))}
                 </select>
@@ -447,7 +554,9 @@ const ViceDirectorPlatform = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">نوع المخالفة *</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">
+                  نوع المخالفة <span className="text-red-500">*</span>
+                </label>
                 <select
                   value={newRecord.rule}
                   onChange={(e) => handleRuleChange(e.target.value)}
@@ -470,7 +579,9 @@ const ViceDirectorPlatform = () => {
               {/* إدخال الدرجة المخصومة عند اختيار "أخرى" */}
               {newRecord.rule === 'أخرى' && (
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700">الدرجة المخصومة *</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                    الدرجة المخصومة <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="number"
                     value={newRecord.customPoints}
@@ -499,7 +610,9 @@ const ViceDirectorPlatform = () => {
           {/* وصف المخالفة والإجراءات */}
           <div className="mt-8 space-y-6">
             <div>
-              <label className="block text-sm font-medium mb-2 text-gray-700">وصف تفصيلي للمخالفة *</label>
+              <label className="block text-sm font-medium mb-2 text-gray-700">
+                وصف تفصيلي للمخالفة <span className="text-red-500">*</span>
+              </label>
               <textarea
                 value={newRecord.behavior}
                 onChange={(e) => setNewRecord({...newRecord, behavior: e.target.value})}
@@ -512,7 +625,9 @@ const ViceDirectorPlatform = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">الإجراء المتخذ *</label>
+                <label className="block text-sm font-medium mb-2 text-gray-700">
+                  الإجراء المتخذ <span className="text-red-500">*</span>
+                </label>
                 <select
                   value={newRecord.action}
                   onChange={(e) => setNewRecord({...newRecord, action: e.target.value})}
@@ -579,7 +694,7 @@ const ViceDirectorPlatform = () => {
               onClick={handleAddRecord}
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-md"
             >
-              <FileText className="h-5 w-5" />
+              <Save className="h-5 w-5" />
               حفظ المخالفة
             </button>
             <button
@@ -612,12 +727,25 @@ const ViceDirectorPlatform = () => {
   // جميع المخالفات
   const AllViolations = () => (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <h3 className="text-xl font-semibold text-gray-800">جميع المخالفات المسجلة</h3>
         <div className="flex gap-2">
-          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md transition-colors">
+          <div className="relative">
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <input
+              type="text"
+              placeholder="البحث في المخالفات..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pr-10 pl-4 py-2 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
+            />
+          </div>
+          <button 
+            onClick={exportData}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md transition-colors"
+          >
             <Download className="h-4 w-4" />
-            تصدير Excel
+            تصدير البيانات
           </button>
         </div>
       </div>
@@ -639,7 +767,7 @@ const ViceDirectorPlatform = () => {
               </tr>
             </thead>
             <tbody>
-              {behaviorRecords.map((record) => (
+              {filteredRecords.map((record) => (
                 <tr key={record.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                   <td className="p-4 font-medium text-green-700">#{record.id}</td>
                   <td className="p-4">
@@ -651,7 +779,7 @@ const ViceDirectorPlatform = () => {
                   <td className="p-4">
                     <div>
                       <p className="text-sm max-w-xs" title={record.behavior}>{record.behavior}</p>
-                      <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 font-medium ${getCategoryColor(record.category)}`}>
+                      <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 font-medium border ${getCategoryColor(record.category)}`}>
                         {record.category}
                       </span>
                     </div>
@@ -672,7 +800,7 @@ const ViceDirectorPlatform = () => {
                     <select
                       value={record.status}
                       onChange={(e) => updateStatus(record.id, e.target.value)}
-                      className={`px-3 py-1 rounded-full text-xs font-medium border-0 ${getStatusColor(record.status)} cursor-pointer`}
+                      className={`px-3 py-1 rounded-full text-xs font-medium border cursor-pointer ${getStatusColor(record.status)}`}
                     >
                       <option value="قيد المعالجة">قيد المعالجة</option>
                       <option value="يحتاج متابعة">يحتاج متابعة</option>
@@ -690,18 +818,21 @@ const ViceDirectorPlatform = () => {
                       <button 
                         className="text-green-600 hover:text-green-800 p-2 rounded transition-colors"
                         title="عرض التفاصيل"
+                        onClick={() => showAlertMessage('عرض التفاصيل قريباً', 'success')}
                       >
                         <Eye className="h-4 w-4" />
                       </button>
                       <button 
                         className="text-blue-600 hover:text-blue-800 p-2 rounded transition-colors"
                         title="تعديل"
+                        onClick={() => showAlertMessage('التعديل قريباً', 'success')}
                       >
                         <Edit className="h-4 w-4" />
                       </button>
                       <button 
                         className="text-purple-600 hover:text-purple-800 p-2 rounded transition-colors"
                         title="طباعة"
+                        onClick={() => showAlertMessage('الطباعة قريباً', 'success')}
                       >
                         <Download className="h-4 w-4" />
                       </button>
@@ -711,184 +842,141 @@ const ViceDirectorPlatform = () => {
               ))}
             </tbody>
           </table>
+          
+          {filteredRecords.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-gray-500">لا توجد مخالفات مطابقة لمعايير البحث</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 
   // التقارير والإحصائيات
-  const Reports = () => (
-    <div className="space-y-6">
-      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-lg shadow-md">
-        <h3 className="text-xl font-semibold flex items-center gap-2">
-          <BarChart3 className="h-6 w-6" />
-          التقارير والإحصائيات
-        </h3>
-        <p className="text-green-100 text-sm mt-1">تحليل شامل لسلوك الطلاب والاتجاهات</p>
-      </div>
-      
-      {/* إحصائيات المخالفات حسب الدرجة */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h4 className="font-semibold mb-6 text-gray-700 flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-green-600" />
-            توزيع المخالفات حسب الدرجة
-          </h4>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <span className="font-medium text-blue-800">الدرجة الأولى</span>
-              <div className="flex items-center gap-3">
-                <div className="w-24 bg-blue-200 rounded-full h-3">
-                  <div className="bg-blue-500 h-3 rounded-full" style={{width: '30%'}}></div>
-                </div>
-                <span className="text-lg font-bold text-blue-700">15</span>
-              </div>
+  const Reports = () => {
+    const categoryStats = {
+      'الدرجة الأولى': behaviorRecords.filter(r => r.category === 'الدرجة الأولى').length,
+      'الدرجة الثانية': behaviorRecords.filter(r => r.category === 'الدرجة الثانية').length,
+      'الدرجة الثالثة': behaviorRecords.filter(r => r.category === 'الدرجة الثالثة').length,
+      'الدرجة الرابعة': behaviorRecords.filter(r => r.category === 'الدرجة الرابعة').length,
+      'الدرجة الخامسة': behaviorRecords.filter(r => r.category === 'الدرجة الخامسة').length,
+    };
+    
+    const locationStats = schoolLocations.map(loc => ({
+      name: loc.name,
+      count: behaviorRecords.filter(r => r.location === loc.name).length
+    })).sort((a, b) => b.count - a.count);
+
+    return (
+      <div className="space-y-6">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-lg shadow-md">
+          <h3 className="text-xl font-semibold flex items-center gap-2">
+            <BarChart3 className="h-6 w-6" />
+            التقارير والإحصائيات
+          </h3>
+          <p className="text-green-100 text-sm mt-1">تحليل شامل لسلوك الطلاب والاتجاهات</p>
+        </div>
+        
+        {/* إحصائيات المخالفات حسب الدرجة */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h4 className="font-semibold mb-6 text-gray-700 flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-green-600" />
+              توزيع المخالفات حسب الدرجة
+            </h4>
+            <div className="space-y-4">
+              {Object.entries(categoryStats).map(([category, count]) => {
+                const maxCount = Math.max(...Object.values(categoryStats));
+                const percentage = maxCount > 0 ? (count / maxCount) * 100 : 0;
+                const colors = {
+                  'الدرجة الأولى': 'blue',
+                  'الدرجة الثانية': 'green', 
+                  'الدرجة الثالثة': 'yellow',
+                  'الدرجة الرابعة': 'orange',
+                  'الدرجة الخامسة': 'red'
+                };
+                const color = colors[category];
+                
+                return (
+                  <div key={category} className={`flex justify-between items-center p-4 bg-${color}-50 rounded-lg border border-${color}-200`}>
+                    <span className={`font-medium text-${color}-800`}>{category}</span>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-24 bg-${color}-200 rounded-full h-3`}>
+                        <div className={`bg-${color}-500 h-3 rounded-full`} style={{width: `${percentage}%`}}></div>
+                      </div>
+                      <span className={`text-lg font-bold text-${color}-700`}>{count}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <div className="flex justify-between items-center p-4 bg-green-50 rounded-lg border border-green-200">
-              <span className="font-medium text-green-800">الدرجة الثانية</span>
-              <div className="flex items-center gap-3">
-                <div className="w-24 bg-green-200 rounded-full h-3">
-                  <div className="bg-green-500 h-3 rounded-full" style={{width: '20%'}}></div>
-                </div>
-                <span className="text-lg font-bold text-green-700">10</span>
-              </div>
-            </div>
-            <div className="flex justify-between items-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-              <span className="font-medium text-yellow-800">الدرجة الثالثة</span>
-              <div className="flex items-center gap-3">
-                <div className="w-24 bg-yellow-200 rounded-full h-3">
-                  <div className="bg-yellow-500 h-3 rounded-full" style={{width: '25%'}}></div>
-                </div>
-                <span className="text-lg font-bold text-yellow-700">12</span>
-              </div>
-            </div>
-            <div className="flex justify-between items-center p-4 bg-orange-50 rounded-lg border border-orange-200">
-              <span className="font-medium text-orange-800">الدرجة الرابعة</span>
-              <div className="flex items-center gap-3">
-                <div className="w-24 bg-orange-200 rounded-full h-3">
-                  <div className="bg-orange-500 h-3 rounded-full" style={{width: '15%'}}></div>
-                </div>
-                <span className="text-lg font-bold text-orange-700">7</span>
-              </div>
-            </div>
-            <div className="flex justify-between items-center p-4 bg-red-50 rounded-lg border border-red-200">
-              <span className="font-medium text-red-800">الدرجة الخامسة</span>
-              <div className="flex items-center gap-3">
-                <div className="w-24 bg-red-200 rounded-full h-3">
-                  <div className="bg-red-500 h-3 rounded-full" style={{width: '10%'}}></div>
-                </div>
-                <span className="text-lg font-bold text-red-700">3</span>
-              </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h4 className="font-semibold mb-6 text-gray-700 flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-red-600" />
+              أكثر الأماكن مخالفة
+            </h4>
+            <div className="space-y-4">
+              {locationStats.slice(0, 5).map((location, index) => {
+                const maxCount = locationStats[0]?.count || 1;
+                const percentage = (location.count / maxCount) * 100;
+                const colors = ['red', 'orange', 'yellow', 'blue', 'green'];
+                const color = colors[index] || 'gray';
+                
+                return (
+                  <div key={location.name} className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
+                    <span className="text-sm font-medium">{location.name}</span>
+                    <div className="flex items-center gap-3">
+                      <div className="w-20 bg-gray-200 rounded-full h-2">
+                        <div className={`bg-${color}-500 h-2 rounded-full`} style={{width: `${percentage}%`}}></div>
+                      </div>
+                      <span className={`text-sm font-bold text-${color}-600`}>{location.count}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
 
+        {/* معلومات إضافية */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h4 className="font-semibold mb-6 text-gray-700 flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-red-600" />
-            أكثر الأماكن مخالفة
+          <h4 className="font-semibold mb-4 text-green-700 flex items-center gap-2">
+            <Award className="h-5 w-5" />
+            ملخص إحصائي
           </h4>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-              <span className="text-sm font-medium">🕌 المصلى</span>
-              <div className="flex items-center gap-3">
-                <div className="w-20 bg-gray-200 rounded-full h-2">
-                  <div className="bg-red-500 h-2 rounded-full" style={{width: '70%'}}></div>
-                </div>
-                <span className="text-sm font-bold text-red-600">18</span>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+              <p className="text-2xl font-bold text-green-700">{behaviorRecords.length}</p>
+              <p className="text-sm text-green-600">إجمالي المخالفات</p>
             </div>
-            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-              <span className="text-sm font-medium">🚪 البوابة الرئيسية</span>
-              <div className="flex items-center gap-3">
-                <div className="w-20 bg-gray-200 rounded-full h-2">
-                  <div className="bg-orange-500 h-2 rounded-full" style={{width: '50%'}}></div>
-                </div>
-                <span className="text-sm font-bold text-orange-600">12</span>
-              </div>
+            <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="text-2xl font-bold text-blue-700">
+                {behaviorRecords.reduce((sum, record) => sum + record.pointsDeducted, 0)}
+              </p>
+              <p className="text-sm text-blue-600">إجمالي الدرجات المخصومة</p>
             </div>
-            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-              <span className="text-sm font-medium">🏃 ساحة المدرسة</span>
-              <div className="flex items-center gap-3">
-                <div className="w-20 bg-gray-200 rounded-full h-2">
-                  <div className="bg-yellow-500 h-2 rounded-full" style={{width: '40%'}}></div>
-                </div>
-                <span className="text-sm font-bold text-yellow-600">8</span>
-              </div>
-            </div>
-            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-              <span className="text-sm font-medium">📚 الفصل الدراسي</span>
-              <div className="flex items-center gap-3">
-                <div className="w-20 bg-gray-200 rounded-full h-2">
-                  <div className="bg-blue-500 h-2 rounded-full" style={{width: '30%'}}></div>
-                </div>
-                <span className="text-sm font-bold text-blue-600">6</span>
-              </div>
-            </div>
-            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
-              <span className="text-sm font-medium">🚶 الممرات</span>
-              <div className="flex items-center gap-3">
-                <div className="w-20 bg-gray-200 rounded-full h-2">
-                  <div className="bg-green-500 h-2 rounded-full" style={{width: '20%'}}></div>
-                </div>
-                <span className="text-sm font-bold text-green-600">3</span>
-              </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <p className="text-2xl font-bold text-purple-700">
+                {[...new Set(behaviorRecords.map(r => r.studentName))].length}
+              </p>
+              <p className="text-sm text-purple-600">عدد الطلاب المخالفين</p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* الطلاب الأكثر التزاماً */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h4 className="font-semibold mb-6 text-green-700 flex items-center gap-2">
-          <Award className="h-5 w-5" />
-          الطلاب المتميزون في السلوك
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-center gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-            <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">1</div>
-            <div className="flex-1">
-              <p className="font-semibold text-gray-900">محمد أحمد السعد</p>
-              <p className="text-sm text-gray-600">الثالث المتوسط - فصل 1</p>
-            </div>
-            <div className="text-right">
-              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">100 نقطة</span>
-              <p className="text-xs text-gray-500 mt-1">أنشطة تطوعية</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">2</div>
-            <div className="flex-1">
-              <p className="font-semibold text-gray-900">عبدالله علي الغامدي</p>
-              <p className="text-sm text-gray-600">الثاني المتوسط - فصل 2</p>
-            </div>
-            <div className="text-right">
-              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-bold">97 نقطة</span>
-              <p className="text-xs text-gray-500 mt-1">انضباط مثالي</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-            <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">3</div>
-            <div className="flex-1">
-              <p className="font-semibold text-gray-900">فهد سعد المطيري</p>
-              <p className="text-sm text-gray-600">الأول المتوسط - فصل 1</p>
-            </div>
-            <div className="text-right">
-              <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-bold">94 نقطة</span>
-              <p className="text-xs text-gray-500 mt-1">مشاركات إذاعية</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 rtl" dir="rtl">
+      <AlertMessage />
+      
       {/* الهيدر الرسمي */}
       <div className="bg-white shadow-lg border-b-4 border-green-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* الشعار والعنوان الرسمي */}
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center gap-4">
               <div className="bg-green-600 text-white p-3 rounded-lg shadow-md">
@@ -984,10 +1072,15 @@ const ViceDirectorPlatform = () => {
           <div className="text-center space-y-2">
             <p className="text-sm text-gray-600">© 2025 منصة الوكيل لإدارة السلوك الطلابي</p>
             <p className="text-sm text-gray-500">متوسطة المنذر بن عمرو الأنصاري - المملكة العربية السعودية</p>
-            <div className="flex justify-center items-center gap-4 text-xs text-gray-400 pt-2">
-              <span>Development & Implementation: Nawaf Alsubhi</span>
+            <div className="flex justify-center items-center gap-4 text-xs text-gray-400 pt-2 border-t border-gray-200 mt-4">
+              <span>نسخة محسنة مع حفظ البيانات محلياً</span>
               <span>|</span>
-              <span>2025</span>
+              <span>إعداد: نواف الصبحي - 2025</span>
+            </div>
+            <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-xs text-yellow-700">
+                <strong>تنبيه:</strong> البيانات محفوظة محلياً في المتصفح. للاستخدام الفعلي، يُنصح بإنشاء قاعدة بيانات خارجية ونظام نسخ احتياطي.
+              </p>
             </div>
           </div>
         </div>
