@@ -284,12 +284,6 @@
             box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3);
         }
 
-        .btn-clear {
-            background: linear-gradient(45deg, #dc3545, #c82333);
-            color: white;
-            box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
-        }
-
         .btn-refresh {
             background: linear-gradient(45deg, #28a745, #20c997);
             color: white;
@@ -497,6 +491,28 @@
             margin-bottom: 20px;
         }
 
+        .loading-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(15, 76, 117, 0.3);
+            border-radius: 50%;
+            border-top-color: #0f4c75;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .footer {
             background: rgba(15, 76, 117, 0.9);
             backdrop-filter: blur(10px);
@@ -622,7 +638,7 @@
                 </div>
                 <button onclick="adminLogin()" class="login-btn">دخول</button>
                 <div style="margin-top: 20px;">
-                    <a href="index.html" class="back-link">العودة إلى الصفحة الرئيسية</a>
+                    <a href="commitment-form.html" class="back-link">العودة إلى نموذج التعهد</a>
                 </div>
             </div>
 
@@ -641,19 +657,19 @@
                 <!-- الإحصائيات -->
                 <div class="stats-grid">
                     <div class="stat-card total">
-                        <div class="stat-number" id="totalCommitments">0</div>
+                        <div class="stat-number" id="totalCommitments">-</div>
                         <div class="stat-label">إجمالي التعهدات</div>
                     </div>
                     <div class="stat-card new">
-                        <div class="stat-number" id="newCommitments">0</div>
+                        <div class="stat-number" id="newCommitments">-</div>
                         <div class="stat-label">تعهدات جديدة</div>
                     </div>
                     <div class="stat-card reviewed">
-                        <div class="stat-number" id="reviewedCommitments">0</div>
+                        <div class="stat-number" id="reviewedCommitments">-</div>
                         <div class="stat-label">تعهدات مراجعة</div>
                     </div>
                     <div class="stat-card today">
-                        <div class="stat-number" id="todayCommitments">0</div>
+                        <div class="stat-number" id="todayCommitments">-</div>
                         <div class="stat-label">تعهدات اليوم</div>
                     </div>
                 </div>
@@ -667,7 +683,6 @@
                     <div class="action-buttons">
                         <button onclick="refreshData()" class="action-btn btn-refresh">تحديث</button>
                         <button onclick="exportData()" class="action-btn btn-export">تصدير CSV</button>
-                        <button onclick="clearAllData()" class="action-btn btn-clear">مسح الكل</button>
                     </div>
                 </div>
 
@@ -696,6 +711,10 @@
                         <h3>لا توجد تعهدات</h3>
                         <p>لم يتم تقديم أي تعهدات بعد</p>
                     </div>
+                    <div id="loadingState" class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <div>جاري تحميل البيانات...</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -721,9 +740,70 @@
         </footer>
     </div>
 
-    <script>
+    <!-- Firebase Scripts -->
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMkhB9tjAnWHBJo3pa7LHRGTfjLRg0yB4",
+            authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
+            projectId: "nawafalsubhi3-f4abf",
+            storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
+            messagingSenderId: "409217413356",
+            appId: "1:409217413356:web:d1e0dd6f584c66255875c9",
+            measurementId: "G-BVP04DLPM9"
+        };
+
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getFirestore, collection, getDocs, query, where, orderBy, doc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+
+        console.log('Firebase initialized successfully for admin panel');
+
         let allCommitments = [];
         let filteredCommitments = [];
+
+        // Firebase Functions
+        async function loadCommitmentsFromFirebase() {
+            try {
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('emptyState').style.display = 'none';
+                
+                console.log('Loading commitments from Firebase...');
+                const q = query(
+                    collection(db, 'commitments'), 
+                    where('type', '==', 'commitment'),
+                    orderBy('timestamp', 'desc')
+                );
+                const querySnapshot = await getDocs(q);
+                
+                allCommitments = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    allCommitments.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+
+                filteredCommitments = [...allCommitments];
+                console.log(`Loaded ${allCommitments.length} commitments`);
+                
+                document.getElementById('loadingState').style.display = 'none';
+                displayCommitments();
+                updateStats();
+                return true;
+            } catch (error) {
+                console.error('خطأ في تحميل التعهدات:', error);
+                document.getElementById('loadingState').innerHTML = '<div style="color: #dc3545;">خطأ في تحميل البيانات<br>يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى</div>';
+                return false;
+            }
+        }
 
         // تسجيل دخول المدير
         function adminLogin() {
@@ -733,8 +813,7 @@
             if (username === 'admin' && password === 'admin123') {
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
-                loadCommitments();
-                updateStats();
+                loadCommitmentsFromFirebase();
                 updateTime();
                 setInterval(updateTime, 1000);
             } else {
@@ -765,20 +844,6 @@
             document.getElementById('currentTime').textContent = timeString;
         }
 
-        // تحميل التعهدات
-        function loadCommitments() {
-            try {
-                allCommitments = JSON.parse(localStorage.getItem('schoolCommitments') || '[]');
-                filteredCommitments = [...allCommitments];
-                displayCommitments();
-            } catch (error) {
-                console.error('خطأ في تحميل البيانات:', error);
-                allCommitments = [];
-                filteredCommitments = [];
-                displayCommitments();
-            }
-        }
-
         // عرض التعهدات في الجدول
         function displayCommitments() {
             const tbody = document.getElementById('commitmentsTableBody');
@@ -799,16 +864,16 @@
                     <td>${index + 1}</td>
                     <td>${commitment.studentName}</td>
                     <td>${commitment.grade}</td>
-                    <td>${commitment.class}</td>
+                    <td>${commitment.class || '-'}</td>
                     <td>${commitment.guardianName}</td>
                     <td>${commitment.mobile}</td>
                     <td>${commitment.date}</td>
                     <td><span class="status-badge ${commitment.status === 'جديد' ? 'status-new' : 'status-reviewed'}">${commitment.status}</span></td>
                     <td>
-                        <button class="table-action-btn btn-view" onclick="viewCommitment(${commitment.id})">عرض</button>
-                        ${commitment.status === 'جديد' ? '<button class="table-action-btn btn-approve" onclick="approveCommitment(' + commitment.id + ')">مراجعة</button>' : ''}
-                        <button class="table-action-btn btn-print" onclick="printCommitment(${commitment.id})">طباعة</button>
-                        <button class="table-action-btn btn-delete" onclick="deleteCommitment(${commitment.id})">حذف</button>
+                        <button class="table-action-btn btn-view" onclick="viewCommitment('${commitment.id}')">عرض</button>
+                        ${commitment.status === 'جديد' ? '<button class="table-action-btn btn-approve" onclick="approveCommitment(\'' + commitment.id + '\')">مراجعة</button>' : ''}
+                        <button class="table-action-btn btn-print" onclick="printCommitment('${commitment.id}')">طباعة</button>
+                        <button class="table-action-btn btn-delete" onclick="deleteCommitment('${commitment.id}')">حذف</button>
                     </td>
                 `;
             });
@@ -840,9 +905,9 @@
                     commitment.studentName.toLowerCase().includes(searchTerm) ||
                     commitment.guardianName.toLowerCase().includes(searchTerm) ||
                     commitment.mobile.includes(searchTerm) ||
-                    commitment.idNumber.includes(searchTerm) ||
+                    (commitment.idNumber && commitment.idNumber.includes(searchTerm)) ||
                     commitment.grade.toLowerCase().includes(searchTerm) ||
-                    commitment.class.toLowerCase().includes(searchTerm)
+                    (commitment.class && commitment.class.toLowerCase().includes(searchTerm))
                 );
             }
             
@@ -867,11 +932,11 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">الصف:</span>
-                        <span class="detail-value">${commitment.class}</span>
+                        <span class="detail-value">${commitment.class || 'غير محدد'}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">رقم الهوية:</span>
-                        <span class="detail-value">${commitment.idNumber}</span>
+                        <span class="detail-value">${commitment.idNumber || 'غير محدد'}</span>
                     </div>
                 </div>
                 <div class="commitment-details">
@@ -897,7 +962,7 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">وقت الإرسال:</span>
-                        <span class="detail-value">${commitment.timestamp}</span>
+                        <span class="detail-value">${commitment.submittedAt || 'غير محدد'}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">الحالة:</span>
@@ -919,23 +984,45 @@
         }
 
         // تغيير حالة التعهد إلى مراجع
-        function approveCommitment(id) {
-            const commitmentIndex = allCommitments.findIndex(c => c.id === id);
-            if (commitmentIndex !== -1) {
-                allCommitments[commitmentIndex].status = 'مراجع';
-                localStorage.setItem('schoolCommitments', JSON.stringify(allCommitments));
-                loadCommitments();
+        async function approveCommitment(id) {
+            try {
+                const commitmentRef = doc(db, 'commitments', id);
+                await updateDoc(commitmentRef, {
+                    status: 'مراجع'
+                });
+                
+                // تحديث البيانات المحلية
+                const commitmentIndex = allCommitments.findIndex(c => c.id === id);
+                if (commitmentIndex !== -1) {
+                    allCommitments[commitmentIndex].status = 'مراجع';
+                }
+                
+                displayCommitments();
                 updateStats();
+                console.log('Commitment approved successfully');
+            } catch (error) {
+                console.error('خطأ في تحديث حالة التعهد:', error);
+                alert('حدث خطأ في تحديث حالة التعهد');
             }
         }
 
         // حذف تعهد
-        function deleteCommitment(id) {
+        async function deleteCommitment(id) {
             if (confirm('هل أنت متأكد من حذف هذا التعهد؟')) {
-                allCommitments = allCommitments.filter(c => c.id !== id);
-                localStorage.setItem('schoolCommitments', JSON.stringify(allCommitments));
-                loadCommitments();
-                updateStats();
+                try {
+                    await deleteDoc(doc(db, 'commitments', id));
+                    
+                    // تحديث البيانات المحلية
+                    allCommitments = allCommitments.filter(c => c.id !== id);
+                    filteredCommitments = filteredCommitments.filter(c => c.id !== id);
+                    
+                    displayCommitments();
+                    updateStats();
+                    console.log('Commitment deleted successfully');
+                } catch (error) {
+                    console.error('خطأ في حذف التعهد:', error);
+                    alert('حدث خطأ في حذف التعهد');
+                }
             }
         }
 
@@ -1043,7 +1130,6 @@
                         }
                         @media print { 
                             body { margin: 20px; } 
-                            .no-print { display: none; }
                         }
                     </style>
                 </head>
@@ -1070,7 +1156,7 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label">الصف:</span>
-                            <span>${commitment.class}</span>
+                            <span>${commitment.class || 'غير محدد'}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">اسم ولي الأمر:</span>
@@ -1086,7 +1172,7 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label">رقم الهوية:</span>
-                            <span>${commitment.idNumber}</span>
+                            <span>${commitment.idNumber || 'غير محدد'}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">التاريخ:</span>
@@ -1134,7 +1220,7 @@
             const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
                 + "الرقم,اسم الطالب,المرحلة,الصف,ولي الأمر,هاتف المنزل,الجوال,رقم الهوية,التاريخ,الحالة,وقت الإرسال,الملاحظات\n"
                 + allCommitments.map((c, index) => 
-                    `${index + 1},"${c.studentName}","${c.grade}","${c.class}","${c.guardianName}","${c.homePhone || ''}","${c.mobile}","${c.idNumber}","${c.date}","${c.status}","${c.timestamp}","${c.notes || ''}"`
+                    `${index + 1},"${c.studentName}","${c.grade}","${c.class || ''}","${c.guardianName}","${c.homePhone || ''}","${c.mobile}","${c.idNumber || ''}","${c.date}","${c.status}","${c.submittedAt || ''}","${c.notes || ''}"`
                 ).join("\n");
             
             const encodedUri = encodeURI(csvContent);
@@ -1146,35 +1232,26 @@
             document.body.removeChild(link);
         }
 
-        // مسح جميع البيانات
-        function clearAllData() {
-            if (allCommitments.length === 0) {
-                alert('لا توجد بيانات لحذفها');
-                return;
-            }
-
-            if (confirm(`هل أنت متأكد من حذف جميع التعهدات (${allCommitments.length} تعهد)؟ هذا الإجراء لا يمكن التراجع عنه!`)) {
-                if (confirm('تأكيد نهائي: سيتم حذف جميع البيانات نهائياً!')) {
-                    localStorage.removeItem('schoolCommitments');
-                    allCommitments = [];
-                    filteredCommitments = [];
-                    displayCommitments();
-                    updateStats();
-                    document.getElementById('searchInput').value = '';
-                    alert('تم حذف جميع البيانات بنجاح');
-                }
-            }
-        }
-
         // تحديث البيانات
-        function refreshData() {
-            loadCommitments();
-            updateStats();
+        async function refreshData() {
+            await loadCommitmentsFromFirebase();
             document.getElementById('searchInput').value = '';
             alert('تم تحديث البيانات بنجاح');
         }
 
-        // إضافة مستمع للنقر خارج النافذة المنبثقة
+        // Export functions to global scope
+        window.adminLogin = adminLogin;
+        window.logout = logout;
+        window.searchCommitments = searchCommitments;
+        window.viewCommitment = viewCommitment;
+        window.closeModal = closeModal;
+        window.approveCommitment = approveCommitment;
+        window.deleteCommitment = deleteCommitment;
+        window.printCommitment = printCommitment;
+        window.exportData = exportData;
+        window.refreshData = refreshData;
+
+        // Event listeners
         window.addEventListener('click', function(event) {
             const modal = document.getElementById('commitmentModal');
             if (event.target === modal) {
@@ -1182,71 +1259,19 @@
             }
         });
 
-        // مستمع للضغط على مفتاح Escape
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal();
-            }
-        });
-
-        // مستمع لمفتاح Enter في نموذج تسجيل الدخول
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter' && document.getElementById('loginSection').style.display !== 'none') {
+            } else if (event.key === 'Enter' && document.getElementById('loginSection').style.display !== 'none') {
                 adminLogin();
             }
         });
 
-        // تحميل البيانات عند تحميل الصفحة
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // إضافة بيانات تجريبية للعرض (يمكن حذفها لاحقاً)
-            if (!localStorage.getItem('schoolCommitments')) {
-                const sampleData = [
-                    {
-                        id: Date.now() + 1,
-                        studentName: 'أحمد محمد العلي',
-                        grade: 'الثاني المتوسط',
-                        class: 'أ',
-                        guardianName: 'محمد سعد العلي',
-                        homePhone: '011-4567890',
-                        mobile: '0501234567',
-                        idNumber: '1234567890',
-                        date: '2025-01-15',
-                        notes: 'طالب متميز ملتزم',
-                        status: 'جديد',
-                        timestamp: new Date(2025, 0, 15).toLocaleString('ar-SA')
-                    },
-                    {
-                        id: Date.now() + 2,
-                        studentName: 'فهد عبدالله المطيري',
-                        grade: 'الأول المتوسط',
-                        class: 'ب',
-                        guardianName: 'عبدالله فهد المطيري',
-                        homePhone: '011-2345678',
-                        mobile: '0559876543',
-                        idNumber: '2345678901',
-                        date: '2025-01-14',
-                        notes: 'يحتاج إلى متابعة في المواظبة',
-                        status: 'مراجع',
-                        timestamp: new Date(2025, 0, 14).toLocaleString('ar-SA')
-                    },
-                    {
-                        id: Date.now() + 3,
-                        studentName: 'خالد سلمان النصر',
-                        grade: 'الثالث المتوسط',
-                        class: 'أ',
-                        guardianName: 'سلمان خالد النصر',
-                        homePhone: '',
-                        mobile: '0543216789',
-                        idNumber: '3456789012',
-                        date: new Date().toISOString().split('T')[0],
-                        notes: '',
-                        status: 'جديد',
-                        timestamp: new Date().toLocaleString('ar-SA')
-                    }
-                ];
-                localStorage.setItem('schoolCommitments', JSON.stringify(sampleData));
-            }
+            console.log('Admin panel initialized successfully');
         });
+
     </script>
 </body>
 </html>
