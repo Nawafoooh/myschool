@@ -1,0 +1,999 @@
+import React, { useState } from 'react';
+import { User, BookOpen, FileText, Award, BarChart3, Bell, Plus, Eye, Edit, Download, MapPin, Clock, Users, AlertTriangle, Settings, Shield } from 'lucide-react';
+
+const ViceDirectorPlatform = () => {
+  const [activeSection, setActiveSection] = useState('dashboard');
+  const [behaviorRecords, setBehaviorRecords] = useState([
+    {
+      id: 1,
+      studentName: 'أحمد محمد العتيبي',
+      grade: 'الصف الأول المتوسط',
+      section: '1',
+      behavior: 'التهاون في أداء الصلاة مع الجماعة',
+      location: 'المصلى',
+      rule: 'التهاون في أداء الصلاة',
+      category: 'الدرجة الثالثة',
+      pointsDeducted: 3,
+      action: 'إشعار ولي الأمر + تعهد خطي',
+      positiveAction: 'الانضباط في الصلاة لمدة أسبوعين',
+      status: 'قيد المعالجة',
+      date: '2025-08-30',
+      time: '12:30',
+      witnesses: 'أ. سالم المناوب'
+    },
+    {
+      id: 2,
+      studentName: 'سعد علي الزهراني',
+      grade: 'الصف الثاني المتوسط',
+      section: '2',
+      behavior: 'التأخر عن الطابور الصباحي والدخول بدون إذن',
+      location: 'البوابة الرئيسية',
+      rule: 'التأخر أو العبث أثناء الاصطفاف الصباحي',
+      category: 'الدرجة الأولى',
+      pointsDeducted: 1,
+      action: 'تنبيه شفهي + تسجيل في النظام',
+      positiveAction: 'الالتزام بالطابور لمدة أسبوع',
+      status: 'مكتمل',
+      date: '2025-08-30',
+      time: '07:45',
+      witnesses: 'أ. محمد المناوب'
+    }
+  ]);
+
+  const [newRecord, setNewRecord] = useState({
+    studentName: '',
+    grade: '',
+    section: '',
+    behavior: '',
+    location: '',
+    rule: '',
+    category: '',
+    pointsDeducted: 0,
+    customPoints: '',
+    action: '',
+    positiveAction: '',
+    customPositiveAction: '',
+    witnesses: '',
+    time: ''
+  });
+
+  const [showAddForm, setShowAddForm] = useState(false);
+
+  // قواعد السلوك حسب الوثيقة الرسمية
+  const behaviorRules = {
+    firstDegree: [
+      { rule: 'عدم التقيد باللباس الرسمي', points: 1, category: 'الدرجة الأولى' },
+      { rule: 'التأخر أو العبث أثناء الاصطفاف الصباحي', points: 1, category: 'الدرجة الأولى' },
+      { rule: 'إعاقة سير الحصة الدراسية', points: 1, category: 'الدرجة الأولى' },
+      { rule: 'تكرار دخول وخروج الطلبة من البوابة', points: 1, category: 'الدرجة الأولى' },
+      { rule: 'أخرى', points: 0, category: 'الدرجة الأولى' }
+    ],
+    secondDegree: [
+      { rule: 'إثارة الفوضى داخل الفصل أو المدرسة', points: 2, category: 'الدرجة الثانية' },
+      { rule: 'الخروج من الفصل بدون استئذان', points: 2, category: 'الدرجة الثانية' },
+      { rule: 'أخرى', points: 0, category: 'الدرجة الثانية' }
+    ],
+    thirdDegree: [
+      { rule: 'التهاون في أداء الصلاة', points: 3, category: 'الدرجة الثالثة' },
+      { rule: 'الإشارة بحركات مخلة بالأدب', points: 3, category: 'الدرجة الثالثة' },
+      { rule: 'الاشتراك في مضاربة أو مهاجمة الزملاء', points: 3, category: 'الدرجة الثالثة' },
+      { rule: 'إلحاق الضرر بممتلكات الزملاء', points: 3, category: 'الدرجة الثالثة' },
+      { rule: 'حيازة المواد الإعلامية الممنوعة', points: 3, category: 'الدرجة الثالثة' },
+      { rule: 'التوقيع عن ولي الأمر بدون علمه', points: 3, category: 'الدرجة الثالثة' },
+      { rule: 'أخرى', points: 0, category: 'الدرجة الثالثة' }
+    ],
+    fourthDegree: [
+      { rule: 'الإصرار على ترك أداء الصلاة', points: 10, category: 'الدرجة الرابعة' },
+      { rule: 'التدخين داخل المدرسة', points: 10, category: 'الدرجة الرابعة' },
+      { rule: 'الهروب من المدرسة', points: 10, category: 'الدرجة الرابعة' },
+      { rule: 'التنمر', points: 10, category: 'الدرجة الرابعة' },
+      { rule: 'العبث بتجهيزات المدرسة', points: 10, category: 'الدرجة الرابعة' },
+      { rule: 'التسجيل الصوتي للطلبة', points: 10, category: 'الدرجة الرابعة' },
+      { rule: 'أخرى', points: 0, category: 'الدرجة الرابعة' }
+    ],
+    fifthDegree: [
+      { rule: 'التحرش', points: 15, category: 'الدرجة الخامسة' },
+      { rule: 'إشعال النار داخل المدرسة', points: 15, category: 'الدرجة الخامسة' },
+      { rule: 'حيازة أسلحة أو مواد حادة', points: 15, category: 'الدرجة الخامسة' },
+      { rule: 'الجرائم المعلوماتية', points: 15, category: 'الدرجة الخامسة' },
+      { rule: 'حيازة أو تعاطي المخدرات', points: 15, category: 'الدرجة الخامسة' },
+      { rule: 'أخرى', points: 0, category: 'الدرجة الخامسة' }
+    ]
+  };
+
+  // أماكن المدرسة
+  const schoolLocations = [
+    { id: 'mosque', name: 'المصلى', icon: '🕌' },
+    { id: 'entrance', name: 'البوابة الرئيسية', icon: '🚪' },
+    { id: 'yard', name: 'ساحة المدرسة', icon: '🏃' },
+    { id: 'hallway', name: 'الممرات', icon: '🚶' },
+    { id: 'cafeteria', name: 'المقصف', icon: '🍽️' },
+    { id: 'bathroom', name: 'دورات المياه', icon: '🚿' },
+    { id: 'classroom', name: 'الفصل الدراسي', icon: '📚' },
+    { id: 'lab', name: 'المختبر', icon: '🔬' },
+    { id: 'library', name: 'المكتبة', icon: '📖' }
+  ];
+
+  // خيارات التعويض الإيجابي
+  const compensationOptions = [
+    'الانضباط وعدم الغياب لمدة أسبوعين (2 درجة)',
+    'المحافظة على الهوية الوطنية (3 درجات)',
+    'مبادرات وأعمال تطوعية (3 درجات)',
+    'مشاركات إذاعية أو أنشطة (2 درجة)',
+    'المحافظة على الممتلكات العامة (2 درجة)',
+    'التعاون مع الزملاء والمعلمين (2 درجة)',
+    'برنامج التطوير الشخصي (2 درجة)',
+    'تقديم مقترحات تطويرية (1 درجة)',
+    'أخرى'
+  ];
+
+  const handleRuleChange = (rule) => {
+    const allRules = [
+      ...behaviorRules.firstDegree,
+      ...behaviorRules.secondDegree,
+      ...behaviorRules.thirdDegree,
+      ...behaviorRules.fourthDegree,
+      ...behaviorRules.fifthDegree
+    ];
+    const selectedRule = allRules.find(r => r.rule === rule);
+    setNewRecord({
+      ...newRecord,
+      rule: rule,
+      pointsDeducted: selectedRule && selectedRule.points > 0 ? selectedRule.points : 0,
+      category: selectedRule ? selectedRule.category : '',
+      customPoints: selectedRule && selectedRule.points === 0 ? newRecord.customPoints : ''
+    });
+  };
+
+  const handleAddRecord = () => {
+    if (newRecord.studentName && newRecord.behavior && newRecord.rule) {
+      const finalPoints = newRecord.rule === 'أخرى' ? parseInt(newRecord.customPoints) || 0 : newRecord.pointsDeducted;
+      const finalPositiveAction = newRecord.positiveAction === 'أخرى' ? newRecord.customPositiveAction : newRecord.positiveAction;
+      
+      const record = {
+        ...newRecord,
+        id: behaviorRecords.length + 1,
+        pointsDeducted: finalPoints,
+        positiveAction: finalPositiveAction,
+        status: 'قيد المعالجة',
+        date: new Date().toISOString().split('T')[0],
+        time: newRecord.time || new Date().toLocaleTimeString('ar-SA', { hour12: false }).slice(0,5)
+      };
+      setBehaviorRecords([...behaviorRecords, record]);
+      setNewRecord({
+        studentName: '',
+        grade: '',
+        section: '',
+        behavior: '',
+        location: '',
+        rule: '',
+        category: '',
+        pointsDeducted: 0,
+        customPoints: '',
+        action: '',
+        positiveAction: '',
+        customPositiveAction: '',
+        witnesses: '',
+        time: ''
+      });
+      setShowAddForm(false);
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch(status) {
+      case 'قيد المعالجة': return 'bg-yellow-100 text-yellow-800';
+      case 'يحتاج متابعة': return 'bg-red-100 text-red-800';
+      case 'مكتمل': return 'bg-green-100 text-green-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getCategoryColor = (category) => {
+    switch(category) {
+      case 'الدرجة الأولى': return 'bg-blue-100 text-blue-800';
+      case 'الدرجة الثانية': return 'bg-green-100 text-green-800';
+      case 'الدرجة الثالثة': return 'bg-yellow-100 text-yellow-800';
+      case 'الدرجة الرابعة': return 'bg-orange-100 text-orange-800';
+      case 'الدرجة الخامسة': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const updateStatus = (id, newStatus) => {
+    setBehaviorRecords(behaviorRecords.map(record => 
+      record.id === id ? { ...record, status: newStatus } : record
+    ));
+  };
+
+  // لوحة التحكم الرئيسية
+  const Dashboard = () => (
+    <div className="space-y-6">
+      {/* إحصائيات سريعة */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-green-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">اليوم</p>
+              <p className="text-2xl font-bold text-green-700">3</p>
+              <p className="text-xs text-gray-500">مخالفات جديدة</p>
+            </div>
+            <div className="bg-green-100 p-3 rounded-full">
+              <FileText className="h-6 w-6 text-green-600" />
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-yellow-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">قيد المعالجة</p>
+              <p className="text-2xl font-bold text-yellow-700">5</p>
+              <p className="text-xs text-gray-500">تحتاج إجراء</p>
+            </div>
+            <div className="bg-yellow-100 p-3 rounded-full">
+              <Clock className="h-6 w-6 text-yellow-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-red-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">تحتاج متابعة</p>
+              <p className="text-2xl font-bold text-red-700">2</p>
+              <p className="text-xs text-gray-500">حالات خطيرة</p>
+            </div>
+            <div className="bg-red-100 p-3 rounded-full">
+              <AlertTriangle className="h-6 w-6 text-red-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md border-r-4 border-blue-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">مكتملة</p>
+              <p className="text-2xl font-bold text-blue-700">12</p>
+              <p className="text-xs text-gray-500">هذا الأسبوع</p>
+            </div>
+            <div className="bg-blue-100 p-3 rounded-full">
+              <Award className="h-6 w-6 text-blue-600" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* المخالفات الأخيرة */}
+      <div className="bg-white rounded-lg shadow-md">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-t-lg">
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            آخر المخالفات المسجلة
+          </h3>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th className="text-right p-4 font-semibold text-gray-700">الطالب</th>
+                <th className="text-right p-4 font-semibold text-gray-700">المخالفة</th>
+                <th className="text-right p-4 font-semibold text-gray-700">المكان</th>
+                <th className="text-right p-4 font-semibold text-gray-700">الدرجة</th>
+                <th className="text-right p-4 font-semibold text-gray-700">الحالة</th>
+                <th className="text-right p-4 font-semibold text-gray-700">الوقت</th>
+                <th className="text-right p-4 font-semibold text-gray-700">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              {behaviorRecords.slice(0, 5).map((record) => (
+                <tr key={record.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                  <td className="p-4">
+                    <div>
+                      <p className="font-medium text-gray-900">{record.studentName}</p>
+                      <p className="text-xs text-gray-500">{record.grade} - فصل {record.section}</p>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-sm max-w-xs truncate" title={record.behavior}>{record.behavior}</p>
+                    <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 font-medium ${getCategoryColor(record.category)}`}>
+                      {record.category}
+                    </span>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-gray-400" />
+                      <span className="text-sm">{record.location}</span>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <span className="font-bold text-red-600 text-lg">-{record.pointsDeducted}</span>
+                  </td>
+                  <td className="p-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(record.status)}`}>
+                      {record.status}
+                    </span>
+                  </td>
+                  <td className="p-4 text-sm">
+                    <div>
+                      <p>{record.date}</p>
+                      <p className="text-xs text-gray-500">{record.time}</p>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex gap-2">
+                      <button className="text-green-600 hover:text-green-800 p-1 rounded transition-colors">
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button className="text-blue-600 hover:text-blue-800 p-1 rounded transition-colors">
+                        <Edit className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+
+  // تسجيل مخالفة جديدة
+  const NewViolation = () => (
+    <div className="space-y-6">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6">
+          <h4 className="text-xl font-semibold flex items-center gap-2">
+            <Plus className="h-5 w-5" />
+            تسجيل مخالفة جديدة
+          </h4>
+          <p className="text-green-100 text-sm mt-1">وفقاً لقواعد تنظيم السلوك والمواظبة المحدثة 1447هـ</p>
+        </div>
+        
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* معلومات الطالب */}
+            <div className="space-y-4">
+              <div className="border-r-4 border-green-500 pr-4">
+                <h5 className="font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  معلومات الطالب
+                </h5>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">اسم الطالب *</label>
+                <input
+                  type="text"
+                  value={newRecord.studentName}
+                  onChange={(e) => setNewRecord({...newRecord, studentName: e.target.value})}
+                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                  placeholder="الاسم الثلاثي للطالب"
+                  required
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">الصف *</label>
+                  <select
+                    value={newRecord.grade}
+                    onChange={(e) => setNewRecord({...newRecord, grade: e.target.value})}
+                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                    required
+                  >
+                    <option value="">اختر الصف</option>
+                    <option value="الأول المتوسط">الأول المتوسط</option>
+                    <option value="الثاني المتوسط">الثاني المتوسط</option>
+                    <option value="الثالث المتوسط">الثالث المتوسط</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">القسم *</label>
+                  <select
+                    value={newRecord.section}
+                    onChange={(e) => setNewRecord({...newRecord, section: e.target.value})}
+                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                    required
+                  >
+                    <option value="">اختر القسم</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* تفاصيل المخالفة */}
+            <div className="space-y-4">
+              <div className="border-r-4 border-red-500 pr-4">
+                <h5 className="font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4" />
+                  تفاصيل المخالفة
+                </h5>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">مكان المخالفة *</label>
+                <select
+                  value={newRecord.location}
+                  onChange={(e) => setNewRecord({...newRecord, location: e.target.value})}
+                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                  required
+                >
+                  <option value="">اختر المكان</option>
+                  {schoolLocations.map((location) => (
+                    <option key={location.id} value={location.name}>
+                      {location.icon} {location.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">وقت المخالفة</label>
+                <input
+                  type="time"
+                  value={newRecord.time}
+                  onChange={(e) => setNewRecord({...newRecord, time: e.target.value})}
+                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">نوع المخالفة *</label>
+                <select
+                  value={newRecord.rule}
+                  onChange={(e) => handleRuleChange(e.target.value)}
+                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                  required
+                >
+                  <option value="">اختر المخالفة</option>
+                  {Object.entries(behaviorRules).map(([key, rules]) => (
+                    <optgroup key={key} label={rules[0]?.category?.replace('الدرجة', 'مخالفات الدرجة') || key}>
+                      {rules.map((rule, index) => (
+                        <option key={index} value={rule.rule}>
+                          {rule.rule} {rule.points > 0 ? `(${rule.points} ${rule.points === 1 ? 'درجة' : 'درجات'})` : ''}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </div>
+              
+              {/* إدخال الدرجة المخصومة عند اختيار "أخرى" */}
+              {newRecord.rule === 'أخرى' && (
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">الدرجة المخصومة *</label>
+                  <input
+                    type="number"
+                    value={newRecord.customPoints}
+                    onChange={(e) => setNewRecord({...newRecord, customPoints: e.target.value, pointsDeducted: parseInt(e.target.value) || 0})}
+                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                    placeholder="أدخل عدد الدرجات"
+                    min="0"
+                    max="15"
+                  />
+                </div>
+              )}
+              
+              {newRecord.pointsDeducted > 0 && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <div className="text-center">
+                    <span className="text-2xl font-bold text-red-600">
+                      -{newRecord.pointsDeducted} {newRecord.pointsDeducted === 1 ? 'درجة' : 'درجات'}
+                    </span>
+                    <p className="text-sm text-red-500 mt-1">مخصومة من درجة السلوك</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* وصف المخالفة والإجراءات */}
+          <div className="mt-8 space-y-6">
+            <div>
+              <label className="block text-sm font-medium mb-2 text-gray-700">وصف تفصيلي للمخالفة *</label>
+              <textarea
+                value={newRecord.behavior}
+                onChange={(e) => setNewRecord({...newRecord, behavior: e.target.value})}
+                className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                rows="4"
+                placeholder="اكتب وصف مفصل للمخالفة التي حدثت..."
+                required
+              />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">الإجراء المتخذ *</label>
+                <select
+                  value={newRecord.action}
+                  onChange={(e) => setNewRecord({...newRecord, action: e.target.value})}
+                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                  required
+                >
+                  <option value="">اختر الإجراء</option>
+                  <option value="تنبيه شفهي">تنبيه شفهي</option>
+                  <option value="تنبيه شفهي + تسجيل في النظام">تنبيه شفهي + تسجيل</option>
+                  <option value="إشعار ولي الأمر هاتفياً">إشعار ولي الأمر هاتفياً</option>
+                  <option value="إشعار ولي الأمر + تعهد خطي">إشعار ولي الأمر + تعهد</option>
+                  <option value="إحالة للمرشد الطلابي">إحالة للمرشد الطلابي</option>
+                  <option value="إحالة للمدير">إحالة للمدير</option>
+                  <option value="استدعاء ولي الأمر">استدعاء ولي الأمر</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">العمل الإيجابي للتعويض</label>
+                <select
+                  value={newRecord.positiveAction}
+                  onChange={(e) => setNewRecord({...newRecord, positiveAction: e.target.value})}
+                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                >
+                  <option value="">اختر العمل الإيجابي</option>
+                  {compensationOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* حقل العمل الإيجابي المخصص */}
+            {newRecord.positiveAction === 'أخرى' && (
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">اكتب العمل الإيجابي المخصص</label>
+                <textarea
+                  value={newRecord.customPositiveAction}
+                  onChange={(e) => setNewRecord({...newRecord, customPositiveAction: e.target.value})}
+                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                  rows="2"
+                  placeholder="اكتب تفاصيل العمل الإيجابي المقترح..."
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-medium mb-2 text-gray-700">الشهود</label>
+              <input
+                type="text"
+                value={newRecord.witnesses}
+                onChange={(e) => setNewRecord({...newRecord, witnesses: e.target.value})}
+                className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-right focus:border-green-500 focus:outline-none transition-colors"
+                placeholder="أسماء الشهود (اختياري)"
+              />
+            </div>
+          </div>
+
+          {/* أزرار الحفظ */}
+          <div className="flex gap-4 mt-8 pt-6 border-t border-gray-200">
+            <button
+              onClick={handleAddRecord}
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-md"
+            >
+              <FileText className="h-5 w-5" />
+              حفظ المخالفة
+            </button>
+            <button
+              onClick={() => setNewRecord({
+                studentName: '',
+                grade: '',
+                section: '',
+                behavior: '',
+                location: '',
+                rule: '',
+                category: '',
+                pointsDeducted: 0,
+                customPoints: '',
+                action: '',
+                positiveAction: '',
+                customPositiveAction: '',
+                witnesses: '',
+                time: ''
+              })}
+              className="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-medium transition-colors shadow-md"
+            >
+              إعادة تعيين
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // جميع المخالفات
+  const AllViolations = () => (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h3 className="text-xl font-semibold text-gray-800">جميع المخالفات المسجلة</h3>
+        <div className="flex gap-2">
+          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md transition-colors">
+            <Download className="h-4 w-4" />
+            تصدير Excel
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gradient-to-r from-green-600 to-green-700 text-white">
+              <tr>
+                <th className="text-right p-4 font-semibold">رقم</th>
+                <th className="text-right p-4 font-semibold">الطالب</th>
+                <th className="text-right p-4 font-semibold">المخالفة</th>
+                <th className="text-right p-4 font-semibold">المكان</th>
+                <th className="text-right p-4 font-semibold">الدرجة</th>
+                <th className="text-right p-4 font-semibold">الإجراء</th>
+                <th className="text-right p-4 font-semibold">الحالة</th>
+                <th className="text-right p-4 font-semibold">التاريخ</th>
+                <th className="text-right p-4 font-semibold">عمليات</th>
+              </tr>
+            </thead>
+            <tbody>
+              {behaviorRecords.map((record) => (
+                <tr key={record.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                  <td className="p-4 font-medium text-green-700">#{record.id}</td>
+                  <td className="p-4">
+                    <div>
+                      <p className="font-medium text-gray-900">{record.studentName}</p>
+                      <p className="text-xs text-gray-500">{record.grade} - فصل {record.section}</p>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <div>
+                      <p className="text-sm max-w-xs" title={record.behavior}>{record.behavior}</p>
+                      <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 font-medium ${getCategoryColor(record.category)}`}>
+                        {record.category}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-gray-400" />
+                      <span className="text-sm">{record.location}</span>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <span className="font-bold text-red-600 text-lg">-{record.pointsDeducted}</span>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-sm max-w-xs truncate" title={record.action}>{record.action}</p>
+                  </td>
+                  <td className="p-4">
+                    <select
+                      value={record.status}
+                      onChange={(e) => updateStatus(record.id, e.target.value)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium border-0 ${getStatusColor(record.status)} cursor-pointer`}
+                    >
+                      <option value="قيد المعالجة">قيد المعالجة</option>
+                      <option value="يحتاج متابعة">يحتاج متابعة</option>
+                      <option value="مكتمل">مكتمل</option>
+                    </select>
+                  </td>
+                  <td className="p-4 text-sm">
+                    <div>
+                      <p>{record.date}</p>
+                      <p className="text-xs text-gray-500">{record.time}</p>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex gap-1">
+                      <button 
+                        className="text-green-600 hover:text-green-800 p-2 rounded transition-colors"
+                        title="عرض التفاصيل"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button 
+                        className="text-blue-600 hover:text-blue-800 p-2 rounded transition-colors"
+                        title="تعديل"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </button>
+                      <button 
+                        className="text-purple-600 hover:text-purple-800 p-2 rounded transition-colors"
+                        title="طباعة"
+                      >
+                        <Download className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+
+  // التقارير والإحصائيات
+  const Reports = () => (
+    <div className="space-y-6">
+      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-semibold flex items-center gap-2">
+          <BarChart3 className="h-6 w-6" />
+          التقارير والإحصائيات
+        </h3>
+        <p className="text-green-100 text-sm mt-1">تحليل شامل لسلوك الطلاب والاتجاهات</p>
+      </div>
+      
+      {/* إحصائيات المخالفات حسب الدرجة */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h4 className="font-semibold mb-6 text-gray-700 flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-green-600" />
+            توزيع المخالفات حسب الدرجة
+          </h4>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <span className="font-medium text-blue-800">الدرجة الأولى</span>
+              <div className="flex items-center gap-3">
+                <div className="w-24 bg-blue-200 rounded-full h-3">
+                  <div className="bg-blue-500 h-3 rounded-full" style={{width: '30%'}}></div>
+                </div>
+                <span className="text-lg font-bold text-blue-700">15</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-4 bg-green-50 rounded-lg border border-green-200">
+              <span className="font-medium text-green-800">الدرجة الثانية</span>
+              <div className="flex items-center gap-3">
+                <div className="w-24 bg-green-200 rounded-full h-3">
+                  <div className="bg-green-500 h-3 rounded-full" style={{width: '20%'}}></div>
+                </div>
+                <span className="text-lg font-bold text-green-700">10</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+              <span className="font-medium text-yellow-800">الدرجة الثالثة</span>
+              <div className="flex items-center gap-3">
+                <div className="w-24 bg-yellow-200 rounded-full h-3">
+                  <div className="bg-yellow-500 h-3 rounded-full" style={{width: '25%'}}></div>
+                </div>
+                <span className="text-lg font-bold text-yellow-700">12</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+              <span className="font-medium text-orange-800">الدرجة الرابعة</span>
+              <div className="flex items-center gap-3">
+                <div className="w-24 bg-orange-200 rounded-full h-3">
+                  <div className="bg-orange-500 h-3 rounded-full" style={{width: '15%'}}></div>
+                </div>
+                <span className="text-lg font-bold text-orange-700">7</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-4 bg-red-50 rounded-lg border border-red-200">
+              <span className="font-medium text-red-800">الدرجة الخامسة</span>
+              <div className="flex items-center gap-3">
+                <div className="w-24 bg-red-200 rounded-full h-3">
+                  <div className="bg-red-500 h-3 rounded-full" style={{width: '10%'}}></div>
+                </div>
+                <span className="text-lg font-bold text-red-700">3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h4 className="font-semibold mb-6 text-gray-700 flex items-center gap-2">
+            <MapPin className="h-5 w-5 text-red-600" />
+            أكثر الأماكن مخالفة
+          </h4>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
+              <span className="text-sm font-medium">🕌 المصلى</span>
+              <div className="flex items-center gap-3">
+                <div className="w-20 bg-gray-200 rounded-full h-2">
+                  <div className="bg-red-500 h-2 rounded-full" style={{width: '70%'}}></div>
+                </div>
+                <span className="text-sm font-bold text-red-600">18</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
+              <span className="text-sm font-medium">🚪 البوابة الرئيسية</span>
+              <div className="flex items-center gap-3">
+                <div className="w-20 bg-gray-200 rounded-full h-2">
+                  <div className="bg-orange-500 h-2 rounded-full" style={{width: '50%'}}></div>
+                </div>
+                <span className="text-sm font-bold text-orange-600">12</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
+              <span className="text-sm font-medium">🏃 ساحة المدرسة</span>
+              <div className="flex items-center gap-3">
+                <div className="w-20 bg-gray-200 rounded-full h-2">
+                  <div className="bg-yellow-500 h-2 rounded-full" style={{width: '40%'}}></div>
+                </div>
+                <span className="text-sm font-bold text-yellow-600">8</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
+              <span className="text-sm font-medium">📚 الفصل الدراسي</span>
+              <div className="flex items-center gap-3">
+                <div className="w-20 bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{width: '30%'}}></div>
+                </div>
+                <span className="text-sm font-bold text-blue-600">6</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-lg bg-gray-50">
+              <span className="text-sm font-medium">🚶 الممرات</span>
+              <div className="flex items-center gap-3">
+                <div className="w-20 bg-gray-200 rounded-full h-2">
+                  <div className="bg-green-500 h-2 rounded-full" style={{width: '20%'}}></div>
+                </div>
+                <span className="text-sm font-bold text-green-600">3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* الطلاب الأكثر التزاماً */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h4 className="font-semibold mb-6 text-green-700 flex items-center gap-2">
+          <Award className="h-5 w-5" />
+          الطلاب المتميزون في السلوك
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex items-center gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
+            <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">1</div>
+            <div className="flex-1">
+              <p className="font-semibold text-gray-900">محمد أحمد السعد</p>
+              <p className="text-sm text-gray-600">الثالث المتوسط - فصل 1</p>
+            </div>
+            <div className="text-right">
+              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">100 نقطة</span>
+              <p className="text-xs text-gray-500 mt-1">أنشطة تطوعية</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">2</div>
+            <div className="flex-1">
+              <p className="font-semibold text-gray-900">عبدالله علي الغامدي</p>
+              <p className="text-sm text-gray-600">الثاني المتوسط - فصل 2</p>
+            </div>
+            <div className="text-right">
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-bold">97 نقطة</span>
+              <p className="text-xs text-gray-500 mt-1">انضباط مثالي</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+            <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">3</div>
+            <div className="flex-1">
+              <p className="font-semibold text-gray-900">فهد سعد المطيري</p>
+              <p className="text-sm text-gray-600">الأول المتوسط - فصل 1</p>
+            </div>
+            <div className="text-right">
+              <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-bold">94 نقطة</span>
+              <p className="text-xs text-gray-500 mt-1">مشاركات إذاعية</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-100 rtl" dir="rtl">
+      {/* الهيدر الرسمي */}
+      <div className="bg-white shadow-lg border-b-4 border-green-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* الشعار والعنوان الرسمي */}
+          <div className="flex items-center justify-between py-4">
+            <div className="flex items-center gap-4">
+              <div className="bg-green-600 text-white p-3 rounded-lg shadow-md">
+                <Shield className="h-8 w-8" />
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-gray-600 font-medium">المملكة العربية السعودية</p>
+                <p className="text-lg font-bold text-green-700">وزارة التعليم</p>
+                <p className="text-md font-semibold text-gray-800">متوسطة المنذر بن عمرو الأنصاري</p>
+                <p className="text-sm text-green-600 font-medium">منصة الوكيل ١٤٤٧</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <p className="text-lg font-bold text-gray-900">نواف الصبحي</p>
+                <p className="text-sm text-gray-600">وكيل المدرسة</p>
+              </div>
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center shadow-md">
+                <User className="h-7 w-7 text-green-600" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* القائمة الرئيسية */}
+        <div className="mb-8">
+          <nav className="flex space-x-reverse space-x-8 bg-white rounded-lg shadow-md p-2">
+            <button
+              onClick={() => setActiveSection('dashboard')}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                activeSection === 'dashboard'
+                  ? 'bg-green-100 text-green-700 border-2 border-green-600 shadow-md'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                لوحة التحكم
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveSection('new')}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                activeSection === 'new'
+                  ? 'bg-blue-100 text-blue-700 border-2 border-blue-600 shadow-md'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Plus className="h-5 w-5" />
+                تسجيل مخالفة
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveSection('all')}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                activeSection === 'all'
+                  ? 'bg-purple-100 text-purple-700 border-2 border-purple-600 shadow-md'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                جميع المخالفات
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveSection('reports')}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                activeSection === 'reports'
+                  ? 'bg-orange-100 text-orange-700 border-2 border-orange-600 shadow-md'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Award className="h-5 w-5" />
+                التقارير
+              </div>
+            </button>
+          </nav>
+        </div>
+
+        {/* المحتوى الرئيسي */}
+        {activeSection === 'dashboard' && <Dashboard />}
+        {activeSection === 'new' && <NewViolation />}
+        {activeSection === 'all' && <AllViolations />}
+        {activeSection === 'reports' && <Reports />}
+
+        {/* الفوتر */}
+        <div className="mt-12 bg-white rounded-lg shadow-md p-6">
+          <div className="text-center space-y-2">
+            <p className="text-sm text-gray-600">© 2025 منصة الوكيل لإدارة السلوك الطلابي</p>
+            <p className="text-sm text-gray-500">متوسطة المنذر بن عمرو الأنصاري - المملكة العربية السعودية</p>
+            <div className="flex justify-center items-center gap-4 text-xs text-gray-400 pt-2">
+              <span>Development & Implementation: Nawaf Alsubhi</span>
+              <span>|</span>
+              <span>2025</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ViceDirectorPlatform;
