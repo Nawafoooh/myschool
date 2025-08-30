@@ -1,132 +1,10 @@
-<div class="dashboard-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="admin-info">
-                <h1 class="admin-title">🎯 لوحة إدارة اجتماع أولياء الأمور</h1>
-                <p class="admin-subtitle">متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي</p>
-                <div class="admin-name">👨‍💼 مدير المدرسة: خالد سعود المطيري</div>
-                <div class="current-date" id="currentDate">📅 اليوم: الخميس 28 أغسطس 2025</div>
-            </div>
-        </div>
-        
-        <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card bookings">
-                <div class="stat-icon">👥</div>
-                <div class="stat-number" id="totalBookings">0</div>
-                <div class="stat-label">إجمالي الحجوزات</div>
-                <div class="stat-description">عدد أولياء الأمور المسجلين للحضور</div>
-            </div>
-            
-            <div class="stat-card excuses">
-                <div class="stat-icon">😔</div>
-                <div class="stat-number" id="totalExcuses">0</div>
-                <div class="stat-label">إجمالي الاعتذارات</div>
-                <div class="stat-description">عدد أولياء الأمور المعتذرين</div>
-            </div>
-            
-            <div class="stat-card available">
-                <div class="stat-icon">⭐</div>
-                <div class="stat-number" id="availableSlots">400</div>
-                <div class="stat-label">المقاعد المتاحة</div>
-                <div class="stat-description">المقاعد المتبقية للحجز</div>
-            </div>
-            
-            <div class="stat-card occupancy">
-                <div class="stat-icon">📊</div>
-                <div class="stat-number" id="occupancyRate">0%</div>
-                <div class="stat-label">نسبة الإشغال</div>
-                <div class="stat-description">نسبة المقاعد المحجوزة</div>
-            </div>
-        </div>
-        
-        <!-- Quick Stats -->
-        <div class="quick-stats">
-            <h3 class="quick-stats-title">📈 إحصائيات سريعة</h3>
-            <div class="quick-stats-grid">
-                <div class="quick-stat-item">
-                    <div class="quick-stat-number" id="busyDays">0</div>
-                    <div class="quick-stat-label">أيام مشغولة</div>
-                </div>
-                <div class="quick-stat-item">
-                    <div class="quick-stat-number" id="fullDays">0</div>
-                    <div class="quick-stat-label">أيام مكتملة</div>
-                </div>
-                <div class="quick-stat-item">
-                    <div class="quick-stat-number" id="avgPerDay">0</div>
-                    <div class="quick-stat-label">متوسط يومي</div>
-                </div>
-                <div class="quick-stat-item">
-                    <div class="quick-stat-number" id="responseRate">0%</div>
-                    <div class="quick-stat-label">معدل الاستجابة</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Main Content Grid -->
-        <div class="main-content">
-            <!-- Days Overview -->
-            <div class="days-overview">
-                <h2 class="overview-title">📅 نظرة عامة على الأيام</h2>
-                <div class="days-grid" id="daysGrid">
-                    <!-- سيتم إنشاؤها ديناميكياً بواسطة JavaScript -->
-                </div>
-            </div>
-            
-            <!-- Control Panel -->
-            <div class="controls-panel">
-                <h3 class="controls-title">🛠️ أدوات الإدارة</h3>
-                <button class="control-btn btn-primary" onclick="showDetailedReport()">
-                    📋 تقرير مفصل
-                </button>
-                <button class="control-btn btn-secondary" onclick="exportToExcel()">
-                    📤 تصدير Excel
-                </button>
-                <button class="control-btn btn-warning" onclick="printReport()">
-                    🖨️ طباعة
-                </button>
-                <button class="control-btn btn-danger" onclick="resetAllData()">
-                    🗑️ إعادة تعيين
-                </button>
-                
-                <div class="quick-stats" style="margin-top: 25px; padding: 20px; box-shadow: none; border: 2px solid #f0f0f0;">
-                    <h4 style="font-size: 16px; margin-bottom: 15px; color: #0d5c0d;">⚡ تحديث مباشر</h4>
-                    <div style="font-size: 14px; color: #666; text-align: center;">
-                        <div>آخر تحديث:</div>
-                        <div id="lastUpdate" style="color: #0d5c0d; font-weight: 600;">الآن</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>        <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">👥</div>
-                <div class="stat-number" id="totalBookings">0</div>
-                <div class="stat-label">إجمالي الحجوزات</div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">😔</div>
-                <div class="stat-number" id="totalExcuses">0</div>
-                <div class="stat-label">إجمالي الاعتذارات</div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">⭐</div>
-                <div class="stat-number" id="availableSlots">400</div>
-                <div class="stat-label">المقاعد المتاحة</div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">📊</div>
-                <div class="stat-number" id="occupancyRate">0%</div>
-                <div class="stat-label">نسب<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة إدارة اجتماع أولياء الأمور - خالد سعود المطيري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -135,100 +13,112 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+            color: #2c3e50;
             line-height: 1.6;
         }
         
-        .dashboard-container {
-            max-width: 1200px;
+        .dashboard-wrapper {
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
         
-        .header {
-            background: linear-gradient(135deg, #0d5c0d, #1a7a1a);
+        /* Header Section */
+        .dashboard-header {
+            background: linear-gradient(135deg, #0d5c0d 0%, #1a7a1a 50%, #2d8f2d 100%);
             color: white;
             padding: 40px 30px;
-            border-radius: 20px;
+            border-radius: 25px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
             margin-bottom: 30px;
         }
         
-        .header::before {
-            content: '';
+        .dashboard-header::before {
+            content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="7.5" cy="7.5" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: backgroundMove 25s linear infinite;
         }
         
-        .admin-info {
+        @keyframes backgroundMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+        
+        .header-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         
         .admin-title {
-            font-size: 32px;
-            font-weight: bold;
+            font-size: 36px;
+            font-weight: 700;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
         }
         
-        .admin-subtitle {
+        .school-info {
             font-size: 18px;
             opacity: 0.95;
             margin-bottom: 10px;
+            font-weight: 500;
         }
         
         .admin-name {
             font-size: 20px;
-            margin-top: 15px;
-            padding-top: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 2px solid rgba(255,255,255,0.3);
             font-weight: 600;
         }
         
-        .current-date {
-            font-size: 16px;
-            opacity: 0.9;
+        .last-update {
+            font-size: 14px;
+            opacity: 0.8;
             margin-top: 10px;
         }
         
-        .stats-grid {
+        /* Stats Grid */
+        .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
         }
         
         .stat-card {
-            background: white;
-            padding: 30px 25px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 35px 30px;
             border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid #f0f0f0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.5);
         }
         
         .stat-card::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, transparent, var(--card-color), transparent);
+            background: var(--card-gradient);
             transition: left 0.6s ease;
         }
         
@@ -237,199 +127,150 @@
         }
         
         .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
         }
         
         .stat-card.bookings {
-            --card-color: #28a745;
+            --card-gradient: linear-gradient(90deg, #28a745, #20c997);
         }
         
         .stat-card.excuses {
-            --card-color: #ffc107;
+            --card-gradient: linear-gradient(90deg, #ffc107, #e0a800);
         }
         
         .stat-card.available {
-            --card-color: #17a2b8;
+            --card-gradient: linear-gradient(90deg, #17a2b8, #138496);
         }
         
         .stat-card.occupancy {
-            --card-color: #6f42c1;
+            --card-gradient: linear-gradient(90deg, #6f42c1, #5a67d8);
         }
         
         .stat-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background: var(--card-color);
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: var(--card-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 32px;
             color: white;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .stat-icon::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.3;
+            transform: scale(1.5);
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.5); opacity: 0.3; }
+            50% { transform: scale(1.8); opacity: 0.1; }
         }
         
         .stat-number {
-            font-size: 42px;
-            font-weight: bold;
-            color: var(--card-color);
+            font-size: 48px;
+            font-weight: 700;
+            color: #2c3e50;
             margin-bottom: 10px;
             line-height: 1;
+            background: var(--card-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .stat-label {
-            font-size: 16px;
-            color: #666;
-            font-weight: 500;
-            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
         }
         
         .stat-description {
-            font-size: 13px;
-            color: #999;
+            font-size: 14px;
+            color: #7f8c8d;
             line-height: 1.4;
         }
         
-        .main-content {
+        /* Main Content Layout */
+        .main-layout {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr 350px;
             gap: 30px;
             align-items: start;
         }
         
-        .controls-panel {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 20px;
+        /* Days Overview */
+        .days-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
         }
         
-        .controls-title {
-            font-size: 20px;
+        .section-title {
+            font-size: 28px;
             color: #0d5c0d;
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 30px;
             text-align: center;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .control-btn {
-            width: 100%;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 12px;
             position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .control-btn:last-child {
-            margin-bottom: 0;
-        }
-        
-        .control-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.4s ease;
-        }
-        
-        .control-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, #17a2b8, #138496);
-            color: white;
-            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
-        }
-        
-        .btn-warning {
-            background: linear-gradient(135deg, #ffc107, #e0a800);
-            color: #000;
-            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545, #c82333);
-            color: white;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-        }
-        
-        .control-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-        
-        .days-overview {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-        
-        .overview-title {
-            font-size: 24px;
-            color: #0d5c0d;
-            font-weight: bold;
-            margin-bottom: 25px;
-            text-align: center;
             padding-bottom: 15px;
-            border-bottom: 3px solid #0d5c0d;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #0d5c0d, #2d8f2d);
+            border-radius: 2px;
         }
         
         .days-grid {
             display: grid;
-            gap: 20px;
+            gap: 25px;
         }
         
         .day-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 30px;
             border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
         
         .day-card::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #0d5c0d, #28a745);
+            height: 5px;
+            background: linear-gradient(90deg, #0d5c0d, #2d8f2d);
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
         
         .day-card:hover::before {
@@ -438,67 +279,89 @@
         
         .day-card:hover {
             border-color: #0d5c0d;
-            background: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #ffffff 0%, #f0fff0 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(13, 92, 13, 0.15);
         }
         
         .day-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .day-info h3 {
-            font-size: 20px;
+            font-size: 22px;
             color: #0d5c0d;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 5px;
         }
         
-        .day-info .date {
+        .day-date {
             font-size: 14px;
-            color: #666;
+            color: #6c757d;
+            font-weight: 500;
         }
         
         .day-stats {
             text-align: center;
+            background: #0d5c0d;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 15px;
+            min-width: 120px;
         }
         
         .stats-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0d5c0d;
-            margin-bottom: 5px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 2px;
         }
         
         .stats-label {
-            font-size: 12px;
-            color: #999;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            opacity: 0.9;
         }
         
         .progress-section {
-            margin: 20px 0;
+            margin: 25px 0;
         }
         
         .progress-bar {
             width: 100%;
-            height: 12px;
+            height: 14px;
             background: #e9ecef;
-            border-radius: 6px;
+            border-radius: 7px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            position: relative;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #28a745, #20c997);
-            border-radius: 6px;
-            transition: width 1s ease;
+            border-radius: 7px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+        }
+        
+        .progress-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressShimmer 2s infinite;
+        }
+        
+        @keyframes progressShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         .progress-fill.full {
@@ -510,153 +373,199 @@
         }
         
         .progress-text {
-            font-size: 13px;
-            color: #666;
+            font-size: 14px;
+            color: #495057;
             text-align: center;
+            font-weight: 500;
         }
         
-        .bookings-preview {
-            max-height: 150px;
+        .bookings-list {
+            max-height: 180px;
             overflow-y: auto;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
             background: white;
         }
         
+        .bookings-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .bookings-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .bookings-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        
         .booking-item {
-            padding: 8px 12px;
-            margin-bottom: 6px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            font-size: 13px;
-            border-left: 3px solid #28a745;
+            padding: 12px 18px;
+            border-bottom: 1px solid #f8f9fa;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
         }
         
         .booking-item:last-child {
-            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .booking-item:hover {
+            background-color: #f8f9fa;
         }
         
         .student-name {
             font-weight: 600;
             color: #0d5c0d;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
         
-        .parent-name {
-            color: #666;
-            font-size: 12px;
+        .parent-info {
+            color: #6c757d;
+            font-size: 13px;
         }
         
-        .empty-day {
+        .empty-state {
             text-align: center;
-            color: #999;
+            color: #adb5bd;
             font-style: italic;
-            padding: 30px 20px;
-            background: white;
-            border: 2px dashed #e9ecef;
-            border-radius: 8px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
         }
         
-        .quick-stats {
-            background: white;
-            border-radius: 20px;
+        /* Controls Panel */
+        .controls-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        
+        .controls-title {
+            font-size: 24px;
+            color: #0d5c0d;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .controls-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #0d5c0d, #2d8f2d);
+            border-radius: 2px;
+        }
+        
+        .control-btn {
+            width: 100%;
+            padding: 18px 24px;
+            border: none;
+            border-radius: 15px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .control-btn::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+        
+        .control-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            color: white;
+            box-shadow: 0 8px 25px rgba(23, 162, 184, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: #000;
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #6f42c1, #5a67d8);
+            color: white;
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .status-panel {
+            margin-top: 30px;
             padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border: 1px solid #dee2e6;
         }
         
-        .quick-stats-title {
-            font-size: 18px;
+        .status-title {
+            font-size: 16px;
+            font-weight: 600;
             color: #0d5c0d;
-            font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
         
-        .quick-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .quick-stat-item {
+        .status-info {
             text-align: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
+            font-size: 14px;
+            color: #6c757d;
         }
         
-        .quick-stat-number {
-            font-size: 20px;
-            font-weight: bold;
+        .status-time {
             color: #0d5c0d;
-            margin-bottom: 5px;
+            font-weight: 600;
+            margin-top: 8px;
+            font-size: 13px;
         }
         
-        .quick-stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .controls-panel {
-                position: static;
-                order: -1;
-            }
-            
-            .control-btn {
-                display: inline-flex;
-                width: auto;
-                margin: 5px;
-                padding: 12px 20px;
-            }
-            
-            .controls-title {
-                margin-bottom: 15px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .dashboard-container {
-                padding: 10px;
-            }
-            
-            .admin-title {
-                font-size: 24px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            
-            .stat-card {
-                padding: 20px 15px;
-            }
-            
-            .stat-number {
-                font-size: 32px;
-            }
-            
-            .stat-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 24px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -666,7 +575,7 @@
             height: 100%;
             background: rgba(0,0,0,0.8);
             z-index: 1000;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
         
         .modal-content {
@@ -675,36 +584,36 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 90%;
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 95%;
             max-height: 90%;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
         }
         
         .modal-header {
             text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
             border-bottom: 3px solid #0d5c0d;
         }
         
         .modal-title {
-            font-size: 28px;
+            font-size: 32px;
             color: #0d5c0d;
-            font-weight: bold;
+            font-weight: 700;
         }
         
         .close-btn {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: 20px;
+            left: 20px;
             background: #dc3545;
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             font-size: 20px;
             cursor: pointer;
@@ -716,23 +625,28 @@
             transform: scale(1.1);
         }
         
+        /* Report Table */
         .report-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
         .report-table th,
         .report-table td {
-            padding: 12px 15px;
+            padding: 15px 20px;
             text-align: center;
-            border: 1px solid #ddd;
+            border-bottom: 1px solid #dee2e6;
         }
         
         .report-table th {
             background: linear-gradient(135deg, #0d5c0d, #2d8f2d);
             color: white;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 16px;
         }
         
         .report-table tr:nth-child(even) {
@@ -740,158 +654,255 @@
         }
         
         .report-table tr:hover {
-            background: #e9ecef;
+            background: #e8f5e8;
+            transform: scale(1.01);
+            transition: all 0.3s ease;
         }
         
-        .summary-section {
-            background: #e9ecef;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        
-        .summary-title {
-            font-size: 20px;
-            color: #0d5c0d;
-            font-weight: bold;
-            margin-bottom: 15px;
+        .loading-state {
             text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+            font-size: 16px;
         }
         
-        .summary-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(13, 92, 13, 0.3);
+            border-radius: 50%;
+            border-top-color: #0d5c0d;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
         }
         
-        .summary-item {
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
             text-align: center;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 40px 20px;
+            margin-top: 50px;
+            border-radius: 25px 25px 0 0;
         }
         
-        .summary-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0d5c0d;
-            margin-bottom: 5px;
+        .footer-main {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-weight: 500;
         }
         
-        .summary-label {
+        .developer-credit {
             font-size: 14px;
-            color: #666;
+            color: rgba(255,255,255,0.7);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            font-weight: 400;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .controls-panel {
+                position: static;
+                order: -1;
+            }
+            
+            .control-btn {
+                display: inline-flex;
+                width: calc(50% - 10px);
+                margin: 5px;
+            }
         }
         
         @media (max-width: 768px) {
-            .dashboard-container {
-                margin: 10px;
-                padding: 0 10px;
+            .dashboard-wrapper {
+                padding: 15px;
             }
             
             .admin-title {
                 font-size: 28px;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
             
-            .control-buttons {
-                grid-template-columns: 1fr;
+            .stat-card {
+                padding: 25px 20px;
             }
             
-            .days-overview {
-                grid-template-columns: 1fr;
+            .stat-number {
+                font-size: 36px;
+            }
+            
+            .control-btn {
+                width: 100%;
+                margin: 5px 0;
             }
             
             .modal-content {
                 width: 95%;
-                height: 95%;
-                max-width: none;
-                max-height: none;
-                padding: 20px;
+                height: 90%;
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <div class="header">
-            <h1 class="admin-title">🎯 لوحة إدارة اجتماع أولياء الأمور</h1>
-            <p class="admin-subtitle">متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي</p>
-            <div class="admin-info">👨‍💼 مدير المدرسة: خالد سعود المطيري</div>
+    <div class="dashboard-wrapper">
+        <!-- Header Section -->
+        <div class="dashboard-header">
+            <div class="header-content">
+                <h1 class="admin-title">لوحة إدارة اجتماع أولياء الأمور</h1>
+                <p class="school-info">متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي</p>
+                <div class="admin-name">مدير المدرسة: خالد سعود المطيري</div>
+                <div class="last-update" id="headerLastUpdate">آخر تحديث: جاري التحميل...</div>
+            </div>
         </div>
         
         <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
+        <div class="stats-container">
+            <div class="stat-card bookings">
                 <div class="stat-icon">👥</div>
-                <div class="stat-number" id="totalBookings">0</div>
+                <div class="stat-number" id="totalBookings">-</div>
                 <div class="stat-label">إجمالي الحجوزات</div>
+                <div class="stat-description">عدد أولياء الأمور المسجلين للحضور في جميع الأيام</div>
             </div>
             
-            <div class="stat-card">
+            <div class="stat-card excuses">
                 <div class="stat-icon">😔</div>
-                <div class="stat-number" id="totalExcuses">0</div>
+                <div class="stat-number" id="totalExcuses">-</div>
                 <div class="stat-label">إجمالي الاعتذارات</div>
+                <div class="stat-description">عدد أولياء الأمور المعتذرين عن الحضور</div>
             </div>
             
-            <div class="stat-card">
+            <div class="stat-card available">
                 <div class="stat-icon">⭐</div>
                 <div class="stat-number" id="availableSlots">400</div>
                 <div class="stat-label">المقاعد المتاحة</div>
+                <div class="stat-description">إجمالي المقاعد المتبقية للحجز</div>
             </div>
             
-            <div class="stat-card">
+            <div class="stat-card occupancy">
                 <div class="stat-icon">📊</div>
-                <div class="stat-number" id="occupancyRate">0%</div>
+                <div class="stat-number" id="occupancyRate">-%</div>
                 <div class="stat-label">نسبة الإشغال</div>
+                <div class="stat-description">النسبة المئوية للمقاعد المحجوزة</div>
             </div>
         </div>
         
-        <!-- Control Panel -->
-        <div class="controls-section">
-            <h2 class="controls-title">🛠️ أدوات الإدارة</h2>
-            <div class="control-buttons">
+        <!-- Main Content -->
+        <div class="main-layout">
+            <!-- Days Overview -->
+            <div class="days-section">
+                <h2 class="section-title">نظرة عامة على الأيام</h2>
+                <div class="days-grid" id="daysGrid">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <div>جاري تحميل البيانات...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <h3 class="controls-title">أدوات الإدارة</h3>
+                
                 <button class="control-btn btn-primary" onclick="showDetailedReport()">
                     📋 تقرير مفصل
                 </button>
+                
                 <button class="control-btn btn-secondary" onclick="exportToExcel()">
                     📤 تصدير Excel
                 </button>
-                <button class="control-btn btn-warning" onclick="printReport()">
+                
+                <button class="control-btn btn-warning" onclick="refreshData()">
+                    🔄 تحديث البيانات
+                </button>
+                
+                <button class="control-btn btn-info" onclick="printReport()">
                     🖨️ طباعة التقرير
                 </button>
-                <button class="control-btn btn-danger" onclick="resetAllData()">
-                    🗑️ إعادة تعيين
-                </button>
+                
+                <div class="status-panel">
+                    <div class="status-title">حالة النظام</div>
+                    <div class="status-info">
+                        <div>متصل بقاعدة البيانات</div>
+                        <div class="status-time" id="lastUpdateTime">آخر تحديث: -</div>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <!-- Days Overview -->
-        <div class="days-overview" id="daysOverview">
-            <!-- سيتم إنشاؤها ديناميكياً بواسطة JavaScript -->
         </div>
     </div>
     
-    <!-- Modal for Detailed Report -->
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-main">
+            © 1447هـ - متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي
+        </div>
+        <div class="developer-credit">
+            تنفيذ وتصميم Nawaf Alsubhi 2025
+        </div>
+    </div>
+    
+    <!-- Modal for Reports -->
     <div class="modal" id="reportModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
             <div class="modal-header">
-                <h2 class="modal-title">📊 التقرير المفصل</h2>
+                <h2 class="modal-title">التقرير المفصل</h2>
             </div>
             <div id="modalContent">
-                <!-- سيتم إدراج محتوى التقرير هنا -->
+                <!-- Report content will be inserted here -->
             </div>
         </div>
     </div>
     
-    <script>
-        // بيانات الأيام
+    <!-- Firebase Scripts -->
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxKQY8jxZwJz5YOjRQvLq7Mb2NxQvRq1s",
+            authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
+            projectId: "nawafalsubhi3-f4abf",
+            storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abc123def456ghi789jkl"
+        };
+
+        // Import Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getFirestore, collection, getDocs, query, where, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Days Configuration
         const DAYS_DATA = {
             sunday: { name: 'الأحد', date: '15/3/1447هـ', max: 80 },
             monday: { name: 'الاثنين', date: '16/3/1447هـ', max: 80 },
@@ -899,64 +910,69 @@
             wednesday: { name: 'الأربعاء', date: '18/3/1447هـ', max: 80 },
             thursday: { name: 'الخميس', date: '19/3/1447هـ', max: 80 }
         };
-        
-        // استرجاع البيانات
-        let bookingsData = JSON.parse(localStorage.getItem('parentMeetingBookings') || '{}');
-        
-        // تحديث الإحصائيات
-        function updateStatistics() {
-            let totalBookings = 0;
-            let totalCapacity = 0;
-            let totalExcuses = 0;
-            let busyDays = 0;
-            let fullDays = 0;
-            
-            for (const dayKey in DAYS_DATA) {
-                const dayBookings = bookingsData[dayKey] || [];
-                totalBookings += dayBookings.length;
-                totalCapacity += DAYS_DATA[dayKey].max;
+
+        let allBookings = [];
+        let allExcuses = [];
+
+        // Fetch all data from Firebase
+        async function fetchAllData() {
+            try {
+                const q = query(collection(db, 'bookings'), orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
                 
-                if (dayBookings.length > 0) busyDays++;
-                if (dayBookings.length >= DAYS_DATA[dayKey].max) fullDays++;
+                allBookings = [];
+                allExcuses = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.type === 'booking') {
+                        allBookings.push(data);
+                    } else if (data.type === 'excuse') {
+                        allExcuses.push(data);
+                    }
+                });
+
+                return true;
+            } catch (error) {
+                console.error('خطأ في جلب البيانات:', error);
+                return false;
             }
-            
-            // حساب الاعتذارات
-            totalExcuses = bookingsData.excuses ? bookingsData.excuses.length : 0;
-            
+        }
+
+        // Update Statistics
+        function updateStatistics() {
+            const totalBookings = allBookings.length;
+            const totalExcuses = allExcuses.length;
+            const totalCapacity = Object.keys(DAYS_DATA).length * 80;
             const availableSlots = totalCapacity - totalBookings;
             const occupancyRate = totalCapacity > 0 ? Math.round((totalBookings / totalCapacity) * 100) : 0;
-            const avgPerDay = Math.round(totalBookings / Object.keys(DAYS_DATA).length);
-            const totalResponses = totalBookings + totalExcuses;
-            const responseRate = totalResponses > 0 ? Math.round((totalResponses / (totalResponses + availableSlots)) * 100) : 0;
-            
-            // تحديث البطاقات الرئيسية
+
             document.getElementById('totalBookings').textContent = totalBookings;
             document.getElementById('totalExcuses').textContent = totalExcuses;
             document.getElementById('availableSlots').textContent = availableSlots;
             document.getElementById('occupancyRate').textContent = occupancyRate + '%';
             
-            // تحديث الإحصائيات السريعة
-            document.getElementById('busyDays').textContent = busyDays;
-            document.getElementById('fullDays').textContent = fullDays;
-            document.getElementById('avgPerDay').textContent = avgPerDay;
-            document.getElementById('responseRate').textContent = responseRate + '%';
-            
-            // تحديث وقت آخر تحديث
-            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('ar-SA', {
+            const now = new Date().toLocaleString('ar-SA', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
                 hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
+                minute: '2-digit'
             });
+            
+            document.getElementById('headerLastUpdate').textContent = `آخر تحديث: ${now}`;
+            document.getElementById('lastUpdateTime').textContent = `آخر تحديث: ${new Date().toLocaleTimeString('ar-SA')}`;
         }
-        
-        // إنشاء عرض الأيام
+
+        // Create Days Overview
         function createDaysOverview() {
             const container = document.getElementById('daysGrid');
             container.innerHTML = '';
             
             for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
-                const bookings = bookingsData[dayKey] || [];
-                const bookedCount = bookings.length;
+                const dayBookings = allBookings.filter(booking => booking.selectedDay === dayKey);
+                const bookedCount = dayBookings.length;
                 const availableCount = dayInfo.max - bookedCount;
                 const progressPercent = Math.round((bookedCount / dayInfo.max) * 100);
                 
@@ -971,7 +987,7 @@
                     <div class="day-header">
                         <div class="day-info">
                             <h3>${dayInfo.name}</h3>
-                            <div class="date">${dayInfo.date}</div>
+                            <div class="day-date">${dayInfo.date}</div>
                         </div>
                         <div class="day-stats">
                             <div class="stats-number">${bookedCount}/${dayInfo.max}</div>
@@ -986,19 +1002,17 @@
                         <div class="progress-text">${availableCount} مقعد متاح</div>
                     </div>
                     
-                    <div class="bookings-preview">
-                        ${bookings.length > 0 ? 
-                            bookings.slice(0, 4).map((booking, index) => `
+                    <div class="bookings-list">
+                        ${dayBookings.length > 0 ? 
+                            dayBookings.slice(0, 5).map((booking, index) => `
                                 <div class="booking-item">
-                                    <div>
-                                        <div class="student-name">${index + 1}. ${booking.studentName}</div>
-                                        <div class="parent-name">👨‍💼 ${booking.parentName}</div>
-                                    </div>
+                                    <div class="student-name">${index + 1}. ${booking.studentName}</div>
+                                    <div class="parent-info">ولي الأمر: ${booking.parentName} - ${booking.phoneNumber}</div>
                                 </div>
                             `).join('') + 
-                            (bookings.length > 4 ? `<div style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;">و ${bookings.length - 4} آخرين...</div>` : '')
+                            (dayBookings.length > 5 ? `<div class="booking-item" style="text-align: center; color: #6c757d; font-style: italic;">و ${dayBookings.length - 5} آخرين...</div>` : '')
                             :
-                            '<div class="empty-day">لا توجد حجوزات</div>'
+                            '<div class="empty-state">لا توجد حجوزات لهذا اليوم</div>'
                         }
                     </div>
                 `;
@@ -1006,36 +1020,30 @@
                 container.appendChild(dayCard);
             }
         }
-        
-        // عرض التقرير المفصل
+
+        // Show Detailed Report
         function showDetailedReport() {
-            const totalExcuses = bookingsData.excuses ? bookingsData.excuses.length : 0;
-            
             let reportHTML = `
-                <div class="summary-section">
-                    <h3 class="summary-title">📈 ملخص الإحصائيات</h3>
-                    <div class="summary-stats">
-                        <div class="summary-item">
-                            <div class="summary-number">${getTotalBookings()}</div>
-                            <div class="summary-label">إجمالي الحجوزات</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="summary-number">${totalExcuses}</div>
-                            <div class="summary-label">إجمالي الاعتذارات</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="summary-number">${getTotalAvailable()}</div>
-                            <div class="summary-label">المقاعد المتاحة</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="summary-number">${getOccupancyRate()}%</div>
-                            <div class="summary-label">نسبة الإشغال</div>
-                        </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-bottom: 40px;">
+                    <div style="background: linear-gradient(135deg, #d1edcc, #c3e6cb); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                        <div style="font-size: 36px; font-weight: bold; color: #155724; margin-bottom: 8px;">${allBookings.length}</div>
+                        <div style="color: #155724; font-weight: 600;">إجمالي الحجوزات</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                        <div style="font-size: 36px; font-weight: bold; color: #856404; margin-bottom: 8px;">${allExcuses.length}</div>
+                        <div style="color: #856404; font-weight: 600;">إجمالي الاعتذارات</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #d1ecf1, #bee5eb); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                        <div style="font-size: 36px; font-weight: bold; color: #0c5460; margin-bottom: 8px;">${400 - allBookings.length}</div>
+                        <div style="color: #0c5460; font-weight: 600;">المقاعد المتاحة</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #e2e3f1, #d4d4f0); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                        <div style="font-size: 36px; font-weight: bold; color: #383d41; margin-bottom: 8px;">${Math.round((allBookings.length / 400) * 100)}%</div>
+                        <div style="color: #383d41; font-weight: 600;">نسبة الإشغال</div>
                     </div>
                 </div>
-            `;
-            
-            reportHTML += `
+                
+                <h3 style="color: #0d5c0d; margin: 30px 0 20px 0; font-size: 24px; border-bottom: 3px solid #0d5c0d; padding-bottom: 10px;">تفاصيل الحجوزات حسب الأيام</h3>
                 <table class="report-table">
                     <thead>
                         <tr>
@@ -1044,16 +1052,28 @@
                             <th>عدد الحجوزات</th>
                             <th>المقاعد المتاحة</th>
                             <th>نسبة الإشغال</th>
+                            <th>الحالة</th>
                         </tr>
                     </thead>
                     <tbody>
             `;
             
             for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
-                const bookings = bookingsData[dayKey] || [];
-                const bookedCount = bookings.length;
+                const dayBookings = allBookings.filter(booking => booking.selectedDay === dayKey);
+                const bookedCount = dayBookings.length;
                 const availableCount = dayInfo.max - bookedCount;
-                const dayOccupancy = Math.round((bookedCount / dayInfo.max) * 100);
+                const occupancyRate = Math.round((bookedCount / dayInfo.max) * 100);
+                
+                let statusText = 'متاح';
+                let statusColor = '#28a745';
+                
+                if (occupancyRate >= 100) {
+                    statusText = 'مكتمل';
+                    statusColor = '#dc3545';
+                } else if (occupancyRate >= 80) {
+                    statusText = 'شبه مكتمل';
+                    statusColor = '#ffc107';
+                }
                 
                 reportHTML += `
                     <tr>
@@ -1061,64 +1081,60 @@
                         <td>${dayInfo.date}</td>
                         <td>${bookedCount}/${dayInfo.max}</td>
                         <td>${availableCount}</td>
-                        <td style="color: ${dayOccupancy >= 100 ? '#dc3545' : '#28a745'}">${dayOccupancy}%</td>
+                        <td style="color: ${statusColor}; font-weight: bold;">${occupancyRate}%</td>
+                        <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
                     </tr>
                 `;
             }
             
             reportHTML += '</tbody></table>';
             
-            // إضافة قسم الاعتذارات
-            if (totalExcuses > 0) {
+            // Add excuses section if any
+            if (allExcuses.length > 0) {
                 reportHTML += `
-                    <div style="margin: 30px 0; padding: 25px; background: #fff3cd; border-radius: 15px; border: 2px solid #ffc107;">
-                        <h3 style="color: #856404; margin-bottom: 20px; text-align: center;">
-                            😔 الاعتذارات (${totalExcuses})
-                        </h3>
-                        <table class="report-table" style="font-size: 14px;">
-                            <thead>
-                                <tr style="background: linear-gradient(135deg, #ffc107, #e0a800); color: #000;">
-                                    <th>#</th>
-                                    <th>اسم الطالب</th>
-                                    <th>اسم ولي الأمر</th>
-                                    <th>رقم الجوال</th>
-                                    <th>سبب الاعتذار</th>
-                                    <th>وقت التسجيل</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <h3 style="color: #856404; margin: 40px 0 20px 0; font-size: 24px; border-bottom: 3px solid #ffc107; padding-bottom: 10px;">الاعتذارات (${allExcuses.length})</h3>
+                    <table class="report-table">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #ffc107, #e0a800);">
+                                <th style="color: #000;">اسم الطالب</th>
+                                <th style="color: #000;">اسم ولي الأمر</th>
+                                <th style="color: #000;">رقم الجوال</th>
+                                <th style="color: #000;">سبب الاعتذار</th>
+                                <th style="color: #000;">وقت التسجيل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                 `;
                 
-                bookingsData.excuses.forEach((excuse, index) => {
+                allExcuses.forEach((excuse, index) => {
                     reportHTML += `
-                        <tr style="background: ${index % 2 === 0 ? '#fff3cd' : 'white'};">
-                            <td>${index + 1}</td>
+                        <tr style="background: ${index % 2 === 0 ? '#fff8e1' : 'white'};">
                             <td><strong>${excuse.studentName}</strong></td>
                             <td>${excuse.parentName}</td>
                             <td style="direction: ltr;">${excuse.phoneNumber}</td>
-                            <td style="max-width: 200px; word-wrap: break-word; font-size: 13px;">${excuse.excuseReason}</td>
-                            <td style="font-size: 12px;">${excuse.timestamp}</td>
+                            <td style="max-width: 250px; word-wrap: break-word; font-size: 14px;">${excuse.excuseReason}</td>
+                            <td style="font-size: 13px;">${excuse.submittedAt || 'غير محدد'}</td>
                         </tr>
                     `;
                 });
                 
-                reportHTML += '</tbody></table></div>';
+                reportHTML += '</tbody></table>';
             }
             
-            // إضافة تفاصيل الحجوزات لكل يوم
-            reportHTML += '<h3 style="margin-top: 30px; color: #0d5c0d;">📋 تفاصيل الحجوزات</h3>';
+            // Add detailed bookings for each day
+            reportHTML += '<h3 style="color: #0d5c0d; margin: 40px 0 20px 0; font-size: 24px; border-bottom: 3px solid #0d5c0d; padding-bottom: 10px;">تفاصيل كاملة للحجوزات</h3>';
             
             for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
-                const bookings = bookingsData[dayKey] || [];
+                const dayBookings = allBookings.filter(booking => booking.selectedDay === dayKey);
                 
                 reportHTML += `
-                    <div style="margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 10px;">
-                        <h4 style="color: #0d5c0d; margin-bottom: 15px;">
-                            ${dayInfo.name} - ${dayInfo.date} (${bookings.length}/${dayInfo.max})
+                    <div style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <h4 style="color: #0d5c0d; margin-bottom: 20px; font-size: 20px;">
+                            ${dayInfo.name} - ${dayInfo.date} (${dayBookings.length}/${dayInfo.max} محجوز)
                         </h4>
                 `;
                 
-                if (bookings.length > 0) {
+                if (dayBookings.length > 0) {
                     reportHTML += `
                         <table class="report-table" style="font-size: 14px;">
                             <thead>
@@ -1133,21 +1149,21 @@
                             <tbody>
                     `;
                     
-                    bookings.forEach((booking, index) => {
+                    dayBookings.forEach((booking, index) => {
                         reportHTML += `
                             <tr>
                                 <td>${index + 1}</td>
-                                <td>${booking.studentName}</td>
+                                <td><strong>${booking.studentName}</strong></td>
                                 <td>${booking.parentName}</td>
                                 <td style="direction: ltr;">${booking.phoneNumber}</td>
-                                <td style="font-size: 12px;">${booking.timestamp}</td>
+                                <td style="font-size: 13px;">${booking.submittedAt || 'غير محدد'}</td>
                             </tr>
                         `;
                     });
                     
                     reportHTML += '</tbody></table>';
                 } else {
-                    reportHTML += '<p style="text-align: center; color: #999; font-style: italic;">لا توجد حجوزات لهذا اليوم</p>';
+                    reportHTML += '<p style="text-align: center; color: #6c757d; font-style: italic; padding: 30px; background: white; border: 2px dashed #dee2e6; border-radius: 10px;">لا توجد حجوزات لهذا اليوم</p>';
                 }
                 
                 reportHTML += '</div>';
@@ -1156,44 +1172,34 @@
             document.getElementById('modalContent').innerHTML = reportHTML;
             document.getElementById('reportModal').style.display = 'block';
         }
-        
-        // إغلاق النافذة المنبثقة
-        function closeModal() {
-            document.getElementById('reportModal').style.display = 'none';
-        }
-        
-        // تصدير إلى Excel
+
+        // Export to Excel
         function exportToExcel() {
             let csvContent = "نوع البيان,اليوم,التاريخ,اسم الطالب,اسم ولي الأمر,رقم الجوال,سبب الاعتذار,وقت التسجيل\n";
             
-            // إضافة الحجوزات
-            for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
-                const bookings = bookingsData[dayKey] || [];
-                
-                bookings.forEach(booking => {
-                    csvContent += `"حجز","${dayInfo.name}","${dayInfo.date}","${booking.studentName}","${booking.parentName}","${booking.phoneNumber}","","${booking.timestamp}"\n`;
-                });
-            }
+            // Add bookings
+            allBookings.forEach(booking => {
+                const dayInfo = DAYS_DATA[booking.selectedDay];
+                csvContent += `"حجز","${dayInfo?.name || ''}","${dayInfo?.date || ''}","${booking.studentName}","${booking.parentName}","${booking.phoneNumber}","","${booking.submittedAt || ''}"\n`;
+            });
             
-            // إضافة الاعتذارات
-            if (bookingsData.excuses && bookingsData.excuses.length > 0) {
-                bookingsData.excuses.forEach(excuse => {
-                    csvContent += `"اعتذار","","","${excuse.studentName}","${excuse.parentName}","${excuse.phoneNumber}","${excuse.excuseReason}","${excuse.timestamp}"\n`;
-                });
-            }
+            // Add excuses
+            allExcuses.forEach(excuse => {
+                csvContent += `"اعتذار","","","${excuse.studentName}","${excuse.parentName}","${excuse.phoneNumber}","${excuse.excuseReason}","${excuse.submittedAt || ''}"\n`;
+            });
             
             const blob = new Blob(["\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
-            link.setAttribute('download', `اجتماع_أولياء_الأمور_شامل_${new Date().toLocaleDateString('ar-SA')}.csv`);
+            link.setAttribute('download', `اجتماع_أولياء_الأمور_${new Date().toLocaleDateString('ar-SA')}.csv`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
-        
-        // طباعة التقرير
+
+        // Print Report
         function printReport() {
             const printWindow = window.open('', '_blank');
             const printContent = generatePrintContent();
@@ -1203,8 +1209,8 @@
             printWindow.focus();
             setTimeout(() => printWindow.print(), 500);
         }
-        
-        // إنشاء محتوى الطباعة
+
+        // Generate Print Content
         function generatePrintContent() {
             return `
                 <!DOCTYPE html>
@@ -1213,15 +1219,15 @@
                     <meta charset="UTF-8">
                     <title>تقرير اجتماع أولياء الأمور</title>
                     <style>
-                        body { font-family: Arial; padding: 20px; direction: rtl; }
+                        body { font-family: 'Cairo', Arial; padding: 20px; direction: rtl; }
                         .header { text-align: center; margin-bottom: 30px; }
-                        .title { color: #0d5c0d; font-size: 24px; font-weight: bold; }
+                        .title { color: #0d5c0d; font-size: 28px; font-weight: bold; }
                         .subtitle { color: #666; margin: 10px 0; }
                         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-                        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+                        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
                         th { background: #0d5c0d; color: white; }
                         tr:nth-child(even) { background: #f9f9f9; }
-                        .summary { background: #f0f0f0; padding: 15px; margin: 20px 0; border-radius: 5px; }
+                        .summary { background: #f0f0f0; padding: 20px; margin: 20px 0; border-radius: 10px; }
                     </style>
                 </head>
                 <body>
@@ -1229,369 +1235,118 @@
                         <h1 class="title">تقرير اجتماع أولياء الأمور</h1>
                         <p class="subtitle">متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي</p>
                         <p class="subtitle">مدير المدرسة: خالد سعود المطيري</p>
-                        <p>التاريخ: ${new Date().toLocaleDateString('ar-SA')}</p>
+                        <p>تاريخ الطباعة: ${new Date().toLocaleDateString('ar-SA')}</p>
                     </div>
                     
                     <div class="summary">
                         <h3>ملخص الإحصائيات:</h3>
-                        <p>إجمالي الحجوزات: ${getTotalBookings()}</p>
-                        <p>إجمالي الاعتذارات: ${bookingsData.excuses ? bookingsData.excuses.length : 0}</p>
-                        <p>إجمالي المقاعد: ${getTotalCapacity()}</p>
-                        <p>المقاعد المتاحة: ${getTotalAvailable()}</p>
-                        <p>نسبة الإشغال: ${getOccupancyRate()}%</p>
+                        <p>إجمالي الحجوزات: ${allBookings.length}</p>
+                        <p>إجمالي الاعتذارات: ${allExcuses.length}</p>
+                        <p>إجمالي المقاعد: 400</p>
+                        <p>المقاعد المتاحة: ${400 - allBookings.length}</p>
+                        <p>نسبة الإشغال: ${Math.round((allBookings.length / 400) * 100)}%</p>
                     </div>
                     
-                    ${generatePrintTable()}
+                    <h3>تفاصيل الأيام:</h3>
+                    ${Object.entries(DAYS_DATA).map(([dayKey, dayInfo]) => {
+                        const dayBookings = allBookings.filter(booking => booking.selectedDay === dayKey);
+                        return `
+                            <h4>${dayInfo.name} - ${dayInfo.date} (${dayBookings.length}/${dayInfo.max})</h4>
+                            ${dayBookings.length > 0 ? `
+                                <table>
+                                    <tr><th>اسم الطالب</th><th>اسم ولي الأمر</th><th>رقم الجوال</th></tr>
+                                    ${dayBookings.map(booking => `
+                                        <tr>
+                                            <td>${booking.studentName}</td>
+                                            <td>${booking.parentName}</td>
+                                            <td>${booking.phoneNumber}</td>
+                                        </tr>
+                                    `).join('')}
+                                </table>
+                            ` : '<p>لا توجد حجوزات</p>'}
+                        `;
+                    }).join('')}
                 </body>
                 </html>
             `;
         }
-        
-        // إنشاء جدول الطباعة
-        function generatePrintTable() {
-            let tableHTML = '';
+
+        // Refresh Data
+        async function refreshData() {
+            const container = document.getElementById('daysGrid');
+            container.innerHTML = '<div class="loading-state"><div class="loading-spinner"></div><div>جاري تحديث البيانات...</div></div>';
             
-            for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
-                const bookings = bookingsData[dayKey] || [];
-                
-                if (bookings.length > 0) {
-                    tableHTML += `
-                        <h3 style="color: #0d5c0d; margin-top: 30px;">
-                            ${dayInfo.name} - ${dayInfo.date} (${bookings.length}/${dayInfo.max})
-                        </h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>اسم الطالب</th>
-                                    <th>اسم ولي الأمر</th>
-                                    <th>رقم الجوال</th>
-                                    <th>وقت التسجيل</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                    `;
-                    
-                    bookings.forEach((booking, index) => {
-                        tableHTML += `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td>${booking.studentName}</td>
-                                <td>${booking.parentName}</td>
-                                <td>${booking.phoneNumber}</td>
-                                <td style="font-size: 11px;">${booking.timestamp}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    tableHTML += '</tbody></table>';
-                } else {
-                    tableHTML += `
-                        <h3 style="color: #0d5c0d; margin-top: 30px;">
-                            ${dayInfo.name} - ${dayInfo.date} (0/${dayInfo.max})
-                        </h3>
-                        <p style="text-align: center; color: #999; font-style: italic; padding: 20px; border: 1px dashed #ccc;">
-                            لا توجد حجوزات لهذا اليوم
-                        </p>
-                    `;
-                }
-            }
-            
-            // إضافة الاعتذارات
-            const excuses = bookingsData.excuses || [];
-            if (excuses.length > 0) {
-                tableHTML += `
-                    <h3 style="color: #856404; margin-top: 40px; background: #fff3cd; padding: 10px; border-radius: 5px;">
-                        😔 الاعتذارات (${excuses.length})
-                    </h3>
-                    <table style="border: 2px solid #ffc107;">
-                        <thead>
-                            <tr style="background: #ffc107; color: #000;">
-                                <th>#</th>
-                                <th>اسم الطالب</th>
-                                <th>اسم ولي الأمر</th>
-                                <th>رقم الجوال</th>
-                                <th>سبب الاعتذار</th>
-                                <th>وقت التسجيل</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                excuses.forEach((excuse, index) => {
-                    tableHTML += `
-                        <tr style="background: ${index % 2 === 0 ? '#fff3cd' : 'white'};">
-                            <td>${index + 1}</td>
-                            <td>${excuse.studentName}</td>
-                            <td>${excuse.parentName}</td>
-                            <td>${excuse.phoneNumber}</td>
-                            <td style="font-size: 11px; max-width: 150px; word-wrap: break-word;">${excuse.excuseReason}</td>
-                            <td style="font-size: 10px;">${excuse.timestamp}</td>
-                        </tr>
-                    `;
-                });
-                
-                tableHTML += '</tbody></table>';
-            }
-            
-            return tableHTML;
-        }
-        
-        // إعادة تعيين جميع البيانات
-        function resetAllData() {
-            const confirmMessage = 'هل أنت متأكد من حذف جميع بيانات الحجوزات؟\n\nتحذير: لا يمكن التراجع عن هذا الإجراء!';
-            
-            if (confirm(confirmMessage)) {
-                const doubleConfirm = 'تأكيد أخير: سيتم حذف جميع البيانات نهائياً.\n\nهل تريد المتابعة؟';
-                
-                if (confirm(doubleConfirm)) {
-                    localStorage.removeItem('parentMeetingBookings');
-                    bookingsData = {};
-                    updateStatistics();
-                    createDaysOverview();
-                    
-                    alert('✅ تم حذف جميع البيانات بنجاح');
-                }
-            }
-        }
-        
-        // دوال مساعدة للإحصائيات
-        function getTotalBookings() {
-            let total = 0;
-            for (const dayKey in DAYS_DATA) {
-                const bookings = bookingsData[dayKey] || [];
-                total += bookings.length;
-            }
-            return total;
-        }
-        
-        function getTotalCapacity() {
-            let total = 0;
-            for (const dayKey in DAYS_DATA) {
-                total += DAYS_DATA[dayKey].max;
-            }
-            return total;
-        }
-        
-        function getTotalAvailable() {
-            return getTotalCapacity() - getTotalBookings();
-        }
-        
-        function getOccupancyRate() {
-            const total = getTotalBookings();
-            const capacity = getTotalCapacity();
-            return capacity > 0 ? Math.round((total / capacity) * 100) : 0;
-        }
-        
-        // تحديث البيانات كل 30 ثانية (في حالة وجود حجوزات جديدة)
-        function autoRefresh() {
-            const newData = JSON.parse(localStorage.getItem('parentMeetingBookings') || '{}');
-            
-            // مقارنة البيانات الجديدة مع القديمة
-            if (JSON.stringify(newData) !== JSON.stringify(bookingsData)) {
-                bookingsData = newData;
+            const success = await fetchAllData();
+            if (success) {
                 updateStatistics();
                 createDaysOverview();
-                
-                // إظهار تنبيه للمدير
-                showNotification('📬 تم استلام حجز جديد!');
+            } else {
+                container.innerHTML = '<div class="loading-state" style="color: #dc3545;"><div>خطأ في تحميل البيانات</div><div style="font-size: 14px; margin-top: 10px;">يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى</div></div>';
             }
         }
-        
-        // إظهار إشعار للمدير
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #28a745, #20c997);
-                color: white;
-                padding: 15px 20px;
-                border-radius: 10px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                z-index: 9999;
-                font-size: 16px;
-                font-weight: bold;
-                animation: slideIn 0.5s ease;
-            `;
-            
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            // إزالة الإشعار بعد 5 ثوانٍ
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.5s ease';
-                setTimeout(() => document.body.removeChild(notification), 500);
-            }, 5000);
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('reportModal').style.display = 'none';
         }
-        
-        // إضافة CSS للرسوم المتحركة
-        const animationCSS = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = animationCSS;
-        document.head.appendChild(styleSheet);
-        
-        // إغلاق النافذة المنبثقة بالنقر خارجها
+
+        // Initialize Dashboard
+        document.addEventListener('DOMContentLoaded', async function() {
+            await refreshData();
+            
+            // Auto-refresh every 2 minutes
+            setInterval(async () => {
+                await fetchAllData();
+                updateStatistics();
+                createDaysOverview();
+            }, 120000);
+        });
+
+        // Modal event listeners
         document.getElementById('reportModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal();
             }
         });
-        
-        // معالج لوحة المفاتيح
+
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
             }
         });
-        
-        // دالة البحث السريع (يمكن إضافتها لاحقاً)
-        function searchBookings(query) {
-            const results = [];
-            
-            for (const [dayKey, dayInfo] of Object.entries(DAYS_DATA)) {
-                const bookings = bookingsData[dayKey] || [];
-                
-                bookings.forEach(booking => {
-                    if (booking.studentName.includes(query) || 
-                        booking.parentName.includes(query) || 
-                        booking.phoneNumber.includes(query)) {
-                        results.push({
-                            ...booking,
-                            day: dayInfo.name,
-                            date: dayInfo.date
-                        });
-                    }
-                });
-            }
-            
-            return results;
+
+        // Export functions to global scope
+        window.adminFunctions = {
+            showDetailedReport,
+            exportToExcel,
+            refreshData,
+            closeModal,
+            printReport
+        };
+
+    </script>
+
+    <script>
+        // Global function wrappers
+        function showDetailedReport() {
+            window.adminFunctions.showDetailedReport();
         }
         
-        // إنشاء تقرير يومي
-        function generateDailyReport(dayKey) {
-            const dayInfo = DAYS_DATA[dayKey];
-            const bookings = bookingsData[dayKey] || [];
-            
-            return {
-                day: dayInfo.name,
-                date: dayInfo.date,
-                totalBookings: bookings.length,
-                maxCapacity: dayInfo.max,
-                availableSlots: dayInfo.max - bookings.length,
-                occupancyRate: Math.round((bookings.length / dayInfo.max) * 100),
-                bookings: bookings
-            };
+        function exportToExcel() {
+            window.adminFunctions.exportToExcel();
         }
         
-        // تصدير تقرير يوم واحد
-        function exportDayReport(dayKey) {
-            const report = generateDailyReport(dayKey);
-            const dayInfo = DAYS_DATA[dayKey];
-            
-            let csvContent = `تقرير ${dayInfo.name} - ${dayInfo.date}\n`;
-            csvContent += `إجمالي الحجوزات: ${report.totalBookings}\n`;
-            csvContent += `المقاعد المتاحة: ${report.availableSlots}\n`;
-            csvContent += `نسبة الإشغال: ${report.occupancyRate}%\n\n`;
-            csvContent += "الرقم,اسم الطالب,اسم ولي الأمر,رقم الجوال,وقت التسجيل\n";
-            
-            report.bookings.forEach((booking, index) => {
-                csvContent += `"${index + 1}","${booking.studentName}","${booking.parentName}","${booking.phoneNumber}","${booking.timestamp}"\n`;
-            });
-            
-            const blob = new Blob(["\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `${dayInfo.name}_${dayInfo.date}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        function refreshData() {
+            window.adminFunctions.refreshData();
         }
         
-        // تشغيل لوحة الإدارة
-        document.addEventListener('DOMContentLoaded', function() {
-            updateStatistics();
-            createDaysOverview();
-            
-            // تحديث التاريخ الحالي
-            const now = new Date();
-            document.getElementById('currentDate').textContent = 
-                `📅 ${now.toLocaleDateString('ar-SA', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                })}`;
-            
-            // تحديث تلقائي كل 30 ثانية
-            setInterval(autoRefresh, 30000);
-            
-            // إضافة تأثيرات بصرية للبطاقات
-            const statCards = document.querySelectorAll('.stat-card');
-            statCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(30px)';
-                    card.style.transition = 'all 0.6s ease';
-                    
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 150);
-            });
-            
-            // تحديث مؤشر الوقت كل ثانية
-            setInterval(() => {
-                document.getElementById('lastUpdate').textContent = 
-                    new Date().toLocaleTimeString('ar-SA', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });
-            }, 1000);
-        });
+        function closeModal() {
+            window.adminFunctions.closeModal();
+        }
         
-        // إضافة رسوم متحركة للبطاقات
-        const cardAnimationCSS = `
-            @keyframes slideInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        
-        const cardStyleSheet = document.createElement('style');
-        cardStyleSheet.textContent = cardAnimationCSS;
-        document.head.appendChild(cardStyleSheet);
-        
-        // معالج التحديث المباشر
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'parentMeetingBookings') {
-                bookingsData = JSON.parse(e.newValue || '{}');
-                updateStatistics();
-                createDaysOverview();
-                showNotification('🔄 تم تحديث البيانات تلقائياً');
-            }
-        });
+        function printReport() {
+            window.adminFunctions.printReport();
+        }
     </script>
 </body>
 </html>
