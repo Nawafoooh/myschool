@@ -884,23 +884,28 @@
     
     <!-- Firebase Scripts -->
     <script type="module">
-        // Firebase Configuration
+        // Firebase Configuration - Updated with new credentials
         const firebaseConfig = {
-            apiKey: "AIzaSyDxKQY8jxZwJz5YOjRQvLq7Mb2NxQvRq1s",
+            apiKey: "AIzaSyDMkhB9tjAnWHBJo3pa7LHRGTfjLRg0yB4",
             authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
             projectId: "nawafalsubhi3-f4abf",
             storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abc123def456ghi789jkl"
+            messagingSenderId: "409217413356",
+            appId: "1:409217413356:web:d1e0dd6f584c66255875c9",
+            measurementId: "G-BVP04DLPM9"
         };
 
-        // Import Firebase
+        // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
         import { getFirestore, collection, getDocs, query, where, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+
+        console.log('Firebase initialized successfully');
 
         // Days Configuration
         const DAYS_DATA = {
@@ -917,6 +922,7 @@
         // Fetch all data from Firebase
         async function fetchAllData() {
             try {
+                console.log('Fetching data from Firebase...');
                 const q = query(collection(db, 'bookings'), orderBy('timestamp', 'desc'));
                 const querySnapshot = await getDocs(q);
                 
@@ -932,6 +938,7 @@
                     }
                 });
 
+                console.log(`Loaded ${allBookings.length} bookings and ${allExcuses.length} excuses`);
                 return true;
             } catch (error) {
                 console.error('خطأ في جلب البيانات:', error);
@@ -1292,6 +1299,7 @@
 
         // Initialize Dashboard
         document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Initializing dashboard...');
             await refreshData();
             
             // Auto-refresh every 2 minutes
