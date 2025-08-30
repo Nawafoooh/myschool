@@ -675,8 +675,27 @@ body {
     </div>
 </div>
 
-<script>
-    // Days Configuration - يعمل بدون Firebase مؤقتاً
+<!-- Firebase Scripts -->
+<script type="module">
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDxKQY8jxZwJz5YOjRQvLq7Mb2NxQvRq1s",
+        authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
+        projectId: "nawafalsubhi3-f4abf",
+        storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
+        messagingSenderId: "123456789012",
+        appId: "1:123456789012:web:abc123def456ghi789jkl"
+    };
+
+    // Import Firebase
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Days Configuration
     const DAYS_CAPACITY = {
         sunday: { name: 'الأحد', date: '15/3/1447هـ', max: 80 },
         monday: { name: 'الاثنين', date: '16/3/1447هـ', max: 80 },
@@ -685,22 +704,72 @@ body {
         thursday: { name: 'الخميس', date: '19/3/1447هـ', max: 80 }
     };
 
-    // Get bookings data from localStorage
-    let bookingsData = JSON.parse(localStorage.getItem('parentMeetingBookings') || '{}');
-
-    // Get booked count for a day
-    function getBookedCount(day) {
-        return bookingsData[day] ? bookingsData[day].length : 0;
+    // Firebase Functions
+    async function saveBookingToFirebase(bookingData) {
+        try {
+            await addDoc(collection(db, 'bookings'), {
+                ...bookingData,
+                timestamp: serverTimestamp(),
+                type: 'booking'
+            });
+            return true;
+        } catch (error) {
+            console.error('خطأ في حفظ الحجز:', error);
+            return false;
+        }
     }
 
-    // Update day options
-    function updateDayOptions() {
+    async function saveExcuseToFirebase(excuseData) {
+        try {
+            await addDoc(collection(db, 'bookings'), {
+                ...excuseData,
+                timestamp: serverTimestamp(),
+                type: 'excuse'
+            });
+            return true;
+        } catch (error) {
+            console.error('خطأ في حفظ الاعتذار:', error);
+            return false;
+        }
+    }
+
+    async function getBookedCount(day) {
+        try {
+            const q = query(
+                collection(db, 'bookings'), 
+                where('selectedDay', '==', day),
+                where('type', '==', 'booking')
+            );
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.size;
+        } catch (error) {
+            console.error('خطأ في جلب البيانات:', error);
+            return 0;
+        }
+    }
+
+    async function isStudentAlreadyBooked(studentName) {
+        try {
+            const q = query(
+                collection(db, 'bookings'), 
+                where('studentName', '==', studentName)
+            );
+            const querySnapshot = await getDocs(q);
+            return !querySnapshot.empty;
+        } catch (error) {
+            console.error('خطأ في التحقق من التكرار:', error);
+            return false;
+        }
+    }
+
+    // Update Day Options
+    async function updateDayOptions() {
         const selectElement = document.getElementById('meetingDay');
         
-        selectElement.innerHTML = '<option value="">جاري تحديث الأيام المتاحة...</option>';
+        selectElement.innerHTML = '<option value="">جاري تحميل الأيام المتاحة...</option>';
         selectElement.disabled = true;
 
-        setTimeout(() => {
+        try {
             selectElement.innerHTML = '<option value="">-- اختر اليوم المناسب --</option>';
 
             const dayOptions = [
@@ -711,11 +780,11 @@ body {
                 { value: 'thursday', text: 'الخميس - 19/3/1447هـ' }
             ];
 
-            dayOptions.forEach(dayOption => {
+            for (const dayOption of dayOptions) {
                 const option = document.createElement('option');
                 option.value = dayOption.value;
 
-                const bookedCount = getBookedCount(dayOption.value);
+                const bookedCount = await getBookedCount(dayOption.value);
                 const available = DAYS_CAPACITY[dayOption.value].max - bookedCount;
 
                 if (available <= 0) {
@@ -731,56 +800,20 @@ body {
                 }
 
                 selectElement.appendChild(option);
-            });
+            }
 
             selectElement.disabled = false;
-        }, 800);
+        } catch (error) {
+            console.error('خطأ في تحديث الأيام:', error);
+            selectElement.innerHTML = '<option value="">خطأ في تحميل الأيام - يرجى إعادة المحاولة</option>';
+        }
     }
 
-    // Check if student is already booked
-    function isStudentAlreadyBooked(studentName) {
-        for (const day in bookingsData) {
-            if (day !== 'excuses' && Array.isArray(bookingsData[day])) {
-                if (bookingsData[day].some(booking => booking.studentName.toLowerCase() === studentName.toLowerCase())) {
-                    return true;
-                }
-            }
-        }
-
-        if (bookingsData.excuses && Array.isArray(bookingsData.excuses)) {
-            if (bookingsData.excuses.some(excuse => excuse.studentName.toLowerCase() === studentName.toLowerCase())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    // Validate Saudi phone number
+    // Utility Functions
     function isValidSaudiPhone(phone) {
         return /^05[0-9]{8}$/.test(phone);
     }
 
-    // Save booking
-    function saveBooking(bookingData) {
-        const day = bookingData.selectedDay;
-        if (!bookingsData[day]) {
-            bookingsData[day] = [];
-        }
-        bookingsData[day].push(bookingData);
-        localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
-    }
-
-    // Save excuse
-    function saveExcuse(excuseData) {
-        if (!bookingsData.excuses) {
-            bookingsData.excuses = [];
-        }
-        bookingsData.excuses.push(excuseData);
-        localStorage.setItem('parentMeetingBookings', JSON.stringify(bookingsData));
-    }
-
-    // Show success message
     function showSuccess(isExcuse) {
         const successMsg = document.getElementById('successMessage');
         const successDetails = document.getElementById('successDetails');
@@ -804,7 +837,6 @@ body {
         }, 7000);
     }
 
-    // Show error message
     function showError(message) {
         const errorMsg = document.getElementById('errorMessage');
         const errorDetails = document.getElementById('errorDetails');
@@ -820,13 +852,14 @@ body {
         }, 5000);
     }
 
-    // Form submission
-    document.getElementById('parentForm').addEventListener('submit', function(e) {
+    // Form Handling
+    document.getElementById('parentForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
         const submitBtn = document.getElementById('submitBtn');
         const originalText = submitBtn.textContent;
         
+        // Disable button during submission
         submitBtn.disabled = true;
         submitBtn.innerHTML = 'جاري الإرسال... <span class="loading-spinner"></span>';
 
@@ -837,72 +870,79 @@ body {
         const excuseReason = document.getElementById('excuseReason').value.trim();
         const meetingDay = document.getElementById('meetingDay').value;
 
-        setTimeout(() => {
-            try {
-                // Validation
-                if (!studentName || !parentName || !phoneNumber) {
-                    throw new Error('يرجى ملء جميع الحقول المطلوبة.');
-                }
-
-                if (!isValidSaudiPhone(phoneNumber)) {
-                    throw new Error('يرجى إدخال رقم جوال سعودي صحيح (يبدأ بـ 05 ويتكون من 10 أرقام).');
-                }
-
-                if (isStudentAlreadyBooked(studentName)) {
-                    throw new Error('هذا الطالب مسجل مسبقاً في الاجتماع.');
-                }
-
-                if (excuseCheckbox.checked) {
-                    // Excuse case
-                    if (!excuseReason) {
-                        throw new Error('يرجى كتابة سبب الاعتذار.');
-                    }
-
-                    const excuseData = {
-                        studentName,
-                        parentName,
-                        phoneNumber,
-                        excuseReason,
-                        submittedAt: new Date().toLocaleString('ar-SA')
-                    };
-
-                    saveExcuse(excuseData);
-                    showSuccess(true);
-                    document.getElementById('parentForm').reset();
-                    document.getElementById('excuseDetails').style.display = 'none';
-                } else {
-                    // Booking case
-                    if (!meetingDay) {
-                        throw new Error('يرجى اختيار يوم للحضور.');
-                    }
-
-                    const bookedCount = getBookedCount(meetingDay);
-                    if (bookedCount >= DAYS_CAPACITY[meetingDay].max) {
-                        throw new Error('عذراً، اليوم المختار مكتمل. يرجى اختيار يوم آخر.');
-                    }
-
-                    const bookingData = {
-                        studentName,
-                        parentName,
-                        phoneNumber,
-                        selectedDay: meetingDay,
-                        selectedDayName: DAYS_CAPACITY[meetingDay].name + ' - ' + DAYS_CAPACITY[meetingDay].date,
-                        submittedAt: new Date().toLocaleString('ar-SA')
-                    };
-
-                    saveBooking(bookingData);
-                    showSuccess(false);
-                    document.getElementById('parentForm').reset();
-                    updateDayOptions(); // Refresh available days
-                }
-
-            } catch (error) {
-                showError(error.message);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+        try {
+            // Validation
+            if (!studentName || !parentName || !phoneNumber) {
+                throw new Error('يرجى ملء جميع الحقول المطلوبة.');
             }
-        }, 1500);
+
+            if (!isValidSaudiPhone(phoneNumber)) {
+                throw new Error('يرجى إدخال رقم جوال سعودي صحيح (يبدأ بـ 05 ويتكون من 10 أرقام).');
+            }
+
+            if (await isStudentAlreadyBooked(studentName)) {
+                throw new Error('هذا الطالب مسجل مسبقاً في الاجتماع.');
+            }
+
+            if (excuseCheckbox.checked) {
+                // Excuse case
+                if (!excuseReason) {
+                    throw new Error('يرجى كتابة سبب الاعتذار.');
+                }
+
+                const excuseData = {
+                    studentName,
+                    parentName,
+                    phoneNumber,
+                    excuseReason,
+                    submittedAt: new Date().toLocaleString('ar-SA')
+                };
+
+                const success = await saveExcuseToFirebase(excuseData);
+                if (!success) {
+                    throw new Error('فشل في حفظ الاعتذار. يرجى المحاولة مرة أخرى.');
+                }
+
+                showSuccess(true);
+                document.getElementById('parentForm').reset();
+                document.getElementById('excuseDetails').style.display = 'none';
+            } else {
+                // Booking case
+                if (!meetingDay) {
+                    throw new Error('يرجى اختيار يوم للحضور.');
+                }
+
+                const bookedCount = await getBookedCount(meetingDay);
+                if (bookedCount >= DAYS_CAPACITY[meetingDay].max) {
+                    throw new Error('عذراً، اليوم المختار مكتمل. يرجى اختيار يوم آخر.');
+                }
+
+                const bookingData = {
+                    studentName,
+                    parentName,
+                    phoneNumber,
+                    selectedDay: meetingDay,
+                    selectedDayName: DAYS_CAPACITY[meetingDay].name + ' - ' + DAYS_CAPACITY[meetingDay].date,
+                    submittedAt: new Date().toLocaleString('ar-SA')
+                };
+
+                const success = await saveBookingToFirebase(bookingData);
+                if (!success) {
+                    throw new Error('فشل في حفظ الحجز. يرجى المحاولة مرة أخرى.');
+                }
+
+                showSuccess(false);
+                document.getElementById('parentForm').reset();
+                updateDayOptions(); // Refresh available days
+            }
+
+        } catch (error) {
+            showError(error.message);
+        } finally {
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     });
 
     // Excuse checkbox handling
@@ -966,6 +1006,7 @@ body {
             });
         });
     });
+
 </script>
 </body>
 </html>
