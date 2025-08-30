@@ -216,6 +216,17 @@
             animation: slideDown 0.5s ease;
         }
 
+        .error-message {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
         @keyframes slideDown {
             from {
                 opacity: 0;
@@ -248,6 +259,21 @@
             font-size: 12px;
             margin-top: 5px;
             display: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @keyframes fadeInUp {
@@ -382,11 +408,16 @@
                     <textarea name="notes" rows="4" placeholder="أي ملاحظات أو ظروف خاصة..."></textarea>
                 </div>
 
-                <button type="submit" class="submit-btn">إرسال التعهد</button>
+                <button type="submit" class="submit-btn" id="submitBtn">إرسال التعهد</button>
             </form>
 
             <div id="successMessage" class="success-message">
                 تم إرسال التعهد بنجاح! شكراً لك على التزامك.
+            </div>
+
+            <div id="errorMessage" class="error-message">
+                <strong>حدث خطأ!</strong><br>
+                <span id="errorDetails">يرجى المحاولة مرة أخرى.</span>
             </div>
         </div>
 
@@ -398,12 +429,80 @@
         </footer>
     </div>
 
-    <script>
+    <!-- Firebase Scripts -->
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMkhB9tjAnWHBJo3pa7LHRGTfjLRg0yB4",
+            authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
+            projectId: "nawafalsubhi3-f4abf",
+            storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
+            messagingSenderId: "409217413356",
+            appId: "1:409217413356:web:d1e0dd6f584c66255875c9",
+            measurementId: "G-BVP04DLPM9"
+        };
+
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+
+        console.log('Firebase initialized successfully for commitments');
+
+        // تحديد تاريخ اليوم افتراضياً
         document.addEventListener('DOMContentLoaded', function() {
-            // تحديد تاريخ اليوم افتراضياً
             const today = new Date().toISOString().split('T')[0];
             document.querySelector('input[name="date"]').value = today;
         });
+
+        // Firebase Functions
+        async function saveCommitmentToFirebase(commitmentData) {
+            try {
+                console.log('Saving commitment:', commitmentData);
+                const docRef = await addDoc(collection(db, 'commitments'), {
+                    ...commitmentData,
+                    timestamp: serverTimestamp(),
+                    type: 'commitment'
+                });
+                console.log('Commitment saved with ID:', docRef.id);
+                return true;
+            } catch (error) {
+                console.error('خطأ في حفظ التعهد:', error);
+                return false;
+            }
+        }
+
+        async function checkDuplicateCommitment(studentName, idNumber) {
+            try {
+                let q;
+                if (idNumber) {
+                    // البحث برقم الهوية أولاً
+                    q = query(
+                        collection(db, 'commitments'), 
+                        where('idNumber', '==', idNumber),
+                        where('type', '==', 'commitment')
+                    );
+                } else {
+                    // البحث باسم الطالب
+                    q = query(
+                        collection(db, 'commitments'), 
+                        where('studentName', '==', studentName),
+                        where('type', '==', 'commitment')
+                    );
+                }
+                
+                const querySnapshot = await getDocs(q);
+                return !querySnapshot.empty;
+            } catch (error) {
+                console.error('خطأ في التحقق من التكرار:', error);
+                return false;
+            }
+        }
 
         // التحقق من صحة البيانات في الوقت الفعلي
         function validateField(field) {
@@ -433,6 +532,35 @@
                 }
                 return true;
             }
+        }
+
+        // Utility Functions
+        function showSuccess() {
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'block';
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 7000);
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMessage');
+            const errorDetails = document.getElementById('errorDetails');
+            const successMsg = document.getElementById('successMessage');
+            
+            successMsg.style.display = 'none';
+            errorDetails.textContent = message;
+            errorMsg.style.display = 'block';
+            errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 5000);
         }
 
         // إضافة مستمعي الأحداث للتحقق من صحة البيانات
@@ -465,69 +593,87 @@
         });
 
         // معالجة إرسال النموذج
-        document.getElementById('commitmentForm').addEventListener('submit', function(e) {
+        document.getElementById('commitmentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // التحقق من جميع الحقول الإلزامية
-            const requiredFields = this.querySelectorAll('[required]');
-            let isValid = true;
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
             
-            requiredFields.forEach(field => {
-                if (!validateField(field)) {
-                    isValid = false;
-                }
-            });
-            
-            // التحقق من الحقول الاختيارية إذا كانت محددة
-            const optionalFields = this.querySelectorAll('input[name="idNumber"]');
-            optionalFields.forEach(field => {
-                if (field.value) {
+            // تعطيل الزر أثناء الإرسال
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'جاري الإرسال... <span class="loading-spinner"></span>';
+
+            try {
+                // التحقق من جميع الحقول الإلزامية
+                const requiredFields = this.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
                     if (!validateField(field)) {
                         isValid = false;
                     }
+                });
+                
+                // التحقق من الحقول الاختيارية إذا كانت محددة
+                const optionalFields = this.querySelectorAll('input[name="idNumber"]');
+                optionalFields.forEach(field => {
+                    if (field.value) {
+                        if (!validateField(field)) {
+                            isValid = false;
+                        }
+                    }
+                });
+                
+                if (!isValid) {
+                    throw new Error('يُرجى تصحيح الأخطاء المميزة باللون الأحمر');
                 }
-            });
-            
-            if (!isValid) {
-                alert('يُرجى تصحيح الأخطاء المميزة باللون الأحمر');
-                return;
+
+                const formData = new FormData(this);
+                const studentName = formData.get('studentName').trim();
+                const idNumber = formData.get('idNumber').trim();
+
+                // التحقق من التكرار
+                if (await checkDuplicateCommitment(studentName, idNumber)) {
+                    throw new Error('هذا الطالب قدم تعهداً مسبقاً');
+                }
+                
+                const commitment = {
+                    studentName: studentName,
+                    grade: formData.get('grade'),
+                    class: formData.get('class') || '',
+                    guardianName: formData.get('guardianName').trim(),
+                    homePhone: formData.get('homePhone').trim() || '',
+                    mobile: formData.get('mobile').trim(),
+                    idNumber: idNumber,
+                    date: formData.get('date'),
+                    notes: formData.get('notes').trim() || '',
+                    status: 'جديد',
+                    submittedAt: new Date().toLocaleString('ar-SA')
+                };
+                
+                // حفظ التعهد في Firebase
+                const success = await saveCommitmentToFirebase(commitment);
+                if (!success) {
+                    throw new Error('فشل في حفظ التعهد. يرجى المحاولة مرة أخرى.');
+                }
+
+                // عرض رسالة النجاح
+                showSuccess();
+                this.reset();
+                
+                // إعادة تحديد تاريخ اليوم
+                document.querySelector('input[name="date"]').value = new Date().toISOString().split('T')[0];
+                
+                // التمرير للأعلى
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                // إعادة تفعيل الزر
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
             }
-            
-            const formData = new FormData(this);
-            const commitment = {
-                id: Date.now(),
-                studentName: formData.get('studentName'),
-                grade: formData.get('grade'),
-                class: formData.get('class') || '',
-                guardianName: formData.get('guardianName'),
-                homePhone: formData.get('homePhone') || '',
-                mobile: formData.get('mobile'),
-                idNumber: formData.get('idNumber') || '',
-                date: formData.get('date'),
-                notes: formData.get('notes') || '',
-                status: 'جديد',
-                timestamp: new Date().toLocaleString('ar-SA')
-            };
-            
-            // حفظ التعهد
-            let commitments = JSON.parse(localStorage.getItem('schoolCommitments') || '[]');
-            commitments.push(commitment);
-            localStorage.setItem('schoolCommitments', JSON.stringify(commitments));
-            
-            // عرض رسالة النجاح
-            document.getElementById('successMessage').style.display = 'block';
-            this.reset();
-            
-            // إعادة تحديد تاريخ اليوم
-            document.querySelector('input[name="date"]').value = new Date().toISOString().split('T')[0];
-            
-            // إخفاء الرسالة بعد 5 ثوانِ
-            setTimeout(() => {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 5000);
-            
-            // التمرير للأعلى
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // تأثيرات الأنيميشن
