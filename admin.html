@@ -14,125 +14,41 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
             padding: 20px;
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             text-align: center;
-        }
-
-        .ministry-info {
-            color: #0f4c75;
-            font-size: 12px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .school-name {
-            color: #0f4c75;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .page-title {
-            color: #3282b8;
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .main-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .login-form {
-            max-width: 400px;
-            margin: 50px auto;
-            text-align: center;
-        }
-
-        .login-title {
-            color: #0f4c75;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: right;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #0f4c75;
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-            text-align: center;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #3282b8;
-            box-shadow: 0 0 0 3px rgba(50, 130, 184, 0.1);
-        }
-
-        .login-btn {
-            background: linear-gradient(45deg, #28a745, #20c997);
             color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-            font-family: 'Cairo', sans-serif;
-            width: 100%;
-            margin-top: 20px;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
         }
 
         .admin-panel {
-            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
         }
 
-        .dashboard-header {
+        .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -141,51 +57,34 @@
             gap: 15px;
         }
 
-        .dashboard-title {
-            color: #0f4c75;
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .user-info {
-            color: #666;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logout-btn {
-            padding: 8px 20px;
-            background: linear-gradient(45deg, #dc3545, #c82333);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
+        .panel-title {
+            font-size: 1.8em;
             font-weight: 600;
-            transition: all 0.3s ease;
-            font-family: 'Cairo', sans-serif;
+            color: #2d3748;
         }
 
-        .logout-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        .last-update {
+            color: #718096;
+            font-size: 0.9em;
+            background: #f7fafc;
+            padding: 5px 15px;
+            border-radius: 20px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #fff, #f8f9fa);
+            background: linear-gradient(135deg, #4299e1, #667eea);
+            color: white;
             padding: 25px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-top: 4px solid;
+            box-shadow: 0 10px 25px rgba(66, 153, 225, 0.3);
             transition: transform 0.3s ease;
         }
 
@@ -193,42 +92,73 @@
             transform: translateY(-5px);
         }
 
-        .stat-card.total {
-            border-top-color: #3282b8;
+        .stat-card.green {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            box-shadow: 0 10px 25px rgba(72, 187, 120, 0.3);
         }
 
-        .stat-card.new {
-            border-top-color: #ffc107;
+        .stat-card.orange {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            box-shadow: 0 10px 25px rgba(237, 137, 54, 0.3);
         }
 
-        .stat-card.reviewed {
-            border-top-color: #28a745;
-        }
-
-        .stat-card.today {
-            border-top-color: #17a2b8;
+        .stat-card.purple {
+            background: linear-gradient(135deg, #805ad5, #6b46c1);
+            box-shadow: 0 10px 25px rgba(128, 90, 213, 0.3);
         }
 
         .stat-number {
-            font-size: 36px;
+            font-size: 2.5em;
             font-weight: 700;
-            color: #0f4c75;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .stat-label {
-            font-size: 14px;
-            color: #666;
-            font-weight: 600;
+            font-size: 1.1em;
+            opacity: 0.9;
         }
 
-        .controls-section {
+        .controls {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 15px;
             margin-bottom: 25px;
             flex-wrap: wrap;
-            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .search-box {
@@ -237,20 +167,19 @@
             position: relative;
         }
 
-        .search-box input {
+        .search-input {
             width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 2px solid #e0e0e0;
+            padding: 12px 45px 12px 20px;
+            border: 2px solid #e2e8f0;
             border-radius: 25px;
             font-family: 'Cairo', sans-serif;
-            font-size: 14px;
+            font-size: 0.9em;
             transition: border-color 0.3s ease;
         }
 
-        .search-box input:focus {
+        .search-input:focus {
             outline: none;
-            border-color: #3282b8;
-            box-shadow: 0 0 0 3px rgba(50, 130, 184, 0.1);
+            border-color: #4299e1;
         }
 
         .search-icon {
@@ -258,135 +187,113 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #666;
+            color: #a0aec0;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+            color: white;
+            padding: 15px 12px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 3px solid #2d3748;
+        }
+
+        .table td {
+            padding: 15px 12px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .status-new {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .status-reviewed {
+            background: #c6f6d5;
+            color: #2f855a;
         }
 
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 5px;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
         .action-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Cairo', sans-serif;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-export {
-            background: linear-gradient(45deg, #17a2b8, #138496);
-            color: white;
-            box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3);
-        }
-
-        .btn-refresh {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            color: white;
-            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .table-container {
-            overflow-x: auto;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .commitments-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            min-width: 1000px;
-        }
-
-        .commitments-table th,
-        .commitments-table td {
-            padding: 15px 10px;
-            text-align: center;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 14px;
-        }
-
-        .commitments-table th {
-            background: linear-gradient(45deg, #0f4c75, #3282b8);
-            color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .commitments-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .commitments-table tr:nth-child(even) {
-            background: rgba(15, 76, 117, 0.02);
-        }
-
-        .status-badge {
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-new {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-
-        .status-reviewed {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .table-action-btn {
             padding: 6px 12px;
             border: none;
             border-radius: 15px;
+            font-size: 0.8em;
             cursor: pointer;
-            font-size: 11px;
             font-weight: 600;
-            margin: 0 2px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-family: 'Cairo', sans-serif;
         }
 
-        .btn-view {
-            background: #17a2b8;
-            color: white;
+        .action-btn.view {
+            background: #e6fffa;
+            color: #319795;
         }
 
-        .btn-approve {
-            background: #28a745;
-            color: white;
+        .action-btn.edit {
+            background: #fef5e7;
+            color: #d69e2e;
         }
 
-        .btn-print {
-            background: #6c757d;
-            color: white;
+        .action-btn.delete {
+            background: #fed7d7;
+            color: #c53030;
         }
 
-        .btn-delete {
-            background: #dc3545;
-            color: white;
+        .action-btn:hover {
+            transform: scale(1.05);
         }
 
-        .table-action-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        .no-data {
+            text-align: center;
+            padding: 50px 20px;
+            color: #718096;
+        }
+
+        .no-data i {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: #4a5568;
         }
 
         .modal {
@@ -397,351 +304,222 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            background: white;
-            margin: 3% auto;
+            background-color: white;
+            margin: 5% auto;
             padding: 30px;
-            border-radius: 15px;
+            border-radius: 20px;
             width: 90%;
-            max-width: 700px;
-            max-height: 85vh;
+            max-width: 600px;
+            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid #e2e8f0;
         }
 
         .modal-title {
-            color: #0f4c75;
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2d3748;
         }
 
         .close {
-            color: #999;
-            font-size: 32px;
+            color: #a0aec0;
+            font-size: 2em;
             font-weight: bold;
             cursor: pointer;
-            line-height: 1;
             transition: color 0.3s ease;
         }
 
         .close:hover {
-            color: #dc3545;
-        }
-
-        .commitment-details {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 15px 0;
-            border-left: 4px solid #0f4c75;
-        }
-
-        .commitment-details h4 {
-            color: #0f4c75;
-            margin-bottom: 15px;
-            font-weight: 700;
+            color: #e53e3e;
         }
 
         .detail-row {
             display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-            padding: 8px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f1f1;
         }
 
         .detail-label {
             font-weight: 600;
-            color: #0f4c75;
-            min-width: 120px;
+            width: 120px;
+            color: #4a5568;
         }
 
         .detail-value {
-            color: #333;
             flex: 1;
-            text-align: left;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-        }
-
-        .empty-icon {
-            font-size: 64px;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-
-        .loading-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #6c757d;
-            font-size: 16px;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(15, 76, 117, 0.3);
-            border-radius: 50%;
-            border-top-color: #0f4c75;
-            animation: spin 1s ease-in-out infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .footer {
-            background: rgba(15, 76, 117, 0.9);
-            backdrop-filter: blur(10px);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        .developer-credit {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-top: 10px;
-        }
-
-        .back-link {
-            display: inline-block;
-            padding: 10px 25px;
-            background: linear-gradient(45deg, #6c757d, #495057);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
-        }
-
-        .back-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
-            text-decoration: none;
-            color: white;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade {
-            animation: fadeInUp 0.6s ease-out;
+            color: #2d3748;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .main-content {
-                padding: 20px;
-            }
-            
             .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
             }
-            
-            .controls-section {
+
+            .controls {
                 flex-direction: column;
+                align-items: stretch;
             }
-            
+
             .search-box {
-                min-width: 100%;
-            }
-            
-            .action-buttons {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .modal-content {
-                margin: 5% auto;
-                width: 95%;
-                padding: 20px;
-            }
-            
-            .detail-row {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .detail-label {
                 min-width: auto;
             }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .table {
+                min-width: 800px;
+            }
+
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 3px;
+            }
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header animate-fade">
-            <div class="ministry-info">
-                المملكة العربية السعودية<br>
-                وزارة التعليم<br>
-                مكتب تعليم العوالي
-            </div>
-            <h1 class="school-name">متوسطة المنذر بن عمرو الأنصاري</h1>
-            <div class="page-title">لوحة تحكم المدير - إدارة التعهدات</div>
-        </header>
-
-        <div class="main-content animate-fade">
-            <!-- نموذج تسجيل الدخول -->
-            <div id="loginSection" class="login-form">
-                <h2 class="login-title">تسجيل دخول المدير</h2>
-                <div class="form-group">
-                    <label>اسم المستخدم</label>
-                    <input type="text" id="adminUsername" placeholder="admin" value="admin">
-                </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="adminPassword" placeholder="admin123" value="admin123">
-                </div>
-                <button onclick="adminLogin()" class="login-btn">دخول</button>
-                <div style="margin-top: 20px;">
-                    <a href="commitment-form.html" class="back-link">العودة إلى نموذج التعهد</a>
-                </div>
-            </div>
-
-            <!-- لوحة التحكم -->
-            <div id="adminPanel" class="admin-panel">
-                <div class="dashboard-header">
-                    <h2 class="dashboard-title">لوحة تحكم المدير</h2>
-                    <div class="user-info">
-                        <span>مرحباً، المدير</span>
-                        <span>|</span>
-                        <span id="currentTime"></span>
-                        <button onclick="logout()" class="logout-btn">تسجيل خروج</button>
-                    </div>
-                </div>
-
-                <!-- الإحصائيات -->
-                <div class="stats-grid">
-                    <div class="stat-card total">
-                        <div class="stat-number" id="totalCommitments">-</div>
-                        <div class="stat-label">إجمالي التعهدات</div>
-                    </div>
-                    <div class="stat-card new">
-                        <div class="stat-number" id="newCommitments">-</div>
-                        <div class="stat-label">تعهدات جديدة</div>
-                    </div>
-                    <div class="stat-card reviewed">
-                        <div class="stat-number" id="reviewedCommitments">-</div>
-                        <div class="stat-label">تعهدات مراجعة</div>
-                    </div>
-                    <div class="stat-card today">
-                        <div class="stat-number" id="todayCommitments">-</div>
-                        <div class="stat-label">تعهدات اليوم</div>
-                    </div>
-                </div>
-
-                <!-- أدوات التحكم -->
-                <div class="controls-section">
-                    <div class="search-box">
-                        <input type="text" id="searchInput" placeholder="البحث في التعهدات..." onkeyup="searchCommitments()">
-                        <div class="search-icon">🔍</div>
-                    </div>
-                    <div class="action-buttons">
-                        <button onclick="refreshData()" class="action-btn btn-refresh">تحديث</button>
-                        <button onclick="exportData()" class="action-btn btn-export">تصدير CSV</button>
-                    </div>
-                </div>
-
-                <!-- جدول التعهدات -->
-                <div class="table-container">
-                    <table class="commitments-table">
-                        <thead>
-                            <tr>
-                                <th>الرقم</th>
-                                <th>اسم الطالب</th>
-                                <th>المرحلة</th>
-                                <th>الصف</th>
-                                <th>ولي الأمر</th>
-                                <th>الجوال</th>
-                                <th>التاريخ</th>
-                                <th>الحالة</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="commitmentsTableBody">
-                            <!-- البيانات ستضاف هنا -->
-                        </tbody>
-                    </table>
-                    <div id="emptyState" class="empty-state" style="display: none;">
-                        <div class="empty-icon">📋</div>
-                        <h3>لا توجد تعهدات</h3>
-                        <p>لم يتم تقديم أي تعهدات بعد</p>
-                    </div>
-                    <div id="loadingState" class="loading-state">
-                        <div class="loading-spinner"></div>
-                        <div>جاري تحميل البيانات...</div>
-                    </div>
-                </div>
-            </div>
+    <div class="header">
+        <div style="text-align: left; font-size: 0.9em; margin-bottom: 15px;">
+            <div>المملكة العربية السعودية</div>
+            <div>وزارة التعليم</div>
+            <div>مكتب تعليم الخرج</div>
         </div>
-
-        <!-- نافذة تفاصيل التعهد -->
-        <div id="commitmentModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">تفاصيل التعهد</h3>
-                    <span class="close" onclick="closeModal()">&times;</span>
-                </div>
-                <div id="commitmentDetails">
-                    <!-- تفاصيل التعهد ستضاف هنا -->
-                </div>
-            </div>
-        </div>
-
-        <footer class="footer">
-            <div>متوسطة المنذر بن عمرو الأنصاري &copy; 2025</div>
-            <div class="developer-credit" style="font-family: 'Segoe UI', Arial, sans-serif; direction: ltr;">
-                Designed & Developed by Nawaf Alsubhi
-            </div>
-        </footer>
+        <h1>متوسطة المنذرين عمرو الأنصاري</h1>
+        <p>لوحة تحكم المدير - إدارة التعهدات</p>
     </div>
 
-    <!-- Firebase Scripts -->
+    <div class="admin-panel">
+        <div class="panel-header">
+            <h2 class="panel-title">لوحة تحكم المدير</h2>
+            <button class="btn btn-primary" onclick="refreshData()">
+                🔄 تسجيل جديد
+            </button>
+            <div class="last-update" id="lastUpdate">
+                آخر تحديث: <span id="updateTime">جاري التحميل...</span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCommitments">-</div>
+                <div class="stat-label">إجمالي التعهدات</div>
+            </div>
+            <div class="stat-card green">
+                <div class="stat-number" id="reviewedCommitments">-</div>
+                <div class="stat-label">تعهدات مراجعة</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="stat-number" id="newCommitments">-</div>
+                <div class="stat-label">تعهدات جديدة</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-number" id="totalStudents">-</div>
+                <div class="stat-label">عدد الطلاب</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-success" onclick="exportToCSV()">
+                📊 تصدير CSV
+            </button>
+            <button class="btn btn-primary" onclick="refreshData()">
+                🔄 تحديث
+            </button>
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" 
+                       placeholder="البحث في التعهدات..." 
+                       onkeyup="searchCommitments()">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table" id="commitmentsTable">
+                <thead>
+                    <tr>
+                        <th>الرقم</th>
+                        <th>اسم الطالب</th>
+                        <th>المرحلة</th>
+                        <th>الصف</th>
+                        <th>ولي الأمر</th>
+                        <th>الجوال</th>
+                        <th>التاريخ</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="commitmentsTableBody">
+                    <tr>
+                        <td colspan="9" class="loading">
+                            <div>جاري تحميل البيانات...</div>
+                            <div>يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal لعرض تفاصيل التعهد -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تفاصيل التعهد</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
     <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
         // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDMkhB9tjAnWHBJo3pa7LHRGTfjLRg0yB4",
@@ -753,38 +531,33 @@
             measurementId: "G-BVP04DLPM9"
         };
 
-        // Import Firebase modules
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-        import { getFirestore, collection, getDocs, query, where, orderBy, doc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
-
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const analytics = getAnalytics(app);
 
-        console.log('Firebase initialized successfully for admin panel');
+        console.log("Firebase initialized successfully");
 
+        // Global variables
         let allCommitments = [];
         let filteredCommitments = [];
 
-        // Firebase Functions
-        async function loadCommitmentsFromFirebase() {
+        // Load commitments data
+        async function loadCommitments() {
             try {
-                document.getElementById('loadingState').style.display = 'block';
-                document.getElementById('emptyState').style.display = 'none';
+                console.log("Loading commitments...");
                 
-                console.log('Loading commitments from Firebase...');
-                const q = query(
-                    collection(db, 'commitments'), 
-                    where('type', '==', 'commitment'),
-                    orderBy('timestamp', 'desc')
-                );
-                const querySnapshot = await getDocs(q);
+                // Try to get all documents from commitments collection
+                const commitmentsRef = collection(db, 'commitments');
+                const snapshot = await getDocs(commitmentsRef);
+                
+                console.log(`Found ${snapshot.docs.length} documents in commitments collection`);
                 
                 allCommitments = [];
-                querySnapshot.forEach((doc) => {
+                snapshot.forEach((doc) => {
                     const data = doc.data();
+                    console.log("Document data:", data);
+                    
+                    // إضافة جميع التعهدات بغض النظر عن وجود حقل type
                     allCommitments.push({
                         id: doc.id,
                         ...data
@@ -792,47 +565,86 @@
                 });
 
                 filteredCommitments = [...allCommitments];
-                console.log(`Loaded ${allCommitments.length} commitments`);
+                console.log("All commitments:", allCommitments);
                 
-                document.getElementById('loadingState').style.display = 'none';
-                displayCommitments();
+                updateUI();
                 updateStats();
-                return true;
+                updateLastUpdate();
+                
             } catch (error) {
-                console.error('خطأ في تحميل التعهدات:', error);
-                document.getElementById('loadingState').innerHTML = '<div style="color: #dc3545;">خطأ في تحميل البيانات<br>يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى</div>';
-                return false;
+                console.error("Error loading commitments:", error);
+                showError("خطأ في تحميل البيانات: " + error.message);
             }
         }
 
-        // تسجيل دخول المدير
-        function adminLogin() {
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
+        // Update UI with commitments
+        function updateUI() {
+            const tbody = document.getElementById('commitmentsTableBody');
             
-            if (username === 'admin' && password === 'admin123') {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadCommitmentsFromFirebase();
-                updateTime();
-                setInterval(updateTime, 1000);
-            } else {
-                alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+            if (!filteredCommitments || filteredCommitments.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="no-data">
+                            <i>📋</i>
+                            <h3>لا توجد تعهدات</h3>
+                            <p>لم يتم العثور على أي تعهدات في قاعدة البيانات</p>
+                        </td>
+                    </tr>
+                `;
+                return;
             }
+
+            tbody.innerHTML = filteredCommitments.map((commitment, index) => {
+                const date = commitment.timestamp ? 
+                    (commitment.timestamp.toDate ? commitment.timestamp.toDate().toLocaleDateString('ar-SA') : 
+                     new Date(commitment.timestamp).toLocaleDateString('ar-SA')) :
+                    (commitment.date || 'غير محدد');
+                
+                const status = commitment.status || 'جديد';
+                const statusClass = status === 'مراجع' ? 'status-reviewed' : 'status-new';
+                
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${commitment.studentName || 'غير محدد'}</td>
+                        <td>${commitment.stage || commitment.grade || 'غير محدد'}</td>
+                        <td>${commitment.class || 'غير محدد'}</td>
+                        <td>${commitment.guardianName || 'غير محدد'}</td>
+                        <td>${commitment.mobile || commitment.phone || 'غير محدد'}</td>
+                        <td>${date}</td>
+                        <td><span class="status ${statusClass}">${status}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn view" onclick="viewCommitment('${commitment.id}')">
+                                    👁 عرض
+                                </button>
+                                <button class="action-btn edit" onclick="toggleStatus('${commitment.id}')">
+                                    ✏️ ${status === 'جديد' ? 'مراجع' : 'جديد'}
+                                </button>
+                                <button class="action-btn delete" onclick="deleteCommitment('${commitment.id}')">
+                                    🗑 حذف
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        // تسجيل الخروج
-        function logout() {
-            if (confirm('هل تريد تسجيل الخروج؟')) {
-                document.getElementById('loginSection').style.display = 'block';
-                document.getElementById('adminPanel').style.display = 'none';
-                document.getElementById('adminUsername').value = 'admin';
-                document.getElementById('adminPassword').value = 'admin123';
-            }
+        // Update statistics
+        function updateStats() {
+            const total = allCommitments.length;
+            const reviewed = allCommitments.filter(c => c.status === 'مراجع').length;
+            const newCommitments = allCommitments.filter(c => c.status === 'جديد' || !c.status).length;
+            
+            document.getElementById('totalCommitments').textContent = total;
+            document.getElementById('reviewedCommitments').textContent = reviewed;
+            document.getElementById('newCommitments').textContent = newCommitments;
+            document.getElementById('totalStudents').textContent = total;
         }
 
-        // تحديث الوقت
-        function updateTime() {
+        // Update last update time
+        function updateLastUpdate() {
             const now = new Date();
             const timeString = now.toLocaleString('ar-SA', {
                 year: 'numeric',
@@ -841,436 +653,229 @@
                 hour: '2-digit',
                 minute: '2-digit'
             });
-            document.getElementById('currentTime').textContent = timeString;
+            document.getElementById('updateTime').textContent = timeString;
         }
 
-        // عرض التعهدات في الجدول
-        function displayCommitments() {
+        // Show error message
+        function showError(message) {
             const tbody = document.getElementById('commitmentsTableBody');
-            const emptyState = document.getElementById('emptyState');
-            
-            tbody.innerHTML = '';
-            
-            if (filteredCommitments.length === 0) {
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            emptyState.style.display = 'none';
-            
-            filteredCommitments.forEach((commitment, index) => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${commitment.studentName}</td>
-                    <td>${commitment.grade}</td>
-                    <td>${commitment.class || '-'}</td>
-                    <td>${commitment.guardianName}</td>
-                    <td>${commitment.mobile}</td>
-                    <td>${commitment.date}</td>
-                    <td><span class="status-badge ${commitment.status === 'جديد' ? 'status-new' : 'status-reviewed'}">${commitment.status}</span></td>
-                    <td>
-                        <button class="table-action-btn btn-view" onclick="viewCommitment('${commitment.id}')">عرض</button>
-                        ${commitment.status === 'جديد' ? '<button class="table-action-btn btn-approve" onclick="approveCommitment(\'' + commitment.id + '\')">مراجعة</button>' : ''}
-                        <button class="table-action-btn btn-print" onclick="printCommitment('${commitment.id}')">طباعة</button>
-                        <button class="table-action-btn btn-delete" onclick="deleteCommitment('${commitment.id}')">حذف</button>
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="9" class="error-message">
+                        ⚠️ ${message}
+                        <br><br>
+                        <button class="btn btn-primary" onclick="window.loadCommitments()">إعادة المحاولة</button>
                     </td>
-                `;
-            });
+                </tr>
+            `;
         }
 
-        // تحديث الإحصائيات
-        function updateStats() {
-            const total = allCommitments.length;
-            const newCount = allCommitments.filter(c => c.status === 'جديد').length;
-            const reviewedCount = allCommitments.filter(c => c.status === 'مراجع').length;
+        // Search commitments
+        window.searchCommitments = function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
-            const today = new Date().toISOString().split('T')[0];
-            const todayCount = allCommitments.filter(c => c.date === today).length;
-            
-            document.getElementById('totalCommitments').textContent = total;
-            document.getElementById('newCommitments').textContent = newCount;
-            document.getElementById('reviewedCommitments').textContent = reviewedCount;
-            document.getElementById('todayCommitments').textContent = todayCount;
-        }
-
-        // البحث في التعهدات
-        function searchCommitments() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            if (searchTerm === '') {
+            if (!searchTerm) {
                 filteredCommitments = [...allCommitments];
             } else {
                 filteredCommitments = allCommitments.filter(commitment => 
-                    commitment.studentName.toLowerCase().includes(searchTerm) ||
-                    commitment.guardianName.toLowerCase().includes(searchTerm) ||
-                    commitment.mobile.includes(searchTerm) ||
-                    (commitment.idNumber && commitment.idNumber.includes(searchTerm)) ||
-                    commitment.grade.toLowerCase().includes(searchTerm) ||
+                    (commitment.studentName && commitment.studentName.toLowerCase().includes(searchTerm)) ||
+                    (commitment.guardianName && commitment.guardianName.toLowerCase().includes(searchTerm)) ||
+                    (commitment.mobile && commitment.mobile.includes(searchTerm)) ||
+                    (commitment.phone && commitment.phone.includes(searchTerm)) ||
+                    (commitment.grade && commitment.grade.toLowerCase().includes(searchTerm)) ||
+                    (commitment.stage && commitment.stage.toLowerCase().includes(searchTerm)) ||
                     (commitment.class && commitment.class.toLowerCase().includes(searchTerm))
                 );
             }
             
-            displayCommitments();
-        }
+            updateUI();
+        };
 
-        // عرض تفاصيل التعهد
-        function viewCommitment(id) {
-            const commitment = allCommitments.find(c => c.id === id);
+        // View commitment details
+        window.viewCommitment = function(commitmentId) {
+            const commitment = allCommitments.find(c => c.id === commitmentId);
             if (!commitment) return;
-            
-            document.getElementById('commitmentDetails').innerHTML = `
-                <div class="commitment-details">
-                    <h4>بيانات الطالب</h4>
-                    <div class="detail-row">
-                        <span class="detail-label">الاسم:</span>
-                        <span class="detail-value">${commitment.studentName}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">المرحلة:</span>
-                        <span class="detail-value">${commitment.grade}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">الصف:</span>
-                        <span class="detail-value">${commitment.class || 'غير محدد'}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">رقم الهوية:</span>
-                        <span class="detail-value">${commitment.idNumber || 'غير محدد'}</span>
+
+            const modalContent = document.getElementById('modalContent');
+            const date = commitment.timestamp ? 
+                (commitment.timestamp.toDate ? commitment.timestamp.toDate().toLocaleString('ar-SA') : 
+                 new Date(commitment.timestamp).toLocaleString('ar-SA')) :
+                (commitment.date || 'غير محدد');
+
+            modalContent.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">اسم الطالب:</div>
+                    <div class="detail-value">${commitment.studentName || 'غير محدد'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">ولي الأمر:</div>
+                    <div class="detail-value">${commitment.guardianName || 'غير محدد'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">رقم الجوال:</div>
+                    <div class="detail-value">${commitment.mobile || commitment.phone || 'غير محدد'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">المرحلة:</div>
+                    <div class="detail-value">${commitment.stage || commitment.grade || 'غير محدد'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">الصف:</div>
+                    <div class="detail-value">${commitment.class || 'غير محدد'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">التاريخ:</div>
+                    <div class="detail-value">${date}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">الحالة:</div>
+                    <div class="detail-value">
+                        <span class="status ${commitment.status === 'مراجع' ? 'status-reviewed' : 'status-new'}">
+                            ${commitment.status || 'جديد'}
+                        </span>
                     </div>
                 </div>
-                <div class="commitment-details">
-                    <h4>بيانات ولي الأمر</h4>
-                    <div class="detail-row">
-                        <span class="detail-label">الاسم:</span>
-                        <span class="detail-value">${commitment.guardianName}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">هاتف المنزل:</span>
-                        <span class="detail-value">${commitment.homePhone || 'غير محدد'}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">الجوال:</span>
-                        <span class="detail-value">${commitment.mobile}</span>
-                    </div>
+                ${commitment.notes ? `
+                <div class="detail-row">
+                    <div class="detail-label">ملاحظات:</div>
+                    <div class="detail-value">${commitment.notes}</div>
                 </div>
-                <div class="commitment-details">
-                    <h4>معلومات إضافية</h4>
-                    <div class="detail-row">
-                        <span class="detail-label">تاريخ التقديم:</span>
-                        <span class="detail-value">${commitment.date}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">وقت الإرسال:</span>
-                        <span class="detail-value">${commitment.submittedAt || 'غير محدد'}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">الحالة:</span>
-                        <span class="detail-value">${commitment.status}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">الملاحظات:</span>
-                        <span class="detail-value">${commitment.notes || 'لا توجد ملاحظات'}</span>
-                    </div>
+                ` : ''}
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn btn-primary" onclick="toggleStatus('${commitmentId}')">
+                        ${commitment.status === 'جديد' ? 'تحويل إلى مراجع' : 'تحويل إلى جديد'}
+                    </button>
+                    <button class="btn btn-danger" onclick="deleteCommitment('${commitmentId}')">
+                        حذف التعهد
+                    </button>
                 </div>
             `;
-            
-            document.getElementById('commitmentModal').style.display = 'block';
-        }
 
-        // إغلاق النافذة المنبثقة
-        function closeModal() {
-            document.getElementById('commitmentModal').style.display = 'none';
-        }
+            document.getElementById('detailModal').style.display = 'block';
+        };
 
-        // تغيير حالة التعهد إلى مراجع
-        async function approveCommitment(id) {
+        // Toggle commitment status
+        window.toggleStatus = async function(commitmentId) {
             try {
-                const commitmentRef = doc(db, 'commitments', id);
+                const commitment = allCommitments.find(c => c.id === commitmentId);
+                if (!commitment) return;
+
+                const newStatus = commitment.status === 'مراجع' ? 'جديد' : 'مراجع';
+                
+                const commitmentRef = doc(db, 'commitments', commitmentId);
                 await updateDoc(commitmentRef, {
-                    status: 'مراجع'
+                    status: newStatus
                 });
+
+                // Update local data
+                commitment.status = newStatus;
                 
-                // تحديث البيانات المحلية
-                const commitmentIndex = allCommitments.findIndex(c => c.id === id);
-                if (commitmentIndex !== -1) {
-                    allCommitments[commitmentIndex].status = 'مراجع';
-                }
-                
-                displayCommitments();
+                updateUI();
                 updateStats();
-                console.log('Commitment approved successfully');
+                closeModal();
+                
+                console.log(`Status updated for commitment ${commitmentId} to ${newStatus}`);
+                
             } catch (error) {
-                console.error('خطأ في تحديث حالة التعهد:', error);
-                alert('حدث خطأ في تحديث حالة التعهد');
+                console.error('Error updating status:', error);
+                alert('خطأ في تحديث الحالة: ' + error.message);
             }
-        }
+        };
 
-        // حذف تعهد
-        async function deleteCommitment(id) {
-            if (confirm('هل أنت متأكد من حذف هذا التعهد؟')) {
-                try {
-                    await deleteDoc(doc(db, 'commitments', id));
-                    
-                    // تحديث البيانات المحلية
-                    allCommitments = allCommitments.filter(c => c.id !== id);
-                    filteredCommitments = filteredCommitments.filter(c => c.id !== id);
-                    
-                    displayCommitments();
-                    updateStats();
-                    console.log('Commitment deleted successfully');
-                } catch (error) {
-                    console.error('خطأ في حذف التعهد:', error);
-                    alert('حدث خطأ في حذف التعهد');
-                }
+        // Delete commitment
+        window.deleteCommitment = async function(commitmentId) {
+            if (!confirm('هل أنت متأكد من حذف هذا التعهد؟')) return;
+
+            try {
+                await deleteDoc(doc(db, 'commitments', commitmentId));
+                
+                // Remove from local data
+                allCommitments = allCommitments.filter(c => c.id !== commitmentId);
+                filteredCommitments = filteredCommitments.filter(c => c.id !== commitmentId);
+                
+                updateUI();
+                updateStats();
+                closeModal();
+                
+                console.log(`Commitment ${commitmentId} deleted successfully`);
+                
+            } catch (error) {
+                console.error('Error deleting commitment:', error);
+                alert('خطأ في حذف التعهد: ' + error.message);
             }
-        }
+        };
 
-        // طباعة تعهد
-        function printCommitment(id) {
-            const commitment = allCommitments.find(c => c.id === id);
-            if (!commitment) return;
-            
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="ar" dir="rtl">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>نموذج الالتزام المدرسي - ${commitment.studentName}</title>
-                    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-                    <style>
-                        body { 
-                            font-family: 'Cairo', sans-serif; 
-                            margin: 40px; 
-                            line-height: 1.8; 
-                            color: #333;
-                        }
-                        .header { 
-                            text-align: center; 
-                            margin-bottom: 30px; 
-                            border-bottom: 3px solid #0f4c75; 
-                            padding-bottom: 20px; 
-                        }
-                        .ministry-info { 
-                            font-size: 14px; 
-                            color: #0f4c75; 
-                            margin-bottom: 10px; 
-                            font-weight: 600;
-                        }
-                        .school-name { 
-                            font-size: 22px; 
-                            font-weight: 700; 
-                            color: #0f4c75; 
-                            margin: 10px 0;
-                        }
-                        .form-title { 
-                            text-align: center; 
-                            font-size: 20px; 
-                            font-weight: 700; 
-                            margin: 30px 0; 
-                            color: #0f4c75;
-                        }
-                        .student-info { 
-                            background: #f8f9fa; 
-                            padding: 25px; 
-                            border-radius: 10px; 
-                            margin: 20px 0; 
-                            border: 2px solid #e0e0e0;
-                        }
-                        .info-row {
-                            display: flex;
-                            justify-content: space-between;
-                            margin: 12px 0;
-                            padding: 8px 0;
-                            border-bottom: 1px solid #ddd;
-                        }
-                        .info-row:last-child {
-                            border-bottom: none;
-                        }
-                        .info-label {
-                            font-weight: 700;
-                            color: #0f4c75;
-                            min-width: 140px;
-                        }
-                        .commitment-text { 
-                            border: 2px solid #0f4c75; 
-                            padding: 25px; 
-                            margin: 25px 0; 
-                            border-radius: 10px; 
-                            background: #fafafa;
-                        }
-                        .commitment-title {
-                            text-align: center;
-                            font-weight: 700;
-                            color: #0f4c75;
-                            margin-bottom: 15px;
-                        }
-                        .signature-section { 
-                            display: flex; 
-                            justify-content: space-between; 
-                            margin-top: 50px; 
-                        }
-                        .signature-box { 
-                            text-align: center; 
-                            width: 200px;
-                        }
-                        .signature-line { 
-                            border-bottom: 2px solid #333; 
-                            width: 150px; 
-                            margin: 30px auto 10px; 
-                        }
-                        .footer-print {
-                            text-align: center; 
-                            margin-top: 50px; 
-                            color: #666;
-                            font-size: 12px;
-                            border-top: 1px solid #ddd;
-                            padding-top: 20px;
-                        }
-                        @media print { 
-                            body { margin: 20px; } 
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <div class="ministry-info">
-                            المملكة العربية السعودية<br>
-                            وزارة التعليم<br>
-                            مكتب تعليم العوالي
-                        </div>
-                        <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
-                    </div>
-                    
-                    <div class="form-title">نموذج الالتزام المدرسي</div>
-                    
-                    <div class="student-info">
-                        <div class="info-row">
-                            <span class="info-label">اسم الطالب:</span>
-                            <span>${commitment.studentName}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">المرحلة:</span>
-                            <span>${commitment.grade}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">الصف:</span>
-                            <span>${commitment.class || 'غير محدد'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">اسم ولي الأمر:</span>
-                            <span>${commitment.guardianName}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">هاتف المنزل:</span>
-                            <span>${commitment.homePhone || 'غير محدد'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">الجوال:</span>
-                            <span>${commitment.mobile}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">رقم الهوية:</span>
-                            <span>${commitment.idNumber || 'غير محدد'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">التاريخ:</span>
-                            <span>${commitment.date}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="commitment-text">
-                        <h4 class="commitment-title">نص التعهد</h4>
-                        <p>بعد اطلاعي الكامل على محتوى <strong>قواعد السلوك والمواظبة</strong>، أتعهد بالالتزام التام بجميع الأنظمة والتعليمات الواردة فيها، والعمل بمقتضاها بما يحفظ حقوقي ويحقق أهداف العملية التعليمية.</p>
-                        <br>
-                        <p>كما أتحمل كامل المسؤولية عن صحة بيانات التواصل الموضحة أعلاه، وألتزم بتحديثها عند أي تغيير.</p>
-                    </div>
-                    
-                    <div class="signature-section">
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <p><strong>توقيع ولي الأمر</strong></p>
-                        </div>
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <p><strong>توقيع الطالب</strong></p>
-                        </div>
-                    </div>
-                    
-                    <div class="footer-print">
-                        <p>تم إنشاء هذا النموذج من نظام إدارة التعهدات المدرسية</p>
-                        <p>تاريخ الطباعة: ${new Date().toLocaleDateString('ar-SA')} - الساعة: ${new Date().toLocaleTimeString('ar-SA')}</p>
-                        <p>رقم التعهد: ${commitment.id}</p>
-                    </div>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
-        }
-
-        // تصدير البيانات
-        function exportData() {
-            if (allCommitments.length === 0) {
+        // Export to CSV
+        window.exportToCSV = function() {
+            if (!allCommitments || allCommitments.length === 0) {
                 alert('لا توجد بيانات للتصدير');
                 return;
             }
 
-            const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
-                + "الرقم,اسم الطالب,المرحلة,الصف,ولي الأمر,هاتف المنزل,الجوال,رقم الهوية,التاريخ,الحالة,وقت الإرسال,الملاحظات\n"
-                + allCommitments.map((c, index) => 
-                    `${index + 1},"${c.studentName}","${c.grade}","${c.class || ''}","${c.guardianName}","${c.homePhone || ''}","${c.mobile}","${c.idNumber || ''}","${c.date}","${c.status}","${c.submittedAt || ''}","${c.notes || ''}"`
-                ).join("\n");
-            
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `التعهدات_المدرسية_${new Date().toISOString().split('T')[0]}.csv`);
+            const headers = ['الرقم', 'اسم الطالب', 'ولي الأمر', 'الجوال', 'المرحلة', 'الصف', 'التاريخ', 'الحالة'];
+            const csvContent = [headers.join(',')];
+
+            allCommitments.forEach((commitment, index) => {
+                const date = commitment.timestamp ? 
+                    (commitment.timestamp.toDate ? commitment.timestamp.toDate().toLocaleDateString('ar-SA') : 
+                     new Date(commitment.timestamp).toLocaleDateString('ar-SA')) :
+                    (commitment.date || 'غير محدد');
+
+                const row = [
+                    index + 1,
+                    commitment.studentName || 'غير محدد',
+                    commitment.guardianName || 'غير محدد',
+                    commitment.mobile || commitment.phone || 'غير محدد',
+                    commitment.stage || commitment.grade || 'غير محدد',
+                    commitment.class || 'غير محدد',
+                    date,
+                    commitment.status || 'جديد'
+                ];
+
+                csvContent.push(row.map(field => `"${field}"`).join(','));
+            });
+
+            const blob = new Blob([csvContent.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `تعهدات_المدرسة_${new Date().toLocaleDateString('ar-SA')}.csv`);
+            link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }
+        };
 
-        // تحديث البيانات
-        async function refreshData() {
-            await loadCommitmentsFromFirebase();
-            document.getElementById('searchInput').value = '';
-            alert('تم تحديث البيانات بنجاح');
-        }
+        // Refresh data
+        window.refreshData = function() {
+            console.log("Refreshing data...");
+            loadCommitments();
+        };
 
-        // Export functions to global scope
-        window.adminLogin = adminLogin;
-        window.logout = logout;
-        window.searchCommitments = searchCommitments;
-        window.viewCommitment = viewCommitment;
-        window.closeModal = closeModal;
-        window.approveCommitment = approveCommitment;
-        window.deleteCommitment = deleteCommitment;
-        window.printCommitment = printCommitment;
-        window.exportData = exportData;
-        window.refreshData = refreshData;
+        // Close modal
+        window.closeModal = function() {
+            document.getElementById('detailModal').style.display = 'none';
+        };
 
-        // Event listeners
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('commitmentModal');
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailModal');
             if (event.target === modal) {
-                closeModal();
+                modal.style.display = 'none';
             }
+        };
+
+        // Make functions available globally
+        window.loadCommitments = loadCommitments;
+
+        // Initial load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log("Page loaded, initializing...");
+            loadCommitments();
         });
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            } else if (event.key === 'Enter' && document.getElementById('loginSection').style.display !== 'none') {
-                adminLogin();
-            }
-        });
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Admin panel initialized successfully');
-        });
+        // Auto refresh every 2 minutes
+        setInterval(loadCommitments, 120000);
 
     </script>
 </body>
