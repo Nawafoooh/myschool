@@ -48,56 +48,30 @@
             50% { opacity: 1; }
         }
 
-        /* Navigation */
-        .nav-tabs {
-            background: linear-gradient(135deg, #0d5c0d 0%, #1a7a1a 50%, #2d8f2d 100%);
-            display: flex;
-            overflow-x: auto;
-            padding: 0 20px;
-        }
-
-        .nav-tab {
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.7);
-            padding: 20px 30px;
-            font-size: 16px;
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 13px;
             font-weight: 600;
-            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+            z-index: 999;
             transition: all 0.3s ease;
-            white-space: nowrap;
-            position: relative;
-            font-family: inherit;
         }
 
-        .nav-tab:hover {
-            color: white;
-            background: rgba(255,255,255,0.1);
+        .connection-status.disconnected {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            box-shadow: 0 8px 25px rgba(245, 101, 101, 0.3);
         }
 
-        .nav-tab.active {
-            color: white;
-            background: rgba(255,255,255,0.2);
-        }
-
-        .nav-tab.active::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: white;
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            padding: 0;
-        }
-
-        .tab-content.active {
-            display: block;
+        .connection-status.connecting {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            box-shadow: 0 8px 25px rgba(237, 137, 54, 0.3);
         }
 
         /* Header Section */
@@ -161,6 +135,41 @@
             font-size: 14px;
             margin-top: 10px;
             opacity: 0.9;
+        }
+
+        /* Title Section */
+        .title-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 28px;
+            color: #0d5c0d;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .important-note {
+            background: rgba(13, 92, 13, 0.1);
+            border: 2px solid #0d5c0d;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .note-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0d5c0d;
+            margin-bottom: 10px;
+        }
+
+        .note-content {
+            color: #2c3e50;
+            line-height: 1.6;
         }
 
         /* Form Sections */
@@ -310,22 +319,6 @@
             color: #2c3e50;
         }
 
-        /* Special Input Groups */
-        .input-with-unit {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .input-with-unit .form-input {
-            flex: 1;
-        }
-
-        .unit-text {
-            font-weight: 600;
-            color: #0d5c0d;
-        }
-
         /* Submit Section */
         .submit-section {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
@@ -348,6 +341,7 @@
             letter-spacing: 1px;
             min-width: 200px;
             margin: 0 10px;
+            position: relative;
         }
 
         .submit-button:hover {
@@ -366,14 +360,45 @@
             background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
         }
 
+        .submit-button.loading {
+            pointer-events: none;
+        }
+
+        .submit-button.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s ease infinite;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Messages */
         .message {
-            padding: 20px;
-            border-radius: 12px;
+            padding: 25px;
+            border-radius: 15px;
             text-align: center;
-            font-size: 15px;
-            margin-top: 20px;
+            font-size: 16px;
+            margin-top: 25px;
             display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .success-message {
@@ -386,145 +411,6 @@
             background: linear-gradient(135deg, #f8d7da, #f5c6cb);
             border: 2px solid #dc3545;
             color: #721c24;
-        }
-
-        /* Admin Panel Styles */
-        .admin-header {
-            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .admin-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .admin-subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 30px;
-            background: #f8f9fa;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid #0d5c0d;
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: #0d5c0d;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: #6c757d;
-            font-weight: 600;
-        }
-
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-            padding: 30px;
-        }
-
-        .student-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-top: 4px solid #0d5c0d;
-            transition: all 0.3s ease;
-        }
-
-        .student-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-
-        .student-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0d5c0d;
-            margin-bottom: 15px;
-        }
-
-        .student-info {
-            display: grid;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #6c757d;
-            font-size: 14px;
-        }
-
-        .info-value {
-            font-weight: 500;
-            color: #2c3e50;
-            font-size: 14px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-view {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .btn-edit {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .btn-delete {
-            background: #dc3545;
-            color: white;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-1px);
-            opacity: 0.9;
         }
 
         /* Footer */
@@ -569,26 +455,24 @@
                 grid-template-columns: 1fr;
             }
 
-            .nav-tabs {
-                padding: 0 10px;
-            }
-
-            .nav-tab {
-                padding: 15px 20px;
-                font-size: 14px;
-            }
-
-            .students-grid {
-                grid-template-columns: 1fr;
-                padding: 20px;
+            .connection-status {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 10px;
+                display: inline-block;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+        جاري الاتصال...
+    </div>
 
     <div class="main-container">
-
+        <!-- Header Section -->
         <div class="header-section">
             <div class="logo-section">
                 <div class="saudi-emblem">🇸🇦</div>
@@ -603,18 +487,21 @@
             </div>
         </div>
 
+        <!-- Title Section -->
         <div class="title-section">
             <h1 class="main-title">منصة جمع بيانات الطلاب</h1>
             <div class="important-note">
-                <div class="note-title">📝 تعليمات مهمة</div>
+                <div class="note-title">
+                    📝 تعليمات مهمة
+                </div>
                 <div class="note-content">
                     يرجى ملء جميع البيانات المطلوبة بدقة واكتمال. هذه البيانات ستساعد المدرسة في تقديم أفضل رعاية تعليمية واجتماعية لطلابنا الأعزاء.
                 </div>
             </div>
         </div>
-        
-        <form id="studentDataForm">
 
+        <form id="studentDataForm">
+            <!-- البيانات الأساسية -->
             <div class="form-section">
                 <h2 class="section-title">البيانات الأساسية</h2>
                 <div class="form-container">
@@ -643,15 +530,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="field-label required">الفصل</label>
+                            <label class="field-label required">الشعبة</label>
                             <select name="section" class="form-select" required>
-                                <option value="">اختر الفصل</option>
-                                <option value="الفصل الأول - 1">الفصل الأول - 1</option>
-                                <option value="الفصل الأول - 2">الفصل الأول - 2</option>
-                                <option value="الفصل الأول - 3">الفصل الأول - 3</option>
-                                <option value="الفصل الأول - 4">الفصل الأول - 4</option>
-                                <option value="الفصل الأول - 5">الفصل الأول - 5</option>
-                                <option value="الفصل الأول - 6">الفصل الأول - 6</option>
+                                <option value="">اختر الشعبة</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -668,6 +555,7 @@
                 </div>
             </div>
 
+            <!-- البيانات العامة -->
             <div class="form-section">
                 <h2 class="section-title">البيانات العامة</h2>
                 <div class="form-container">
@@ -678,181 +566,731 @@
                         </div>
                         <div class="form-group">
                             <label class="field-label required">جوال ولي الأمر</label>
-                            <input type="tel" name="guardianPhone" class="form-input" pattern="[0-9]{10}" maxlength="10" required>
+                            <input type="tel" name="guardianPhone" class="form-input" pattern="05[0-9]{8}" maxlength="10" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="field-label">رقم جوال الطالب</label>
-                            <input type="tel" name="studentPhone" class="form-input" pattern="[0-9]{10}" maxlength="10">
+                            <label class="field-label">هاتف عمل ولي الأمر</label>
+                            <input type="tel" name="workPhone" class="form-input">
                         </div>
                         <div class="form-group">
-                            <label class="field-label">رقم جوال احتياطي</label>
-                            <input type="tel" name="alternativePhone" class="form-input" pattern="[0-9]{10}" maxlength="10">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="field-label">البريد الإلكتروني</label>
-                            <input type="email" name="email" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="field-label">رقم جوال للطوارئ</label>
-                            <input type="tel" name="emergencyPhone" class="form-input" pattern="[0-9]{10}" maxlength="10">
+                            <label class="field-label">جوال الطالب</label>
+                            <input type="tel" name="studentPhone" class="form-input" pattern="05[0-9]{8}" maxlength="10">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="field-label">العنوان الوطني</label>
-                            <input type="text" name="nationalAddress" class="form-input">
+                            <label class="field-label">عنوان عمل ولي الأمر</label>
+                            <input type="text" name="workAddress" class="form-input">
                         </div>
                         <div class="form-group">
-                            <label class="field-label">مستواك الاقتصادي</label>
-                            <select name="economicLevel" class="form-select">
-                                <option value="">اختر المستوى</option>
-                                <option value="مرتفع">مرتفع</option>
-                                <option value="متوسط">متوسط</option>
-                                <option value="منخفض">منخفض</option>
+                            <label class="field-label">جوال آخر</label>
+                            <input type="tel" name="alternativePhone" class="form-input" pattern="05[0-9]{8}" maxlength="10">
+                        </div>
+                    </div>
+                    <div class="form-row three-columns">
+                        <div class="form-group">
+                            <label class="field-label">اسم قريب يمكن الاتصال به</label>
+                            <input type="text" name="emergencyContactName" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label">قرابته بالطالب</label>
+                            <select name="emergencyRelation" class="form-select">
+                                <option value="">اختر القرابة</option>
+                                <option value="عم">عم</option>
+                                <option value="خال">خال</option>
+                                <option value="جد">جد</option>
+                                <option value="أخ">أخ</option>
+                                <option value="أخت">أخت</option>
+                                <option value="عمة">عمة</option>
+                                <option value="خالة">خالة</option>
+                                <option value="أخرى">أخرى</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label">الجوال</label>
+                            <input type="tel" name="emergencyPhone" class="form-input" pattern="05[0-9]{8}" maxlength="10">
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- البيانات الدراسية -->
             <div class="form-section">
-                <h2 class="section-title">معلومات صحية ونفسية</h2>
+                <h2 class="section-title">البيانات الدراسية</h2>
                 <div class="form-container">
-                    <div class="form-row">
+                    <div class="form-row full-width">
                         <div class="form-group">
-                            <label class="field-label">هل يعاني الطالب من أي مشاكل نفسية؟</label>
+                            <label class="field-label required">هل يعاني الطالب من مشاكل نفسية تؤثر على استيعابه؟</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
-                                    <input type="radio" name="psychologicalProblems" value="نعم">
-                                    <label>نعم</label>
+                                    <input type="radio" name="psychologicalProblems" value="لا" id="psychNo" required>
+                                    <label for="psychNo">لا</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="radio" name="psychologicalProblems" value="لا" checked>
-                                    <label>لا</label>
+                                    <input type="radio" name="psychologicalProblems" value="نعم" id="psychYes">
+                                    <label for="psychYes">نعم</label>
                                 </div>
-                            </div>
-                            <div class="form-group" id="psychDetails" style="display: none; margin-top: 15px;">
-                                <label class="field-label">اذكر نوع المشكلة النفسية</label>
-                                <input type="text" name="psychologicalProblemsDetails" class="form-input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="field-label">هل يعاني الطالب من أي مشاكل صحية؟</label>
-                            <div class="checkbox-group">
-                                <div class="checkbox-item">
-                                    <input type="radio" name="healthProblems" value="نعم">
-                                    <label>نعم</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="radio" name="healthProblems" value="لا" checked>
-                                    <label>لا</label>
-                                </div>
-                            </div>
-                            <div class="form-group" id="healthDetails" style="display: none; margin-top: 15px;">
-                                <label class="field-label">اذكر نوع المشكلة الصحية</label>
-                                <input type="text" name="healthProblemsDetails" class="form-input">
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row full-width" id="psychDetails" style="display: none;">
                         <div class="form-group">
-                            <label class="field-label">هل لديه إعاقة؟</label>
+                            <label class="field-label">تفاصيل المشاكل النفسية</label>
+                            <textarea name="psychologicalDetails" class="form-textarea" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">هل يعاني الطالب من مشاكل صحية تؤثر على استيعابه؟</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
-                                    <input type="radio" name="studentDisability" value="نعم">
-                                    <label>نعم</label>
+                                    <input type="radio" name="healthProblems" value="لا" id="healthNo" required>
+                                    <label for="healthNo">لا</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="radio" name="studentDisability" value="لا" checked>
-                                    <label>لا</label>
+                                    <input type="radio" name="healthProblems" value="نعم" id="healthYes">
+                                    <label for="healthYes">نعم</label>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-row full-width" id="healthDetails" style="display: none;">
                         <div class="form-group">
-                            <label class="field-label">هل الطالب محتاج مادياً؟</label>
+                            <label class="field-label">تفاصيل المشاكل الصحية</label>
+                            <textarea name="healthDetails" class="form-textarea" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- البيانات الاقتصادية -->
+            <div class="form-section">
+                <h2 class="section-title">البيانات الاقتصادية</h2>
+                <div class="form-container">
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">مستوى الأسرة الاقتصادي</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
-                                    <input type="radio" name="financialNeed" value="نعم">
-                                    <label>نعم</label>
+                                    <input type="radio" name="economicLevel" value="مرتفع" id="high" required>
+                                    <label for="high">مرتفع</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="radio" name="financialNeed" value="لا" checked>
-                                    <label>لا</label>
+                                    <input type="radio" name="economicLevel" value="متوسط" id="medium">
+                                    <label for="medium">متوسط</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="economicLevel" value="دون المتوسط" id="belowMedium">
+                                    <label for="belowMedium">دون المتوسط</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="economicLevel" value="منخفض" id="low">
+                                    <label for="low">منخفض</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="economicLevel" value="ضعيف" id="weak">
+                                    <label for="weak">ضعيف</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-row full-width">
                         <div class="form-group">
-                            <label class="field-label">ملاحظات إضافية (اختياري)</label>
-                            <textarea name="additionalNotes" class="form-textarea"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <h2 class="section-title">بيانات الأسرة</h2>
-                <div class="form-container">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="field-label">حالة ولي الأمر</label>
+                            <label class="field-label required">مصادر دخل الأسرة</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
-                                    <input type="radio" name="guardianStatus" value="على قيد الحياة" checked>
-                                    <label>على قيد الحياة</label>
+                                    <input type="radio" name="incomeSource" value="الأب" id="fatherIncome" required>
+                                    <label for="fatherIncome">الأب</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="radio" name="guardianStatus" value="متوفي">
-                                    <label>متوفي</label>
+                                    <input type="radio" name="incomeSource" value="الأم" id="motherIncome">
+                                    <label for="motherIncome">الأم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="incomeSource" value="الأب والأم" id="bothParents">
+                                    <label for="bothParents">الأب والأم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="incomeSource" value="غير ذلك" id="otherIncome">
+                                    <label for="otherIncome">غير ذلك</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width" id="otherIncomeDetails" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">تفاصيل مصدر الدخل الآخر</label>
+                            <input type="text" name="otherIncomeDetails" class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label required">عدد الأفراد الذين يعولهم العائل</label>
+                            <input type="number" name="dependentsCount" class="form-input" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">هل ولي الأمر يعول أشخاص من خارج الأسرة؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="supportOutsideFamily" value="نعم" id="supportYes" required>
+                                    <label for="supportYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="supportOutsideFamily" value="لا" id="supportNo">
+                                    <label for="supportNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label required">هل الطالب يحصل على مكافأة من وزارة التعليم؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="educationReward" value="نعم" id="rewardYes" required>
+                                    <label for="rewardYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="educationReward" value="لا" id="rewardNo">
+                                    <label for="rewardNo">لا</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="field-label">عدد أفراد الأسرة</label>
-                            <input type="number" name="familyMembers" class="form-input" min="1">
+                            <label class="field-label required">هل الطالب محتاج ماديا؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="financialNeed" value="نعم" id="needYes" required>
+                                    <label for="needYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="financialNeed" value="لا" id="needNo">
+                                    <label for="needNo">لا</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="field-label">عدد الإخوة والأخوات</label>
-                            <input type="number" name="siblingsCount" class="form-input" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label class="field-label">ترتيب الطالب بين إخوته</label>
-                            <input type="number" name="studentOrder" class="form-input" min="1">
+                            <label class="field-label required">دخل الأسرة الشهري</label>
+                            <select name="monthlyIncome" class="form-select" required>
+                                <option value="">اختر مستوى الدخل</option>
+                                <option value="أقل من 3000">أقل من 3000 ريال</option>
+                                <option value="3000-5000">3000 - 5000 ريال</option>
+                                <option value="5000-8000">5000 - 8000 ريال</option>
+                                <option value="8000-12000">8000 - 12000 ريال</option>
+                                <option value="12000-20000">12000 - 20000 ريال</option>
+                                <option value="أكثر من 20000">أكثر من 20000 ريال</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- البيانات الصحية -->
+            <div class="form-section">
+                <h2 class="section-title">البيانات الصحية</h2>
+                <div class="form-container">
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">هل الطالب يعاني من أمراض صحية؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="healthConditions" value="لا" id="healthCondNo" required>
+                                    <label for="healthCondNo">لا</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="healthConditions" value="نعم" id="healthCondYes">
+                                    <label for="healthCondYes">نعم</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width" id="healthCondDetails" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">اذكر الأمراض الصحية</label>
+                            <textarea name="healthConditionsDetails" class="form-textarea" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">هل سبق أن أجرى الطالب أي عمليات جراحية؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="surgeries" value="لا" id="surgeryNo" required>
+                                    <label for="surgeryNo">لا</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="surgeries" value="نعم" id="surgeryYes">
+                                    <label for="surgeryYes">نعم</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width" id="surgeryDetails" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">اذكر العمليات الجراحية</label>
+                            <textarea name="surgeriesDetails" class="form-textarea" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">هل الطالب يعاني من مشكلة نفسية؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="mentalHealth" value="لا" id="mentalNo" required>
+                                    <label for="mentalNo">لا</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="mentalHealth" value="نعم" id="mentalYes">
+                                    <label for="mentalYes">نعم</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width" id="mentalHealthDetails" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">اذكر المشكلة النفسية</label>
+                            <textarea name="mentalHealthDetails" class="form-textarea" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- البيانات الاجتماعية -->
+            <div class="form-section">
+                <h2 class="section-title">البيانات الاجتماعية</h2>
+                <div class="form-container">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label required">الحي الذي يسكن فيه الطالب</label>
+                            <input type="text" name="neighborhood" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">كم يبعد مقر سكن الطالب عن المدرسة بالكيلومتر</label>
+                            <input type="number" name="distanceFromSchool" class="form-input" min="0" step="0.5" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label required">نوع السكن الذي يسكنه الطالب</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="housingType" value="ملك" id="owned" required>
+                                    <label for="owned">ملك</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="housingType" value="مستأجر" id="rented">
+                                    <label for="rented">مستأجر</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="housingType" value="سكن خيري" id="charity">
+                                    <label for="charity">سكن خيري</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">نوع المسكن</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="buildingType" value="فيلا" id="villa" required>
+                                    <label for="villa">فيلا</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="buildingType" value="دور" id="floor">
+                                    <label for="floor">دور</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="buildingType" value="شقة" id="apartment">
+                                    <label for="apartment">شقة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="buildingType" value="بيت شعبي" id="traditional">
+                                    <label for="traditional">بيت شعبي</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">الحالة الاجتماعية للأب</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherStatus" value="متزوج من واحدة" id="marriedOne" required>
+                                    <label for="marriedOne">متزوج من واحدة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherStatus" value="متزوج من أكثر من واحدة" id="marriedMore">
+                                    <label for="marriedMore">متزوج من أكثر من واحدة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherStatus" value="مطلق" id="divorced">
+                                    <label for="divorced">مطلق</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherStatus" value="أرمل" id="widowed">
+                                    <label for="widowed">أرمل</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherStatus" value="متوفي" id="deceased">
+                                    <label for="deceased">متوفي</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" id="fatherDeathAge" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">عمر الطالب عند وفاة الأب</label>
+                            <input type="number" name="ageAtFatherDeath" class="form-input" min="0" max="20">
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">الحالة الاجتماعية للأم</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="motherStatus" value="متزوجة" id="motherMarried" required>
+                                    <label for="motherMarried">متزوجة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="motherStatus" value="مطلقة" id="motherDivorced">
+                                    <label for="motherDivorced">مطلقة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="motherStatus" value="أرملة" id="motherWidowed">
+                                    <label for="motherWidowed">أرملة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="motherStatus" value="متوفية" id="motherDeceased">
+                                    <label for="motherDeceased">متوفية</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" id="motherDeathAge" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">عمر الطالب عند وفاة الأم</label>
+                            <input type="number" name="ageAtMotherDeath" class="form-input" min="0" max="20">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label required">هل الأب يعمل؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherWorks" value="نعم" id="fatherWorksYes" required>
+                                    <label for="fatherWorksYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherWorks" value="لا" id="fatherWorksNo">
+                                    <label for="fatherWorksNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">هل الأم تعمل؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="motherWorks" value="نعم" id="motherWorksYes" required>
+                                    <label for="motherWorksYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="motherWorks" value="لا" id="motherWorksNo">
+                                    <label for="motherWorksNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label">وظيفة الأب</label>
+                            <input type="text" name="fatherJob" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label">وظيفة الأم</label>
+                            <input type="text" name="motherJob" class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">من يعول الطالب (المسؤول عنه وعن خروجه من المدرسة)</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="responsiblePerson" value="الأب" id="respFather" required>
+                                    <label for="respFather">الأب</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="responsiblePerson" value="الأم" id="respMother">
+                                    <label for="respMother">الأم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="responsiblePerson" value="غير ذلك" id="respOther">
+                                    <label for="respOther">غير ذلك</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" id="otherResponsibleDetails" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">اذكر المسؤول عن الطالب</label>
+                            <input type="text" name="otherResponsibleDetails" class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">مع من يعيش الطالب</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="livesWith" value="الأب والأم" id="bothParentsLive" required>
+                                    <label for="bothParentsLive">الأب والأم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="livesWith" value="الأب" id="fatherLive">
+                                    <label for="fatherLive">الأب</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="livesWith" value="الأم" id="motherLive">
+                                    <label for="motherLive">الأم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="livesWith" value="الجد أو الجدة" id="grandparents">
+                                    <label for="grandparents">الجد أو الجدة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="livesWith" value="غير ذلك" id="othersLive">
+                                    <label for="othersLive">غير ذلك</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" id="otherLivingDetails" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">مع من يعيش الطالب (تفاصيل)</label>
+                            <input type="text" name="otherLivingDetails" class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-row four-columns">
+                        <div class="form-group">
+                            <label class="field-label required">عدد أفراد الأسرة مع الوالدين</label>
+                            <input type="number" name="familyMembersCount" class="form-input" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">عدد الإخوة</label>
+                            <input type="number" name="brothersCount" class="form-input" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">عدد الأخوات</label>
+                            <input type="number" name="sistersCount" class="form-input" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">ترتيب الطالب في الأسرة</label>
+                            <input type="number" name="studentOrder" class="form-input" min="1" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label required">المستوى التعليمي للأب</label>
+                            <select name="fatherEducation" class="form-select" required>
+                                <option value="">اختر المستوى التعليمي</option>
+                                <option value="غير متعلم">غير متعلم</option>
+                                <option value="يقرأ ويكتب">يقرأ ويكتب</option>
+                                <option value="ابتدائي">ابتدائي</option>
+                                <option value="متوسط">متوسط</option>
+                                <option value="ثانوي">ثانوي</option>
+                                <option value="بكالوريوس">بكالوريوس</option>
+                                <option value="ماجستير">ماجستير</option>
+                                <option value="دكتوراه">دكتوراه</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label required">المستوى التعليمي للأم</label>
+                            <select name="motherEducation" class="form-select" required>
+                                <option value="">اختر المستوى التعليمي</option>
+                                <option value="غير متعلمة">غير متعلمة</option>
+                                <option value="تقرأ وتكتب">تقرأ وتكتب</option>
+                                <option value="ابتدائي">ابتدائي</option>
+                                <option value="متوسط">متوسط</option>
+                                <option value="ثانوي">ثانوي</option>
+                                <option value="بكالوريوس">بكالوريوس</option>
+                                <option value="ماجستير">ماجستير</option>
+                                <option value="دكتوراه">دكتوراه</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label required">هل الطالب من ذوي الإعاقة؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="studentDisability" value="نعم" id="disabilityYes" required>
+                                    <label for="disabilityYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="studentDisability" value="لا" id="disabilityNo">
+                                    <label for="disabilityNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="field-label required">هل يوجد أحد من أفراد الأسرة من ذوي الإعاقة؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="familyDisability" value="نعم" id="famDisabilityYes" required>
+                                    <label for="famDisabilityYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="familyDisability" value="لا" id="famDisabilityNo">
+                                    <label for="famDisabilityNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="disabilityCountGroup" style="display: none;">
+                            <label class="field-label">عدد المعاقين في الأسرة</label>
+                            <input type="number" name="disabilityCount" class="form-input" min="1">
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label">هل الطالب من أبناء المعلمين أو المعلمات المتوفين؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="teacherChild" value="نعم" id="teacherChildYes">
+                                    <label for="teacherChildYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="teacherChild" value="لا" id="teacherChildNo">
+                                    <label for="teacherChildNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label">هل الأب من شهداء الواجب؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="martyrFather" value="نعم" id="martyrYes">
+                                    <label for="martyrYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="martyrFather" value="لا" id="martyrNo">
+                                    <label for="martyrNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label">حالة الأب الخاصة</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherSpecialStatus" value="طبيعي" id="normalFather">
+                                    <label for="normalFather">طبيعي</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherSpecialStatus" value="هاجر للأسرة" id="abandonedFamily">
+                                    <label for="abandonedFamily">هاجر للأسرة</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherSpecialStatus" value="مسجون ستة أشهر فأكثر" id="imprisoned">
+                                    <label for="imprisoned">مسجون ستة أشهر فأكثر</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherSpecialStatus" value="محروم" id="deprived">
+                                    <label for="deprived">محروم (لا يصرف على الأسرة)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherSpecialStatus" value="مفقود" id="missing">
+                                    <label for="missing">مفقود</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="fatherSpecialStatus" value="مجهول" id="unknown">
+                                    <label for="unknown">مجهول (الطالب مجهول الأبوين)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بيانات إضافية -->
+            <div class="form-section">
+                <h2 class="section-title">بيانات إضافية</h2>
+                <div class="form-container">
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label">هل لدى الطالب أي مواهب؟</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="hasTalents" value="نعم" id="talentsYes">
+                                    <label for="talentsYes">نعم</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="hasTalents" value="لا" id="talentsNo">
+                                    <label for="talentsNo">لا</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full-width" id="talentsDetails" style="display: none;">
+                        <div class="form-group">
+                            <label class="field-label">اذكر المواهب</label>
+                            <textarea name="talentsDetails" class="form-textarea" rows="3" placeholder="مثل: الرسم، كرة القدم، الشعر، الحاسوب..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row full-width">
+                        <div class="form-group">
+                            <label class="field-label">ملاحظات إضافية ترغب في ذكرها</label>
+                            <textarea name="additionalNotes" class="form-textarea" rows="4" placeholder="أي معلومات إضافية مهمة عن الطالب..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Section -->
             <div class="submit-section">
-                <button type="submit" class="submit-button">إرسال البيانات</button>
-            </div>
-            
-            <div id="successMessage" class="message success-message">
-                <strong></strong>
-                <p id="successDetails"></p>
-            </div>
-            <div id="errorMessage" class="message error-message">
-                <strong></strong>
-                <p id="errorDetails"></p>
-            </div>
+                <div class="form-container">
+                    <div style="background: rgba(13, 92, 13, 0.1); border: 2px solid #0d5c0d; border-radius: 15px; padding: 20px; margin-bottom: 30px; text-align: center;">
+                        <p style="color: #0d5c0d; font-weight: 600; font-size: 16px; margin: 0;">
+                            أقر بأن المعلومات التي تم تعبئتها صحيحة وتحت مسؤوليتي
+                        </p>
+                    </div>
+                    <button type="submit" class="submit-button" id="submitStudentData">
+                        حفظ بيانات الطالب
+                    </button>
+                    <button type="reset" class="submit-button secondary" onclick="resetForm()">
+                        مسح البيانات
+                    </button>
+                </div>
 
+                <div class="success-message message" id="successMessage">
+                    <strong>تم حفظ بيانات الطالب بنجاح!</strong><br>
+                    <span id="successDetails">تم إضافة الطالب إلى قاعدة البيانات.</span>
+                </div>
+
+                <div class="error-message message" id="errorMessage">
+                    <strong>حدث خطأ!</strong><br>
+                    <span id="errorDetails">يرجى المحاولة مرة أخرى.</span>
+                </div>
+            </div>
         </form>
-    </div>
 
-    <div class="footer">
-        <div class="footer-main">منصة جمع بيانات الطلاب - متوسطة المنذر بن عمرو الأنصاري</div>
-        <div class="developer-credit">
-            © 2025 جميع الحقوق محفوظة
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-main">
+                © 1447هـ - متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي
+            </div>
+            <div class="developer-credit">
+                Design & Development by Nawaf Alsubhi 2025
+            </div>
         </div>
     </div>
 
+    <!-- Firebase Scripts -->
     <script type="module">
         // Firebase Configuration
         const firebaseConfig = {
@@ -865,103 +1303,305 @@
             measurementId: "G-BVP04DLPM9"
         };
 
-        // Import Firebase
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-        import { getFirestore, collection, addDoc, getDocs, doc, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        let app, db;
+        let isFirebaseReady = false;
 
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Global variable (not strictly needed here but kept for consistency)
-        let studentsData = [];
-
-        // Firebase Functions
-        async function saveStudentToFirebase(studentData) {
+        async function initializeFirebase() {
             try {
-                // Check if a student with the same ID already exists to prevent duplicates
-                const q = query(collection(db, 'students_data'), where('nationalId', '==', studentData.nationalId));
-                const querySnapshot = await getDocs(q);
-                if (!querySnapshot.empty) {
-                    return { success: false, error: 'الطالب مسجل مسبقًا برقم الهوية هذا.' };
-                }
-
-                const docRef = await addDoc(collection(db, 'students_data'), {
-                    ...studentData,
-                    timestamp: serverTimestamp(),
-                    createdAt: new Date().toISOString()
-                });
-                return { success: true, id: docRef.id };
+                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+                const { getFirestore, collection, addDoc, getDocs, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+                
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                
+                // Test connection
+                await getDocs(collection(db, 'students_data'));
+                isFirebaseReady = true;
+                updateConnectionStatus(true);
+                
+                console.log('✅ Firebase تم تهيئته بنجاح');
+                return { success: true };
             } catch (error) {
-                console.error('Error saving student data:', error);
+                console.error('❌ خطأ في تهيئة Firebase:', error);
+                updateConnectionStatus(false, 'خطأ في الاتصال');
                 return { success: false, error: error.message };
             }
         }
 
-        // Form validation and submission
+        // Connection status management
+        function updateConnectionStatus(connected, message = '') {
+            const statusElement = document.getElementById('connectionStatus');
+            if (connected) {
+                statusElement.className = 'connection-status';
+                statusElement.innerHTML = '✅ متصل بقاعدة البيانات' + (message ? ' - ' + message : '');
+            } else {
+                statusElement.className = 'connection-status disconnected';
+                statusElement.innerHTML = '❌ غير متصل' + (message ? ' - ' + message : '');
+            }
+        }
+
+        // Save student to Firebase
+        async function saveStudentToFirebase(studentData) {
+            if (!isFirebaseReady) {
+                throw new Error('قاعدة البيانات غير جاهزة');
+            }
+
+            try {
+                const { addDoc, collection, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+                
+                console.log('🔄 جاري حفظ البيانات...', studentData);
+                
+                const docRef = await addDoc(collection(db, 'students_data'), {
+                    ...studentData,
+                    timestamp: serverTimestamp(),
+                    createdAt: new Date().toISOString(),
+                    submittedAt: new Date().toLocaleString('ar-SA'),
+                    formVersion: "2.0"
+                });
+                
+                console.log('✅ تم الحفظ بنجاح. ID:', docRef.id);
+                return { success: true, id: docRef.id };
+            } catch (error) {
+                console.error('❌ خطأ في الحفظ:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Check for duplicate ID
+        async function checkForDuplicateId(nationalId) {
+            if (!isFirebaseReady) return false;
+            
+            try {
+                const { getDocs, collection, query, where } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+                const q = query(collection(db, 'students_data'), where("nationalId", "==", nationalId));
+                const querySnapshot = await getDocs(q);
+                return !querySnapshot.empty;
+            } catch (error) {
+                console.error('خطأ في فحص التكرار:', error);
+                return false;
+            }
+        }
+
+        // Form submission handler
         document.getElementById('studentDataForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const formData = new FormData(this);
-            const studentData = {};
+            const submitButton = document.getElementById('submitStudentData');
+            const originalText = submitButton.innerHTML;
             
-            // Convert FormData to object
-            for (let [key, value] of formData.entries()) {
-                studentData[key] = value;
-            }
-            
-            // Validate required fields
-            const requiredFields = ['studentName', 'nationality', 'grade', 'section', 'age', 'nationalId', 'guardianName', 'guardianPhone'];
-            const missingFields = requiredFields.filter(field => !studentData[field]);
-            
-            if (missingFields.length > 0) {
-                showMessage('error', 'حقول مطلوبة مفقودة', 'يرجى ملء جميع الحقول المطلوبة المميزة بعلامة *');
-                return;
-            }
-            
-            // Validate national ID
-            if (!/^[0-9]{10}$/.test(studentData.nationalId)) {
-                showMessage('error', 'رقم هوية غير صحيح', 'يرجى إدخال رقم هوية صحيح (10 أرقام)');
-                return;
-            }
-            
-            // Validate phone numbers
-            if (!/^05[0-9]{8}$/.test(studentData.guardianPhone)) {
-                showMessage('error', 'رقم جوال غير صحيح', 'يرجى إدخال رقم جوال صحيح يبدأ بـ 05');
-                return;
-            }
-            
-            // Call the Firebase function to save data
-            const saveResult = await saveStudentToFirebase(studentData);
-            if (saveResult.success) {
-                showMessage('success', 'تم حفظ بيانات الطالب بنجاح!', `تم تسجيل الطالب: ${studentData.studentName}\nرقم الهوية: ${studentData.nationalId}`);
-                // Reset form
-                this.reset();
-            } else {
-                showMessage('error', 'حدث خطأ', saveResult.error);
+            try {
+                // Show loading state
+                submitButton.innerHTML = 'جاري الحفظ...';
+                submitButton.classList.add('loading');
+                submitButton.disabled = true;
+                
+                // Check Firebase connection
+                if (!isFirebaseReady) {
+                    const initResult = await initializeFirebase();
+                    if (!initResult.success) {
+                        throw new Error('لا يمكن الاتصال بقاعدة البيانات');
+                    }
+                }
+                
+                // Get form data
+                const formData = new FormData(this);
+                const studentData = {};
+                
+                for (let [key, value] of formData.entries()) {
+                    studentData[key] = value.trim();
+                }
+                
+                console.log('📝 بيانات النموذج:', studentData);
+                
+                // Validate required fields
+                const requiredFields = [
+                    'studentName', 'nationality', 'grade', 'section', 'age', 'nationalId', 
+                    'guardianName', 'guardianPhone', 'economicLevel', 'incomeSource',
+                    'fatherStatus', 'motherStatus', 'fatherEducation', 'motherEducation'
+                ];
+                
+                const missingFields = requiredFields.filter(field => !studentData[field]);
+                
+                if (missingFields.length > 0) {
+                    throw new Error('يرجى ملء جميع الحقول المطلوبة المميزة بعلامة *');
+                }
+                
+                // Validate national ID
+                if (!/^[0-9]{10}$/.test(studentData.nationalId)) {
+                    throw new Error('رقم الهوية يجب أن يكون 10 أرقام بالضبط');
+                }
+                
+                // Validate phone number
+                if (!/^05[0-9]{8}$/.test(studentData.guardianPhone)) {
+                    throw new Error('رقم جوال ولي الأمر يجب أن يبدأ بـ 05 ويكون 10 أرقام');
+                }
+                
+                // Check for duplicate
+                const isDuplicate = await checkForDuplicateId(studentData.nationalId);
+                if (isDuplicate) {
+                    throw new Error('يوجد طالب مسجل بنفس رقم الهوية مسبقاً');
+                }
+                
+                // Save to Firebase
+                const result = await saveStudentToFirebase(studentData);
+                
+                if (result.success) {
+                    showMessage('success', 
+                        'تم حفظ بيانات الطالب بنجاح!', 
+                        `الطالب: ${studentData.studentName}\nرقم الهوية: ${studentData.nationalId}\nالصف: ${studentData.grade} - ${studentData.section}\n\nتم حفظ البيانات في قاعدة البيانات وستظهر في لوحة التحكم`
+                    );
+                    
+                    // Reset form
+                    this.reset();
+                    hideAllConditionalFields();
+                    
+                } else {
+                    throw new Error(result.error || 'فشل في حفظ البيانات');
+                }
+                
+            } catch (error) {
+                console.error('❌ خطأ:', error.message);
+                showMessage('error', 'فشل في حفظ البيانات', error.message);
+            } finally {
+                // Reset button
+                submitButton.innerHTML = originalText;
+                submitButton.classList.remove('loading');
+                submitButton.disabled = false;
             }
         });
 
-        // Show/hide conditional fields
+        // Reset form function
+        window.resetForm = function() {
+            if (confirm('هل أنت متأكد من مسح جميع البيانات المدخلة؟')) {
+                document.getElementById('studentDataForm').reset();
+                hideAllConditionalFields();
+                hideMessages();
+            }
+        }
+
+        // Hide all conditional fields
+        function hideAllConditionalFields() {
+            const conditionalFields = [
+                'psychDetails', 'healthDetails', 'otherIncomeDetails', 'healthCondDetails',
+                'surgeryDetails', 'mentalHealthDetails', 'fatherDeathAge', 'motherDeathAge',
+                'otherResponsibleDetails', 'otherLivingDetails', 'disabilityCountGroup', 'talentsDetails'
+            ];
+            
+            conditionalFields.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+        }
+
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // Setup conditional fields
         function setupConditionalFields() {
-            // Psychological problems details
+            // Psychological problems
             document.querySelectorAll('input[name="psychologicalProblems"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     const details = document.getElementById('psychDetails');
-                    details.style.display = this.value === 'نعم' ? 'block' : 'none';
+                    if (details) details.style.display = this.value === 'نعم' ? 'block' : 'none';
                 });
             });
 
-            // Health problems details
+            // Health problems
             document.querySelectorAll('input[name="healthProblems"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     const details = document.getElementById('healthDetails');
-                    details.style.display = this.value === 'نعم' ? 'block' : 'none';
+                    if (details) details.style.display = this.value === 'نعم' ? 'block' : 'none';
+                });
+            });
+
+            // Income source
+            document.querySelectorAll('input[name="incomeSource"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('otherIncomeDetails');
+                    if (details) details.style.display = this.value === 'غير ذلك' ? 'block' : 'none';
+                });
+            });
+
+            // Health conditions
+            document.querySelectorAll('input[name="healthConditions"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('healthCondDetails');
+                    if (details) details.style.display = this.value === 'نعم' ? 'block' : 'none';
+                });
+            });
+
+            // Surgery details
+            document.querySelectorAll('input[name="surgeries"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('surgeryDetails');
+                    if (details) details.style.display = this.value === 'نعم' ? 'block' : 'none';
+                });
+            });
+
+            // Mental health
+            document.querySelectorAll('input[name="mentalHealth"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('mentalHealthDetails');
+                    if (details) details.style.display = this.value === 'نعم' ? 'block' : 'none';
+                });
+            });
+
+            // Father death age
+            document.querySelectorAll('input[name="fatherStatus"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('fatherDeathAge');
+                    if (details) details.style.display = this.value === 'متوفي' ? 'block' : 'none';
+                });
+            });
+
+            // Mother death age
+            document.querySelectorAll('input[name="motherStatus"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('motherDeathAge');
+                    if (details) details.style.display = this.value === 'متوفية' ? 'block' : 'none';
+                });
+            });
+
+            // Responsible person
+            document.querySelectorAll('input[name="responsiblePerson"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('otherResponsibleDetails');
+                    if (details) details.style.display = this.value === 'غير ذلك' ? 'block' : 'none';
+                });
+            });
+
+            // Lives with
+            document.querySelectorAll('input[name="livesWith"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('otherLivingDetails');
+                    if (details) details.style.display = this.value === 'غير ذلك' ? 'block' : 'none';
+                });
+            });
+
+            // Family disability
+            document.querySelectorAll('input[name="familyDisability"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('disabilityCountGroup');
+                    if (details) details.style.display = this.value === 'نعم' ? 'block' : 'none';
+                });
+            });
+
+            // Talents
+            document.querySelectorAll('input[name="hasTalents"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('talentsDetails');
+                    if (details) details.style.display = this.value === 'نعم' ? 'block' : 'none';
                 });
             });
         }
-        
-        // Phone number formatting
+
+        // Phone formatting
         function setupPhoneFormatting() {
             const phoneFields = ['guardianPhone', 'studentPhone', 'alternativePhone', 'emergencyPhone'];
             
@@ -971,6 +1611,7 @@
                     field.addEventListener('input', function() {
                         let value = this.value.replace(/\D/g, '');
                         
+                        // Auto-add 05 prefix
                         if (value.length > 0 && !value.startsWith('05')) {
                             if (value.startsWith('5')) {
                                 value = '0' + value;
@@ -980,6 +1621,18 @@
                         }
                         
                         this.value = value.substring(0, 10);
+                        
+                        // Visual validation
+                        if (value.length === 10 && value.startsWith('05')) {
+                            this.style.borderColor = '#28a745';
+                            this.style.backgroundColor = '#f8fff8';
+                        } else if (value.length > 0) {
+                            this.style.borderColor = '#ffc107';
+                            this.style.backgroundColor = '#fffdf0';
+                        } else {
+                            this.style.borderColor = '#e1e5e9';
+                            this.style.backgroundColor = '#fafbfc';
+                        }
                     });
                 }
             });
@@ -990,45 +1643,182 @@
             const idField = document.querySelector('input[name="nationalId"]');
             if (idField) {
                 idField.addEventListener('input', function() {
-                    this.value = this.value.replace(/\D/g, '').substring(0, 10);
+                    let value = this.value.replace(/\D/g, '').substring(0, 10);
+                    this.value = value;
+                    
+                    // Visual validation
+                    if (value.length === 10) {
+                        this.style.borderColor = '#28a745';
+                        this.style.backgroundColor = '#f8fff8';
+                    } else if (value.length > 0) {
+                        this.style.borderColor = '#ffc107';
+                        this.style.backgroundColor = '#fffdf0';
+                    } else {
+                        this.style.borderColor = '#e1e5e9';
+                        this.style.backgroundColor = '#fafbfc';
+                    }
                 });
             }
         }
 
         // Show message function
         function showMessage(type, title, message) {
-            const successMsg = document.getElementById('successMessage');
-            const errorMsg = document.getElementById('errorMessage');
+            hideMessages();
             
-            if (type === 'success') {
-                errorMsg.style.display = 'none';
-                successMsg.querySelector('strong').textContent = title;
-                successMsg.querySelector('#successDetails').textContent = message;
-                successMsg.style.display = 'block';
-                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const messageElement = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
+            messageElement.querySelector('strong').textContent = title;
+            messageElement.querySelector(`#${type}Details`).textContent = message;
+            messageElement.style.display = 'block';
+            
+            // Scroll to message
+            setTimeout(() => {
+                messageElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+            
+            // Auto-hide
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, type === 'success' ? 8000 : 10000);
+        }
+
+        // Auto-save functionality (backup)
+        let autoSaveTimeout;
+        function setupAutoSave() {
+            const importantFields = ['studentName', 'nationalId', 'guardianName', 'guardianPhone'];
+            
+            importantFields.forEach(fieldName => {
+                const field = document.querySelector(`[name="${fieldName}"]`);
+                if (field) {
+                    field.addEventListener('input', function() {
+                        clearTimeout(autoSaveTimeout);
+                        autoSaveTimeout = setTimeout(saveFormBackup, 2000);
+                    });
+                }
+            });
+        }
+
+        function saveFormBackup() {
+            try {
+                const formData = new FormData(document.getElementById('studentDataForm'));
+                const data = {};
+                let hasData = false;
                 
-                setTimeout(() => {
-                    successMsg.style.display = 'none';
-                }, 5000);
-            } else {
-                successMsg.style.display = 'none';
-                errorMsg.querySelector('strong').textContent = title;
-                errorMsg.querySelector('#errorDetails').textContent = message;
-                errorMsg.style.display = 'block';
-                errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                for (let [key, value] of formData.entries()) {
+                    if (value.trim()) {
+                        data[key] = value.trim();
+                        hasData = true;
+                    }
+                }
                 
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 5000);
+                if (hasData && data.studentName) {
+                    localStorage.setItem('studentFormBackup', JSON.stringify({
+                        data: data,
+                        timestamp: new Date().toISOString()
+                    }));
+                    console.log('💾 تم حفظ نسخة احتياطية من البيانات');
+                }
+            } catch (error) {
+                console.error('خطأ في الحفظ الاحتياطي:', error);
             }
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        function restoreBackup() {
+            try {
+                const backup = localStorage.getItem('studentFormBackup');
+                if (!backup) return;
+                
+                const { data, timestamp } = JSON.parse(backup);
+                const backupTime = new Date(timestamp);
+                const hoursSince = (new Date() - backupTime) / (1000 * 60 * 60);
+                
+                if (hoursSince < 24 && data.studentName) {
+                    if (confirm(`تم العثور على بيانات محفوظة من ${backupTime.toLocaleString('ar-SA')}\n\nهل تريد استرجاعها؟`)) {
+                        Object.entries(data).forEach(([key, value]) => {
+                            const field = document.querySelector(`[name="${key}"]`);
+                            if (field) {
+                                if (field.type === 'radio') {
+                                    const radio = document.querySelector(`[name="${key}"][value="${value}"]`);
+                                    if (radio) radio.checked = true;
+                                } else {
+                                    field.value = value;
+                                }
+                                
+                                // Trigger change event for conditional fields
+                                field.dispatchEvent(new Event('change'));
+                            }
+                        });
+                        
+                        showMessage('success', 'تم استرجاع البيانات', 'تم استرجاع البيانات المحفوظة بنجاح');
+                    }
+                }
+                
+                localStorage.removeItem('studentFormBackup');
+            } catch (error) {
+                console.error('خطأ في استرجاع النسخة الاحتياطية:', error);
+            }
+        }
+
+        // Form validation helpers
+        function addRealTimeValidation() {
+            // Name validation
+            const nameField = document.querySelector('[name="studentName"]');
+            if (nameField) {
+                nameField.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value.length >= 2) {
+                        this.style.borderColor = '#28a745';
+                        this.style.backgroundColor = '#f8fff8';
+                    } else if (value.length > 0) {
+                        this.style.borderColor = '#ffc107';
+                        this.style.backgroundColor = '#fffdf0';
+                    } else {
+                        this.style.borderColor = '#e1e5e9';
+                        this.style.backgroundColor = '#fafbfc';
+                    }
+                });
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 بدء تهيئة النظام...');
+            
+            updateConnectionStatus(false, 'جاري التهيئة...');
+            
+            // Initialize Firebase
+            await initializeFirebase();
+            
+            // Setup form functionality
             setupConditionalFields();
             setupPhoneFormatting();
             setupIdFormatting();
+            setupAutoSave();
+            addRealTimeValidation();
+            
+            // Check for backup data
+            setTimeout(restoreBackup, 1000);
+            
+            console.log('✅ تم تهيئة النظام بنجاح');
         });
+
+        // Error handling
+        window.addEventListener('error', function(event) {
+            console.error('خطأ في التطبيق:', event.error);
+            updateConnectionStatus(false, 'خطأ في التطبيق');
+        });
+
+        // Network monitoring
+        window.addEventListener('online', async function() {
+            console.log('🌐 تم استعادة الاتصال');
+            await initializeFirebase();
+        });
+
+        window.addEventListener('offline', function() {
+            console.log('📴 انقطع الاتصال');
+            updateConnectionStatus(false, 'لا يوجد اتصال بالإنترنت');
+        });
+
+        console.log('📋 تم تحميل نموذج جمع البيانات');
     </script>
 </body>
 </html>
