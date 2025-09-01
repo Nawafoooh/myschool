@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة التعاميم الإلكترونية</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0f6b47">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="إدارة التعاميم">
+    <meta name="description" content="نظام إدارة التعاميم الإلكترونية - متوسطة المنذر بن عمرو الأنصاري">
+    
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f6b47'/><text y='70' x='50' text-anchor='middle' font-size='60' fill='white'>📋</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f6b47'/><text y='70' x='50' text-anchor='middle' font-size='60' fill='white'>📋</text></svg>">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json,{
+        'name': 'نظام إدارة التعاميم الإلكترونية',
+        'short_name': 'إدارة التعاميم',
+        'description': 'نظام متكامل لإدارة التعاميم والتوقيعات الإلكترونية',
+        'start_url': './',
+        'display': 'standalone',
+        'background_color': '#ffffff',
+        'theme_color': '#0f6b47',
+        'orientation': 'portrait',
+        'icons': [
+            {
+                'src': 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%230f6b47\'/><text y=\'70\' x=\'50\' text-anchor=\'middle\' font-size=\'60\' fill=\'white\'>📋</text></svg>',
+                'sizes': '192x192',
+                'type': 'image/svg+xml'
+            },
+            {
+                'src': 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%230f6b47\'/><text y=\'70\' x=\'50\' text-anchor=\'middle\' font-size=\'60\' fill=\'white\'>📋</text></svg>',
+                'sizes': '512x512',
+                'type': 'image/svg+xml'
+            }
+        ]
+    }">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 50%, #1e4d3b 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-50px) translateY(-50px); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .school-info {
+            margin-bottom: 20px;
+        }
+        
+        .ministry-logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .ministry-title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .school-name {
+            font-size: 20px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin: 10px auto;
+            display: inline-block;
+        }
+        
+        .app-title {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .user-role-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .role-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .role-btn.active {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+        }
+        
+        .role-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        .install-prompt {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .install-prompt.show {
+            display: block;
+        }
+        
+        .install-btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .offline-indicator {
+            background: #ef4444;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .offline-indicator.show {
+            display: block;
+        }
+        
+        .main-content {
+            padding: 0;
+        }
+        
+        .tab-navigation {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: #0f6b47;
+            border-bottom-color: #0f6b47;
+            background: white;
+        }
+        
+        .tab-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Admin Panel Styles */
+        .admin-dashboard {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #0f6b47;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0f6b47;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .circular-form {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1e4d3b;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0f6b47;
+            box-shadow: 0 0 0 3px rgba(15, 107, 71, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: #0f6b47;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background: #1e4d3b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 107, 71, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        /* Teacher Interface Styles */
+        .circular-list {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .circular-item {
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.3s ease;
+        }
+        
+        .circular-item:last-child {
+            border-bottom: none;
+        }
+        
+        .circular-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .circular-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .circular-info h3 {
+            color: #0f6b47;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        
+        .circular-meta {
+            color: #6c757d;
+            font-size: 14px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .signature-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-signed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .circular-details {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .circular-details.show {
+            display: block;
+        }
+        
+        .circular-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .signature-area {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px dashed #0f6b47;
+        }
+        
+        .confirmation-checkboxes {
+            margin: 20px 0;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-left: 12px;
+            transform: scale(1.3);
+        }
+        
+        .signature-canvas {
+            border: 2px solid #0f6b47;
+            border-radius: 8px;
+            background: white;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        
+        .signature-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .text-signature-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #0f6b47;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+            color: #1e4d3b;
+            background: #f8fff9;
+            margin: 15px 0;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .app-container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .ministry-logo {
+                font-size: 36px;
+            }
+            
+            .tab-btn {
+                font-size: 14px;
+                padding: 12px;
+            }
+            
+            .tab-content {
+                padding: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .circular-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .circular-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .signature-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        .footer {
+            background: #1e4d3b;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .creator-info {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="offline-indicator" id="offlineIndicator">
+            📡 لا يوجد اتصال بالإنترنت - التطبيق يعمل في الوضع المحلي
+        </div>
+
+        <div class="install-prompt" id="installPrompt">
+            <h3>🚀 تثبيت التطبيق</h3>
+            <p>يمكنك تثبيت تطبيق إدارة التعاميم على جهازك للوصول السريع إليه</p>
+            <button class="install-btn" id="installBtn">تثبيت التطبيق</button>
+        </div>
+
+        <div class="header">
+            <div class="header-content">
+                <div class="school-info">
+                    <div class="ministry-logo">🇸🇦</div>
+                    <div class="ministry-title">المملكة العربية السعودية - وزارة التعليم</div>
+                    <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
+                    <div class="app-title">📋 نظام إدارة التعاميم الإلكترونية</div>
+                </div>
+                
+                <div class="user-role-selector">
+                    <button class="role-btn active" onclick="switchRole('admin')" id="adminBtn">
+                        👨‍💼 المدير
+                    </button>
+                    <button class="role-btn" onclick="switchRole('teacher')" id="teacherBtn">
+                        👨‍🏫 المعلم
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Admin Interface -->
+            <div id="adminInterface" class="role-interface active">
+                <div class="tab-navigation">
+                    <button class="tab-btn active" onclick="switchTab('dashboard')">📊 لوحة المراقبة</button>
+                    <button class="tab-btn" onclick="switchTab('create-circular')">📝 إنشاء تعميم</button>
+                    <button class="tab-btn" onclick="switchTab('manage-circulars')">📋 إدارة التعاميم</button>
+                </div>
+
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="admin-dashboard">
+                        <h2 style="margin-bottom: 20px; color: #1e4d3b;">📈 إحصائيات النظام</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalCirculars">0</div>
+                                <div class="stat-label">إجمالي التعاميم</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="pendingSignatures">0</div>
+                                <div class="stat-label">التوقيعات المعلقة</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="completedSignatures">0</div>
+                                <div class="stat-label">التوقيعات المكتملة</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalTeachers">15</div>
+                                <div class="stat-label">عدد المعلمين</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="circular-form">
+                        <h3 style="margin-bottom: 15px; color: #1e4d3b;">🎯 إجراءات سريعة</h3>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button class="btn" onclick="switchTab('create-circular')">إنشاء تعميم جديد</button>
+                            <button class="btn btn-secondary" onclick="exportReport()">تصدير التقرير</button>
+                            <button class="btn btn-secondary" onclick="refreshData()">تحديث البيانات</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Circular Tab -->
+                <div id="create-circular" class="tab-content">
+                    <div class="circular-form">
+                        <h2 style="margin-bottom: 20px; color: #1e4d3b;">📝 إنشاء تعميم جديد</h2>
+                        <form id="circularForm">
+                            <div class="form-group">
+                                <label for="circularNumber">رقم التعميم *</label>
+                                <input type="text" id="circularNumber" required placeholder="مثال: 001">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="circularSubject">موضوع التعميم *</label>
+                                <input type="text" id="circularSubject" required placeholder="أدخل موضوع التعميم">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="circularContent">محتوى التعميم *</label>
+                                <textarea id="circularContent" required placeholder="أدخل نص التعميم كاملاً..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="circularPriority">أولوية التعميم</label>
+                                <select id="circularPriority">
+                                    <option value="normal">عادي</option>
+                                    <option value="urgent">عاجل</option>
+                                    <option value="very-urgent">عاجل جداً</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="targetGroup">المستهدفون</label>
+                                <select id="targetGroup">
+                                    <option value="all">جميع المعلمين</option>
+                                    <option value="teachers">المعلمين فقط</option>
+                                    <option value="female-teachers">المعلمات فقط</option>
+                                    <option value="staff">الإداريين</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn">📤 نشر التعميم</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Manage Circulars Tab -->
+                <div id="manage-circulars" class="tab-content">
+                    <div class="circular-form">
+                        <h2 style="margin-bottom: 20px; color: #1e4d3b;">📋 إدارة التعاميم المنشورة</h2>
+                        <div id="circularsManagement">
+                            <p style="text-align: center; color: #6c757d; padding: 40px;">
+                                لا توجد تعاميم منشورة حالياً
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Interface -->
+            <div id="teacherInterface" class="role-interface" style="display: none;">
+                <div class="tab-content active">
+                    <div style="padding: 20px;">
+                        <h2 style="margin-bottom: 20px; color: #1e4d3b;">📋 التعاميم المتاحة للتوقيع</h2>
+                        <div id="teacherCirculars" class="circular-list">
+                            <div style="text-align: center; padding: 60px; color: #6c757d;">
+                                <div style="font-size: 48px; margin-bottom: 20px;">📭</div>
+                                <h3>لا توجد تعاميم متاحة حالياً</h3>
+                                <p>سيتم عرض التعاميم الجديدة هنا عندما يتم نشرها من قِبل الإدارة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>متوسطة المنذر بن عمرو الأنصاري © 2025</p>
+            <p>نظام إدارة التعاميم الإلكترونية</p>
+            <div class="creator-info">
+                <strong>تطوير وتصميم: Nawaf Alsubhi 2025</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 15px; max-width: 500px; text-align: center;">
+            <div style="font-size: 48px; color: #22c55e; margin-bottom: 20px;">✅</div>
+            <h3 style="color: #0f6b47; margin-bottom: 15px;">تم بنجاح!</h3>
+            <p id="modalMessage" style="margin-bottom: 20px; color: #6c757d;"></p>
+            <button class="btn" onclick="closeModal()">موافق</button>
+        </div>
+    </div>
+
+    <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    const CACHE_NAME = 'school-circulars-v1';
+                    const urlsToCache = [
+                        '/',
+                        '/offline.html'
+                    ];
+
+                    self.addEventListener('install', event => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(cache => cache.addAll(urlsToCache))
+                        );
+                    });
+
+                    self.addEventListener('fetch', event => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(response => {
+                                    return response || fetch(event.request);
+                                })
+                                .catch(() => {
+                                    if (event.request.destination === 'document') {
+                                        return caches.match('/offline.html');
+                                    }
+                                })
+                        );
+                    });
+                `;
+
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+
+                navigator.serviceWorker.register(swUrl)
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').classList.add('show');
+        });
+
+        document.getElementById('installBtn').addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        document.getElementById('installPrompt').classList.remove('show');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        // Offline Detection
+        function updateOnlineStatus() {
+            const offlineIndicator = document.getElementById('offlineIndicator');
+            if (navigator.onLine) {
+                offlineIndicator.classList.remove('show');
+            } else {
+                offlineIndicator.classList.add('show');
+            }
+        }
+
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
+
+        // Global Variables
+        let currentRole = 'admin';
+        let currentTab = 'dashboard';
+        let circulars = [];
+        let signatures = [];
+
+        // Load data from localStorage
+        function loadData() {
+            const savedCirculars = localStorage.getItem('circulars');
+            const savedSignatures = localStorage.getItem('signatures');
+            
+            circulars = savedCirculars ? JSON.parse(savedCirculars) : [];
+            signatures = savedSignatures ? JSON.parse(savedSignatures) : [];
+            
+            updateDashboard();
+            renderCircularsManagement();
+            renderTeacherCirculars();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('circulars', JSON.stringify(circulars));
+            localStorage.setItem('signatures', JSON.stringify(signatures));
+        }
+
+        // Role Switching
+        function switchRole(role) {
+            currentRole = role;
+            
+            // Update role buttons
+            document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(role + 'Btn').classList.add('active');
+            
+            // Show/hide interfaces
+            document.querySelectorAll('.role-interface').forEach(interface => {
+                interface.style.display = 'none';
+            });
+            document.getElementById(role + 'Interface').style.display = 'block';
+            
+            // Load appropriate data
+            if (role === 'teacher') {
+                renderTeacherCirculars();
+            } else {
+                updateDashboard();
+            }
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show/hide tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            
+            if (tabName === 'manage-circulars') {
+                renderCircularsManagement();
+            }
+        }
+
+        // Generate unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // Create Circular
+        document.getElementById('circularForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const circular = {
+                id: generateId(),
+                number: document.getElementById('circularNumber').value,
+                subject: document.getElementById('circularSubject').value,
+                content: document.getElementById('circularContent').value,
+                priority: document.getElementById('circularPriority').value,
+                targetGroup: document.getElementById('targetGroup').value,
+                createdAt: new Date().toISOString(),
+                createdBy: 'المدير',
+                status: 'active',
+                signatures: []
+            };
+            
+            circulars.push(circular);
+            saveData();
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            showModal('تم إنشاء التعميم بنجاح!', 'تم نشر التعميم وإرساله إلى جميع المعلمين المستهدفين');
+            
+            // Update displays
+            updateDashboard();
+            renderCircularsManagement();
+            renderTeacherCirculars();
+            
+            // Switch to management tab
+            switchTab('manage-circulars');
+        });
+
+        // Update Dashboard Statistics
+        function updateDashboard() {
+            document.getElementById('totalCirculars').textContent = circulars.length;
+            
+            let totalSignatures = 0;
+            let completedSignatures = 0;
+            
+            circulars.forEach(circular => {
+                totalSignatures += 15; // Assuming 15 teachers
+                completedSignatures += circular.signatures.length;
+            });
+            
+            document.getElementById('pendingSignatures').textContent = totalSignatures - completedSignatures;
+            document.getElementById('completedSignatures').textContent = completedSignatures;
+        }
+
+        // Render Circulars Management
+        function renderCircularsManagement() {
+            const container = document.getElementById('circularsManagement');
+            
+            if (circulars.length === 0) {
+                container.innerHTML = `
+                    <p style="text-align: center; color: #6c757d; padding: 40px;">
+                        لا توجد تعاميم منشورة حالياً<br>
+                        <small>انقر على "إنشاء تعميم جديد" لبدء إنشاء تعميم</small>
+                    </p>
+                `;
+                return;
+            }
+            
+            let html = '';
+            circulars.forEach(circular => {
+                const signatureRate = Math.round((circular.signatures.length / 15) * 100);
+                html += `
+                    <div class="circular-item" style="margin-bottom: 15px; border: 1px solid #e9ecef; border-radius: 8px;">
+                        <div class="circular-header">
+                            <div class="circular-info">
+                                <h3>تعميم رقم ${circular.number}: ${circular.subject}</h3>
+                                <div class="circular-meta">
+                                    <span>📅 ${new Date(circular.createdAt).toLocaleDateString('ar-SA')}</span>
+                                    <span>👥 ${circular.signatures.length}/15 توقيع</span>
+                                    <span>📊 ${signatureRate}%</span>
+                                    <span class="signature-status ${circular.priority === 'urgent' ? 'status-pending' : 'status-signed'}">
+                                        ${circular.priority === 'urgent' ? '🔴 عاجل' : 
+                                          circular.priority === 'very-urgent' ? '🔴 عاجل جداً' : '🟢 عادي'}
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-secondary" onclick="viewCircularDetails('${circular.id}')">
+                                    عرض التفاصيل
+                                </button>
+                                <button class="btn btn-danger" onclick="deleteCircular('${circular.id}')">
+                                    حذف
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-bar" style="background: #f8f9fa; height: 8px; border-radius: 4px; margin: 15px 20px;">
+                            <div style="background: #0f6b47; height: 100%; width: ${signatureRate}%; border-radius: 4px; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Render Teacher Circulars
+        function renderTeacherCirculars() {
+            const container = document.getElementById('teacherCirculars');
+            
+            if (circulars.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: #6c757d;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">📭</div>
+                        <h3>لا توجد تعاميم متاحة حالياً</h3>
+                        <p>سيتم عرض التعاميم الجديدة هنا عندما يتم نشرها من قِبل الإدارة</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            circulars.forEach(circular => {
+                const hasUserSigned = circular.signatures.some(sig => sig.teacherId === getCurrentTeacherId());
+                const statusClass = hasUserSigned ? 'status-signed' : 'status-pending';
+                const statusText = hasUserSigned ? 'تم التوقيع' : 'في انتظار التوقيع';
+                
+                html += `
+                    <div class="circular-item">
+                        <div class="circular-header" onclick="toggleCircularDetails('${circular.id}')">
+                            <div class="circular-info">
+                                <h3>تعميم رقم ${circular.number}: ${circular.subject}</h3>
+                                <div class="circular-meta">
+                                    <span>📅 ${new Date(circular.createdAt).toLocaleDateString('ar-SA')}</span>
+                                    <span>👤 ${circular.createdBy}</span>
+                                    <span class="signature-status ${statusClass}">${statusText}</span>
+                                </div>
+                            </div>
+                            <div style="font-size: 24px;">
+                                ${hasUserSigned ? '✅' : '⏳'}
+                            </div>
+                        </div>
+                        
+                        <div id="details-${circular.id}" class="circular-details">
+                            <div class="circular-content">
+                                <h4 style="color: #0f6b47; margin-bottom: 15px;">محتوى التعميم:</h4>
+                                <p style="line-height: 1.8; white-space: pre-line;">${circular.content}</p>
+                            </div>
+                            
+                            ${!hasUserSigned ? `
+                                <div class="signature-area">
+                                    <h4 style="color: #0f6b47; margin-bottom: 15px;">التوقيع على التعميم</h4>
+                                    
+                                    <div class="confirmation-checkboxes">
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="read-${circular.id}" required>
+                                            <label for="read-${circular.id}">أؤكد أنني اطلعت على التعميم كاملاً ومحتوياته</label>
+                                        </div>
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="understand-${circular.id}" required>
+                                            <label for="understand-${circular.id}">أؤكد أنني فهمت المضمون والتعليمات المطلوبة</label>
+                                        </div>
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="implement-${circular.id}" required>
+                                            <label for="implement-${circular.id}">أؤكد التزامي بتطبيق التعليمات والتوجيهات الواردة</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 15px; justify-content: center; margin: 20px 0;">
+                                        <button class="btn btn-secondary" onclick="showSignatureCanvas('${circular.id}')">
+                                            ✏️ الرسم باليد
+                                        </button>
+                                        <button class="btn btn-secondary" onclick="showTextSignature('${circular.id}')">
+                                            ⌨️ كتابة الاسم
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="canvas-area-${circular.id}" style="display: none; text-align: center;">
+                                        <canvas id="canvas-${circular.id}" class="signature-canvas" width="400" height="150"></canvas>
+                                        <div class="signature-buttons">
+                                            <button class="btn btn-secondary" onclick="clearSignature('${circular.id}')">
+                                                مسح التوقيع
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="text-area-${circular.id}" style="display: none;">
+                                        <input type="text" id="text-signature-${circular.id}" class="text-signature-input" 
+                                               placeholder="اكتب اسمك الكامل هنا...">
+                                    </div>
+                                    
+                                    <button class="btn" onclick="submitSignature('${circular.id}')" 
+                                            style="width: 100%; margin-top: 20px; padding: 15px;">
+                                        ✅ تأكيد التوقيع وإرسال
+                                    </button>
+                                </div>
+                            ` : `
+                                <div class="success-message show">
+                                    <h4>✅ تم التوقيع على هذا التعميم بنجاح</h4>
+                                    <p>شكراً لك على تعاونك والالتزام بالتعليمات</p>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Toggle Circular Details
+        function toggleCircularDetails(circularId) {
+            const details = document.getElementById(`details-${circularId}`);
+            details.classList.toggle('show');
+        }
+
+        // Signature Canvas Functions
+        let currentCanvas = null;
+        let isDrawing = false;
+        let signatureMode = 'none';
+
+        function showSignatureCanvas(circularId) {
+            document.getElementById(`canvas-area-${circularId}`).style.display = 'block';
+            document.getElementById(`text-area-${circularId}`).style.display = 'none';
+            
+            const canvas = document.getElementById(`canvas-${circularId}`);
+            setupCanvas(canvas);
+            currentCanvas = canvas;
+            signatureMode = 'canvas';
+        }
+
+        function showTextSignature(circularId) {
+            document.getElementById(`text-area-${circularId}`).style.display = 'block';
+            document.getElementById(`canvas-area-${circularId}`).style.display = 'none';
+            signatureMode = 'text';
+        }
+
+        function setupCanvas(canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#1e4d3b';
+            
+            // Mouse events
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch events
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = currentCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ctx = currentCanvas.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = currentCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ctx = currentCanvas.getContext('2d');
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            if (!touch) return;
+            
+            const mouseEvent = new MouseEvent(
+                e.type === 'touchstart' ? 'mousedown' : 
+                e.type === 'touchmove' ? 'mousemove' : 'mouseup',
+                {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                }
+            );
+            currentCanvas.dispatchEvent(mouseEvent);
+        }
+
+        function clearSignature(circularId) {
+            const canvas = document.getElementById(`canvas-${circularId}`);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Submit Signature
+        function submitSignature(circularId) {
+            const readCheck = document.getElementById(`read-${circularId}`).checked;
+            const understandCheck = document.getElementById(`understand-${circularId}`).checked;
+            const implementCheck = document.getElementById(`implement-${circularId}`).checked;
+            
+            if (!readCheck || !understandCheck || !implementCheck) {
+                alert('يرجى التأكد من جميع خانات التأكيد قبل التوقيع');
+                return;
+            }
+            
+            let signatureData = null;
+            
+            if (signatureMode === 'canvas') {
+                const canvas = document.getElementById(`canvas-${circularId}`);
+                const ctx = canvas.getContext('2d');
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                
+                // Check if canvas has content
+                if (!imageData.data.some(pixel => pixel !== 0)) {
+                    alert('يرجى إضافة توقيعك أولاً');
+                    return;
+                }
+                
+                signatureData = {
+                    type: 'canvas',
+                    data: canvas.toDataURL('image/png')
+                };
+            } else if (signatureMode === 'text') {
+                const textSignature = document.getElementById(`text-signature-${circularId}`).value.trim();
+                if (!textSignature) {
+                    alert('يرجى كتابة اسمك للتوقيع النصي');
+                    return;
+                }
+                
+                signatureData = {
+                    type: 'text',
+                    text: textSignature
+                };
+            } else {
+                alert('يرجى اختيار طريقة التوقيع أولاً');
+                return;
+            }
+            
+            // Add signature to circular
+            const circular = circulars.find(c => c.id === circularId);
+            if (circular) {
+                const signature = {
+                    teacherId: getCurrentTeacherId(),
+                    teacherName: getCurrentTeacherName(),
+                    signedAt: new Date().toISOString(),
+                    readConfirm: readCheck,
+                    understandConfirm: understandCheck,
+                    implementConfirm: implementCheck,
+                    signature: signatureData
+                };
+                
+                circular.signatures.push(signature);
+                saveData();
+                
+                // Show success message
+                showModal('تم التوقيع بنجاح!', 'شكراً لك على تعاونك والتزامك بالتعليمات');
+                
+                // Update displays
+                renderTeacherCirculars();
+                if (currentRole === 'admin') {
+                    updateDashboard();
+                    renderCircularsManagement();
+                }
+            }
+        }
+
+        // Helper functions
+        function getCurrentTeacherId() {
+            // In a real application, this would come from user authentication
+            return 'TEACHER_001';
+        }
+
+        function getCurrentTeacherName() {
+            // In a real application, this would come from user profile
+            return 'أحمد محمد العلي';
+        }
+
+        function viewCircularDetails(circularId) {
+            const circular = circulars.find(c => c.id === circularId);
+            if (!circular) return;
+            
+            let signaturesList = '';
+            circular.signatures.forEach(sig => {
+                signaturesList += `<li>${sig.teacherName} - ${new Date(sig.signedAt).toLocaleString('ar-SA')}</li>`;
+            });
+            
+            showModal(
+                `تفاصيل التعميم رقم ${circular.number}`,
+                `<div style="text-align: right;">
+                    <p><strong>الموضوع:</strong> ${circular.subject}</p>
+                    <p><strong>تاريخ الإنشاء:</strong> ${new Date(circular.createdAt).toLocaleString('ar-SA')}</p>
+                    <p><strong>المجموعة المستهدفة:</strong> ${circular.targetGroup}</p>
+                    <p><strong>عدد التوقيعات:</strong> ${circular.signatures.length}/15</p>
+                    ${signaturesList ? `<p><strong>المعلمون الذين وقعوا:</strong></p><ul>${signaturesList}</ul>` : ''}
+                </div>`
+            );
+        }
+
+        function deleteCircular(circularId) {
+            if (confirm('هل أنت متأكد من حذف هذا التعميم؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                circulars = circulars.filter(c => c.id !== circularId);
+                saveData();
+                updateDashboard();
+                renderCircularsManagement();
+                renderTeacherCirculars();
+                showModal('تم الحذف بنجاح', 'تم حذف التعميم من النظام');
+            }
+        }
+
+        function exportReport() {
+            const reportData = circulars.map(circular => ({
+                'رقم التعميم': circular.number,
+                'الموضوع': circular.subject,
+                'تاريخ الإنشاء': new Date(circular.createdAt).toLocaleDateString('ar-SA'),
+                'عدد التوقيعات': circular.signatures.length,
+                'نسبة الإنجاز': Math.round((circular.signatures.length / 15) * 100) + '%'
+            }));
+            
+            const csv = [
+                Object.keys(reportData[0]).join(','),
+                ...reportData.map(row => Object.values(row).join(','))
+            ].join('\n');
+            
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `تقرير_التعاميم_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showModal('تم التصدير بنجاح', 'تم تحميل ملف التقرير على جهازك');
+        }
+
+        function refreshData() {
+            loadData();
+            showModal('تم التحديث بنجاح', 'تم تحديث جميع البيانات من التخزين المحلي');
+        }
+
+        // Modal Functions
+        function showModal(title, message) {
+            const modal = document.getElementById('successModal');
+            const modalMessage = document.getElementById('modalMessage');
+            
+            modal.querySelector('h3').textContent = title;
+            modalMessage.innerHTML = message;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            console.log('تم تحميل نظام إدارة التعاميم الإلكترونية بنجاح');
+            console.log('تطوير وتصميم: Nawaf Alsubhi 2025');
+        });
+
+        console.log('نظام إدارة التعاميم الإلكترونية - PWA جاهز للاستخدام');
