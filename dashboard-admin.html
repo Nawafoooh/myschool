@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة - نظام الموافقات الإلكترونية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f6b47;
+            --secondary-color: #1e4d3b;
+            --accent-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+            --success-color: #27ae60;
+            --light-bg: #f8fffe;
+            --white: #ffffff;
+            --gray-light: #ecf0f1;
+            --gray: #95a5a6;
+            --dark: #2c3e50;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Dubai', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+        }
+
+        .sidebar-header .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin: 5px 15px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: var(--light-bg);
+            transform: translateX(-5px);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-link i {
+            width: 24px;
+            font-size: 18px;
+            margin-left: 15px;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            padding: 30px;
+            background: var(--gray-light);
+            min-height: 100vh;
+        }
+
+        .page-header {
+            background: var(--white);
+            padding: 25px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--primary-color); color: var(--white); }
+        .btn-success { background: var(--success-color); color: var(--white); }
+        .btn-warning { background: var(--warning-color); color: var(--white); }
+        .btn-danger { background: var(--danger-color); color: var(--white); }
+        .btn-info { background: var(--info-color); color: var(--white); }
+        .btn-sm { padding: 8px 16px; font-size: 14px; }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--white);
+        }
+
+        .stat-icon.total { background: linear-gradient(45deg, var(--info-color), #5dade2); }
+        .stat-icon.approved { background: linear-gradient(45deg, var(--success-color), #58d68d); }
+        .stat-icon.pending { background: linear-gradient(45deg, var(--warning-color), #f7dc6f); }
+        .stat-icon.rate { background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .content-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: var(--border-radius);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        th {
+            background: var(--light-bg);
+            font-weight: 600;
+            color: var(--primary-color);
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background: var(--light-bg);
+            transform: scale(1.01);
+            transition: var(--transition);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-approved { background: #d4edda; color: #155724; }
+        .status-pending { background: #fff3cd; color: #856404; }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 12px 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(15, 107, 71, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--white);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: var(--border-radius);
+            max-width: 700px;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 25px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            color: var(--white);
+            font-weight: 600;
+            z-index: 3000;
+            animation: slideDown 0.3s ease;
+        }
+
+        .notification.success { background: var(--success-color); }
+        .notification.error { background: var(--danger-color); }
+        .notification.info { background: var(--info-color); }
+
+        @keyframes slideDown {
+            from { transform: translateX(-50%) translateY(-100%); }
+            to { transform: translateX(-50%) translateY(0); }
+        }
+
+        .footer {
+            background: var(--secondary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+
+        .footer .developer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+                padding: 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">🇸🇦</div>
+                <h2>نظام الموافقات الإلكترونية</h2>
+                <p>متوسطة المنذر بن عمرو الأنصاري</p>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item">
+                    <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i>
+                        لوحة التحكم
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#approvals" class="nav-link" onclick="showSection('approvals')">
+                        <i class="fas fa-check-circle"></i>
+                        الموافقات
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#export" class="nav-link" onclick="showSection('export')">
+                        <i class="fas fa-download"></i>
+                        التصدير
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="main-content">
+            <div id="dashboard" class="content-section">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        لوحة التحكم الرئيسية
+                    </h1>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="refreshData()">
+                            <i class="fas fa-sync-alt"></i>
+                            تحديث البيانات
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="totalApprovals">0</div>
+                                <div class="stat-label">إجمالي الموافقات</div>
+                            </div>
+                            <div class="stat-icon total">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="approvedCount">0</div>
+                                <div class="stat-label">تم الموافقة</div>
+                            </div>
+                            <div class="stat-icon approved">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="pendingCount">0</div>
+                                <div class="stat-label">في الانتظار</div>
+                            </div>
+                            <div class="stat-icon pending">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="approvalRate">0%</div>
+                                <div class="stat-label">معدل الموافقة</div>
+                            </div>
+                            <div class="stat-icon rate">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">أحدث الموافقات</h3>
+                        <button class="btn btn-info btn-sm" onclick="showSection('approvals')">
+                            عرض الكل
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="loading" id="dashboardLoading">
+                            <div class="loading-spinner"></div>
+                            <p>جاري تحميل البيانات...</p>
+                        </div>
+                        <div class="table-container" id="recentApprovalsTable" style="display: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>اسم المعلم</th>
+                                        <th>تاريخ الموافقة</th>
+                                        <th>الحالة</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentApprovalsBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="empty-state" id="dashboardEmpty" style="display: none;">
+                            <i class="fas fa-inbox"></i>
+                            <h3>لا توجد موافقات حتى الآن</h3>
+                            <p>ستظهر الموافقات هنا عند قيام المعلمين بالموافقة على التعاميم</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="approvals" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-check-circle"></i>
+                        إدارة الموافقات
+                    </h1>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="exportApprovals()">
+                            <i class="fas fa-download"></i>
+                            تصدير Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">قائمة الموافقات</h3>
+                        <div class="search-container">
+                            <input type="text" id="searchInput" class="search-input" placeholder="البحث عن معلم...">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="loading" id="approvalsLoading">
+                            <div class="loading-spinner"></div>
+                            <p>جاري تحميل الموافقات...</p>
+                        </div>
+                        <div class="table-container" id="approvalsTable" style="display: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>اسم المعلم</th>
+                                        <th>تاريخ الموافقة</th>
+                                        <th>الوقت</th>
+                                        <th>رقم المرجع</th>
+                                        <th>الحالة</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="approvalsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="empty-state" id="approvalsEmpty" style="display: none;">
+                            <i class="fas fa-clipboard-check"></i>
+                            <h3>لا توجد موافقات مسجلة</h3>
+                            <p>عندما يقوم المعلمون بالموافقة على التعاميم ستظهر هنا</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="export" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-download"></i>
+                        تصدير البيانات
+                    </h1>
+                </div>
+                <div class="content-card">
+                    <div class="card-body">
+                        <div style="text-align: center; padding: 40px;">
+                            <i class="fas fa-file-excel" style="font-size: 64px; color: var(--success-color); margin-bottom: 20px;"></i>
+                            <h3 style="margin-bottom: 20px;">تصدير بيانات الموافقات</h3>
+                            <p style="margin-bottom: 30px; color: var(--gray);">يمكنك تصدير جميع بيانات الموافقات إلى ملف Excel</p>
+                            <button class="btn btn-success" onclick="exportAllData()" style="font-size: 18px; padding: 15px 30px;">
+                                <i class="fas fa-download"></i>
+                                تصدير جميع البيانات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تفاصيل الموافقة</h3>
+                <button class="close" onclick="hideModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>متوسطة المنذر بن عمرو الأنصاري &copy; 2025</p>
+        <div class="developer">
+            Design & Development: Nawaf Alsubhi 2025
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase Configuration مدمج
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMkhB9tjAnWHBJo3pa7LHRGTfjLRg0yB4",
+            authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
+            projectId: "nawafalsubhi3-f4abf",
+            storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
+            messagingSenderId: "409217413356",
+            appId: "1:409217413356:web:d1e0dd6f584c66255875c9",
+            measurementId: "G-BVP04DLPM9"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Global variables
+        let allApprovals = [];
+        let currentSection = 'dashboard';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('تحميل نظام الإدارة...');
+            loadData();
+            startRealtimeListener();
+        });
+
+        // Show/Hide sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.style.display = 'none');
+
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.style.display = 'block';
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+            
+            currentSection = sectionId;
+
+            switch(sectionId) {
+                case 'dashboard':
+                    updateDashboard();
+                    break;
+                case 'approvals':
+                    loadApprovalsTable();
+                    break;
+            }
+        }
+
+        // Load data from Firebase
+        async function loadData() {
+            showLoading('dashboard', true);
+            showLoading('approvals', true);
+            
+            try {
+                const querySnapshot = await db.collection('teacher_approvals')
+                    .orderBy('createdAt', 'desc').get();
+                allApprovals = [];
+                
+                querySnapshot.forEach((doc) => {
+                    allApprovals.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                console.log(`تم تحميل ${allApprovals.length} موافقة`);
+                updateStats();
+                updateDashboard();
+                
+                if (currentSection === 'approvals') {
+                    loadApprovalsTable();
+                }
+                
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                showNotification('خطأ في تحميل البيانات: ' + error.message, 'error');
+            } finally {
+                showLoading('dashboard', false);
+                showLoading('approvals', false);
+            }
+        }
+
+        // Show/Hide loading
+        function showLoading(section, show) {
+            const loadingElement = document.getElementById(section + 'Loading');
+            const tableElement = document.getElementById(section === 'dashboard' ? 'recentApprovalsTable' : 'approvalsTable');
+            const emptyElement = document.getElementById(section + 'Empty');
+            
+            if (loadingElement) {
+                loadingElement.style.display = show ? 'block' : 'none';
+            }
+            
+            if (!show) {
+                if (tableElement) {
+                    tableElement.style.display = allApprovals.length > 0 ? 'block' : 'none';
+                }
+                if (emptyElement) {
+                    emptyElement.style.display = allApprovals.length === 0 ? 'block' : 'none';
+                }
+            } else {
+                if (tableElement) tableElement.style.display = 'none';
+                if (emptyElement) emptyElement.style.display = 'none';
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = allApprovals.length;
+            const approved = allApprovals.filter(approval => approval.agreed).length;
+            const pending = total - approved;
+            const approvalRate = total > 0 ? Math.round((approved / total) * 100) : 0;
+            
+            animateNumber('totalApprovals', total);
+            animateNumber('approvedCount', approved);
+            animateNumber('pendingCount', pending);
+            animateNumber('approvalRate', approvalRate, '%');
+        }
+
+        // Animate numbers
+        function animateNumber(elementId, targetValue, suffix = '') {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const currentValue = parseInt(element.textContent) || 0;
+            const increment = Math.max(1, Math.floor(Math.abs(targetValue - currentValue) / 20));
+            
+            if (currentValue < targetValue) {
+                const newValue = Math.min(currentValue + increment, targetValue);
+                element.textContent = newValue + suffix;
+                if (newValue < targetValue) {
+                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
+                }
+            }
+        }
+
+        // Update dashboard
+        function updateDashboard() {
+            const tbody = document.getElementById('recentApprovalsBody');
+            if (!tbody || allApprovals.length === 0) return;
+
+            const recent = allApprovals.slice(0, 5);
+            let tableHTML = '';
+
+            recent.forEach((approval) => {
+                const statusClass = approval.agreed ? 'status-approved' : 'status-pending';
+                const statusText = approval.agreed ? 'تمت الموافقة' : 'في الانتظار';
+                
+                const formattedDate = approval.arabicDate || 'غير محدد';
+
+                tableHTML += `
+                    <tr>
+                        <td><strong>${approval.teacherName || 'غير محدد'}</strong></td>
+                        <td>${formattedDate}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <button class="btn btn-info btn-sm" onclick="viewApprovalDetails('${approval.id}')">
+                                <i class="fas fa-eye"></i>
+                                عرض
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = tableHTML;
+        }
+
+        // Load approvals table
+        function loadApprovalsTable() {
+            const tbody = document.getElementById('approvalsTableBody');
+            if (!tbody || allApprovals.length === 0) return;
+
+            let tableHTML = '';
+            allApprovals.forEach((approval, index) => {
+                const statusClass = approval.agreed ? 'status-approved' : 'status-pending';
+                const statusText = approval.agreed ? 'تمت الموافقة' : 'في الانتظار';
+                
+                const formattedDate = approval.arabicDate || 'غير محدد';
+                const formattedTime = approval.arabicTime || 'غير محدد';
+
+                tableHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${approval.teacherName}</strong></td>
+                        <td>${formattedDate}</td>
+                        <td>${formattedTime}</td>
+                        <td><code>${approval.referenceNumber || 'غير متوفر'}</code></td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn btn-info btn-sm" onclick="viewApprovalDetails('${approval.id}')" title="عرض التفاصيل">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteApproval('${approval.id}')" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = tableHTML;
+        }
+
+        // View approval details
+        function viewApprovalDetails(approvalId) {
+            const approval = allApprovals.find(a => a.id === approvalId);
+            if (!approval) return;
+
+            const modalBody = document.getElementById('modalBody');
+            const detailsHTML = `
+                <div style="line-height: 1.8;">
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: var(--primary-color);">اسم المعلم:</strong>
+                        <span>${approval.teacherName}</span>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: var(--primary-color);">التاريخ:</strong>
+                        <span>${approval.arabicDate || 'غير محدد'}</span>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: var(--primary-color);">الوقت:</strong>
+                        <span>${approval.arabicTime || 'غير محدد'}</span>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: var(--primary-color);">رقم المرجع:</strong>
+                        <code>${approval.referenceNumber || 'غير متوفر'}</code>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: var(--primary-color);">حالة الموافقة:</strong>
+                        <span class="status-badge ${approval.agreed ? 'status-approved' : 'status-pending'}">
+                            ${approval.agreed ? 'تمت الموافقة' : 'في الانتظار'}
+                        </span>
+                    </div>
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="btn btn-danger" onclick="deleteApproval('${approval.id}'); hideModal();">
+                            <i class="fas fa-trash"></i>
+                            حذف هذه الموافقة
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modalBody.innerHTML = detailsHTML;
+            showModal();
+        }
+
+        // Delete approval
+        async function deleteApproval(approvalId) {
+            if (!confirm('هل أنت متأكد من حذف هذه الموافقة؟')) return;
+            
+            try {
+                await db.collection('teacher_approvals').doc(approvalId).delete();
+                showNotification('تم حذف الموافقة بنجاح', 'success');
+                await loadData();
+            } catch (error) {
+                console.error('خطأ في حذف الموافقة:', error);
+                showNotification('خطأ في حذف الموافقة: ' + error.message, 'error');
+            }
+        }
+
+        // Export approvals
+        function exportApprovals() {
+            if (allApprovals.length === 0) {
+                showNotification('لا توجد بيانات للتصدير', 'warning');
+                return;
+            }
+            
+            const headers = ['الرقم', 'اسم المعلم', 'التاريخ', 'الوقت', 'رقم المرجع', 'الحالة'];
+            const csvData = allApprovals.map((approval, index) => [
+                index + 1,
+                approval.teacherName,
+                approval.arabicDate || 'غير محدد',
+                approval.arabicTime || 'غير محدد',
+                approval.referenceNumber || 'غير متوفر',
+                approval.agreed ? 'تمت الموافقة' : 'في الانتظار'
+            ]);
+            
+            const csvContent = [headers, ...csvData]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+            
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `تقرير_الموافقات_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('تم تصدير البيانات بنجاح', 'success');
+        }
+
+        function exportAllData() {
+            exportApprovals();
+        }
+
+        // Refresh data
+        async function refreshData() {
+            showNotification('جاري تحديث البيانات...', 'info');
+            await loadData();
+            showNotification('تم تحديث البيانات بنجاح', 'success');
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#approvalsTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('detailsModal').style.display = 'block';
+        }
+
+        function hideModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailsModal');
+            if (event.target === modal) {
+                hideModal();
+            }
+        }
+
+        // Sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // Show notifications
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 4000);
+        }
+
+        // Real-time listener for new approvals
+        function startRealtimeListener() {
+            db.collection('teacher_approvals')
+                .orderBy('createdAt', 'desc')
+                .onSnapshot((snapshot) => {
+                    const previousCount = allApprovals.length;
+                    allApprovals = [];
+                    
+                    snapshot.forEach((doc) => {
+                        allApprovals.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    
+                    // Update UI
+                    updateStats();
+                    if (currentSection === 'dashboard') {
+                        updateDashboard();
+                    }
+                    if (currentSection === 'approvals') {
+                        loadApprovalsTable();
+                    }
+                    
+                    // Show notification for new approvals
+                    if (allApprovals.length > previousCount && previousCount > 0) {
+                        const newCount = allApprovals.length - previousCount;
+                        showNotification(`تم استلام ${newCount} موافقة جديدة!`, 'success');
+                    }
+                }, (error) => {
+                    console.error('خطأ في الاستماع للتحديثات:', error);
+                });
+        }
+
+        // Add print styles
+        const printStyles = document.createElement('style');
+        printStyles.textContent = `
+            @media print {
+                .sidebar, .menu-toggle, .action-buttons, .modal { display: none !important; }
+                .main-content { margin-right: 0 !important; }
+                .page-header { background: white !important; color: black !important; }
+                .content-card { break-inside: avoid; }
+                body { background: white !important; }
+                .btn { display: none !important; }
+            }
+        `;
+        document.head.appendChild(printStyles);
+
+        console.log('تم تحميل نظام الإدارة المتكامل مع Firebase - Design & Development: Nawaf Alsubhi 2025');
+    </script>
+</body>
+</html>
