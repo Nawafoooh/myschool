@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ù„ÙˆØ­Ø© Ø§Ù„Ø¥Ø¯Ø§Ø±Ø© - Ù†Ø¸Ø§Ù… Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ Ø§Ù„Ù…ØªÙƒØ§Ù…Ù„</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f6b47;
+            --secondary-color: #1e4d3b;
+            --accent-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+            --success-color: #27ae60;
+            --light-bg: #f8fffe;
+            --white: #ffffff;
+            --gray-light: #ecf0f1;
+            --gray: #95a5a6;
+            --dark: #2c3e50;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Dubai', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+        }
+
+        .sidebar-header .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin: 5px 15px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: var(--light-bg);
+            transform: translateX(-5px);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-link i {
+            width: 24px;
+            font-size: 18px;
+            margin-left: 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            padding: 30px;
+            background: var(--gray-light);
+            min-height: 100vh;
+        }
+
+        .page-header {
+            background: var(--white);
+            padding: 25px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--primary-color); color: var(--white); }
+        .btn-success { background: var(--success-color); color: var(--white); }
+        .btn-warning { background: var(--warning-color); color: var(--white); }
+        .btn-danger { background: var(--danger-color); color: var(--white); }
+        .btn-info { background: var(--info-color); color: var(--white); }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--white);
+        }
+
+        .stat-icon.total { background: linear-gradient(45deg, var(--info-color), #5dade2); }
+        .stat-icon.completed { background: linear-gradient(45deg, var(--success-color), #58d68d); }
+        .stat-icon.pending { background: linear-gradient(45deg, var(--warning-color), #f7dc6f); }
+        .stat-icon.rate { background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            border-radius: var(--border-radius);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        th {
+            background: var(--light-bg);
+            font-weight: 600;
+            color: var(--primary-color);
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background: var(--light-bg);
+            transform: scale(1.01);
+            transition: var(--transition);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-completed { background: #d4edda; color: #155724; }
+        .status-pending { background: #fff3cd; color: #856404; }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--white);
+            margin: 3% auto;
+            padding: 0;
+            border-radius: var(--border-radius);
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 25px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(15, 107, 71, 0.1);
+        }
+
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            background: var(--light-bg);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .upload-area:hover .upload-icon {
+            color: var(--white);
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            color: var(--white);
+            font-weight: 600;
+            z-index: 3000;
+            animation: slideDown 0.3s ease;
+        }
+
+        .notification.success { background: var(--success-color); }
+        .notification.error { background: var(--danger-color); }
+        .notification.warning { background: var(--warning-color); }
+        .notification.info { background: var(--info-color); }
+
+        @keyframes slideDown {
+            from { transform: translateX(-50%) translateY(-100%); }
+            to { transform: translateX(-50%) translateY(0); }
+        }
+
+        /* QR Code Container */
+        .qr-container {
+            text-align: center;
+            padding: 30px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .qr-code {
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: inline-block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+                padding: 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        .circular-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .circular-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .circular-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .circular-number {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .circular-date {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .circular-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">ðŸ‡¸ðŸ‡¦</div>
+                <h2>Ù†Ø¸Ø§Ù… Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</h2>
+                <p>Ù…ØªÙˆØ³Ø·Ø© Ø§Ù„Ù…Ù†Ø°Ø± Ø¨Ù† Ø¹Ù…Ø±Ùˆ Ø§Ù„Ø£Ù†ØµØ§Ø±ÙŠ</p>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item">
+                    <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#circulars" class="nav-link" onclick="showSection('circulars')">
+                        <i class="fas fa-file-alt"></i>
+                        Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ØªØ¹Ø§Ù…ÙŠÙ…
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#signatures" class="nav-link" onclick="showSection('signatures')">
+                        <i class="fas fa-signature"></i>
+                        Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#reports" class="nav-link" onclick="showSection('reports')">
+                        <i class="fas fa-chart-bar"></i>
+                        Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#settings" class="nav-link" onclick="showSection('settings')">
+                        <i class="fas fa-cog"></i>
+                        Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#qr-generator" class="nav-link" onclick="showSection('qr-generator')">
+                        <i class="fas fa-qrcode"></i>
+                        Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="main-content">
+            <div id="dashboard" class="content-section">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ… Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©
+                    </h1>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="refreshData()">
+                            <i class="fas fa-sync-alt"></i>
+                            ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª
+                        </button>
+                        <button class="btn btn-success" onclick="showModal('newCircularModal')">
+                            <i class="fas fa-plus"></i>
+                            ØªØ¹Ù…ÙŠÙ… Ø¬Ø¯ÙŠØ¯
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="totalSignatures">0</div>
+                                <div class="stat-label">Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª</div>
+                            </div>
+                            <div class="stat-icon total">
+                                <i class="fas fa-file-signature"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="completedSignatures">0</div>
+                                <div class="stat-label">Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª Ø§Ù„Ù…ÙƒØªÙ…Ù„Ø©</div>
+                            </div>
+                            <div class="stat-icon completed">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="pendingSignatures">0</div>
+                                <div class="stat-label">Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª Ø§Ù„Ù…Ø¹Ù„Ù‚Ø©</div>
+                            </div>
+                            <div class="stat-icon pending">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="completionRate">0%</div>
+                                <div class="stat-label">Ù…Ø¹Ø¯Ù„ Ø§Ù„Ø¥Ù†Ø¬Ø§Ø²</div>
+                            </div>
+                            <div class="stat-icon rate">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Ø£Ø­Ø¯Ø« Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª</h3>
+                        <button class="btn btn-info btn-sm" onclick="showSection('signatures')">
+                            Ø¹Ø±Ø¶ Ø§Ù„ÙƒÙ„
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table id="recentSignaturesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Ø§Ù„Ø§Ø³Ù…</th>
+                                        <th>Ø§Ù„Ù…Ù†ØµØ¨</th>
+                                        <th>ØªØ§Ø±ÙŠØ® Ø§Ù„ØªÙˆÙ‚ÙŠØ¹</th>
+                                        <th>Ø§Ù„Ø­Ø§Ù„Ø©</th>
+                                        <th>Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentSignaturesBody">
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; color: #666; padding: 40px;">
+                                            Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙˆÙ‚ÙŠØ¹Ø§Øª Ø­Ø§Ù„ÙŠØ§Ù‹
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="circulars" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-file-alt"></i>
+                        Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ØªØ¹Ø§Ù…ÙŠÙ…
+                    </h1>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="showModal('newCircularModal')">
+                            <i class="fas fa-plus"></i>
+                            Ø¥Ø¶Ø§ÙØ© ØªØ¹Ù…ÙŠÙ… Ø¬Ø¯ÙŠØ¯
+                        </button>
+                        <button class="btn btn-info" onclick="importCircular()">
+                            <i class="fas fa-upload"></i>
+                            Ø§Ø³ØªÙŠØ±Ø§Ø¯ ØªØ¹Ù…ÙŠÙ…
+                        </button>
+                    </div>
+                </div>
+
+                <div id="circularsList" class="circulars-container">
+                    </div>
+            </div>
+
+            <div id="signatures" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-signature"></i>
+                        Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª
+                    </h1>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="exportSignatures()">
+                            <i class="fas fa-download"></i>
+                            ØªØµØ¯ÙŠØ± Excel
+                        </button>
+                        <button class="btn btn-warning" onclick="printSignatures()">
+                            <i class="fas fa-print"></i>
+                            Ø·Ø¨Ø§Ø¹Ø© Ø§Ù„ØªÙ‚Ø±ÙŠØ±
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª</h3>
+                        <div class="action-buttons">
+                            <input type="text" id="searchInput" placeholder="Ø§Ù„Ø¨Ø­Ø«..." 
+                                   style="padding: 8px 12px; border-radius: 20px; border: 2px solid #fff;">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table id="signaturesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Ù…</th>
+                                        <th>Ø§Ù„Ø§Ø³Ù… Ø§Ù„Ø«Ù„Ø§Ø«ÙŠ</th>
+                                        <th>Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ÙˆØ¸ÙŠÙÙŠ</th>
+                                        <th>Ø§Ù„Ù…Ø³Ù…Ù‰ Ø§Ù„ÙˆØ¸ÙŠÙÙŠ</th>
+                                        <th>Ø§Ù„ØªØ®ØµØµ</th>
+                                        <th>ØªØ§Ø±ÙŠØ® Ø§Ù„ØªÙˆÙ‚ÙŠØ¹</th>
+                                        <th>Ø§Ù„Ø­Ø§Ù„Ø©</th>
+                                        <th>Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="signaturesTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reports" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ± ÙˆØ§Ù„Ø¥Ø­ØµØ§Ø¦ÙŠØ§Øª
+                    </h1>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Ø¥Ø­ØµØ§Ø¦ÙŠØ§Øª Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="signatureChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="qr-generator" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-qrcode"></i>
+                        Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR Ù„Ù„ØªØ·Ø¨ÙŠÙ‚
+                    </h1>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        <div class="qr-container">
+                            <h3>Ø±Ù…Ø² QR Ù„Ù„ÙˆØµÙˆÙ„ Ø¥Ù„Ù‰ ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„Ù…Ø¹Ù„Ù…ÙŠÙ†</h3>
+                            <div class="qr-code" id="qrCode">
+                                </div>
+                            <p>ÙŠÙ…ÙƒÙ† Ù„Ù„Ù…Ø¹Ù„Ù…ÙŠÙ† Ù…Ø³Ø­ Ù‡Ø°Ø§ Ø§Ù„Ø±Ù…Ø² Ù„Ù„ÙˆØµÙˆÙ„ Ø¥Ù„Ù‰ ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</p>
+                            <div class="action-buttons" style="margin-top: 20px;">
+                                <button class="btn btn-primary" onclick="generateQR()">
+                                    <i class="fas fa-qrcode"></i>
+                                    Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø±Ù…Ø²
+                                </button>
+                                <button class="btn btn-success" onclick="downloadQR()">
+                                    <i class="fas fa-download"></i>
+                                    ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø±Ù…Ø²
+                                </button>
+                                <button class="btn btn-info" onclick="printQR()">
+                                    <i class="fas fa-print"></i>
+                                    Ø·Ø¨Ø§Ø¹Ø© Ø§Ù„Ø±Ù…Ø²
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="settings" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-cog"></i>
+                        Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ù†Ø¸Ø§Ù…
+                    </h1>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø¹Ø§Ù…Ø©</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Ø§Ø³Ù… Ø§Ù„Ù…Ø¯Ø±Ø³Ø©</label>
+                            <input type="text" class="form-control" id="schoolName" 
+                                   value="Ù…ØªÙˆØ³Ø·Ø© Ø§Ù„Ù…Ù†Ø°Ø± Ø¨Ù† Ø¹Ù…Ø±Ùˆ Ø§Ù„Ø£Ù†ØµØ§Ø±ÙŠ">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ø±Ù‚Ù… Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ØªØ¹Ù„ÙŠÙ…</label>
+                            <input type="text" class="form-control" id="educationId" value="001">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ù…Ø¯Ø±Ø³Ø©</label>
+                            <textarea class="form-control textarea" id="schoolAddress">Ø§Ù„Ù…Ù…Ù„ÙƒØ© Ø§Ù„Ø¹Ø±Ø¨ÙŠØ© Ø§Ù„Ø³Ø¹ÙˆØ¯ÙŠØ© - Ø§Ù„Ù…Ù†Ø·Ù‚Ø© Ø§Ù„Ø´Ø±Ù‚ÙŠØ©</textarea>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="saveSettings()">
+                                <i class="fas fa-save"></i>
+                                Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="background: var(--secondary-color); color: var(--white); text-align: center; padding: 25px; margin-top: 40px;">
+        <p style="margin: 5px 0; opacity: 0.9; font-size: 16px;">Ù…ØªÙˆØ³Ø·Ø© Ø§Ù„Ù…Ù†Ø°Ø± Ø¨Ù† Ø¹Ù…Ø±Ùˆ Ø§Ù„Ø£Ù†ØµØ§Ø±ÙŠ &copy; 2025</p>
+        <p style="margin: 5px 0; opacity: 0.9; font-size: 14px;">Ù†Ø¸Ø§Ù… Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ Ø§Ù„Ù…ØªÙƒØ§Ù…Ù„</p>
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 14px; font-weight: 600;">
+            ØªÙ†ÙÙŠØ° ÙˆØªØµÙ…ÙŠÙ…: Nawaf Alsubhi
+        </div>
+    </div>
+
+    <div id="newCircularModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Ø¥Ø¶Ø§ÙØ© ØªØ¹Ù…ÙŠÙ… Ø¬Ø¯ÙŠØ¯</h3>
+                <button class="close" onclick="hideModal('newCircularModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="newCircularForm">
+                    <div class="form-group">
+                        <label class="form-label">Ø±Ù‚Ù… Ø§Ù„ØªØ¹Ù…ÙŠÙ… <span style="color: var(--danger-color);">*</span></label>
+                        <input type="text" class="form-control" id="circularNumber" required 
+                               placeholder="Ù…Ø«Ø§Ù„: 001">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ù…ÙˆØ¶ÙˆØ¹ Ø§Ù„ØªØ¹Ù…ÙŠÙ… <span style="color: var(--danger-color);">*</span></label>
+                        <input type="text" class="form-control" id="circularSubject" required 
+                               placeholder="Ø£Ø¯Ø®Ù„ Ù…ÙˆØ¶ÙˆØ¹ Ø§Ù„ØªØ¹Ù…ÙŠÙ…">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ù†Øµ Ø§Ù„ØªØ¹Ù…ÙŠÙ… <span style="color: var(--danger-color);">*</span></label>
+                        <textarea class="form-control textarea" id="circularContent" required 
+                                  placeholder="Ø£Ø¯Ø®Ù„ Ù†Øµ Ø§Ù„ØªØ¹Ù…ÙŠÙ… Ù‡Ù†Ø§..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ØªØ§Ø±ÙŠØ® Ø§Ù„Ø§Ù†ØªÙ‡Ø§Ø¡ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)</label>
+                        <input type="date" class="form-control" id="circularDeadline">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ø£ÙˆÙ„ÙˆÙŠØ© Ø§Ù„ØªØ¹Ù…ÙŠÙ…</label>
+                        <select class="form-control" id="circularPriority">
+                            <option value="normal">Ø¹Ø§Ø¯ÙŠØ©</option>
+                            <option value="urgent">Ø¹Ø§Ø¬Ù„Ø©</option>
+                            <option value="very-urgent">Ø¹Ø§Ø¬Ù„Ø© Ø¬Ø¯Ø§Ù‹</option>
+                        </select>
+                    </div>
+                    <div class="action-buttons" style="justify-content: flex-start;">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            Ø­ÙØ¸ Ø§Ù„ØªØ¹Ù…ÙŠÙ…
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="hideModal('newCircularModal')">
+                            <i class="fas fa-times"></i>
+                            Ø¥Ù„ØºØ§Ø¡
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="signatureModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">ØªÙØ§ØµÙŠÙ„ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹</h3>
+                <button class="close" onclick="hideModal('signatureModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="signatureDetails">
+                </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    
+    <script>
+        // Ù…ØªØºÙŠØ±Ø§Øª Ø¹Ø§Ù…Ø©
+        let allSignatures = [];
+        let allCirculars = [];
+        let currentSection = 'dashboard';
+
+        // Fix: Ensure the correct section is shown on page load and the correct link is active
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if there is a hash in the URL, otherwise default to 'dashboard'
+            const initialSectionId = window.location.hash ? window.location.hash.substring(1) : 'dashboard';
+            showSection(initialSectionId);
+            
+            // Deactivate all nav links initially to avoid multiple active links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Activate the correct nav link based on the initial section
+            const activeLink = document.querySelector(`.nav-link[href="#${initialSectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            console.log('ØªØ­Ù…ÙŠÙ„ Ù†Ø¸Ø§Ù… Ø§Ù„Ø¥Ø¯Ø§Ø±Ø©...');
+            loadData();
+            generateQR();
+            startAutoRefresh();
+        });
+
+
+        // Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø£Ù‚Ø³Ø§Ù…
+        function showSection(sectionId) {
+            // Ø¥Ø®ÙØ§Ø¡ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø£Ù‚Ø³Ø§Ù…
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Ø¥Ø¸Ù‡Ø§Ø± Ø§Ù„Ù‚Ø³Ù… Ø§Ù„Ù…Ø·Ù„ÙˆØ¨
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø±ÙˆØ§Ø¨Ø· Ø§Ù„Ù†Ø´Ø·Ø©
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            currentSection = sectionId;
+
+            // ØªØ­Ù…ÙŠÙ„ Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù‚Ø³Ù…
+            switch(sectionId) {
+                case 'dashboard':
+                    updateDashboard();
+                    break;
+                case 'signatures':
+                    loadSignaturesTable();
+                    break;
+                case 'circulars':
+                    loadCirculars();
+                    break;
+                case 'reports':
+                    generateReports();
+                    break;
+            }
+        }
+
+        // ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª
+        function loadData() {
+            loadSignatures();
+            loadCircularsFromStorage();
+            updateStats();
+            updateDashboard();
+        }
+
+        function loadSignatures() {
+            allSignatures = [];
+            
+            try {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('signature_')) {
+                        try {
+                            const signature = JSON.parse(localStorage.getItem(key));
+                            if (signature && signature.fullName && signature.employeeId) {
+                                allSignatures.push(signature);
+                            }
+                        } catch (parseError) {
+                            console.error('Ø®Ø·Ø£ ÙÙŠ ØªØ­Ù„ÙŠÙ„ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹:', key, parseError);
+                        }
+                    }
+                }
+                
+                // ØªØ±ØªÙŠØ¨ Ø­Ø³Ø¨ Ø§Ù„ØªØ§Ø±ÙŠØ® (Ø§Ù„Ø£Ø­Ø¯Ø« Ø£ÙˆÙ„Ø§Ù‹)
+                allSignatures.sort((a, b) => {
+                    const dateA = new Date(a.submissionDate || a.timestamp);
+                    const dateB = new Date(b.submissionDate || b.timestamp);
+                    return dateB - dateA;
+                });
+                
+            } catch (error) {
+                console.error('Ø®Ø·Ø£ ÙÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª:', error);
+                showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ ÙÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª', 'error');
+            }
+        }
+
+        function loadCircularsFromStorage() {
+            try {
+                const stored = localStorage.getItem('circulars');
+                allCirculars = stored ? JSON.parse(stored) : [];
+            } catch (error) {
+                console.error('Ø®Ø·Ø£ ÙÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„ØªØ¹Ø§Ù…ÙŠÙ…:', error);
+                allCirculars = [];
+            }
+        }
+
+        // ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¥Ø­ØµØ§Ø¦ÙŠØ§Øª
+        function updateStats() {
+            const total = allSignatures.length;
+            const completed = allSignatures.filter(sig => 
+                sig.readConfirm && sig.understandConfirm && sig.implementConfirm
+            ).length;
+            const pending = total - completed;
+            const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            animateNumber('totalSignatures', total);
+            animateNumber('completedSignatures', completed);
+            animateNumber('pendingSignatures', pending);
+            animateNumber('completionRate', completionRate, '%');
+        }
+
+        function animateNumber(elementId, targetValue, suffix = '') {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const currentValue = parseInt(element.textContent) || 0;
+            const increment = Math.max(1, Math.floor(Math.abs(targetValue - currentValue) / 20));
+            
+            if (currentValue < targetValue) {
+                const newValue = Math.min(currentValue + increment, targetValue);
+                element.textContent = newValue + suffix;
+                if (newValue < targetValue) {
+                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
+                }
+            } else if (currentValue > targetValue) {
+                const newValue = Math.max(currentValue - increment, targetValue);
+                element.textContent = newValue + suffix;
+                if (newValue > targetValue) {
+                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
+                }
+            }
+        }
+
+        // ØªØ­Ø¯ÙŠØ« Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…
+        function updateDashboard() {
+            const tbody = document.getElementById('recentSignaturesBody');
+            if (!tbody) return;
+
+            if (allSignatures.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #666; padding: 40px;">
+                            Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙˆÙ‚ÙŠØ¹Ø§Øª Ø­Ø§Ù„ÙŠØ§Ù‹
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            // Ø£Ø­Ø¯Ø« 5 ØªÙˆÙ‚ÙŠØ¹Ø§Øª
+            const recent = allSignatures.slice(0, 5);
+            let tableHTML = '';
+
+            recent.forEach((sig, index) => {
+                const isComplete = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
+                const statusClass = isComplete ? 'status-completed' : 'status-pending';
+                const statusText = isComplete ? 'Ù…ÙƒØªÙ…Ù„Ø©' : 'Ù…Ø¹Ù„Ù‚Ø©';
+                
+                let formattedDate = 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯';
+                try {
+                    if (sig.timestamp) {
+                        const date = new Date(sig.submissionDate || sig.timestamp);
+                        formattedDate = date.toLocaleDateString('ar-SA');
+                    }
+                } catch (dateError) {
+                    console.warn('Ø®Ø·Ø£ ÙÙŠ ØªÙ†Ø³ÙŠÙ‚ Ø§Ù„ØªØ§Ø±ÙŠØ®:', dateError);
+                }
+
+                tableHTML += `
+                    <tr>
+                        <td><strong>${sig.fullName || 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯'}</strong></td>
+                        <td>${sig.position}</td>
+                        <td>${formattedDate}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <button class="btn btn-info btn-sm" onclick="viewSignatureDetails('${sig.referenceNumber}')">
+                                <i class="fas fa-eye"></i>
+                                Ø¹Ø±Ø¶
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = tableHTML;
+        }
+
+        // ØªØ­Ù…ÙŠÙ„ Ø¬Ø¯ÙˆÙ„ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª
+        function loadSignaturesTable() {
+            const tbody = document.getElementById('signaturesTableBody');
+            if (!tbody) return;
+
+            if (allSignatures.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #666; padding: 40px;">
+                            <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 20px; opacity: 0.3;"></i><br>
+                            Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙˆÙ‚ÙŠØ¹Ø§Øª Ù…Ø³Ø¬Ù„Ø© Ø­Ø§Ù„ÙŠØ§Ù‹
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let tableHTML = '';
+            allSignatures.forEach((sig, index) => {
+                const isComplete = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
+                const statusClass = isComplete ? 'status-completed' : 'status-pending';
+                const statusText = isComplete ? 'Ù…ÙƒØªÙ…Ù„Ø©' : 'Ù…Ø¹Ù„Ù‚Ø©';
+                
+                let formattedDate = 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯';
+                try {
+                    if (sig.timestamp) {
+                        const date = new Date(sig.submissionDate || sig.timestamp);
+                        formattedDate = date.toLocaleDateString('ar-SA');
+                    }
+                } catch (dateError) {
+                    formattedDate = 'ØªØ§Ø±ÙŠØ® ØºÙŠØ± ØµØ­ÙŠØ­';
+                }
+
+                tableHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${sig.fullName}</strong></td>
+                        <td>${sig.employeeId}</td>
+                        <td>${sig.position}</td>
+                        <td>${sig.subject || 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯'}</td>
+                        <td>${formattedDate}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn btn-info btn-sm" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="Ø¹Ø±Ø¶ Ø§Ù„ØªÙØ§ØµÙŠÙ„">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="printSignature('${sig.referenceNumber}')" title="Ø·Ø¨Ø§Ø¹Ø©">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteSignature('${sig.referenceNumber}')" title="Ø­Ø°Ù">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = tableHTML;
+        }
+
+        // Ø¹Ø±Ø¶ ØªÙØ§ØµÙŠÙ„ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹
+        function viewSignatureDetails(referenceNumber) {
+            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
+            if (!signature) return;
+
+            const isComplete = signature.readConfirm && signature.understandConfirm && signature.implementConfirm;
+            
+            const detailsHTML = `
+                <div style="max-height: 70vh; overflow-y: auto;">
+                    <div class="form-group">
+                        <label class="form-label">Ø§Ù„Ø§Ø³Ù… Ø§Ù„Ø«Ù„Ø§Ø«ÙŠ:</label>
+                        <div style="font-weight: bold; color: var(--primary-color);">${signature.fullName}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ÙˆØ¸ÙŠÙÙŠ:</label>
+                        <div>${signature.employeeId}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ø§Ù„Ù…Ø³Ù…Ù‰ Ø§Ù„ÙˆØ¸ÙŠÙÙŠ:</label>
+                        <div>${signature.position}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ø§Ù„ØªØ®ØµØµ/Ø§Ù„Ù…Ø§Ø¯Ø©:</label>
+                        <div>${signature.subject || 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯'}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ø±Ù‚Ù… Ø§Ù„Ø¬ÙˆØ§Ù„:</label>
+                        <div>${signature.phone || 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯'}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ØªØ§Ø±ÙŠØ® Ø§Ù„ØªÙˆÙ‚ÙŠØ¹:</label>
+                        <div>${signature.timestamp}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ø±Ù‚Ù… Ø§Ù„Ù…Ø±Ø¬Ø¹:</label>
+                        <div><code>${signature.referenceNumber}</code></div>
+                    </div>
+                    
+                    <h4 style="color: var(--primary-color); margin: 25px 0 15px;">Ø­Ø§Ù„Ø© Ø§Ù„ØªØ£ÙƒÙŠØ¯Ø§Øª</h4>
+                    <div style="display: grid; gap: 10px;">
+                        <div style="display: flex; align-items: center; padding: 10px; background: var(--light-bg); border-radius: 8px;">
+                            <span style="font-size: 20px; margin-left: 10px;">${signature.readConfirm ? 'âœ…' : 'âŒ'}</span>
+                            <span>Ø§Ø·Ù„Ø¹ Ø¹Ù„Ù‰ Ø§Ù„ØªØ¹Ù…ÙŠÙ… ÙƒØ§Ù…Ù„Ø§Ù‹ ÙˆÙ…Ø­ØªÙˆÙŠØ§ØªÙ‡</span>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 10px; background: var(--light-bg); border-radius: 8px;">
+                            <span style="font-size: 20px; margin-left: 10px;">${signature.understandConfirm ? 'âœ…' : 'âŒ'}</span>
+                            <span>ÙÙ‡Ù… Ø§Ù„Ù…Ø¶Ù…ÙˆÙ† ÙˆØ§Ù„ØªØ¹Ù„ÙŠÙ…Ø§Øª Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø©</span>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 10px; background: var(--light-bg); border-radius: 8px;">
+                            <span style="font-size: 20px; margin-left: 10px;">${signature.implementConfirm ? 'âœ…' : 'âŒ'}</span>
+                            <span>Ø§Ù„ØªØ²Ø§Ù… Ø¨ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„ØªØ¹Ù„ÙŠÙ…Ø§Øª ÙˆØ§Ù„ØªÙˆØ¬ÙŠÙ‡Ø§Øª</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label class="form-label">Ø§Ù„Ø­Ø§Ù„Ø© Ø§Ù„Ø¹Ø§Ù…Ø©:</label>
+                        <span class="status-badge ${isComplete ? 'status-completed' : 'status-pending'}" style="font-size: 16px;">
+                            ${isComplete ? 'Ù…ÙƒØªÙ…Ù„Ø©' : 'Ù…Ø¹Ù„Ù‚Ø©'}
+                        </span>
+                    </div>
+                    
+                    ${signature.signature ? `
+                        <h4 style="color: var(--primary-color); margin: 25px 0 15px;">Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</h4>
+                        <div style="text-align: center; padding: 20px; background: var(--light-bg); border-radius: 12px;">
+                            ${signature.signature.type === 'text' ? 
+                                `<div style="font-size: 28px; font-weight: bold; color: var(--secondary-color); margin: 20px 0;">${signature.signature.text}</div>
+                                 <div style="font-size: 14px; color: #666;">Ù†ÙˆØ¹ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹: ØªÙˆÙ‚ÙŠØ¹ Ù†ØµÙŠ</div>` : 
+                                `<img src="${signature.signature.data}" style="max-width: 100%; height: auto; border: 2px solid var(--gray-light); border-radius: 8px;" alt="Ø§Ù„ØªÙˆÙ‚ÙŠØ¹">
+                                 <div style="font-size: 14px; color: #666; margin-top: 10px;">Ù†ÙˆØ¹ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹: ØªÙˆÙ‚ÙŠØ¹ Ù…Ø±Ø³ÙˆÙ… Ø¨Ø§Ù„ÙŠØ¯</div>`}
+                        </div>
+                    ` : '<div style="text-align: center; color: #666; padding: 20px;">Ù„Ø§ ÙŠÙˆØ¬Ø¯ ØªÙˆÙ‚ÙŠØ¹</div>'}
+                    
+                    <div class="action-buttons" style="margin-top: 30px; justify-content: center;">
+                        <button class="btn btn-primary" onclick="printSignature('${signature.referenceNumber}')">
+                            <i class="fas fa-print"></i>
+                            Ø·Ø¨Ø§Ø¹Ø© Ø§Ù„ØªÙØ§ØµÙŠÙ„
+                        </button>
+                        <button class="btn btn-success" onclick="exportSignature('${signature.referenceNumber}')">
+                            <i class="fas fa-download"></i>
+                            ØªØµØ¯ÙŠØ± PDF
+                        </button>
+                        <button class="btn btn-secondary" onclick="hideModal('signatureModal')">
+                            <i class="fas fa-times"></i>
+                            Ø¥ØºÙ„Ø§Ù‚
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('signatureDetails').innerHTML = detailsHTML;
+            showModal('signatureModal');
+        }
+
+        // Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ù†ÙˆØ§ÙØ° Ø§Ù„Ù…Ù†Ø¨Ø«Ù‚Ø©
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Ø¥ØºÙ„Ø§Ù‚ Ø§Ù„Ù†Ø§ÙØ°Ø© Ø¨Ø§Ù„Ù†Ù‚Ø± Ø®Ø§Ø±Ø¬Ù‡Ø§
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Ø¥Ø¶Ø§ÙØ© ØªØ¹Ù…ÙŠÙ… Ø¬Ø¯ÙŠØ¯
+        document.getElementById('newCircularForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const circularData = {
+                id: Date.now().toString(),
+                number: document.getElementById('circularNumber').value,
+                subject: document.getElementById('circularSubject').value,
+                content: document.getElementById('circularContent').value,
+                deadline: document.getElementById('circularDeadline').value,
+                priority: document.getElementById('circularPriority').value,
+                createdAt: new Date().toISOString(),
+                createdBy: 'Ø§Ù„Ù…Ø¯ÙŠØ±'
+            };
+            
+            allCirculars.push(circularData);
+            
+            try {
+                localStorage.setItem('circulars', JSON.stringify(allCirculars));
+                showNotification('ØªÙ… Ø¥Ø¶Ø§ÙØ© Ø§Ù„ØªØ¹Ù…ÙŠÙ… Ø¨Ù†Ø¬Ø§Ø­', 'success');
+                hideModal('newCircularModal');
+                document.getElementById('newCircularForm').reset();
+                loadCirculars();
+            } catch (error) {
+                console.error('Ø®Ø·Ø£ ÙÙŠ Ø­ÙØ¸ Ø§Ù„ØªØ¹Ù…ÙŠÙ…:', error);
+                showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ ÙÙŠ Ø­ÙØ¸ Ø§Ù„ØªØ¹Ù…ÙŠÙ…', 'error');
+            }
+        });
+
+        // ØªØ­Ù…ÙŠÙ„ Ø§Ù„ØªØ¹Ø§Ù…ÙŠÙ…
+        function loadCirculars() {
+            const container = document.getElementById('circularsList');
+            if (!container) return;
+
+            if (allCirculars.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: #666;">
+                        <i class="fas fa-file-alt" style="font-size: 64px; margin-bottom: 20px; opacity: 0.3;"></i>
+                        <h3>Ù„Ø§ ØªÙˆØ¬Ø¯ ØªØ¹Ø§Ù…ÙŠÙ…</h3>
+                        <p>Ù‚Ù… Ø¨Ø¥Ø¶Ø§ÙØ© Ø£ÙˆÙ„ ØªØ¹Ù…ÙŠÙ… Ù„Ù„Ù…Ø¯Ø±Ø³Ø©</p>
+                        <button class="btn btn-primary" onclick="showModal('newCircularModal')" style="margin-top: 20px;">
+                            <i class="fas fa-plus"></i>
+                            Ø¥Ø¶Ø§ÙØ© ØªØ¹Ù…ÙŠÙ…
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let circularsHTML = '';
+            allCirculars.forEach(circular => {
+                const priorityClass = circular.priority === 'urgent' ? 'warning' : 
+                                   circular.priority === 'very-urgent' ? 'danger' : 'info';
+                const priorityText = circular.priority === 'urgent' ? 'Ø¹Ø§Ø¬Ù„' : 
+                                   circular.priority === 'very-urgent' ? 'Ø¹Ø§Ø¬Ù„ Ø¬Ø¯Ø§Ù‹' : 'Ø¹Ø§Ø¯ÙŠ';
+
+                circularsHTML += `
+                    <div class="circular-item">
+                        <div class="circular-header">
+                            <div>
+                                <span class="circular-number">ØªØ¹Ù…ÙŠÙ… Ø±Ù‚Ù…: ${circular.number}</span>
+                                <span class="btn btn-${priorityClass} btn-sm" style="margin-right: 10px;">${priorityText}</span>
+                            </div>
+                            <div class="circular-date">
+                                ${new Date(circular.createdAt).toLocaleDateString('ar-SA')}
+                            </div>
+                        </div>
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">${circular.subject}</h4>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">${circular.content.substring(0, 200)}${circular.content.length > 200 ? '...' : ''}</p>
+                        ${circular.deadline ? `<p style="color: var(--warning-color); font-weight: 600;"><i class="fas fa-calendar-alt"></i> ØªØ§Ø±ÙŠØ® Ø§Ù„Ø§Ù†ØªÙ‡Ø§Ø¡: ${new Date(circular.deadline).toLocaleDateString('ar-SA')}</p>` : ''}
+                        <div class="circular-actions">
+                            <button class="btn btn-primary btn-sm" onclick="generateCircularQR('${circular.id}')">
+                                <i class="fas fa-qrcode"></i>
+                                Ø¥Ù†Ø´Ø§Ø¡ QR
+                            </button>
+                            <button class="btn btn-info btn-sm" onclick="viewCircular('${circular.id}')">
+                                <i class="fas fa-eye"></i>
+                                Ø¹Ø±Ø¶
+                            </button>
+                            <button class="btn btn-warning btn-sm" onclick="editCircular('${circular.id}')">
+                                <i class="fas fa-edit"></i>
+                                ØªØ¹Ø¯ÙŠÙ„
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteCircular('${circular.id}')">
+                                <i class="fas fa-trash"></i>
+                                Ø­Ø°Ù
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = circularsHTML;
+        }
+
+        // Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR
+        function generateQR() {
+            const qrContainer = document.getElementById('qrCode');
+            if (!qrContainer) return;
+
+            // Ø±Ø§Ø¨Ø· Ø§Ù„ØªØ·Ø¨ÙŠÙ‚ Ù„Ù„Ù…Ø¹Ù„Ù…ÙŠÙ†
+            const teacherAppUrl = window.location.href.replace('index.html', 'teacher.html');
+            
+            // Ù…Ø³Ø­ Ø§Ù„Ù…Ø­ØªÙˆÙ‰ Ø§Ù„Ø³Ø§Ø¨Ù‚
+            qrContainer.innerHTML = '';
+            
+            // Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR Ø¬Ø¯ÙŠØ¯
+            QRCode.toCanvas(qrContainer, teacherAppUrl, {
+                width: 256,
+                margin: 2,
+                color: {
+                    dark: '#0f6b47',
+                    light: '#FFFFFF'
+                }
+            }, function(error) {
+                if (error) {
+                    console.error('Ø®Ø·Ø£ ÙÙŠ Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR:', error);
+                    qrContainer.innerHTML = '<div style="color: red;">Ø®Ø·Ø£ ÙÙŠ Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø±Ù…Ø²</div>';
+                } else {
+                    console.log('ØªÙ… Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR Ø¨Ù†Ø¬Ø§Ø­');
+                }
+            });
+        }
+
+        // ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª
+        function refreshData() {
+            showNotification('Ø¬Ø§Ø±ÙŠ ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª...', 'info');
+            console.log('Ø¨Ø¯Ø¡ ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª...');
+            
+            const previousCount = allSignatures.length;
+            const previousSignatures = [...allSignatures];
+            
+            loadSignatures();
+            updateStats();
+            
+            const newCount = allSignatures.length;
+            console.log(`Ø§Ù„Ø¹Ø¯Ø¯ Ø§Ù„Ø³Ø§Ø¨Ù‚: ${previousCount}, Ø§Ù„Ø¹Ø¯Ø¯ Ø§Ù„Ø­Ø§Ù„ÙŠ: ${newCount}`);
+            
+            // Debug: Ø·Ø¨Ø§Ø¹Ø© Ø£ÙˆÙ„ ØªÙˆÙ‚ÙŠØ¹ Ù„Ù„ØªØ£ÙƒØ¯ Ù…Ù† Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª
+            if (allSignatures.length > 0) {
+                console.log('Ø£ÙˆÙ„ ØªÙˆÙ‚ÙŠØ¹ ÙÙŠ Ø§Ù„Ù‚Ø§Ø¦Ù…Ø©:', allSignatures[0]);
+            }
+            
+            if (newCount > previousCount) {
+                const newSignatures = newCount - previousCount;
+                console.log(`ØªÙ… Ø§Ù„Ø¹Ø«ÙˆØ± Ø¹Ù„Ù‰ ${newSignatures} ØªÙˆÙ‚ÙŠØ¹ Ø¬Ø¯ÙŠØ¯`);
+                showNewSignatureAlert(`ØªÙ… Ø§Ù„Ø¹Ø«ÙˆØ± Ø¹Ù„Ù‰ ${newSignatures} ØªÙˆÙ‚ÙŠØ¹ Ø¬Ø¯ÙŠØ¯!`);
+                
+                // ØªÙ…ÙŠÙŠØ² Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª Ø§Ù„Ø¬Ø¯ÙŠØ¯Ø©
+                const newSigs = allSignatures.filter(sig => 
+                    !previousSignatures.some(prev => prev.referenceNumber === sig.referenceNumber)
+                );
+                newSigs.forEach(sig => {
+                    console.log('ØªÙˆÙ‚ÙŠØ¹ Ø¬Ø¯ÙŠØ¯ Ù…Ù†:', sig.fullName);
+                });
+                
+            } else if (newCount === previousCount) {
+                showAlert('Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙˆÙ‚ÙŠØ¹Ø§Øª Ø¬Ø¯ÙŠØ¯Ø©', 'info');
+            } else {
+                showAlert('ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø¨Ù†Ø¬Ø§Ø­', 'success');
+            }
+            
+            // ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¬Ø¯Ø§ÙˆÙ„ Ø­Ø³Ø¨ Ø§Ù„Ù‚Ø³Ù… Ø§Ù„Ù…Ø¹Ø±ÙˆØ¶
+            if (currentSection === 'dashboard') updateDashboard();
+            if (currentSection === 'signatures') loadSignaturesTable();
+        }
+
+        // ØªØµØ¯ÙŠØ± Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª
+        function exportSignatures() {
+            if (allSignatures.length === 0) {
+                showNotification('Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª Ù„Ù„ØªØµØ¯ÙŠØ±', 'warning');
+                return;
+            }
+            
+            const headers = [
+                'Ø§Ù„Ø§Ø³Ù… Ø§Ù„Ø«Ù„Ø§Ø«ÙŠ', 'Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ÙˆØ¸ÙŠÙÙŠ', 'Ø§Ù„Ù…Ø³Ù…Ù‰ Ø§Ù„ÙˆØ¸ÙŠÙÙŠ', 'Ø§Ù„ØªØ®ØµØµ/Ø§Ù„Ù…Ø§Ø¯Ø©',
+                'Ø±Ù‚Ù… Ø§Ù„Ø¬ÙˆØ§Ù„', 'ØªØ§Ø±ÙŠØ® Ø§Ù„ØªÙˆÙ‚ÙŠØ¹', 'Ø±Ù‚Ù… Ø§Ù„Ù…Ø±Ø¬Ø¹', 'Ø§Ø·Ù„Ø¹ Ø¹Ù„Ù‰ Ø§Ù„ØªØ¹Ù…ÙŠÙ…',
+                'ÙÙ‡Ù… Ø§Ù„Ù…Ø¶Ù…ÙˆÙ†', 'Ø§Ù„ØªØ²Ù… Ø¨Ø§Ù„ØªØ·Ø¨ÙŠÙ‚', 'Ù†ÙˆØ¹ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹', 'Ø§Ù„Ø­Ø§Ù„Ø© Ø§Ù„Ø¹Ø§Ù…Ø©'
+            ];
+            
+            const csvData = allSignatures.map(sig => [
+                sig.fullName, sig.employeeId, sig.position, sig.subject || '',
+                sig.phone || '', sig.timestamp, sig.referenceNumber,
+                sig.readConfirm ? 'Ù†Ø¹Ù…' : 'Ù„Ø§', sig.understandConfirm ? 'Ù†Ø¹Ù…' : 'Ù„Ø§',
+                sig.implementConfirm ? 'Ù†Ø¹Ù…' : 'Ù„Ø§', sig.signature?.type === 'text' ? 'Ù†ØµÙŠ' : 'Ù…Ø±Ø³ÙˆÙ…',
+                (sig.readConfirm && sig.understandConfirm && sig.implementConfirm) ? 'Ù…ÙƒØªÙ…Ù„Ø©' : 'Ù…Ø¹Ù„Ù‚Ø©'
+            ]);
+            
+            const csvContent = [headers, ...csvData]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+            
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `ØªÙ‚Ø±ÙŠØ±_Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('ØªÙ… ØªØµØ¯ÙŠØ± Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø¨Ù†Ø¬Ø§Ø­', 'success');
+        }
+
+        // Ø·Ø¨Ø§Ø¹Ø© Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª
+        function printSignatures() {
+            if (allSignatures.length === 0) {
+                showNotification('Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª Ù„Ù„Ø·Ø¨Ø§Ø¹Ø©', 'warning');
+                return;
+            }
+            
+            window.print();
+        }
+
+        // Ø¹Ø±Ø¶ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª
+        function showNotification(message, type = 'info') {
+            // Ø¥Ù†Ø´Ø§Ø¡ Ø¹Ù†ØµØ± Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            // Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¥Ø´Ø¹Ø§Ø± Ù„Ù„ØµÙØ­Ø©
+            document.body.appendChild(notification);
+            
+            // Ø¥Ø²Ø§Ù„Ø© Ø§Ù„Ø¥Ø´Ø¹Ø§Ø± Ø¨Ø¹Ø¯ 4 Ø«ÙˆØ§Ù†
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 4000);
+        }
+
+        // Ø­Ø°Ù ØªÙˆÙ‚ÙŠØ¹
+        function deleteSignature(referenceNumber) {
+            if (confirm('Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ø§ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ØŸ Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¹Ù† Ù‡Ø°Ø§ Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡.')) {
+                try {
+                    localStorage.removeItem('signature_' + referenceNumber);
+                    loadData();
+                    showNotification('ØªÙ… Ø­Ø°Ù Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø¨Ù†Ø¬Ø§Ø­', 'success');
+                } catch (error) {
+                    console.error('Ø®Ø·Ø£ ÙÙŠ Ø­Ø°Ù Ø§Ù„ØªÙˆÙ‚ÙŠØ¹:', error);
+                    showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ ÙÙŠ Ø­Ø°Ù Ø§Ù„ØªÙˆÙ‚ÙŠØ¹', 'error');
+                }
+            }
+        }
+
+        // Ø·Ø¨Ø§Ø¹Ø© ØªÙˆÙ‚ÙŠØ¹ Ù…Ø­Ø¯Ø¯
+        function printSignature(referenceNumber) {
+            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
+            if (!signature) return;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html dir="rtl">
+                <head>
+                    <title>ØªÙØ§ØµÙŠÙ„ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ - ${signature.fullName}</title>
+                    <style>
+                        body { font-family: Arial; padding: 20px; }
+                        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #0f6b47; padding-bottom: 20px; }
+                        .detail { margin-bottom: 15px; }
+                        .label { font-weight: bold; color: #0f6b47; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h2>ØªÙØ§ØµÙŠÙ„ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</h2>
+                        <h3>Ù…ØªÙˆØ³Ø·Ø© Ø§Ù„Ù…Ù†Ø°Ø± Ø¨Ù† Ø¹Ù…Ø±Ùˆ Ø§Ù„Ø£Ù†ØµØ§Ø±ÙŠ</h3>
+                    </div>
+                    <div class="detail"><span class="label">Ø§Ù„Ø§Ø³Ù…:</span> ${signature.fullName}</div>
+                    <div class="detail"><span class="label">Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ÙˆØ¸ÙŠÙÙŠ:</span> ${signature.employeeId}</div>
+                    <div class="detail"><span class="label">Ø§Ù„Ù…Ù†ØµØ¨:</span> ${signature.position}</div>
+                    <div class="detail"><span class="label">Ø§Ù„ØªØ§Ø±ÙŠØ®:</span> ${signature.timestamp}</div>
+                    <div class="detail"><span class="label">Ø±Ù‚Ù… Ø§Ù„Ù…Ø±Ø¬Ø¹:</span> ${signature.referenceNumber}</div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // ØªØµØ¯ÙŠØ± ØªÙˆÙ‚ÙŠØ¹ ÙˆØ§Ø­Ø¯ ÙƒÙ€ PDF
+        function exportSignature(referenceNumber) {
+            showNotification('Ù…ÙŠØ²Ø© ØªØµØ¯ÙŠØ± PDF Ù‚ÙŠØ¯ Ø§Ù„ØªØ·ÙˆÙŠØ±', 'info');
+        }
+
+        // Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹Ø§Øª
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#signaturesTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø´Ø±ÙŠØ· Ø§Ù„Ø¬Ø§Ù†Ø¨ÙŠ Ù„Ù„Ø¬ÙˆØ§Ù„
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Ø¥ØºÙ„Ø§Ù‚ Ø§Ù„Ø´Ø±ÙŠØ· Ø§Ù„Ø¬Ø§Ù†Ø¨ÙŠ Ø¹Ù†Ø¯ Ø§Ù„Ù†Ù‚Ø± Ø®Ø§Ø±Ø¬Ù‡ ÙÙŠ Ø§Ù„Ø¬ÙˆØ§Ù„
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // ØªØ­Ø¯ÙŠØ« ØªÙ„Ù‚Ø§Ø¦ÙŠ ÙƒÙ„ Ø¯Ù‚ÙŠÙ‚Ø©
+        function startAutoRefresh() {
+            setInterval(() => {
+                const currentCount = allSignatures.length;
+                loadSignatures();
+                
+                if (allSignatures.length > currentCount) {
+                    const newCount = allSignatures.length - currentCount;
+                    showNotification(`ØªÙ… Ø§Ø³ØªÙ„Ø§Ù… ${newCount} ØªÙˆÙ‚ÙŠØ¹ Ø¬Ø¯ÙŠØ¯!`, 'success');
+                    updateStats();
+                    if (currentSection === 'dashboard') updateDashboard();
+                    if (currentSection === 'signatures') loadSignaturesTable();
+                }
+            }, 60000); // ÙƒÙ„ Ø¯Ù‚ÙŠÙ‚Ø©
+        }
+
+        // Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª
+        function saveSettings() {
+            const settings = {
+                schoolName: document.getElementById('schoolName').value,
+                educationId: document.getElementById('educationId').value,
+                schoolAddress: document.getElementById('schoolAddress').value
+            };
+            
+            try {
+                localStorage.setItem('schoolSettings', JSON.stringify(settings));
+                showNotification('ØªÙ… Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø¨Ù†Ø¬Ø§Ø­', 'success');
+            } catch (error) {
+                showNotification('Ø®Ø·Ø£ ÙÙŠ Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª', 'error');
+            }
+        }
+
+        // ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª
+        function loadSettings() {
+            try {
+                const settings = localStorage.getItem('schoolSettings');
+                if (settings) {
+                    const data = JSON.parse(settings);
+                    document.getElementById('schoolName').value = data.schoolName || '';
+                    document.getElementById('educationId').value = data.educationId || '';
+                    document.getElementById('schoolAddress').value = data.schoolAddress || '';
+                }
+            } catch (error) {
+                console.error('Ø®Ø·Ø£ ÙÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª:', error);
+            }
+        }
+
+        // ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø¹Ù†Ø¯ Ø¨Ø¯Ø¡ Ø§Ù„ØªØ´ØºÙŠÙ„
+        window.addEventListener('load', function() {
+            loadSettings();
+        });
+
+        // Ø­Ø°Ù ØªØ¹Ù…ÙŠÙ…
+        function deleteCircular(circularId) {
+            if (confirm('Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ø§ Ø§Ù„ØªØ¹Ù…ÙŠÙ…ØŸ')) {
+                allCirculars = allCirculars.filter(c => c.id !== circularId);
+                try {
+                    localStorage.setItem('circulars', JSON.stringify(allCirculars));
+                    loadCirculars();
+                    showNotification('ØªÙ… Ø­Ø°Ù Ø§Ù„ØªØ¹Ù…ÙŠÙ… Ø¨Ù†Ø¬Ø§Ø­', 'success');
+                } catch (error) {
+                    showNotification('Ø®Ø·Ø£ ÙÙŠ Ø­Ø°Ù Ø§Ù„ØªØ¹Ù…ÙŠÙ…', 'error');
+                }
+            }
+        }
+
+        // Ø¹Ø±Ø¶ ØªØ¹Ù…ÙŠÙ…
+        function viewCircular(circularId) {
+            const circular = allCirculars.find(c => c.id === circularId);
+            if (!circular) return;
+            
+            showNotification('Ø¹Ø±Ø¶ Ø§Ù„ØªØ¹Ù…ÙŠÙ… - Ù…ÙŠØ²Ø© Ù‚ÙŠØ¯ Ø§Ù„ØªØ·ÙˆÙŠØ±', 'info');
+        }
+
+        // ØªØ¹Ø¯ÙŠÙ„ ØªØ¹Ù…ÙŠÙ…
+        function editCircular(circularId) {
+            const circular = allCirculars.find(c => c.id === circularId);
+            if (!circular) return;
+            
+            // Ù…Ù„Ø¡ Ø§Ù„Ù†Ù…ÙˆØ°Ø¬ Ø¨Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø­Ø§Ù„ÙŠØ©
+            document.getElementById('circularNumber').value = circular.number;
+            document.getElementById('circularSubject').value = circular.subject;
+            document.getElementById('circularContent').value = circular.content;
+            document.getElementById('circularDeadline').value = circular.deadline || '';
+            document.getElementById('circularPriority').value = circular.priority;
+            
+            showModal('newCircularModal');
+            
+            // ØªØºÙŠÙŠØ± ÙˆØ¸ÙŠÙØ© Ø§Ù„Ù†Ù…ÙˆØ°Ø¬ Ù„Ù„ØªØ­Ø¯ÙŠØ« Ø¨Ø¯Ù„Ø§Ù‹ Ù…Ù† Ø§Ù„Ø¥Ø¶Ø§ÙØ©
+            const form = document.getElementById('newCircularForm');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                updateCircular(circularId);
+            };
+        }
+
+        // ØªØ­Ø¯ÙŠØ« ØªØ¹Ù…ÙŠÙ…
+        function updateCircular(circularId) {
+            const index = allCirculars.findIndex(c => c.id === circularId);
+            if (index === -1) return;
+            
+            allCirculars[index] = {
+                ...allCirculars[index],
+                number: document.getElementById('circularNumber').value,
+                subject: document.getElementById('circularSubject').value,
+                content: document.getElementById('circularContent').value,
+                deadline: document.getElementById('circularDeadline').value,
+                priority: document.getElementById('circularPriority').value,
+                updatedAt: new Date().toISOString()
+            };
+            
+            try {
+                localStorage.setItem('circulars', JSON.stringify(allCirculars));
+                showNotification('ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„ØªØ¹Ù…ÙŠÙ… Ø¨Ù†Ø¬Ø§Ø­', 'success');
+                hideModal('newCircularModal');
+                loadCirculars();
+                
+                // Ø¥Ø¹Ø§Ø¯Ø© ØªØ¹ÙŠÙŠÙ† Ø§Ù„Ù†Ù…ÙˆØ°Ø¬ Ù„Ù„Ø¥Ø¶Ø§ÙØ©
+                const form = document.getElementById('newCircularForm');
+                form.onsubmit = function(e) {
+                    e.preventDefault();
+                    // Ø§Ù„ÙˆØ¸ÙŠÙØ© Ø§Ù„Ø£ØµÙ„ÙŠØ© Ù„Ù„Ø¥Ø¶Ø§ÙØ©
+                };
+                form.reset();
+            } catch (error) {
+                showNotification('Ø®Ø·Ø£ ÙÙŠ ØªØ­Ø¯ÙŠØ« Ø§Ù„ØªØ¹Ù…ÙŠÙ…', 'error');
+            }
+        }
+
+        // Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR Ù„ØªØ¹Ù…ÙŠÙ… Ù…Ø­Ø¯Ø¯
+        function generateCircularQR(circularId) {
+            const circular = allCirculars.find(c => c.id === circularId);
+            if (!circular) return;
+            
+            const teacherAppUrl = window.location.href.replace('index.html', 'teacher.html') + `?circular=${circularId}`;
+            
+            // Ø¥Ù†Ø´Ø§Ø¡ Ù†Ø§ÙØ°Ø© Ø¬Ø¯ÙŠØ¯Ø© Ù„Ø¹Ø±Ø¶ Ø±Ù…Ø² QR
+            const qrWindow = window.open('', '_blank', 'width=400,height=500');
+            qrWindow.document.write(`
+                <html dir="rtl">
+                <head>
+                    <title>Ø±Ù…Ø² QR - ${circular.subject}</title>
+                    <style>
+                        body { font-family: Arial; text-align: center; padding: 20px; }
+                        .qr-container { margin: 20px 0; }
+                        .info { color: #666; margin: 10px 0; }
+                    </style>
+                </head>
+                <body>
+                    <h2>Ø±Ù…Ø² QR Ù„Ù„ØªØ¹Ù…ÙŠÙ…</h2>
+                    <div class="info">ØªØ¹Ù…ÙŠÙ… Ø±Ù‚Ù…: ${circular.number}</div>
+                    <div class="info">${circular.subject}</div>
+                    <div class="qr-container" id="qrContainer"></div>
+                    <p>ÙŠÙ…ÙƒÙ† Ù„Ù„Ù…Ø¹Ù„Ù…ÙŠÙ† Ù…Ø³Ø­ Ù‡Ø°Ø§ Ø§Ù„Ø±Ù…Ø² Ù„Ù„ÙˆØµÙˆÙ„ Ù„Ù„ØªØ¹Ù…ÙŠÙ…</p>
+                    <button onclick="print()" style="padding: 10px 20px; margin: 10px;">Ø·Ø¨Ø§Ø¹Ø©</button>
+                    <button onclick="window.close()" style="padding: 10px 20px; margin: 10px;">Ø¥ØºÙ„Ø§Ù‚</button>
+                </body>
+                </html>
+            `);
+            
+            // Ø¥Ù†Ø´Ø§Ø¡ Ø±Ù…Ø² QR ÙÙŠ Ø§Ù„Ù†Ø§ÙØ°Ø© Ø§Ù„Ø¬Ø¯ÙŠØ¯Ø©
+            const script = qrWindow.document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js';
+            script.onload = function() {
+                qrWindow.QRCode.toCanvas(qrWindow.document.getElementById('qrContainer'), teacherAppUrl, {
+                    width: 256,
+                    margin: 2,
+                    color: { dark: '#0f6b47', light: '#FFFFFF' }
+                });
+            };
+            qrWindow.document.head.appendChild(script);
+        }
+
+        // ØªØ­Ù…ÙŠÙ„ Ø±Ù…Ø² QR
+        function downloadQR() {
+            const canvas = document.querySelector('#qrCode canvas');
+            if (!canvas) {
+                showNotification('ÙŠØ±Ø¬Ù‰ Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø±Ù…Ø² Ø£ÙˆÙ„Ø§Ù‹', 'warning');
+                return;
+            }
+            
+            const link = document.createElement('a');
+            link.download = 'teacher_app_qr.png';
+            link.href = canvas.toDataURL();
+            link.click();
+            
+            showNotification('ØªÙ… ØªØ­Ù…ÙŠÙ„ Ø±Ù…Ø² QR Ø¨Ù†Ø¬Ø§Ø­', 'success');
+        }
+
+        // Ø·Ø¨Ø§Ø¹Ø© Ø±Ù…Ø² QR
+        function printQR() {
+            const qrContainer = document.getElementById('qrCode');
+            if (!qrContainer) return;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html dir="rtl">
+                <head>
+                    <title>Ø±Ù…Ø² QR - ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„Ù…Ø¹Ù„Ù…ÙŠÙ†</title>
+                    <style>
+                        body { font-family: Arial; text-align: center; padding: 20px; }
+                        .header { margin-bottom: 30px; }
+                        .qr-container { margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h2>Ù†Ø¸Ø§Ù… Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</h2>
+                        <h3>Ù…ØªÙˆØ³Ø·Ø© Ø§Ù„Ù…Ù†Ø°Ø± Ø¨Ù† Ø¹Ù…Ø±Ùˆ Ø§Ù„Ø£Ù†ØµØ§Ø±ÙŠ</h3>
+                    </div>
+                    <div class="qr-container">${qrContainer.innerHTML}</div>
+                    <p>Ø§Ù…Ø³Ø­ Ù‡Ø°Ø§ Ø§Ù„Ø±Ù…Ø² Ù„Ù„ÙˆØµÙˆÙ„ Ø¥Ù„Ù‰ ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</p>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Ø§Ø³ØªÙŠØ±Ø§Ø¯ ØªØ¹Ù…ÙŠÙ…
+        function importCircular() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.txt,.doc,.docx,.pdf';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    showNotification(`ØªÙ… Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„Ù…Ù„Ù: ${file.name}. Ù…ÙŠØ²Ø© Ø§Ù„Ø§Ø³ØªÙŠØ±Ø§Ø¯ Ù‚ÙŠØ¯ Ø§Ù„ØªØ·ÙˆÙŠØ±`, 'info');
+                }
+            };
+            input.click();
+        }
+
+        // Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±
+        function generateReports() {
+            // Ù‡Ø°Ù‡ Ø§Ù„ÙˆØ¸ÙŠÙØ© Ø³ØªØ­ØªÙˆÙŠ Ø¹Ù„Ù‰ Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø±Ø³ÙˆÙ… Ø§Ù„Ø¨ÙŠØ§Ù†ÙŠØ©
+            showNotification('Ù‚Ø³Ù… Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ± Ù‚ÙŠØ¯ Ø§Ù„ØªØ·ÙˆÙŠØ±', 'info');
+        }
+
+        // Ø¥Ø¶Ø§ÙØ© Ø£Ù†Ù…Ø§Ø· CSS Ù„Ù„Ø·Ø¨Ø§Ø¹Ø©
+        const printStyles = document.createElement('style');
+        printStyles.textContent = `
+            @media print {
+                .sidebar, .menu-toggle, .action-buttons { display: none !important; }
+                .main-content { margin-right: 0 !important; }
+                .page-header { background: white !important; color: black !important; }
+                .content-card { break-inside: avoid; }
+                body { background: white !important; }
+            }
+        `;
+        document.head.appendChild(printStyles);
+
+        console.log('ØªÙ… ØªØ­Ù…ÙŠÙ„ Ù†Ø¸Ø§Ù… Ø§Ù„Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ù…ØªÙƒØ§Ù…Ù„ Ø¨Ù†Ø¬Ø§Ø­ - ØªØ·ÙˆÙŠØ±: Nawaf Alsubhi 2025');
+    </script>
+</body>
+</html>
