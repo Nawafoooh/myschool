@@ -311,12 +311,13 @@
         
         <div class="form-content">
             <div class="circular-notice">
-                <h3>إشعار تعميم هام</h3>
+                <h3>إشعار تعميم <span id="circularNumberDisplay"></span></h3>
+                <h4 id="circularTitleDisplay" style="margin-top: 10px; font-weight: normal;"></h4>
                 <p>الاخوة الزملاء يرجى الاطلاع على التعميم والموافقة عليه .</p>
                 <p><strong>نشكركم على تعاونكم المستمر وجهودكم المبذولة في خدمة التعليم.</strong></p>
             </div>
             
-            <form id="teacherForm">
+            <form id="teacherForm" style="display: none;">
                 <div class="form-group">
                     <label for="teacherName">الاسم الثلاثي <span class="required">*</span></label>
                     <input type="text" id="teacherName" name="teacherName" required 
@@ -350,6 +351,12 @@
                 <p><strong>📅 تاريخ ووقت الإرسال:</strong> <span id="submissionTime"></span></p>
                 <p><strong>🔢 رقم المرجع:</strong> <span id="referenceNumber"></span></p>
             </div>
+            
+            <div class="success-message" id="noCircularMessage" style="display: none; background: #ffebee; border-color: #ef5350;">
+                <h3 style="color: #c62828;">لا يوجد تعميم حالي</h3>
+                <p style="color: #b71c1c;">لا يوجد تعميم نشط للموافقة عليه حالياً.</p>
+                <p style="color: #b71c1c; font-weight: bold;">يرجى مراجعة المسؤول.</p>
+            </div>
         </div>
     </div>
     
@@ -360,7 +367,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
     
@@ -379,6 +385,35 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        
+        let currentCircular = null;
+
+        // Load current circular
+        async function loadCircular() {
+            try {
+                const snapshot = await db.collection('circulars').where('isCurrent', '==', true).limit(1).get();
+                if (!snapshot.empty) {
+                    currentCircular = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+                    document.getElementById('circularNumberDisplay').textContent = `رقم ${currentCircular.circularNumber}`;
+                    document.getElementById('circularTitleDisplay').textContent = `بعنوان: ${currentCircular.circularTitle}`;
+                    document.getElementById('teacherForm').style.display = 'block';
+                    document.getElementById('noCircularMessage').style.display = 'none';
+                } else {
+                    document.getElementById('circularNumberDisplay').textContent = 'غير متوفر';
+                    document.getElementById('circularTitleDisplay').textContent = 'لا يوجد تعميم نشط حالياً';
+                    document.getElementById('teacherForm').style.display = 'none';
+                    document.getElementById('noCircularMessage').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل التعميم:', error);
+                document.getElementById('circularNumberDisplay').textContent = 'خطأ';
+                document.getElementById('circularTitleDisplay').textContent = 'خطأ في الاتصال بالخادم';
+                document.getElementById('teacherForm').style.display = 'none';
+                document.getElementById('noCircularMessage').style.display = 'block';
+            }
+        }
+        
+        loadCircular();
 
         // Helper Functions
         function getCurrentDateTime() {
@@ -449,12 +484,21 @@
                 return;
             }
             
+            if (!currentCircular) {
+                 alert('لا يوجد تعميم نشط للموافقة عليه.');
+                 showLoading(false);
+                 return;
+            }
+            
             const dateTime = getCurrentDateTime();
             const referenceNumber = generateReferenceNumber();
             
             const formData = {
                 teacherName: teacherName,
                 agreed: agreeConfirm,
+                circularId: currentCircular.id,
+                circularNumber: currentCircular.circularNumber,
+                circularTitle: currentCircular.circularTitle,
                 timestamp: dateTime.timestamp,
                 arabicDate: dateTime.arabicDate,
                 arabicTime: dateTime.arabicTime,
