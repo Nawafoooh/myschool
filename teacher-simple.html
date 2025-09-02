@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج التوقيع الإلكتروني - متوسطة المنذر بن عمرو الأنصاري</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 50%, #1e4d3b 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            border: 3px solid #0f6b47;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-50px) translateY(-50px); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .ministry-logo {
+            font-size: 60px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .ministry-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .ministry-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+        
+        .school-name {
+            font-size: 22px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.15);
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 15px auto;
+            display: inline-block;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-content {
+            padding: 35px;
+            background: #fafbfc;
+        }
+        
+        .circular-notice {
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5f0 100%);
+            border: 3px solid #0f6b47;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            text-align: center;
+        }
+        
+        .circular-notice h3 {
+            color: #0f6b47;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .circular-notice p {
+            line-height: 1.8;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #1e4d3b;
+            font-size: 16px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #d5e8d4;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #0f6b47;
+            box-shadow: 0 0 0 4px rgba(15, 107, 71, 0.1);
+            background: #f8fffe;
+        }
+        
+        .checkbox-group {
+            background: linear-gradient(135deg, #e8f8f0 0%, #d4edd8 100%);
+            border: 3px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .checkbox-group h4 {
+            color: #1e4d3b;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .checkbox-item {
+            margin-bottom: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #27ae60;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-item:hover {
+            background: #f8fff9;
+            transform: translateY(-2px);
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-left: 15px;
+            transform: scale(1.5);
+            accent-color: #0f6b47;
+        }
+        
+        .checkbox-item label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 0;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
+            color: white;
+            width: 100%;
+            padding: 18px;
+            font-size: 20px;
+            margin-top: 30px;
+            border: 3px solid #0f6b47;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(15, 107, 71, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 25px;
+            text-align: center;
+            display: none;
+            border: 3px solid #27ae60;
+        }
+        
+        .success-message h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+            color: #0f6b47;
+        }
+        
+        .success-message p {
+            margin-bottom: 10px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0f6b47;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            background: rgba(15, 76, 117, 0.9);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .form-content {
+                padding: 25px;
+            }
+            
+            .header {
+                padding: 25px;
+            }
+            
+            .ministry-logo {
+                font-size: 50px;
+            }
+            
+            .school-name {
+                font-size: 18px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="ministry-logo">🇸🇦</div>
+                <div class="ministry-title">المملكة العربية السعودية</div>
+                <div class="ministry-subtitle">وزارة التعليم</div>
+                <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
+            </div>
+        </div>
+        
+        <div class="form-content">
+            <div class="circular-notice">
+                <h3>إشعار تعميم هام</h3>
+                <p>الاخوة الزملاء الرجاء الاطلاع على التعميم والموافقة عليه.</p>
+                <p><strong>نشكركم على تعاونكم المستمر وجهودكم المبذولة في خدمة التعليم.</strong></p>
+            </div>
+            
+            <form id="teacherForm">
+                <div class="form-group">
+                    <label for="teacherName">الاسم الثلاثي <span class="required">*</span></label>
+                    <input type="text" id="teacherName" name="teacherName" required 
+                           placeholder="أدخل الاسم الثلاثي كاملاً">
+                </div>
+                
+                <div class="checkbox-group">
+                    <h4>تأكيد الموافقة</h4>
+                    <div class="checkbox-item">
+                        <label>
+                            <input type="checkbox" id="agreeConfirm" name="agreeConfirm" required>
+                            أوافق على محتوى التعميم وأؤكد استلامه ومشاهدته <span class="required">*</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p>جاري الإرسال...</p>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    ✅ إرسال الموافقة
+                </button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <h3>تم الإرسال بنجاح!</h3>
+                <p><strong>🙏 شكراً لكم على تعاونكم</strong></p>
+                <p>تم تسجيل موافقة الأستاذ <strong><span id="submittedName"></span></strong> بنجاح</p>
+                <p><strong>📅 تاريخ ووقت الإرسال:</strong> <span id="submissionTime"></span></p>
+                <p><strong>🔢 رقم المرجع:</strong> <span id="referenceNumber"></span></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>متوسطة المنذر بن عمرو الأنصاري &copy; 2025</p>
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 14px; font-weight: 600;">
+            Design & Development: Nawaf Alsubhi 2025
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase Configuration المدمج
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMkhB9tjAnWHBJo3pa7LHRGTfjLRg0yB4",
+            authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
+            projectId: "nawafalsubhi3-f4abf",
+            storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
+            messagingSenderId: "409217413356",
+            appId: "1:409217413356:web:d1e0dd6f584c66255875c9",
+            measurementId: "G-BVP04DLPM9"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Helper Functions
+        function getCurrentDateTime() {
+            const now = new Date();
+            return {
+                timestamp: now.toISOString(),
+                arabicDate: now.toLocaleDateString('ar-SA'),
+                arabicTime: now.toLocaleTimeString('ar-SA')
+            };
+        }
+
+        function generateReferenceNumber() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 999).toString().padStart(3, '0');
+            return `MAN-${year}${month}${day}-${hours}${minutes}${seconds}-${random}`;
+        }
+
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (show) {
+                loading.style.display = 'block';
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'جاري الإرسال...';
+            } else {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✅ إرسال الموافقة';
+            }
+        }
+
+        async function saveToFirebase(data) {
+            try {
+                const docRef = await db.collection('teacher_approvals').add(data);
+                console.log('تم حفظ البيانات بنجاح، ID:', docRef.id);
+                return { success: true, id: docRef.id };
+            } catch (error) {
+                console.error('خطأ في حفظ البيانات:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('teacherForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            showLoading(true);
+            
+            const teacherName = document.getElementById('teacherName').value.trim();
+            const agreeConfirm = document.getElementById('agreeConfirm').checked;
+            
+            if (!teacherName) {
+                alert('يرجى إدخال الاسم الثلاثي');
+                showLoading(false);
+                return;
+            }
+            
+            if (!agreeConfirm) {
+                alert('يرجى تأكيد الموافقة على التعميم');
+                showLoading(false);
+                return;
+            }
+            
+            const dateTime = getCurrentDateTime();
+            const referenceNumber = generateReferenceNumber();
+            
+            const formData = {
+                teacherName: teacherName,
+                agreed: agreeConfirm,
+                timestamp: dateTime.timestamp,
+                arabicDate: dateTime.arabicDate,
+                arabicTime: dateTime.arabicTime,
+                referenceNumber: referenceNumber,
+                school: 'متوسطة المنذر بن عمرو الأنصاري',
+                ipAddress: 'غير متوفر',
+                userAgent: navigator.userAgent,
+                submissionDate: new Date().toISOString(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            const result = await saveToFirebase(formData);
+            
+            showLoading(false);
+            
+            if (result.success) {
+                // Hide form and show success message
+                document.getElementById('teacherForm').style.display = 'none';
+                document.getElementById('submittedName').textContent = teacherName;
+                document.getElementById('submissionTime').textContent = `${dateTime.arabicDate} - ${dateTime.arabicTime}`;
+                document.getElementById('referenceNumber').textContent = referenceNumber;
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Clear draft
+                localStorage.removeItem('teacherFormDraft');
+                
+                setTimeout(() => {
+                    document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+                
+            } else {
+                alert('حدث خطأ في إرسال البيانات: ' + result.error);
+            }
+        });
+
+        // Auto-save draft every 30 seconds
+        setInterval(function() {
+            const teacherName = document.getElementById('teacherName').value.trim();
+            if (teacherName) {
+                try {
+                    localStorage.setItem('teacherFormDraft', JSON.stringify({
+                        teacherName: teacherName,
+                        savedAt: new Date().toISOString()
+                    }));
+                } catch (e) {
+                    console.error('خطأ في حفظ المسودة:', e);
+                }
+            }
+        }, 30000);
+
+        // Restore draft on page load
+        window.addEventListener('load', function() {
+            try {
+                const draft = localStorage.getItem('teacherFormDraft');
+                if (draft) {
+                    const data = JSON.parse(draft);
+                    const savedAt = new Date(data.savedAt);
+                    const now = new Date();
+                    
+                    if (now - savedAt < 24 * 60 * 60 * 1000) {
+                        if (confirm('تم العثور على بيانات محفوظة مسبقاً. هل تريد استرجاعها؟')) {
+                            document.getElementById('teacherName').value = data.teacherName || '';
+                        }
+                    } else {
+                        localStorage.removeItem('teacherFormDraft');
+                    }
+                }
+            } catch (e) {
+                console.error('خطأ في استرجاع المسودة:', e);
+            }
+        });
+
+        // Warn before leaving page
+        window.addEventListener('beforeunload', function(e) {
+            const form = document.getElementById('teacherForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (form.style.display !== 'none' && successMessage.style.display === 'none') {
+                const teacherName = document.getElementById('teacherName').value.trim();
+                
+                if (teacherName) {
+                    e.preventDefault();
+                    e.returnValue = 'هل أنت متأكد من أنك تريد مغادرة الصفحة؟ ستفقد البيانات غير المحفوظة.';
+                    return e.returnValue;
+                }
+            }
+        });
+
+        console.log('تم تحميل نموذج التوقيع الإلكتروني مع Firebase - Design & Development: Nawaf Alsubhi 2025');
+    </script>
+</body>
+</html>
