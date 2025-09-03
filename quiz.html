@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقة نافس - الأسئلة التفاعلية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .ministry-info {
+            color: #6366f1;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .quiz-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .student-info {
+            background: linear-gradient(145deg, rgba(99, 102, 241, 0.1), rgba(129, 140, 248, 0.05));
+            padding: 15px;
+            border-radius: 12px;
+            display: inline-block;
+            color: #1e293b;
+            font-weight: 600;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .progress-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .question-counter {
+            background: linear-gradient(145deg, #0ea5e9, #0284c7);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+        }
+
+        .timer {
+            background: linear-gradient(145deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.3em;
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+        }
+
+        .score-display {
+            background: linear-gradient(145deg, #6366f1, #4f46e5);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        .progress-bar {
+            background: rgba(99, 102, 241, 0.2);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #a5b4fc, #818cf8);
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(129, 140, 248, 0.4);
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .question-icon {
+            background: linear-gradient(145deg, #fbbf24, #f59e0b);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            margin-left: 20px;
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .question-meta {
+            flex: 1;
+        }
+
+        .question-category {
+            color: #059669;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-difficulty {
+            color: #3b82f6;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .question-text {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #1e293b;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            padding: 25px;
+            background: linear-gradient(145deg, rgba(248, 250, 252, 0.9), rgba(241, 245, 249, 0.8));
+            border-radius: 20px;
+            border-right: 6px solid #0ea5e9;
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .option {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+            border: 3px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #1e293b;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-letter {
+            background: linear-gradient(145deg, #64748b, #475569);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .option:hover {
+            border-color: #818cf8;
+            transform: translateX(-8px);
+            box-shadow: 0 15px 35px rgba(129, 140, 248, 0.3);
+        }
+
+        .option:hover .option-letter {
+            background: linear-gradient(145deg, #818cf8, #6366f1);
+            transform: scale(1.1);
+        }
+
+        .option.selected {
+            background: linear-gradient(145deg, #6366f1, #4f46e5);
+            color: white;
+            border-color: #6366f1;
+            transform: translateX(-8px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+        }
+
+        .option.selected .option-letter {
+            background: linear-gradient(145deg, #ffffff, #f3f4f6);
+            color: #6366f1;
+        }
+
+        .option.correct {
+            background: linear-gradient(145deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .option.correct .option-letter {
+            background: linear-gradient(145deg, #ffffff, #f3f4f6);
+            color: #10b981;
+        }
+
+        .option.incorrect {
+            background: linear-gradient(145deg, #ef4444, #dc2626);
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .option.incorrect .option-letter {
+            background: linear-gradient(145deg, #ffffff, #f3f4f6);
+            color: #ef4444;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn {
+            background: linear-gradient(145deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn:disabled {
+            background: linear-gradient(145deg, #475569, #334155);
+            cursor: not-allowed;
+            box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+        }
+
+        .btn:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5);
+            background: linear-gradient(145deg, #4f46e5, #3730a3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(145deg, #0ea5e9, #0284c7);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-secondary:not(:disabled):hover {
+            background: linear-gradient(145deg, #0284c7, #0369a1);
+            box-shadow: 0 15px 30px rgba(14, 165, 233, 0.5);
+        }
+
+        .message-container {
+            margin: 25px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .message {
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.success {
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+            color: #047857;
+            border: 3px solid #10b981;
+        }
+
+        .message.error {
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1));
+            color: #dc2626;
+            border: 3px solid #ef4444;
+        }
+
+        .completion-card {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
+            border: 3px solid #f59e0b;
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
+            margin: 20px 0;
+            backdrop-filter: blur(20px);
+        }
+
+        .completion-card h2 {
+            font-size: 2.5em;
+            color: #d97706;
+            margin-bottom: 20px;
+        }
+
+        .final-score {
+            font-size: 3em;
+            font-weight: bold;
+            color: #6366f1;
+            margin: 20px 0;
+        }
+
+        .motivational-quote {
+            font-size: 1.3em;
+            color: #475569;
+            font-style: italic;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .footer-credit {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.1);
+            border: 2px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .footer-credit .supervisor {
+            color: #6366f1;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .footer-credit .school {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 15px;
+            }
+
+            .progress-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .question-card {
+                padding: 25px;
+            }
+
+            .question-text {
+                font-size: 1.3em;
+                padding: 20px;
+            }
+
+            .option {
+                padding: 20px;
+                font-size: 1.1em;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="header">
+            <div class="ministry-info">المملكة العربية السعودية - وزارة التعليم - متوسطة المنذر بن عمرو الأنصاري</div>
+            <div class="quiz-title">مسابقة نافس</div>
+            <div class="student-info" id="studentInfo">
+                <span id="studentName">الطالب</span> - 
+                <span id="studentGrade">الصف</span> - 
+                <span id="studentSection">الشعبة</span>
+                <span id="studentIcon">🌟</span>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-header">
+                <div class="question-counter" id="questionCounter">السؤال 1 من 10</div>
+                <div class="timer" id="timer">⏰ 60</div>
+                <div class="score-display" id="scoreDisplay">النقاط: 0</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+            </div>
+            <div class="progress-text" id="progressText">تقدمك: 10% • المتبقي: 9 أسئلة</div>
+        </div>
+
+        <div class="question-card" id="questionCard">
+            <div class="question-header">
+                <div class="question-icon" id="questionIcon">🔢</div>
+                <div class="question-meta">
+                    <div class="question-category" id="questionCategory">الرياضيات</div>
+                    <div class="question-difficulty" id="questionDifficulty">⭐⭐ متوسط</div>
+                </div>
+            </div>
+
+            <div class="question-text" id="questionText">ما هو ناتج 15 × 8؟</div>
+
+            <div class="options-container" id="optionsContainer">
+                <div class="option" data-index="0">
+                    <div class="option-letter">أ</div>
+                    <div class="option-text">120</div>
+                </div>
+                <div class="option" data-index="1">
+                    <div class="option-letter">ب</div>
+                    <div class="option-text">130</div>
+                </div>
+                <div class="option" data-index="2">
+                    <div class="option-letter">ج</div>
+                    <div class="option-text">140</div>
+                </div>
+                <div class="option" data-index="3">
+                    <div class="option-letter">د</div>
+                    <div class="option-text">150</div>
+                </div>
+            </div>
+
+            <div class="message-container" id="messageContainer"></div>
+
+            <div class="action-buttons">
+                <button class="btn" id="submitBtn" disabled>✅ تأكيد الإجابة</button>
+                <button class="btn btn-secondary hidden" id="nextBtn">➡️ السؤال التالي</button>
+            </div>
+        </div>
+
+        <div class="completion-card hidden" id="completionCard">
+            <h2>🎉 تهانينا! أكملت المسابقة</h2>
+            <div class="final-score" id="finalScore">8/10</div>
+            <div class="motivational-quote" id="motivationalQuote">
+                "النجاح ليس نهاية الطريق، والفشل ليس نهاية العالم، بل الشجاعة للمواصلة هي ما يهم حقاً"
+            </div>
+            <button class="btn" id="viewResultsBtn">🏆 شاهد النتائج التفصيلية</button>
+        </div>
+
+        <div class="footer-credit">
+            <div class="supervisor">تنفيذ وإشراف: الأستاذ نواف الصبحي</div>
+            <div class="school">متوسطة المنذر بن عمرو الأنصاري - 2025</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
+            authDomain: "nafs-competition.firebaseapp.com",
+            projectId: "nafs-competition",
+            storageBucket: "nafs-competition.firebasestorage.app",
+            messagingSenderId: "182205828634",
+            appId: "1:182205828634:web:dee889f770eb52ff668ba3",
+            measurementId: "G-MLR86M05H7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentQuestionIndex = 0;
+        let selectedAnswer = null;
+        let score = 0;
+        let timeLeft = 60;
+        let timerInterval = null;
+        let quizCompleted = false;
+
+        const questions = [
+            {
+                category: "الرياضيات",
+                difficulty: "متوسط", 
+                icon: "🔢",
+                text: "ما هو ناتج 15 × 8؟",
+                options: ["120", "130", "140", "150"],
+                correct: 0
+            },
+            {
+                category: "العلوم",
+                difficulty: "سهل",
+                icon: "🧪",
+                text: "ما هو الرمز الكيميائي للماء؟",
+                options: ["H2O", "CO2", "NaCl", "O2"],
+                correct: 0
+            },
+            {
+                category: "التاريخ",
+                difficulty: "صعب",
+                icon: "📚",
+                text: "في أي عام تأسست المملكة العربية السعودية؟",
+                options: ["1930", "1932", "1934", "1936"],
+                correct: 1
+            },
+            {
+                category: "الجغرافيا",
+                difficulty: "متوسط",
+                icon: "🌍",
+                text: "ما هي عاصمة أستراليا؟",
+                options: ["سيدني", "ملبورن", "كانبرا", "بيرث"],
+                correct: 2
+            },
+            {
+                category: "اللغة العربية",
+                difficulty: "سهل",
+                icon: "📖",
+                text: "ما هو جمع كلمة 'كتاب'؟",
+                options: ["كتابات", "كتب", "كتابين", "أكتاب"],
+                correct: 1
+            }
+        ];
+
+        const successMessages = [
+            "🌟 رائع! إجابة ممتازة!",
+            "🚀 أحسنت! استمر هكذا!",
+            "🏆 مذهل! أنت في المقدمة!",
+            "⭐ عبقري! واصل التفوق!",
+            "🎯 دقيق جداً! إجابة مثالية!"
+        ];
+
+        const errorMessages = [
+            "💪 لا تيأس! المحاولة القادمة ستكون أفضل!",
+            "🌱 كل خطأ خطوة نحو التعلم! استمر!",
+            "🔄 لا بأس! جرب مرة أخرى بثقة!",
+            "🌟 الأخطاء تعلمنا! أنت تتقدم!"
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadQuestion();
+            startTimer();
+        });
+
+        function setupEventListeners() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.option') && !quizCompleted) {
+                    const option = e.target.closest('.option');
+                    if (!option.classList.contains('correct') && !option.classList.contains('incorrect')) {
+                        selectAnswer(option);
+                    }
+                }
+            });
+
+            document.getElementById('submitBtn').addEventListener('click', submitAnswer);
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('viewResultsBtn').addEventListener('click', viewResults);
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                completeQuiz();
+                return;
+            }
+
+            const question = questions[currentQuestionIndex];
+            
+            document.getElementById('questionCounter').textContent = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+            document.getElementById('questionCategory').textContent = question.category;
+            document.getElementById('questionDifficulty').innerHTML = getDifficultyStars(question.difficulty) + ' ' + question.difficulty;
+            document.getElementById('questionIcon').textContent = question.icon;
+            document.getElementById('questionText').textContent = question.text;
+
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = 
+                `تقدمك: ${Math.round(progress)}% • المتبقي: ${questions.length - currentQuestionIndex - 1} سؤال`;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            const letters = ['أ', 'ب', 'ج', 'د'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.dataset.index = index;
+                optionElement.innerHTML = `
+                    <div class="option-letter">${letters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                optionsContainer.appendChild(optionElement);
+            });
+
+            selectedAnswer = null;
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('messageContainer').innerHTML = '';
+            
+            timeLeft = 60;
+            updateTimerDisplay();
+        }
+
+        function getDifficultyStars(difficulty) {
+            switch(difficulty) {
+                case 'سهل': return '⭐';
+                case 'متوسط': return '⭐⭐';
+                case 'صعب': return '⭐⭐⭐';
+                default: return '⭐⭐';
+            }
+        }
+
+        function selectAnswer(optionElement) {
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            optionElement.classList.add('selected');
+            selectedAnswer = parseInt(optionElement.dataset.index);
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (selectedAnswer === null) return;
+
+            clearInterval(timerInterval);
+            const question = questions[currentQuestionIndex];
+            const isCorrect = selectedAnswer === question.correct;
+            
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            document.querySelectorAll('.option').forEach((opt, index) => {
+                if (index === question.correct) {
+                    opt.classList.add('correct');
+                }
+                if (index === selectedAnswer && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                updateScoreDisplay();
+                showMessage('success', getRandomSuccessMessage());
+            } else {
+                showMessage('error', getRandomErrorMessage());
+            }
+
+            document.getElementById('submitBtn').classList.add('hidden');
+            document.getElementById('nextBtn').classList.remove('hidden');
+
+            setTimeout(() => {
+                if (currentQuestionIndex < questions.length - 1) {
+                    nextQuestion();
+                } else {
+                    completeQuiz();
+                }
+            }, 3000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'auto';
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+
+            loadQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timeUp();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('timer').textContent = `⏰ ${timeLeft}`;
+        }
+
+        function timeUp() {
+            showMessage('error', '⏰ انتهى الوقت! انتقال للسؤال التالي');
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('scoreDisplay').textContent = `النقاط: ${score}`;
+        }
+
+        function showMessage(type, text) {
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = `<div class="message ${type}">${text}</div>`;
+        }
+
+        function getRandomSuccessMessage() {
+            return successMessages[Math.floor(Math.random() * successMessages.length)];
+        }
+
+        function getRandomErrorMessage() {
+            return errorMessages[Math.floor(Math.random() * errorMessages.length)];
+        }
+
+        function completeQuiz() {
+            quizCompleted = true;
+            clearInterval(timerInterval);
+            
+            document.getElementById('questionCard').classList.add('hidden');
+            
+            const completionCard = document.getElementById('completionCard');
+            completionCard.classList.remove('hidden');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${questions.length} (${percentage}%)`;
+            
+            // حفظ النتيجة في Firebase
+            saveQuizResult(score, percentage);
+        }
+
+        async function saveQuizResult(finalScore, percentage) {
+            try {
+                const result = {
+                    score: finalScore,
+                    totalQuestions: questions.length,
+                    percentage: percentage,
+                    completedAt: serverTimestamp(),
+                    timeSpent: (questions.length * 60) - timeLeft,
+                    answers: selectedAnswer // يمكن تطويره لحفظ جميع الإجابات
+                };
+
+                await addDoc(collection(db, 'quiz_results'), result);
+                console.log('Quiz result saved successfully');
+            } catch (error) {
+                console.error('Error saving quiz result:', error);
+            }
+        }
+
+        function viewResults() {
+            const percentage = Math.round((score / questions.length) * 100);
+            let message = `تفاصيل أدائك:\n\nالنتيجة: ${score}/${questions.length}\nالنسبة المئوية: ${percentage}%\n\n`;
+            
+            if (percentage >= 80) {
+                message += 'أداء ممتاز! 🌟';
+            } else if (percentage >= 60) {
+                message += 'أداء جيد! 👍';
+            } else {
+                message += 'يمكنك التحسن أكثر! 💪';
+            }
+            
+            alert(message);
+        }
+
+        // تحديث معلومات الطالب من localStorage إذا كانت متوفرة
+        window.addEventListener('load', () => {
+            const studentData = localStorage.getItem('studentData');
+            if (studentData) {
+                const student = JSON.parse(studentData);
+                document.getElementById('studentName').textContent = student.firstName || 'الطالب';
+                document.getElementById('studentGrade').textContent = student.grade || 'الصف';
+                document.getElementById('studentSection').textContent = `الشعبة ${student.section}` || 'الشعبة';
+                document.getElementById('studentIcon').textContent = student.icon || '🌟';
+            }
+        });
+
+        // اختصارات لوحة المفاتيح
+        document.addEventListener('keydown', function(e) {
+            if (quizCompleted) return;
+            
+            if (e.key >= '1' && e.key <= '4') {
+                const optionIndex = parseInt(e.key) - 1;
+                const option = document.querySelector(`[data-index="${optionIndex}"]`);
+                if (option && !option.classList.contains('correct') && !option.classList.contains('incorrect')) {
+                    selectAnswer(option);
+                }
+            } else if (e.key === 'Enter' && selectedAnswer !== null) {
+                submitAnswer();
+            }
+        });
+    </script>
+</body>
+</html>
