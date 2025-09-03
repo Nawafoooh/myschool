@@ -1,0 +1,29 @@
+{
+  "name": "nafs-competition",
+  "version": "1.0.0",
+  "description": "نظام مسابقة نافس التعليمية - متوسطة المنذر بن عمرو الأنصاري",
+  "main": "index.html",
+  "scripts": {
+    "dev": "firebase serve --only hosting",
+    "deploy": "firebase deploy --only hosting,firestore",
+    "test": "echo 'Testing...'",
+    "backup": "echo 'Creating backup...'"
+  },
+  "keywords": [
+    "education",
+    "quiz",
+    "competition",
+    "arabic",
+    "firebase",
+    "school"
+  ],
+  "author": "الأستاذ نواف الصبحي - متوسطة المنذر بن عمرو الأنصاري",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nawafalsubhi3/myschool.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
