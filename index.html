@@ -28,7 +28,7 @@
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
         }
         
@@ -52,6 +52,12 @@
             font-weight: bold;
         }
         
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
         .form-group {
             margin-bottom: 20px;
             text-align: right;
@@ -64,12 +70,59 @@
             color: #555;
         }
         
+        .name-inputs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
         .form-control {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-control.error {
+            border-color: #dc3545;
+        }
+        
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .icon-option {
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .icon-option:hover {
+            background: #e9ecef;
+            transform: scale(1.1);
+        }
+        
+        .icon-option.selected {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+            transform: scale(1.1);
         }
         
         .btn {
@@ -82,6 +135,18 @@
             cursor: pointer;
             width: 100%;
             margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
         
         .status {
@@ -89,6 +154,7 @@
             padding: 15px;
             border-radius: 8px;
             display: none;
+            font-weight: bold;
         }
         
         .status.success {
@@ -99,6 +165,39 @@
         .status.error {
             background: #f8d7da;
             color: #721c24;
+        }
+        
+        .status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .validation-message {
+            color: #dc3545;
+            font-size: 0.9em;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        .help-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .name-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .icon-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -112,16 +211,23 @@
         
         <div class="logo">🏆</div>
         <h1 class="title">نافس</h1>
-        <p>منصة المسابقات التعليمية الذكية</p>
+        <p class="subtitle">منصة المسابقات التعليمية الذكية</p>
         
         <form id="loginForm">
             <div class="form-group">
-                <label for="studentName">اسم الطالب:</label>
-                <input type="text" id="studentName" class="form-control" required>
+                <label>📝 الاسم الرباعي:</label>
+                <div class="name-inputs">
+                    <input type="text" id="firstName" class="form-control" placeholder="الاسم الأول" required>
+                    <input type="text" id="fatherName" class="form-control" placeholder="اسم الأب" required>
+                    <input type="text" id="grandFatherName" class="form-control" placeholder="اسم الجد" required>
+                    <input type="text" id="familyName" class="form-control" placeholder="اسم العائلة" required>
+                </div>
+                <div class="help-text">يرجى كتابة الاسم الرباعي كاملاً</div>
+                <div id="nameValidation" class="validation-message"></div>
             </div>
             
             <div class="form-group">
-                <label for="grade">الصف:</label>
+                <label for="grade">🎓 الصف:</label>
                 <select id="grade" class="form-control" required>
                     <option value="">اختر الصف</option>
                     <option value="الأول متوسط">الأول متوسط</option>
@@ -131,16 +237,47 @@
             </div>
             
             <div class="form-group">
-                <label for="section">الشعبة:</label>
+                <label for="section">🏫 الشعبة:</label>
                 <select id="section" class="form-control" required>
                     <option value="">اختر الشعبة</option>
                     <option value="1">الشعبة 1</option>
                     <option value="2">الشعبة 2</option>
                     <option value="3">الشعبة 3</option>
+                    <option value="4">الشعبة 4</option>
+                    <option value="5">الشعبة 5</option>
+                    <option value="6">الشعبة 6</option>
                 </select>
             </div>
             
-            <button type="submit" class="btn">دخول المسابقة</button>
+            <div class="form-group">
+                <label>🎨 اختر رمزك المميز:</label>
+                <div class="icon-selector" id="iconSelector">
+                    <div class="icon-option" data-icon="🌟">🌟</div>
+                    <div class="icon-option" data-icon="🚀">🚀</div>
+                    <div class="icon-option" data-icon="⚡">⚡</div>
+                    <div class="icon-option" data-icon="🔥">🔥</div>
+                    <div class="icon-option" data-icon="💎">💎</div>
+                    <div class="icon-option" data-icon="🎯">🎯</div>
+                    <div class="icon-option" data-icon="🏆">🏆</div>
+                    <div class="icon-option" data-icon="👑">👑</div>
+                    <div class="icon-option" data-icon="🦁">🦁</div>
+                    <div class="icon-option" data-icon="🦅">🦅</div>
+                    <div class="icon-option" data-icon="🐺">🐺</div>
+                    <div class="icon-option" data-icon="🦖">🦖</div>
+                    <div class="icon-option" data-icon="🌙">🌙</div>
+                    <div class="icon-option" data-icon="☀️">☀️</div>
+                    <div class="icon-option" data-icon="⭐">⭐</div>
+                    <div class="icon-option" data-icon="🌈">🌈</div>
+                    <div class="icon-option" data-icon="🎪">🎪</div>
+                    <div class="icon-option" data-icon="🎭">🎭</div>
+                </div>
+                <div class="help-text">اختر رمز يمثلك في المسابقة</div>
+                <div id="iconValidation" class="validation-message"></div>
+            </div>
+            
+            <button type="submit" class="btn" id="submitBtn">
+                🚀 دخول المسابقة
+            </button>
         </form>
         
         <div id="status" class="status"></div>
@@ -148,7 +285,7 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
@@ -163,30 +300,179 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        let selectedIcon = '';
+
+        // اختيار الرمز
+        document.querySelectorAll('.icon-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedIcon = this.dataset.icon;
+                document.getElementById('iconValidation').textContent = '';
+            });
+        });
+
+        // التحقق من صحة الاسم
+        function validateName() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const fatherName = document.getElementById('fatherName').value.trim();
+            const grandFatherName = document.getElementById('grandFatherName').value.trim();
+            const familyName = document.getElementById('familyName').value.trim();
+
+            const nameValidation = document.getElementById('nameValidation');
+            
+            if (!firstName || !fatherName || !grandFatherName || !familyName) {
+                nameValidation.textContent = 'يرجى إدخال الاسم الرباعي كاملاً';
+                return false;
+            }
+
+            if (firstName.length < 2 || fatherName.length < 2 || grandFatherName.length < 2 || familyName.length < 2) {
+                nameValidation.textContent = 'كل جزء من الاسم يجب أن يكون حرفين على الأقل';
+                return false;
+            }
+
+            nameValidation.textContent = '';
+            return true;
+        }
+
+        // التحقق من الرمز
+        function validateIcon() {
+            const iconValidation = document.getElementById('iconValidation');
+            if (!selectedIcon) {
+                iconValidation.textContent = 'يرجى اختيار رمز مميز';
+                return false;
+            }
+            iconValidation.textContent = '';
+            return true;
+        }
+
+        // التحقق من تكرار الاسم
+        async function checkNameDuplication(fullName) {
+            try {
+                const q = query(collection(db, 'students'), where('fullName', '==', fullName));
+                const querySnapshot = await getDocs(q);
+                return !querySnapshot.empty;
+            } catch (error) {
+                console.error('Error checking name duplication:', error);
+                return false;
+            }
+        }
+
+        // التحقق من تكرار الرمز في نفس الصف والشعبة
+        async function checkIconDuplication(icon, grade, section) {
+            try {
+                const q = query(
+                    collection(db, 'students'), 
+                    where('icon', '==', icon),
+                    where('grade', '==', grade),
+                    where('section', '==', section)
+                );
+                const querySnapshot = await getDocs(q);
+                return !querySnapshot.empty;
+            } catch (error) {
+                console.error('Error checking icon duplication:', error);
+                return false;
+            }
+        }
+
+        // معالجة النموذج
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('studentName').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const statusDiv = document.getElementById('status');
+            
+            // التحقق من صحة البيانات
+            if (!validateName() || !validateIcon()) {
+                return;
+            }
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const fatherName = document.getElementById('fatherName').value.trim();
+            const grandFatherName = document.getElementById('grandFatherName').value.trim();
+            const familyName = document.getElementById('familyName').value.trim();
+            const fullName = `${firstName} ${fatherName} ${grandFatherName} ${familyName}`;
+            
             const grade = document.getElementById('grade').value;
             const section = document.getElementById('section').value;
             
+            if (!grade || !section) {
+                showStatus('يرجى اختيار الصف والشعبة', 'error');
+                return;
+            }
+            
             try {
-                await addDoc(collection(db, 'students'), {
-                    name: name,
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'جاري التحقق...';
+                showStatus('جاري التحقق من البيانات...', 'loading');
+                
+                // التحقق من تكرار الاسم
+                const nameExists = await checkNameDuplication(fullName);
+                if (nameExists) {
+                    showStatus('هذا الاسم مسجل مسبقاً، يرجى التأكد من البيانات', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '🚀 دخول المسابقة';
+                    return;
+                }
+
+                // التحقق من تكرار الرمز
+                const iconExists = await checkIconDuplication(selectedIcon, grade, section);
+                if (iconExists) {
+                    showStatus('هذا الرمز مختار مسبقاً في نفس الصف والشعبة، يرجى اختيار رمز آخر', 'error');
+                    document.getElementById('iconValidation').textContent = 'هذا الرمز محجوز، اختر رمز آخر';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '🚀 دخول المسابقة';
+                    return;
+                }
+                
+                // حفظ بيانات الطالب
+                const studentData = {
+                    firstName: firstName,
+                    fatherName: fatherName,
+                    grandFatherName: grandFatherName,
+                    familyName: familyName,
+                    fullName: fullName,
                     grade: grade,
                     section: section,
-                    timestamp: serverTimestamp()
-                });
+                    icon: selectedIcon,
+                    joinedAt: serverTimestamp(),
+                    status: 'active'
+                };
                 
-                document.getElementById('status').innerHTML = 'تم التسجيل بنجاح!';
-                document.getElementById('status').className = 'status success';
-                document.getElementById('status').style.display = 'block';
+                const docRef = await addDoc(collection(db, 'students'), studentData);
+                console.log('Student registered with ID:', docRef.id);
+                
+                showStatus(`مرحباً ${firstName}! تم تسجيل دخولك بنجاح ${selectedIcon}`, 'success');
+                
+                // توجيه للمسابقة (سنضيفه لاحقاً)
+                setTimeout(() => {
+                    showStatus('سيتم توجيهك للمسابقة قريباً...', 'loading');
+                }, 2000);
                 
             } catch (error) {
-                document.getElementById('status').innerHTML = 'حدث خطأ!';
-                document.getElementById('status').className = 'status error';
-                document.getElementById('status').style.display = 'block';
+                console.error('Registration error:', error);
+                showStatus('حدث خطأ في التسجيل، يرجى المحاولة مرة أخرى', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 دخول المسابقة';
             }
+        });
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            statusDiv.style.display = 'block';
+            
+            if (type !== 'loading') {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // التحقق المباشر من الاسم أثناء الكتابة
+        ['firstName', 'fatherName', 'grandFatherName', 'familyName'].forEach(id => {
+            document.getElementById(id).addEventListener('blur', validateName);
         });
     </script>
 </body>
