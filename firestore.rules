@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // قواعد نتائج المسابقات
+    match /quiz_results/{resultId} {
+      // السماح للطلاب بإنشاء نتائجهم فقط
+      allow create: if request.auth != null 
+        && request.resource.data.studentId == request.auth.uid
+        && isValidQuizResult(request.resource.data);
+      
+      // السماح بالقراءة للجميع (لأغراض التعليم)
+      allow read: if request.auth != null;
+      
+      // منع التحديث والحذف
+      allow update, delete: if false;
+    }
+    
+    // قواعد الأسئلة
+    match /questions/{questionId} {
+      allow read: if request.auth != null;
+      allow write: if false; // يُحدث يدوياً فقط
+    }
+    
+    // قواعد المسابقات
+    match /competitions/{competitionId} {
+      allow read: if request.auth != null;
+      allow write: if false; // يُحدث يدوياً فقط
+    }
+    
+    // قواعد إعدادات النظام
+    match /system_settings/{settingId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+    
+    // سجلات الأمان
+    match /security_logs/{logId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false;
+    }
+    
+    // اختبار الاتصال
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}
+
+// التحقق من صحة بيانات النتيجة
+function isValidQuizResult(data) {
+  return data.keys().hasAll([
+    'studentId', 'studentName', 'studentGrade', 'studentSection',
+    'score', 'totalQuestions', 'percentage', 'timeSpent'
+  ]) &&
+  data.score is int &&
+  data.totalQuestions is int &&
+  data.percentage is number &&
+  data.timeSpent is int &&
+  data.score >= 0 &&
+  data.score <= data.totalQuestions &&
+  data.percentage >= 0 &&
+  data.percentage <= 100 &&
+  data.timeSpent > 0 &&
+  data.timeSpent < 7200; // أقصى مدة ساعتين
+}
