@@ -712,7 +712,13 @@
         }
 
         function generateStudentId(fullName, grade, section) {
-            const nameHash = btoa(fullName).replace(/[^a-zA-Z0-9]/g, '').substring(0, 8);
+            // استخدام hash بسيط للأسماء العربية
+            let nameHash = '';
+            for (let i = 0; i < fullName.length; i++) {
+                nameHash += fullName.charCodeAt(i).toString(36);
+            }
+            nameHash = nameHash.substring(0, 8);
+            
             const gradeCode = grade.replace(/[^0-9]/g, '');
             const timestamp = Date.now().toString().slice(-6);
             return `STD_${gradeCode}_${section}_${nameHash}_${timestamp}`;
