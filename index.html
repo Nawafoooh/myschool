@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم المدير - نظام التوقيع الإلكتروني</title>
+    <title>مسابقة نافس - متوسطة المنذر بن عمرو الأنصاري</title>
     <style>
         * {
             margin: 0;
@@ -13,1416 +13,181 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e4d3b 0%, #0f6b47 50%, #1e4d3b 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            direction: rtl;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            overflow: hidden;
-            border: 3px solid #0f6b47;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
-            color: white;
-            padding: 30px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
         }
         
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
-            animation: float 20s linear infinite;
+        .ministry-header {
+            background: #1e3a8a;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
         
-        @keyframes float {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(-50px) translateY(-50px); }
+        .logo {
+            font-size: 4em;
+            margin: 20px 0;
         }
         
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .ministry-logo {
-            font-size: 60px;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .ministry-title {
-            font-size: 22px;
+        .title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
             font-weight: bold;
-            margin-bottom: 5px;
-            color: #ffffff;
         }
         
-        .ministry-subtitle {
-            font-size: 16px;
-            margin-bottom: 15px;
-            opacity: 0.95;
-            color: #e8f5f0;
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
         }
         
-        .school-name {
-            font-size: 24px;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
             font-weight: bold;
-            background: rgba(255,255,255,0.15);
-            padding: 12px 25px;
-            border-radius: 25px;
-            margin: 15px auto;
-            display: inline-block;
-            border: 2px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(10px);
+            color: #555;
         }
         
-        .dashboard-title {
-            font-size: 18px;
-            margin-top: 15px;
-            color: #e8f5f0;
-        }
-        
-        .admin-controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
         }
         
         .btn {
-            padding: 12px 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
             border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary { background: #3498db; border: 2px solid #2980b9; }
-        .btn-success { background: #27ae60; border: 2px solid #229954; }
-        .btn-warning { background: #f39c12; border: 2px solid #d68910; }
-        .btn-danger { background: #e74c3c; border: 2px solid #c0392b; }
-        .btn-info { background: #17a2b8; border: 2px solid #138496; }
-        .btn-secondary { background: #6c757d; border: 2px solid #545b62; }
-        
-        .btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .content {
-            padding: 30px;
-            background: #fafbfc;
-        }
-        
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 15px 30px;
             border-radius: 8px;
-            border-left: 5px solid;
-            animation: slideDown 0.5s ease;
-        }
-        
-        .alert-info {
-            background: #e3f2fd;
-            border-color: #2196f3;
-            color: #1976d2;
-        }
-        
-        .alert-success {
-            background: #e8f5e8;
-            border-color: #4caf50;
-            color: #2e7d32;
-        }
-        
-        .alert-warning {
-            background: #fff8e1;
-            border-color: #ff9800;
-            color: #f57c00;
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            border: 2px solid #dee2e6;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(15, 107, 71, 0.05), transparent);
-            transform: rotate(45deg);
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border-color: #0f6b47;
-        }
-        
-        .stat-number {
-            font-size: 42px;
-            font-weight: bold;
-            color: #0f6b47;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .stat-label {
-            color: #6c757d;
-            font-size: 16px;
-            font-weight: 600;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .stat-icon {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            opacity: 0.3;
-            color: #0f6b47;
-        }
-        
-        .search-filter {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-            border: 2px solid #e9ecef;
-        }
-        
-        .search-filter input,
-        .search-filter select {
-            padding: 10px 15px;
-            border: 2px solid #ced4da;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .search-filter input:focus,
-        .search-filter select:focus {
-            outline: none;
-            border-color: #0f6b47;
-            box-shadow: 0 0 0 3px rgba(15, 107, 71, 0.1);
-        }
-        
-        .signatures-table {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border: 2px solid #e9ecef;
-        }
-        
-        .table-header {
-            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
-            color: white;
-            padding: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .table-controls {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .table-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
+            font-size: 1.1em;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .table-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.05);
-        }
-        
-        .table-responsive {
-            overflow-x: auto;
-        }
-        
-        table {
             width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
+            margin-top: 20px;
         }
         
-        th, td {
-            padding: 15px 12px;
-            text-align: center;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 14px;
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
         }
         
-        th {
-            background: #f8f9fa;
-            font-weight: bold;
-            color: #495057;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        
-        tr:hover {
-            background: #e3f2fd;
-            transform: scale(1.01);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
-        }
-        
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .status-complete {
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        .status.success {
+            background: #d4edda;
             color: #155724;
-            border: 1px solid #c3e6cb;
         }
         
-        .status-pending {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-        
-        .signature-preview {
-            max-width: 80px;
-            max-height: 30px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        
-        .signature-preview:hover {
-            transform: scale(1.5);
-        }
-        
-        .no-signatures {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-            font-size: 18px;
-        }
-        
-        .no-signatures-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-        
-        .action-btn {
-            background: #17a2b8;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .action-btn:hover {
-            background: #138496;
-            transform: scale(1.05);
-        }
-        
-        .new-signature-alert {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
-            z-index: 1000;
-            animation: slideInRight 0.5s ease;
-            display: none;
-            max-width: 300px;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .modal-content {
-            background: white;
-            margin: 3% auto;
-            padding: 0;
-            border-radius: 15px;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            animation: slideUp 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .modal-header {
-            background: linear-gradient(135deg, #0f6b47 0%, #1e4d3b 100%);
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-header h2 {
-            margin: 0;
-            font-size: 20px;
-        }
-        
-        .close {
-            color: rgba(255,255,255,0.8);
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        
-        .close:hover {
-            color: white;
-        }
-        
-        .modal-body {
-            padding: 30px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-        
-        .detail-row {
-            display: flex;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-right: 4px solid #0f6b47;
-        }
-        
-        .detail-label {
-            font-weight: bold;
-            min-width: 150px;
-            color: #495057;
-        }
-        
-        .detail-value {
-            color: #212529;
-        }
-        
-        .confirmation-status {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .confirmation-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-right: 4px solid #0f6b47;
-        }
-        
-        .confirmation-icon {
-            font-size: 18px;
-            margin-left: 10px;
-        }
-        
-        .signature-display {
-            text-align: center;
-            margin: 20px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            border: 2px solid #e9ecef;
-        }
-        
-        .footer {
-            background: rgba(15, 76, 117, 0.9);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 0 0 15px 15px;
-        }
-        
-        .last-update {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            backdrop-filter: blur(10px);
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 10px;
-            }
-            
-            .content {
-                padding: 20px;
-            }
-            
-            .header {
-                padding: 20px;
-            }
-            
-            .ministry-logo {
-                font-size: 40px;
-            }
-            
-            .school-name {
-                font-size: 18px;
-                padding: 10px 20px;
-            }
-            
-            .admin-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .search-filter {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-filter input,
-            .search-filter select {
-                width: 100%;
-            }
-            
-            .table-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .table-controls {
-                justify-content: center;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                margin: 5% 10px;
-                max-width: none;
-            }
-            
-            .modal-body {
-                padding: 20px;
-            }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <div class="ministry-logo">🇸🇦</div>
-                <div class="ministry-title">المملكة العربية السعودية</div>
-                <div class="ministry-subtitle">وزارة التعليم</div>
-                <div class="school-name">متوسطة المنذر بن عمرو الأنصاري</div>
-                <div class="dashboard-title">لوحة تحكم المدير</div>
-                
-                <div class="admin-controls">
-                    <button class="btn btn-success" onclick="generateDemoData()">
-                        إنشاء بيانات تجريبية
-                    </button>
-                    <button class="btn btn-primary" onclick="refreshData()">
-                        تحديث البيانات
-                    </button>
-                    <button class="btn btn-info" onclick="exportToExcel()">
-                        تصدير إلى Excel
-                    </button>
-                    <button class="btn btn-warning" onclick="printReport()">
-                        طباعة التقرير
-                    </button>
-                    <button class="btn btn-danger" onclick="clearAllData()">
-                        مسح جميع البيانات
-                    </button>
-                </div>
-            </div>
+        <div class="ministry-header">
+            <div>🇸🇦 المملكة العربية السعودية</div>
+            <div>وزارة التعليم</div>
+            <div>متوسطة المنذر بن عمرو الأنصاري</div>
         </div>
         
-        <div class="content">
-            <div class="alert alert-info" id="systemAlert" style="display: none;">
-                <strong>تنبيه النظام:</strong> <span id="alertMessage"></span>
+        <div class="logo">🏆</div>
+        <h1 class="title">نافس</h1>
+        <p>منصة المسابقات التعليمية الذكية</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="studentName">اسم الطالب:</label>
+                <input type="text" id="studentName" class="form-control" required>
             </div>
             
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-number" id="totalSignatures">0</div>
-                    <div class="stat-label">إجمالي التوقيعات</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-number" id="completedSignatures">0</div>
-                    <div class="stat-label">التوقيعات المكتملة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⚠️</div>
-                    <div class="stat-number" id="pendingSignatures">0</div>
-                    <div class="stat-label">التوقيعات المعلقة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📈</div>
-                    <div class="stat-number" id="completionRate">0%</div>
-                    <div class="stat-label">معدل الإنجاز</div>
-                </div>
-            </div>
-            
-            <div class="search-filter">
-                <input type="text" id="searchName" placeholder="البحث بالاسم..." onkeyup="filterSignatures()">
-                <select id="filterStatus" onchange="filterSignatures()">
-                    <option value="">جميع الحالات</option>
-                    <option value="complete">مكتملة</option>
-                    <option value="pending">معلقة</option>
+            <div class="form-group">
+                <label for="grade">الصف:</label>
+                <select id="grade" class="form-control" required>
+                    <option value="">اختر الصف</option>
+                    <option value="الأول متوسط">الأول متوسط</option>
+                    <option value="الثاني متوسط">الثاني متوسط</option>
+                    <option value="الثالث متوسط">الثالث متوسط</option>
                 </select>
-                <select id="filterPosition" onchange="filterSignatures()">
-                    <option value="">جميع المناصب</option>
-                    <option value="معلم">معلم</option>
-                    <option value="معلمة">معلمة</option>
-                    <option value="وكيل">وكيل</option>
-                    <option value="مرشد">مرشد طلابي</option>
+            </div>
+            
+            <div class="form-group">
+                <label for="section">الشعبة:</label>
+                <select id="section" class="form-control" required>
+                    <option value="">اختر الشعبة</option>
+                    <option value="1">الشعبة 1</option>
+                    <option value="2">الشعبة 2</option>
+                    <option value="3">الشعبة 3</option>
                 </select>
-                <button class="btn btn-secondary" onclick="resetFilters()">إعادة تعيين</button>
             </div>
             
-            <div class="signatures-table">
-                <div class="table-header">
-                    <span>قائمة التوقيعات الإلكترونية</span>
-                    <div class="table-controls">
-                        <button class="table-btn" onclick="refreshData()">تحديث</button>
-                        <button class="table-btn" onclick="exportToExcel()">تصدير</button>
-                        <button class="table-btn" onclick="printReport()">طباعة</button>
-                    </div>
-                </div>
-                
-                <div class="table-responsive">
-                    <table id="signaturesTable">
-                        <thead>
-                            <tr>
-                                <th>م</th>
-                                <th>الاسم الثلاثي</th>
-                                <th>الرقم الوظيفي</th>
-                                <th>المسمى الوظيفي</th>
-                                <th>التخصص</th>
-                                <th>تاريخ التوقيع</th>
-                                <th>الحالة</th>
-                                <th>التوقيع</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="signaturesTableBody">
-                            <tr>
-                                <td colspan="9" class="no-signatures">
-                                    <div class="no-signatures-icon">📋</div>
-                                    لا توجد توقيعات حالياً<br>
-                                    <small>انقر على "إنشاء بيانات تجريبية" لرؤية مثال على النظام</small>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <p>متوسطة المنذر بن عمرو الأنصاري © 2025</p>
-        <p>نظام إدارة التوقيعات الإلكترونية</p>
-    </div>
-    
-    <!-- إشعار التوقيع الجديد -->
-    <div class="new-signature-alert" id="newSignatureAlert">
-        <strong>توقيع جديد!</strong><br>
-        <span id="newSignatureMessage"></span>
-    </div>
-    
-    <!-- مؤشر آخر تحديث -->
-    <div class="last-update" id="lastUpdate">
-        آخر تحديث: جاري التحميل...
-    </div>
-    
-    <!-- نافذة عرض التفاصيل -->
-    <div id="detailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>تفاصيل التوقيع الإلكتروني</h2>
-                <span class="close" onclick="closeModal()">&times;</span>
-            </div>
-            <div class="modal-body" id="modalContent">
-                <!-- محتوى التفاصيل سيتم إدراجه هنا -->
-            </div>
-        </div>
+            <button type="submit" class="btn">دخول المسابقة</button>
+        </form>
+        
+        <div id="status" class="status"></div>
     </div>
 
-    <script>
-        // متغيرات عامة
-        let allSignatures = [];
-        let filteredSignatures = [];
-        let lastUpdateTime = null;
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // تحميل البيانات عند بدء التشغيل
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('تحميل لوحة تحكم المدير...');
-            
-            // إضافة زر التشخيص
-            addDiagnosticButton();
-            
-            // تحميل التوقيعات
-            loadSignatures();
-            updateStats();
-            
-            // بدء الفحص التلقائي
-            startAutoUpdate();
-            
-            // فحص تشخيصي أولي
-            setTimeout(() => {
-                diagnosticCheck();
-            }, 1000);
-            
-            console.log('تم تحميل لوحة تحكم المدير بنجاح');
-        });
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
+            authDomain: "nafs-competition.firebaseapp.com",
+            projectId: "nafs-competition",
+            storageBucket: "nafs-competition.firebasestorage.app",
+            messagingSenderId: "182205828634",
+            appId: "1:182205828634:web:dee889f770eb52ff668ba3",
+            measurementId: "G-MLR86M05H7"
+        };
 
-        // تحميل التوقيعات من التخزين المحلي
-        function loadSignatures() {
-            allSignatures = [];
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('studentName').value;
+            const grade = document.getElementById('grade').value;
+            const section = document.getElementById('section').value;
             
             try {
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith('signature_')) {
-                        try {
-                            const signature = JSON.parse(localStorage.getItem(key));
-                            // التحقق من صحة البيانات
-                            if (signature && signature.fullName && signature.employeeId) {
-                                allSignatures.push(signature);
-                                console.log('تم تحميل توقيع:', signature.fullName);
-                            }
-                        } catch (parseError) {
-                            console.error('خطأ في تحليل التوقيع:', key, parseError);
-                        }
-                    }
-                }
-                
-                console.log(`تم تحميل ${allSignatures.length} توقيع`);
-                
-                // ترتيب التوقيعات حسب التاريخ (الأحدث أولاً)
-                allSignatures.sort((a, b) => {
-                    const dateA = new Date(a.submissionDate || a.timestamp);
-                    const dateB = new Date(b.submissionDate || b.timestamp);
-                    return dateB - dateA;
+                await addDoc(collection(db, 'students'), {
+                    name: name,
+                    grade: grade,
+                    section: section,
+                    timestamp: serverTimestamp()
                 });
                 
-                filteredSignatures = [...allSignatures];
-                
-                displaySignatures();
-                updateLastUpdateTime();
+                document.getElementById('status').innerHTML = 'تم التسجيل بنجاح!';
+                document.getElementById('status').className = 'status success';
+                document.getElementById('status').style.display = 'block';
                 
             } catch (error) {
-                console.error('خطأ في تحميل التوقيعات:', error);
-                showAlert('حدث خطأ في تحميل البيانات', 'warning');
+                document.getElementById('status').innerHTML = 'حدث خطأ!';
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').style.display = 'block';
             }
-        }
-
-        // عرض التوقيعات في الجدول
-        function displaySignatures() {
-            const tbody = document.getElementById('signaturesTableBody');
-            
-            if (!tbody) {
-                console.error('لم يتم العثور على جدول التوقيعات');
-                return;
-            }
-            
-            if (filteredSignatures.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="9" class="no-signatures">
-                            <div class="no-signatures-icon">📋</div>
-                            ${allSignatures.length === 0 ? 
-                                'لا توجد توقيعات حالياً<br><small>انتظر وصول التوقيعات من المعلمين أو انقر على "إنشاء بيانات تجريبية" للاختبار</small>' : 
-                                'لا توجد نتائج تطابق معايير البحث<br><small>جرب تعديل معايير البحث أو إعادة التعيين</small>'}
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            let tableHTML = '';
-            
-            filteredSignatures.forEach((sig, index) => {
-                const isComplete = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
-                const statusClass = isComplete ? 'status-complete' : 'status-pending';
-                const statusText = isComplete ? 'مكتملة' : 'معلقة';
-                
-                // تنسيق التاريخ
-                let formattedDate = 'غير محدد';
-                try {
-                    if (sig.timestamp) {
-                        const date = new Date(sig.submissionDate || sig.timestamp);
-                        formattedDate = date.toLocaleDateString('ar-SA', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit'
-                        });
-                    }
-                } catch (dateError) {
-                    console.warn('خطأ في تنسيق التاريخ:', dateError);
-                }
-                
-                tableHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong>${sig.fullName || 'غير محدد'}</strong></td>
-                        <td>${sig.employeeId || 'غير محدد'}</td>
-                        <td>${sig.position || 'غير محدد'}</td>
-                        <td>${sig.subject || 'غير محدد'}</td>
-                        <td>${formattedDate}</td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        <td>
-                            ${sig.signature ? 
-                                (sig.signature.type === 'text' ? 
-                                    `<div style="font-weight: bold; color: #0f6b47; font-size: 12px; cursor: pointer;" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="انقر للعرض">نصي</div>` : 
-                                    `<img src="${sig.signature.data}" class="signature-preview" alt="توقيع" onclick="viewSignatureDetails('${sig.referenceNumber}')" title="انقر للتكبير">`) : 
-                                '<span style="color: #6c757d; font-size: 12px;">لا يوجد</span>'}
-                        </td>
-                        <td>
-                            <button class="action-btn" onclick="viewSignatureDetails('${sig.referenceNumber || 'N/A'}')" title="عرض التفاصيل الكاملة">
-                                عرض التفاصيل
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            tbody.innerHTML = tableHTML;
-            console.log(`تم عرض ${filteredSignatures.length} توقيع في الجدول`);
-        }
-
-        // تحديث الإحصائيات
-        function updateStats() {
-            const total = allSignatures.length;
-            const completed = allSignatures.filter(sig => 
-                sig.readConfirm && sig.understandConfirm && sig.implementConfirm
-            ).length;
-            const pending = total - completed;
-            const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
-            
-            // تحديث الأرقام مع تأثير العد
-            animateNumber('totalSignatures', total);
-            animateNumber('completedSignatures', completed);
-            animateNumber('pendingSignatures', pending);
-            animateNumber('completionRate', completionRate, '%');
-        }
-
-        // تأثير العد المتحرك للأرقام
-        function animateNumber(elementId, targetValue, suffix = '') {
-            const element = document.getElementById(elementId);
-            const currentValue = parseInt(element.textContent) || 0;
-            const increment = Math.max(1, Math.floor(Math.abs(targetValue - currentValue) / 20));
-            
-            if (currentValue < targetValue) {
-                const newValue = Math.min(currentValue + increment, targetValue);
-                element.textContent = newValue + suffix;
-                if (newValue < targetValue) {
-                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
-                }
-            } else if (currentValue > targetValue) {
-                const newValue = Math.max(currentValue - increment, targetValue);
-                element.textContent = newValue + suffix;
-                if (newValue > targetValue) {
-                    setTimeout(() => animateNumber(elementId, targetValue, suffix), 50);
-                }
-            }
-        }
-
-        // تصفية التوقيعات
-        function filterSignatures() {
-            const searchName = document.getElementById('searchName').value.toLowerCase();
-            const filterStatus = document.getElementById('filterStatus').value;
-            const filterPosition = document.getElementById('filterPosition').value;
-            
-            filteredSignatures = allSignatures.filter(sig => {
-                const matchesName = sig.fullName.toLowerCase().includes(searchName) || 
-                                   sig.employeeId.includes(searchName);
-                
-                let matchesStatus = true;
-                if (filterStatus === 'complete') {
-                    matchesStatus = sig.readConfirm && sig.understandConfirm && sig.implementConfirm;
-                } else if (filterStatus === 'pending') {
-                    matchesStatus = !(sig.readConfirm && sig.understandConfirm && sig.implementConfirm);
-                }
-                
-                const matchesPosition = !filterPosition || sig.position.includes(filterPosition);
-                
-                return matchesName && matchesStatus && matchesPosition;
-            });
-            
-            displaySignatures();
-        }
-
-        // إعادة تعيين المرشحات
-        function resetFilters() {
-            document.getElementById('searchName').value = '';
-            document.getElementById('filterStatus').value = '';
-            document.getElementById('filterPosition').value = '';
-            filteredSignatures = [...allSignatures];
-            displaySignatures();
-            showAlert('تم إعادة تعيين جميع المرشحات', 'success');
-        }
-
-        // عرض تفاصيل التوقيع
-        function viewSignatureDetails(referenceNumber) {
-            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
-            if (!signature) return;
-            
-            const isComplete = signature.readConfirm && signature.understandConfirm && signature.implementConfirm;
-            
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <div class="detail-row">
-                    <div class="detail-label">الاسم الثلاثي:</div>
-                    <div class="detail-value"><strong>${signature.fullName}</strong></div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">الرقم الوظيفي:</div>
-                    <div class="detail-value">${signature.employeeId}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">المسمى الوظيفي:</div>
-                    <div class="detail-value">${signature.position}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">التخصص/المادة:</div>
-                    <div class="detail-value">${signature.subject || 'غير محدد'}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">رقم الجوال:</div>
-                    <div class="detail-value">${signature.phone || 'غير محدد'}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">تاريخ التوقيع:</div>
-                    <div class="detail-value">${signature.timestamp}</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">رقم المرجع:</div>
-                    <div class="detail-value"><code>${signature.referenceNumber}</code></div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">رقم التعميم:</div>
-                    <div class="detail-value">${signature.circularNumber || '001'}</div>
-                </div>
-                
-                <h3 style="color: #0f6b47; margin: 25px 0 15px; text-align: center;">حالة التأكيدات</h3>
-                <div class="confirmation-status">
-                    <div class="confirmation-item">
-                        <span class="confirmation-icon">${signature.readConfirm ? '✅' : '❌'}</span>
-                        <span>اطلع على التعميم كاملاً ومحتوياته</span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-icon">${signature.understandConfirm ? '✅' : '❌'}</span>
-                        <span>فهم المضمون والتعليمات المطلوبة</span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-icon">${signature.implementConfirm ? '✅' : '❌'}</span>
-                        <span>التزام بتطبيق التعليمات والتوجيهات</span>
-                    </div>
-                </div>
-                
-                <div class="detail-row">
-                    <div class="detail-label">الحالة العامة:</div>
-                    <div class="detail-value">
-                        <span class="status-badge ${isComplete ? 'status-complete' : 'status-pending'}">
-                            ${isComplete ? 'مكتملة' : 'معلقة'}
-                        </span>
-                    </div>
-                </div>
-                
-                ${signature.signature ? `
-                    <h3 style="color: #0f6b47; margin: 25px 0 15px; text-align: center;">التوقيع الإلكتروني</h3>
-                    <div class="signature-display">
-                        ${signature.signature.type === 'text' ? 
-                            `<div style="font-size: 28px; font-weight: bold; color: #1e4d3b; margin: 20px 0; font-family: serif;">${signature.signature.text}</div>
-                             <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع نصي</div>` : 
-                            `<img src="${signature.signature.data}" style="max-width: 100%; height: auto; border: 2px solid #e9ecef; border-radius: 8px; background: white;" alt="التوقيع">
-                             <div style="margin-top: 15px; font-size: 14px; color: #666;">نوع التوقيع: توقيع مرسوم باليد</div>`}
-                    </div>
-                ` : '<div style="text-align: center; color: #6c757d; padding: 20px;">لا يوجد توقيع</div>'}
-                
-                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef;">
-                    <button class="btn btn-primary" onclick="printSignatureDetails('${signature.referenceNumber}')" style="margin-left: 10px;">
-                        طباعة التفاصيل
-                    </button>
-                    <button class="btn btn-secondary" onclick="closeModal()">
-                        إغلاق
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('detailsModal').style.display = 'block';
-        }
-
-        // إغلاق النافذة المنبثقة
-        function closeModal() {
-            document.getElementById('detailsModal').style.display = 'none';
-        }
-
-        // إنشاء بيانات تجريبية
-        function generateDemoData() {
-            if (confirm('هل تريد إنشاء بيانات تجريبية؟ سيؤدي ذلك إلى إضافة توقيعات وهمية للاختبار.')) {
-                const demoData = [
-                    {
-                        circularNumber: '001',
-                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
-                        fullName: 'أحمد محمد العلي',
-                        employeeId: '12345',
-                        position: 'معلم',
-                        subject: 'الرياضيات',
-                        phone: '0501234567',
-                        readConfirm: true,
-                        understandConfirm: true,
-                        implementConfirm: true,
-                        signature: { type: 'text', text: 'أحمد محمد العلي' },
-                        timestamp: new Date().toLocaleString('ar-SA'),
-                        referenceNumber: 'MAN-20250101-120000-001',
-                        submissionDate: new Date().toISOString()
-                    },
-                    {
-                        circularNumber: '001',
-                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
-                        fullName: 'فاطمة سعد الأحمد',
-                        employeeId: '12346',
-                        position: 'معلمة',
-                        subject: 'اللغة العربية',
-                        phone: '0507654321',
-                        readConfirm: true,
-                        understandConfirm: true,
-                        implementConfirm: false,
-                        signature: { type: 'text', text: 'فاطمة سعد الأحمد' },
-                        timestamp: new Date(Date.now() - 3600000).toLocaleString('ar-SA'),
-                        referenceNumber: 'MAN-20250101-110000-002',
-                        submissionDate: new Date(Date.now() - 3600000).toISOString()
-                    },
-                    {
-                        circularNumber: '001',
-                        circularSubject: 'تطبيق نظام التوقيع الإلكتروني الجديد',
-                        fullName: 'عبدالله خالد المطيري',
-                        employeeId: '12347',
-                        position: 'وكيل',
-                        subject: '',
-                        phone: '0509876543',
-                        readConfirm: true,
-                        understandConfirm: true,
-                        implementConfirm: true,
-                        signature: { type: 'text', text: 'عبدالله خالد المطيري' },
-                        timestamp: new Date(Date.now() - 7200000).toLocaleString('ar-SA'),
-                        referenceNumber: 'MAN-20250101-100000-003',
-                        submissionDate: new Date(Date.now() - 7200000).toISOString()
-                    }
-                ];
-                
-                demoData.forEach(data => {
-                    localStorage.setItem(`signature_${data.referenceNumber}`, JSON.stringify(data));
-                });
-                
-                loadSignatures();
-                updateStats();
-                showAlert('تم إنشاء البيانات التجريبية بنجاح!', 'success');
-            }
-        }
-
-        // تحديث البيانات مع فحص دوري محسن
-        function refreshData() {
-            console.log('بدء تحديث البيانات...');
-            const previousCount = allSignatures.length;
-            const previousSignatures = [...allSignatures];
-            
-            loadSignatures();
-            updateStats();
-            
-            const newCount = allSignatures.length;
-            console.log(`العدد السابق: ${previousCount}, العدد الحالي: ${newCount}`);
-            
-            if (newCount > previousCount) {
-                const newSignatures = newCount - previousCount;
-                console.log(`تم العثور على ${newSignatures} توقيع جديد`);
-                showNewSignatureAlert(`تم العثور على ${newSignatures} توقيع جديد!`);
-                
-                // تمييز التوقيعات الجديدة
-                const newSigs = allSignatures.filter(sig => 
-                    !previousSignatures.some(prev => prev.referenceNumber === sig.referenceNumber)
-                );
-                newSigs.forEach(sig => {
-                    console.log('توقيع جديد من:', sig.fullName);
-                });
-                
-            } else if (newCount === previousCount) {
-                showAlert('لا توجد توقيعات جديدة', 'info');
-            } else {
-                showAlert('تم تحديث البيانات بنجاح', 'success');
-            }
-        }
-
-        // فحص دوري محسن للتوقيعات الجديدة
-        function startAutoUpdate() {
-            console.log('بدء الفحص التلقائي للتوقيعات الجديدة...');
-            
-            setInterval(() => {
-                const currentCount = allSignatures.length;
-                const currentSignatures = [...allSignatures];
-                
-                console.log('فحص دوري للتوقيعات الجديدة...');
-                loadSignatures();
-                
-                if (allSignatures.length > currentCount) {
-                    updateStats();
-                    const newSignatures = allSignatures.length - currentCount;
-                    console.log(`تم استلام ${newSignatures} توقيع جديد تلقائياً!`);
-                    showNewSignatureAlert(`تم استلام ${newSignatures} توقيع جديد!`);
-                    
-                    // إضافة تأثير بصري للتوقيعات الجديدة
-                    setTimeout(() => {
-                        const rows = document.querySelectorAll('#signaturesTable tbody tr');
-                        rows.forEach((row, index) => {
-                            if (index < newSignatures) {
-                                row.style.backgroundColor = '#e8f5e8';
-                                row.style.animation = 'highlight 2s ease-out';
-                            }
-                        });
-                    }, 500);
-                }
-            }, 5000); // فحص كل 5 ثوان
-        }
-
-        // إضافة ستايل CSS للتأثير البصري
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes highlight {
-                0% { background-color: #28a745; }
-                100% { background-color: #e8f5e8; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // دالة تشخيص لفحص حالة النظام
-        function diagnosticCheck() {
-            console.log('=== فحص تشخيصي للنظام ===');
-            console.log('عدد العناصر في localStorage:', localStorage.length);
-            
-            let signatureCount = 0;
-            let validSignatures = 0;
-            
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.startsWith('signature_')) {
-                    signatureCount++;
-                    try {
-                        const data = JSON.parse(localStorage.getItem(key));
-                        if (data && data.fullName && data.employeeId) {
-                            validSignatures++;
-                            console.log(`✓ توقيع صحيح: ${data.fullName} (${key})`);
-                        } else {
-                            console.warn(`⚠ توقيع ناقص البيانات: ${key}`, data);
-                        }
-                    } catch (e) {
-                        console.error(`✗ توقيع تالف: ${key}`, e);
-                    }
-                }
-            }
-            
-            console.log(`إجمالي التوقيعات: ${signatureCount}`);
-            console.log(`التوقيعات الصحيحة: ${validSignatures}`);
-            console.log('حالة المتغيرات:');
-            console.log(`- allSignatures.length: ${allSignatures.length}`);
-            console.log(`- filteredSignatures.length: ${filteredSignatures.length}`);
-            console.log('=== انتهاء الفحص التشخيصي ===');
-            
-            return {
-                total: signatureCount,
-                valid: validSignatures,
-                loaded: allSignatures.length
-            };
-        }
-
-        // إضافة زر التشخيص للمدير
-        function addDiagnosticButton() {
-            const diagnosticBtn = document.createElement('button');
-            diagnosticBtn.textContent = '🔍 فحص النظام';
-            diagnosticBtn.className = 'btn btn-info';
-            diagnosticBtn.onclick = () => {
-                const result = diagnosticCheck();
-                showAlert(`تم العثور على ${result.valid} توقيع صحيح من أصل ${result.total} في التخزين`, 'info');
-            };
-            
-            const adminControls = document.querySelector('.admin-controls');
-            if (adminControls) {
-                adminControls.appendChild(diagnosticBtn);
-            }
-        }
-
-        function exportToExcel() {
-            if (allSignatures.length === 0) {
-                showAlert('لا توجد بيانات للتصدير', 'warning');
-                return;
-            }
-            
-            const headers = [
-                'الاسم الثلاثي',
-                'الرقم الوظيفي', 
-                'المسمى الوظيفي',
-                'التخصص/المادة',
-                'رقم الجوال',
-                'تاريخ التوقيع',
-                'رقم المرجع',
-                'اطلع على التعميم',
-                'فهم المضمون',
-                'التزم بالتطبيق',
-                'نوع التوقيع',
-                'الحالة العامة'
-            ];
-            
-            const csvData = allSignatures.map(sig => [
-                sig.fullName,
-                sig.employeeId,
-                sig.position,
-                sig.subject || '',
-                sig.phone || '',
-                sig.timestamp,
-                sig.referenceNumber,
-                sig.readConfirm ? 'نعم' : 'لا',
-                sig.understandConfirm ? 'نعم' : 'لا',
-                sig.implementConfirm ? 'نعم' : 'لا',
-                sig.signature?.type === 'text' ? 'نصي' : 'مرسوم',
-                (sig.readConfirm && sig.understandConfirm && sig.implementConfirm) ? 'مكتملة' : 'معلقة'
-            ]);
-            
-            const csvContent = [headers, ...csvData]
-                .map(row => row.map(cell => `"${cell}"`).join(','))
-                .join('\n');
-            
-            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `تقرير_التوقيعات_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showAlert('تم تصدير البيانات بنجاح', 'success');
-        }
-
-        function printReport() {
-            if (allSignatures.length === 0) {
-                showAlert('لا توجد بيانات للطباعة', 'warning');
-                return;
-            }
-            
-            window.print();
-        }
-
-        function clearAllData() {
-            if (confirm('تحذير! هل أنت متأكد من مسح جميع البيانات؟ لا يمكن التراجع عن هذا الإجراء.')) {
-                const keys = [];
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith('signature_')) {
-                        keys.push(key);
-                    }
-                }
-                
-                keys.forEach(key => localStorage.removeItem(key));
-                
-                allSignatures = [];
-                filteredSignatures = [];
-                updateStats();
-                displaySignatures();
-                
-                showAlert('تم مسح جميع البيانات بنجاح', 'warning');
-            }
-        }
-
-        function showAlert(message, type = 'info') {
-            const alertDiv = document.getElementById('systemAlert');
-            const alertMessage = document.getElementById('alertMessage');
-            
-            alertMessage.textContent = message;
-            alertDiv.className = `alert alert-${type}`;
-            alertDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                alertDiv.style.display = 'none';
-            }, 5000);
-        }
-
-        function showNewSignatureAlert(message) {
-            const alert = document.getElementById('newSignatureAlert');
-            const alertMessage = document.getElementById('newSignatureMessage');
-            
-            alertMessage.textContent = message;
-            alert.style.display = 'block';
-            
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 6000);
-        }
-
-        function updateLastUpdateTime() {
-            const lastUpdateDiv = document.getElementById('lastUpdate');
-            const now = new Date();
-            lastUpdateDiv.textContent = `آخر تحديث: ${now.toLocaleTimeString('ar-SA')}`;
-            lastUpdateTime = now;
-        }
-
-        function startAutoUpdate() {
-            setInterval(() => {
-                const currentCount = allSignatures.length;
-                loadSignatures();
-                
-                if (allSignatures.length > currentCount) {
-                    updateStats();
-                    const newSignatures = allSignatures.length - currentCount;
-                    showNewSignatureAlert(`تم استلام ${newSignatures} توقيع جديد!`);
-                }
-            }, 10000);
-        }
-
-        function printSignatureDetails(referenceNumber) {
-            const signature = allSignatures.find(sig => sig.referenceNumber === referenceNumber);
-            if (!signature) return;
-            
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html dir="rtl">
-                <head><title>تفاصيل التوقيع</title></head>
-                <body style="font-family: Arial; padding: 20px;">
-                    <h2>تفاصيل التوقيع - ${signature.fullName}</h2>
-                    <p><strong>الرقم الوظيفي:</strong> ${signature.employeeId}</p>
-                    <p><strong>المنصب:</strong> ${signature.position}</p>
-                    <p><strong>التاريخ:</strong> ${signature.timestamp}</p>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('detailsModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        console.log('تم تحميل لوحة تحكم المدير بنجاح');
+        });
     </script>
 </body>
 </html>
