@@ -735,8 +735,17 @@
                 currentUser = userCredential.user;
                 
                 await loadStudentData();
-                await checkExistingProgress();
-                await loadQuestions();
+                
+                // تحميل الأسئلة والتحقق من التقدم بالتوازي
+                const [questionsLoaded, progressChecked] = await Promise.allSettled([
+                    loadQuestions(),
+                    checkExistingProgress()
+                ]);
+                
+                if (questionsLoaded.status === 'rejected') {
+                    console.warn('فشل تحميل الأسئلة من Firebase، استخدام الأسئلة المحلية');
+                }
+                
                 setupEventListeners();
                 setupSecurity();
                 
@@ -748,10 +757,21 @@
                 }
                 
                 showLoading(false);
+                showMessage('success', '🚀 تم تحضير المسابقة بنجاح! ابدأ الآن');
+                
             } catch (error) {
                 console.error('خطأ في تهيئة التطبيق:', error);
-                showMessage('error', 'حدث خطأ في تحميل المسابقة. يرجى إعادة تحميل الصفحة.');
+                
+                // في حالة فشل كامل، استخدم النظام المحلي
+                currentQuestions = getLocalQuestions();
+                setupEventListeners();
+                setupSecurity();
+                
                 showLoading(false);
+                showMessage('info', '⚡ تم تحضير المسابقة محلياً. ابدأ الآن!');
+                
+                loadQuestion();
+                startTimer();
             }
         }
 
