@@ -232,107 +232,187 @@
             box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
         }
 
-        .podium {
+        /* تصميم قائمة المتفوقين الجديد */
+        .champions-list {
             display: flex;
-            justify-content: center;
-            align-items: end;
+            flex-direction: column;
+            gap: 20px;
             margin-bottom: 40px;
-            gap: 25px;
-            height: 400px;
-            flex-wrap: wrap;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .podium-place {
-            background: linear-gradient(145deg, #ffffff, #f8fafc);
+        .champion-item {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
             border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-width: 280px;
-            max-width: 300px;
+            border-right: 6px solid transparent;
         }
 
-        .podium-place.first {
-            height: 300px;
-            background: linear-gradient(145deg, #fef3c7, #fde68a);
-            border: 3px solid #f59e0b;
-            order: 2;
+        .champion-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
         }
 
-        .podium-place.second {
-            height: 250px;
-            background: linear-gradient(145deg, #e5e7eb, #d1d5db);
-            border: 3px solid #6b7280;
-            order: 1;
+        .champion-item.rank-1 {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-right: 6px solid #f59e0b;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
         }
 
-        .podium-place.third {
-            height: 200px;
-            background: linear-gradient(145deg, #fecaca, #fca5a5);
-            border: 3px solid #ef4444;
-            order: 3;
+        .champion-item.rank-1:hover {
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.3);
         }
 
-        .podium-place:hover {
-            transform: translateY(-10px);
+        .champion-item.rank-2 {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            border-right: 6px solid #6b7280;
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.15);
         }
 
-        .podium-crown {
-            font-size: 3em;
-            margin-bottom: 15px;
-            animation: crownFloat 2s ease-in-out infinite;
+        .champion-item.rank-2:hover {
+            box-shadow: 0 12px 30px rgba(107, 114, 128, 0.2);
         }
 
-        @keyframes crownFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .champion-item.rank-3 {
+            background: linear-gradient(135deg, #fecaca, #fca5a5);
+            border-right: 6px solid #ef4444;
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.15);
         }
 
-        .podium-avatar {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(145deg, #6366f1, #8b5cf6);
+        .champion-item.rank-3:hover {
+            box-shadow: 0 12px 30px rgba(239, 68, 68, 0.2);
+        }
+
+        .rank-badge {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5em;
-            color: white;
-            margin: 0 auto 15px;
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .podium-name {
             font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            color: #374151;
-            line-height: 1.3;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            font-size: 2em;
+            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.4);
+            flex-shrink: 0;
         }
 
-        .podium-score {
-            font-size: 2em;
+        .rank-badge.gold {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
+        }
+
+        .rank-badge.silver {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            box-shadow: 0 6px 18px rgba(107, 114, 128, 0.4);
+        }
+
+        .rank-badge.bronze {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.4);
+        }
+
+        .champion-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .champion-info {
+            flex: 1;
+        }
+
+        .champion-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .excellence-message {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .excellence-message.rank-1 {
+            color: #f59e0b;
+        }
+
+        .excellence-message.rank-2 {
+            color: #6b7280;
+        }
+
+        .excellence-message.rank-3 {
+            color: #ef4444;
+        }
+
+        .student-details {
+            color: #6b7280;
+            font-size: 1em;
+            line-height: 1.4;
+        }
+
+        .champion-stats {
+            text-align: center;
+            margin-left: 20px;
+            flex-shrink: 0;
+        }
+
+        .score-large {
+            font-size: 2.2em;
             font-weight: bold;
             color: #16a34a;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
+            line-height: 1;
         }
 
-        .podium-details {
-            font-size: 1em;
+        .performance-info {
             color: #6b7280;
-            line-height: 1.6;
+            font-size: 0.95em;
+            line-height: 1.3;
+        }
+
+        .motivational-quote {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
             font-weight: 500;
+            text-align: center;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            font-style: italic;
+            max-width: 300px;
+        }
+
+        .motivational-quote.rank-1 {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .motivational-quote.rank-2 {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        .motivational-quote.rank-3 {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         .rankings-list {
@@ -507,7 +587,7 @@
             display: none !important;
         }
 
-        /* تحسين responsive للمنصة */
+        /* تحسين responsive للتصميم الجديد */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -517,7 +597,7 @@
                 font-size: 2em;
             }
 
-            .champion-row {
+            .champion-item {
                 flex-direction: column;
                 text-align: center;
                 gap: 20px;
@@ -551,6 +631,7 @@
             .motivational-quote {
                 margin-top: 10px;
                 width: 100%;
+                max-width: none;
             }
 
             .stats-overview {
@@ -700,14 +781,14 @@
             📡 لا توجد بيانات في قاعدة البيانات بعد - يتم عرض بيانات تجريبية
         </div>
 
-        <!-- Top 3 Podium -->
-        <div class="leaderboard-section hidden" id="podiumSection">
+        <!-- Top 3 Champions List -->
+        <div class="leaderboard-section hidden" id="championsSection">
             <div class="section-title">
                 <span class="section-icon">👑</span>
-                منصة التميز - أبطال المدرسة
+                قائمة الشرف - أبطال المدرسة
             </div>
             
-            <div class="podium" id="podium">
+            <div class="champions-list" id="championsList">
                 <!-- سيتم إنشاؤها بواسطة JavaScript -->
             </div>
         </div>
@@ -873,8 +954,7 @@
 
         // استخراج الصف من معرف الطالب أو البيانات المحفوظة
         function extractGradeFromStudent(studentId) {
-            // محاولة جلب البيانات من localStorage
-                            const studentData = localStorage.getItem('nafes_student_data');
+            const studentData = localStorage.getItem('nafes_student_data');
             if (studentData) {
                 try {
                     const data = JSON.parse(studentData);
@@ -902,12 +982,9 @@
 
         // حساب الوقت المستغرق
         function calculateTimeSpent(data) {
-            // إذا كان الوقت محفوظ مباشرة
             if (data.timeSpent) return data.timeSpent;
-            
-            // حساب تقريبي بناءً على عدد الأسئلة
             const questionsAnswered = data.currentQuestionIndex || data.totalQuestions || 10;
-            return questionsAnswered * 30; // 30 ثانية لكل سؤال تقريباً
+            return questionsAnswered * 30;
         }
 
         // تحميل بيانات تجريبية
@@ -979,7 +1056,6 @@
             const totalStudents = new Set(allResults.map(r => r.studentName)).size;
             const totalSessions = allResults.length;
             
-            // الطلاب النشطين اليوم
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const activeToday = allResults.filter(r => {
@@ -987,12 +1063,10 @@
                 return endDate >= today;
             }).length;
 
-            // متوسط الدرجات
             const averageScore = allResults.length > 0 
                 ? Math.round(allResults.reduce((sum, r) => sum + (r.percentage || 0), 0) / allResults.length)
                 : 0;
 
-            // تحديث العرض
             document.getElementById('totalStudents').textContent = totalStudents.toLocaleString();
             document.getElementById('totalSessions').textContent = totalSessions.toLocaleString();
             document.getElementById('activeToday').textContent = activeToday;
@@ -1004,21 +1078,17 @@
             const gradeFilter = document.getElementById('gradeFilter').value;
             const sectionFilter = document.getElementById('sectionFilter').value;
 
-            // تطبيق المرشحات
             filteredResults = allResults.filter(result => {
                 let matches = true;
 
-                // مرشح الصف
                 if (gradeFilter && result.studentGrade !== gradeFilter) {
                     matches = false;
                 }
 
-                // مرشح الفصل
                 if (sectionFilter && result.studentSection !== sectionFilter) {
                     matches = false;
                 }
 
-                // مرشح الوقت
                 if (currentFilter !== 'all') {
                     const now = new Date();
                     const resultDate = new Date(result.endTime);
@@ -1033,24 +1103,19 @@
                             const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
                             if (resultDate < weekAgo) matches = false;
                             break;
-                        case 'grade':
-                            // عرض حسب الصف الحالي المختار
-                            break;
                     }
                 }
 
                 return matches;
             });
 
-            // ترتيب النتائج
             sortResults();
 
-            // عرض النتائج
             if (filteredResults.length === 0) {
                 showEmptyState();
             } else {
                 hideEmptyState();
-                renderPodium();
+                renderChampions();
                 renderRankingsList();
             }
         }
@@ -1061,7 +1126,7 @@
                 switch (currentSort) {
                     case 'score':
                         if (a.score !== b.score) return b.score - a.score;
-                        return a.timeSpent - b.timeSpent; // في حالة التساوي، الأسرع يتقدم
+                        return a.timeSpent - b.timeSpent;
                     case 'percentage':
                         if (a.percentage !== b.percentage) return b.percentage - a.percentage;
                         return a.timeSpent - b.timeSpent;
@@ -1073,44 +1138,62 @@
             });
         }
 
-        // عرض المنصة للثلاثة الأوائل
-        function renderPodium() {
-            const podium = document.getElementById('podium');
-            podium.innerHTML = '';
+        // عرض قائمة الأبطال الثلاثة
+        function renderChampions() {
+            const championsList = document.getElementById('championsList');
+            championsList.innerHTML = '';
 
             const top3 = filteredResults.slice(0, 3);
             if (top3.length === 0) return;
 
-            const positions = ['first', 'second', 'third'];
-            const crowns = ['👑', '🥈', '🥉'];
-            const titles = ['المركز الأول', 'المركز الثاني', 'المركز الثالث'];
+            const badgeClasses = ['gold', 'silver', 'bronze'];
+            const excellenceMessages = [
+                '🌟 بطل المدرسة - إنجاز رائع!',
+                '💫 نجم متألق - استمر في التميز!',
+                '⭐ مبدع مميز - إلى الأمام دائماً!'
+            ];
+            const motivationalQuotes = [
+                '"النجاح ثمرة الجهد والمثابرة"',
+                '"التميز عادة وليس حدثاً"',
+                '"كل إنجاز يبدأ بقرار المحاولة"'
+            ];
 
             top3.forEach((student, index) => {
-                if (index >= 3) return; // فقط أول 3
+                if (index >= 3) return;
 
-                const place = document.createElement('div');
-                place.className = `podium-place ${positions[index]}`;
+                const championItem = document.createElement('div');
+                championItem.className = `champion-item rank-${index + 1}`;
                 
-                place.innerHTML = `
-                    <div style="text-align: center;">
-                        <div class="podium-crown">${crowns[index]}</div>
-                        <div style="font-size: 1.2em; font-weight: bold; color: #6366f1; margin-bottom: 15px;">${titles[index]}</div>
-                        <div class="podium-avatar">${getStudentIcon(student.studentName)}</div>
-                        <div class="podium-name">${student.studentName}</div>
-                        <div class="podium-score">${student.score}/100</div>
-                        <div class="podium-details">
-                            ${student.studentGrade}<br>
-                            الفصل ${student.studentSection}<br>
-                            ⏱️ ${formatTime(student.timeSpent)}<br>
-                            🎯 ${student.percentage}%
+                championItem.innerHTML = `
+                    <div class="rank-badge ${badgeClasses[index]}">${index + 1}</div>
+                    
+                    <div class="champion-content">
+                        <div class="champion-info">
+                            <div class="champion-name">${student.studentName}</div>
+                            <div class="excellence-message rank-${index + 1}">${excellenceMessages[index]}</div>
+                            <div class="student-details">
+                                ${student.studentGrade} - الفصل ${student.studentSection} | ⏱️ ${formatTime(student.timeSpent)} | 🎯 ${student.percentage}%
+                            </div>
                         </div>
+                        
+                        <div class="champion-stats">
+                            <div class="score-large">${student.score}/100</div>
+                            <div class="performance-info">
+                                درجة التميز<br>
+                                ${formatDate(student.endTime)}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="motivational-quote rank-${index + 1}">
+                        ${motivationalQuotes[index]}
                     </div>
                 `;
 
-                podium.appendChild(place);
+                championsList.appendChild(championItem);
             });
 
-            document.getElementById('podiumSection').classList.remove('hidden');
+            document.getElementById('championsSection').classList.remove('hidden');
         }
 
         // عرض قائمة الترتيب
@@ -1196,7 +1279,7 @@
         // إظهار حالة فارغة
         function showEmptyState() {
             document.getElementById('emptyState').classList.remove('hidden');
-            document.getElementById('podiumSection').classList.add('hidden');
+            document.getElementById('championsSection').classList.add('hidden');
             document.getElementById('rankingsSection').classList.add('hidden');
         }
 
