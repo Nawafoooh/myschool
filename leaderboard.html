@@ -19,6 +19,10 @@
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .container {
@@ -159,6 +163,29 @@
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.1);
         }
 
+        .search-section {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            font-size: 1.1em;
+            background: white;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
         .filter-tabs {
             display: flex;
             gap: 15px;
@@ -205,6 +232,44 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
+        .achievements-section {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.1);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .achievement-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .achievement-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .achievement-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
         .leaderboard-section {
             background: rgba(255, 255, 255, 0.98);
             border-radius: 25px;
@@ -232,7 +297,6 @@
             box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
         }
 
-        /* تصميم قائمة المتفوقين الجديد */
         .champions-list {
             display: flex;
             flex-direction: column;
@@ -560,6 +624,32 @@
             margin: 20px 0;
         }
 
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+        }
+
         .footer-credit {
             margin-top: 50px;
             padding: 30px;
@@ -587,7 +677,6 @@
             display: none !important;
         }
 
-        /* تحسين responsive للتصميم الجديد */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -657,6 +746,21 @@
             .rank-number, .student-avatar {
                 margin-left: 0;
             }
+
+            .search-input {
+                font-size: 1em;
+            }
+
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                transform: translateY(-100px);
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 480px) {
@@ -690,6 +794,9 @@
     </style>
 </head>
 <body>
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
@@ -729,9 +836,24 @@
             </div>
         </div>
 
+        <!-- Achievements Section -->
+        <div class="achievements-section">
+            <div class="section-title">
+                <span class="section-icon">🏅</span>
+                إنجازات وأرقام قياسية
+            </div>
+            <div class="achievements-grid" id="achievementsGrid">
+                <!-- سيتم ملؤها بواسطة JavaScript -->
+            </div>
+        </div>
+
         <!-- Controls -->
         <div class="controls">
             <h3>🎛️ خيارات العرض والتصفية</h3>
+            
+            <div class="search-section">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 البحث بالاسم...">
+            </div>
             
             <div class="filter-tabs">
                 <div class="tab active" data-tab="all">🏫 جميع المدرسة</div>
@@ -761,6 +883,7 @@
                 <select class="filter-select" id="sortFilter">
                     <option value="score">الدرجات</option>
                     <option value="percentage">النسبة المئوية</option>
+                    <option value="time">الوقت</option>
                     <option value="recent">الأحدث</option>
                 </select>
 
@@ -853,12 +976,48 @@
         let currentFilter = 'all';
         let currentSort = 'score';
         let isOfflineMode = false;
+        let searchQuery = '';
 
         // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
+            setupSecurity();
             loadLeaderboardData();
         });
+
+        // إعداد الحماية الأمنية
+        function setupSecurity() {
+            // منع فتح أدوات المطور
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                    (e.ctrlKey && e.key === 'U')) {
+                    e.preventDefault();
+                    showNotification('هذه الميزة غير متاحة لحماية البيانات!', 'error');
+                    return false;
+                }
+            });
+
+            // منع النقر بالزر الأيمن
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showNotification('النقر بالزر الأيمن غير مسموح!', 'error');
+                return false;
+            });
+
+            // منع التحديد والنسخ
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // تنظيف console دورياً
+            setInterval(() => {
+                console.clear();
+            }, 5000);
+        }
 
         // إعداد معالجات الأحداث
         function setupEventListeners() {
@@ -870,6 +1029,12 @@
                     currentFilter = this.dataset.tab;
                     applyFiltersAndSort();
                 });
+            });
+
+            // البحث
+            document.getElementById('searchInput').addEventListener('input', function() {
+                searchQuery = this.value.trim().toLowerCase();
+                applyFiltersAndSort();
             });
 
             // المرشحات
@@ -911,6 +1076,9 @@
                         data.date = data.date.toDate();
                     }
 
+                    // استخراج بيانات الطالب من معرف الطالب أو Firebase
+                    const gradeSection = extractStudentInfo(data.studentId, data);
+
                     // حساب النسبة المئوية
                     const percentage = data.totalQuestions > 0 
                         ? Math.round((data.score / (data.totalQuestions * 10)) * 100)
@@ -919,8 +1087,9 @@
                     allResults.push({
                         id: doc.id,
                         studentName: data.studentName,
-                        studentGrade: extractGradeFromStudent(data.studentId),
-                        studentSection: extractSectionFromStudent(data.studentId),
+                        studentGrade: gradeSection.grade,
+                        studentSection: gradeSection.section,
+                        studentIcon: gradeSection.icon,
                         score: data.score || 0,
                         totalQuestions: data.totalQuestions || 10,
                         percentage: percentage,
@@ -932,6 +1101,7 @@
 
                 console.log(`تم تحميل ${allResults.length} نتيجة من Firebase`);
                 isOfflineMode = false;
+                showNotification('تم تحديث البيانات بنجاح!', 'success');
 
             } catch (error) {
                 console.error('خطأ في تحميل البيانات من Firebase:', error);
@@ -940,114 +1110,112 @@
                 
                 // استخدام بيانات تجريبية
                 loadSampleData();
+                showNotification('يتم عرض بيانات تجريبية - تحقق من الاتصال!', 'error');
             }
 
             if (allResults.length === 0) {
                 showEmptyState();
             } else {
                 updateStatistics();
+                updateAchievements();
                 applyFiltersAndSort();
             }
 
             showLoading(false);
         }
 
-        // استخراج الصف من معرف الطالب أو البيانات المحفوظة
-        function extractGradeFromStudent(studentId) {
+        // استخراج معلومات الطالب المحسنة
+        function extractStudentInfo(studentId, data) {
+            // محاولة استخراج من البيانات المحفوظة أولاً
             const studentData = localStorage.getItem('nafes_student_data');
             if (studentData) {
                 try {
-                    const data = JSON.parse(studentData);
-                    return data.grade || 'الثالث متوسط';
+                    const parsed = JSON.parse(studentData);
+                    if (parsed.studentId === studentId) {
+                        return {
+                            grade: parsed.grade || 'الثالث متوسط',
+                            section: parsed.section || '1',
+                            icon: parsed.icon || '⭐'
+                        };
+                    }
                 } catch (e) {
-                    return 'الثالث متوسط';
+                    console.error('خطأ في استخراج بيانات الطالب:', e);
                 }
             }
-            return 'الثالث متوسط';
-        }
 
-        // استخراج الشعبة من معرف الطالب أو البيانات المحفوظة
-        function extractSectionFromStudent(studentId) {
-            const studentData = localStorage.getItem('nafes_student_data');
-            if (studentData) {
-                try {
-                    const data = JSON.parse(studentData);
-                    return data.section || '1';
-                } catch (e) {
-                    return '1';
-                }
+            // استخراج من Firebase data إذا توفرت
+            if (data.grade && data.section) {
+                return {
+                    grade: data.grade,
+                    section: data.section,
+                    icon: data.icon || '⭐'
+                };
             }
-            return '1';
+
+            // استخراج من معرف الطالب كحل أخير
+            try {
+                const parts = studentId.split('_');
+                if (parts.length >= 3) {
+                    const gradeCode = parts[1];
+                    const section = parts[2];
+                    const gradeMap = {'1': 'الأول متوسط', '2': 'الثاني متوسط', '3': 'الثالث متوسط'};
+                    return {
+                        grade: gradeMap[gradeCode] || 'الثالث متوسط',
+                        section: section || '1',
+                        icon: '⭐'
+                    };
+                }
+            } catch (e) {
+                console.error('خطأ في استخراج البيانات من المعرف:', e);
+            }
+
+            // قيم افتراضية
+            return {
+                grade: 'الثالث متوسط',
+                section: '1',
+                icon: '⭐'
+            };
         }
 
         // حساب الوقت المستغرق
         function calculateTimeSpent(data) {
             if (data.timeSpent) return data.timeSpent;
             const questionsAnswered = data.currentQuestionIndex || data.totalQuestions || 10;
-            return questionsAnswered * 30;
+            return questionsAnswered * 30; // متوسط 30 ثانية لكل سؤال
         }
 
-        // تحميل بيانات تجريبية
+        // تحميل بيانات تجريبية محسنة
         function loadSampleData() {
-            allResults = [
-                {
-                    id: '1',
-                    studentName: 'أحمد محمد العلي',
-                    studentGrade: 'الثالث متوسط',
-                    studentSection: '1',
-                    score: 90,
-                    totalQuestions: 10,
-                    percentage: 90,
-                    timeSpent: 180,
-                    endTime: new Date(Date.now() - 3600000)
-                },
-                {
-                    id: '2',
-                    studentName: 'فاطمة سالم الزهراني',
-                    studentGrade: 'الثاني متوسط',
-                    studentSection: '3',
-                    score: 80,
-                    totalQuestions: 10,
-                    percentage: 80,
-                    timeSpent: 200,
-                    endTime: new Date(Date.now() - 7200000)
-                },
-                {
-                    id: '3',
-                    studentName: 'محمد عبدالله القحطاني',
-                    studentGrade: 'الأول متوسط',
-                    studentSection: '2',
-                    score: 70,
-                    totalQuestions: 10,
-                    percentage: 70,
-                    timeSpent: 150,
-                    endTime: new Date(Date.now() - 10800000)
-                },
-                {
-                    id: '4',
-                    studentName: 'نورا أحمد المطيري',
-                    studentGrade: 'الثالث متوسط',
-                    studentSection: '2',
-                    score: 85,
-                    totalQuestions: 10,
-                    percentage: 85,
-                    timeSpent: 160,
-                    endTime: new Date(Date.now() - 14400000)
-                },
-                {
-                    id: '5',
-                    studentName: 'خالد سعد البقمي',
-                    studentGrade: 'الثاني متوسط',
-                    studentSection: '1',
-                    score: 75,
-                    totalQuestions: 10,
-                    percentage: 75,
-                    timeSpent: 220,
-                    endTime: new Date(Date.now() - 18000000)
-                }
+            const sampleNames = [
+                'أحمد محمد العلي', 'فاطمة سالم الزهراني', 'محمد عبدالله القحطاني',
+                'نورا أحمد المطيري', 'خالد سعد البقمي', 'ريم علي الشهري',
+                'عبدالعزيز محمد الغامدي', 'سارة أحمد العتيبي', 'يوسف عبدالله الدوسري',
+                'هند محمد القرني', 'عبدالرحمن سعد الحربي', 'مريم علي الزهراني'
             ];
 
+            const grades = ['الأول متوسط', 'الثاني متوسط', 'الثالث متوسط'];
+            const icons = ['⭐', '🌟', '🚀', '⚡', '🔥', '💎', '🎯', '👑', '🦁', '🦅'];
+
+            allResults = sampleNames.map((name, index) => ({
+                id: `sample_${index + 1}`,
+                studentName: name,
+                studentGrade: grades[index % 3],
+                studentSection: ((index % 6) + 1).toString(),
+                studentIcon: icons[index % icons.length],
+                score: Math.floor(Math.random() * 40) + 60, // درجات من 60-100
+                totalQuestions: 10,
+                percentage: 0,
+                timeSpent: Math.floor(Math.random() * 200) + 120, // وقت من 2-5 دقائق
+                endTime: new Date(Date.now() - (index * 3600000)) // مواعيد مختلفة
+            }));
+
+            // حساب النسب المئوية
+            allResults.forEach(result => {
+                result.percentage = Math.round((result.score / 100) * 100);
+            });
+
             updateStatistics();
+            updateAchievements();
             applyFiltersAndSort();
         }
 
@@ -1073,6 +1241,52 @@
             document.getElementById('averageScore').textContent = averageScore + '%';
         }
 
+        // تحديث الإنجازات
+        function updateAchievements() {
+            const achievementsGrid = document.getElementById('achievementsGrid');
+            
+            if (allResults.length === 0) {
+                achievementsGrid.innerHTML = '<p style="text-align: center; color: #6b7280;">لا توجد إنجازات بعد</p>';
+                return;
+            }
+
+            const topScore = Math.max(...allResults.map(r => r.score));
+            const fastestTime = Math.min(...allResults.map(r => r.timeSpent));
+            const perfectScores = allResults.filter(r => r.score === 100).length;
+            const topPerformer = allResults.find(r => r.score === topScore);
+
+            const achievements = [
+                {
+                    icon: '🥇',
+                    title: 'أعلى درجة',
+                    desc: `${topScore}/100 - ${topPerformer?.studentName || 'غير محدد'}`
+                },
+                {
+                    icon: '⚡',
+                    title: 'أسرع وقت',
+                    desc: `${formatTime(fastestTime)}`
+                },
+                {
+                    icon: '🎯',
+                    title: 'الدرجة الكاملة',
+                    desc: `${perfectScores} طالب`
+                },
+                {
+                    icon: '📈',
+                    title: 'المشاركة النشطة',
+                    desc: `${allResults.length} محاولة`
+                }
+            ];
+
+            achievementsGrid.innerHTML = achievements.map(achievement => `
+                <div class="achievement-card">
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-title">${achievement.title}</div>
+                    <div class="achievement-desc">${achievement.desc}</div>
+                </div>
+            `).join('');
+        }
+
         // تطبيق المرشحات والترتيب
         function applyFiltersAndSort() {
             const gradeFilter = document.getElementById('gradeFilter').value;
@@ -1081,14 +1295,22 @@
             filteredResults = allResults.filter(result => {
                 let matches = true;
 
+                // تصفية الصف
                 if (gradeFilter && result.studentGrade !== gradeFilter) {
                     matches = false;
                 }
 
+                // تصفية الشعبة
                 if (sectionFilter && result.studentSection !== sectionFilter) {
                     matches = false;
                 }
 
+                // تصفية البحث
+                if (searchQuery && !result.studentName.toLowerCase().includes(searchQuery)) {
+                    matches = false;
+                }
+
+                // تصفية التاريخ
                 if (currentFilter !== 'all') {
                     const now = new Date();
                     const resultDate = new Date(result.endTime);
@@ -1129,6 +1351,8 @@
                         return a.timeSpent - b.timeSpent;
                     case 'percentage':
                         if (a.percentage !== b.percentage) return b.percentage - a.percentage;
+                        return a.timeSpent - b.timeSpent;
+                    case 'time':
                         return a.timeSpent - b.timeSpent;
                     case 'recent':
                         return new Date(b.endTime) - new Date(a.endTime);
@@ -1209,7 +1433,7 @@
                 
                 rankItem.innerHTML = `
                     <div class="rank-number ${rankClass}">${index + 1}</div>
-                    <div class="student-avatar">${getStudentIcon(student.studentName)}</div>
+                    <div class="student-avatar">${student.studentIcon || getStudentIcon(student.studentName)}</div>
                     <div class="student-info">
                         <div class="student-name">${student.studentName}</div>
                         <div class="student-class">${student.studentGrade} - الفصل ${student.studentSection}</div>
@@ -1261,6 +1485,18 @@
             }
         }
 
+        // إظهار الإشعارات
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
         // إظهار حالة التحميل
         function showLoading(show) {
             document.getElementById('loadingState').classList.toggle('hidden', !show);
@@ -1290,6 +1526,7 @@
 
         // تحديث البيانات
         function refreshData() {
+            showNotification('جاري تحديث البيانات...', 'success');
             loadLeaderboardData();
         }
 
