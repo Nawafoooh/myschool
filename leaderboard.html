@@ -498,14 +498,24 @@
             }
 
             .podium {
-                flex-direction: column;
-                height: auto;
-                gap: 15px;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 10px;
             }
 
             .podium-place {
                 width: 100%;
-                height: auto !important;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .podium-place.first,
+            .podium-place.second,
+            .podium-place.third {
+                height: auto;
+                min-height: 280px;
+                grid-column: 1;
+                align-self: center;
             }
 
             .stats-overview {
