@@ -517,37 +517,29 @@
                 font-size: 2em;
             }
 
-            .podium {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-                height: auto;
-            }
-
             .podium-place {
-                width: 90%;
-                max-width: 350px;
-                height: auto !important;
-                min-height: 300px;
-                transform: none !important;
-                min-width: auto;
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 25px 20px;
             }
 
-            .podium-place.first {
-                order: 1;
+            .champion-info {
+                text-align: center;
             }
 
-            .podium-place.second {
-                order: 2;
+            .champion-details {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
             }
 
-            .podium-place.third {
-                order: 3;
+            .champion-name {
+                font-size: 1.6em;
             }
 
-            .podium-name {
-                font-size: 1em;
-                min-height: 45px;
+            .champion-title {
+                font-size: 1.1em;
             }
 
             .stats-overview {
@@ -576,21 +568,25 @@
         }
 
         @media (max-width: 480px) {
-            .podium-place {
-                padding: 20px 15px;
+            .champion-name {
+                font-size: 1.4em;
             }
             
-            .podium-name {
-                font-size: 0.95em;
-                line-height: 1.2;
+            .champion-title {
+                font-size: 1em;
             }
             
-            .podium-score {
+            .champion-score {
                 font-size: 1.5em;
             }
             
             .student-name {
                 font-size: 1.1em;
+            }
+
+            .excellence-badge {
+                font-size: 0.8em;
+                padding: 6px 12px;
             }
         }
     </style>
@@ -1068,8 +1064,9 @@
             const top3 = filteredResults.slice(0, 3);
             if (top3.length === 0) return;
 
-            const positions = ['second', 'first', 'third'];
-            const crowns = ['🥈', '👑', '🥉'];
+            const positions = ['first', 'second', 'third'];
+            const crowns = ['👑', '🥈', '🥉'];
+            const titles = ['المركز الأول', 'المركز الثاني', 'المركز الثالث'];
 
             top3.forEach((student, index) => {
                 if (index >= 3) return; // فقط أول 3
@@ -1078,15 +1075,18 @@
                 place.className = `podium-place ${positions[index]}`;
                 
                 place.innerHTML = `
-                    <div class="podium-crown">${crowns[index]}</div>
-                    <div class="podium-avatar">${getStudentIcon(student.studentName)}</div>
-                    <div class="podium-name" title="${student.studentName}">${student.studentName}</div>
-                    <div class="podium-score">${student.score}/100</div>
-                    <div class="podium-details">
-                        ${student.studentGrade}<br>
-                        الفصل ${student.studentSection}<br>
-                        ⏱️ ${formatTime(student.timeSpent)}<br>
-                        🎯 ${student.percentage}%
+                    <div style="text-align: center;">
+                        <div class="podium-crown">${crowns[index]}</div>
+                        <div style="font-size: 1.2em; font-weight: bold; color: #6366f1; margin-bottom: 15px;">${titles[index]}</div>
+                        <div class="podium-avatar">${getStudentIcon(student.studentName)}</div>
+                        <div class="podium-name">${student.studentName}</div>
+                        <div class="podium-score">${student.score}/100</div>
+                        <div class="podium-details">
+                            ${student.studentGrade}<br>
+                            الفصل ${student.studentSection}<br>
+                            ⏱️ ${formatTime(student.timeSpent)}<br>
+                            🎯 ${student.percentage}%
+                        </div>
                     </div>
                 `;
 
