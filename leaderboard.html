@@ -517,29 +517,40 @@
                 font-size: 2em;
             }
 
-            .podium-place {
+            .champion-row {
                 flex-direction: column;
                 text-align: center;
                 gap: 20px;
                 padding: 25px 20px;
             }
 
-            .champion-info {
-                text-align: center;
-            }
-
-            .champion-details {
+            .champion-content {
                 flex-direction: column;
                 gap: 15px;
                 align-items: center;
+                width: 100%;
+            }
+
+            .champion-info {
+                text-align: center;
+                width: 100%;
             }
 
             .champion-name {
-                font-size: 1.6em;
+                font-size: 1.5em;
             }
 
-            .champion-title {
+            .excellence-message {
                 font-size: 1.1em;
+            }
+
+            .champion-stats {
+                margin-left: 0;
+            }
+
+            .motivational-quote {
+                margin-top: 10px;
+                width: 100%;
             }
 
             .stats-overview {
@@ -569,24 +580,30 @@
 
         @media (max-width: 480px) {
             .champion-name {
-                font-size: 1.4em;
+                font-size: 1.3em;
             }
             
-            .champion-title {
+            .excellence-message {
                 font-size: 1em;
             }
             
-            .champion-score {
-                font-size: 1.5em;
+            .score-large {
+                font-size: 1.8em;
             }
             
             .student-name {
                 font-size: 1.1em;
             }
 
-            .excellence-badge {
-                font-size: 0.8em;
-                padding: 6px 12px;
+            .motivational-quote {
+                font-size: 0.85em;
+                padding: 8px 12px;
+            }
+
+            .rank-badge {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6em;
             }
         }
     </style>
