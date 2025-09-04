@@ -488,7 +488,7 @@
             display: none !important;
         }
 
-        /* تحسين responsive للمنصة */
+        /* تحسين responsive للتصميم الجديد */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -498,30 +498,29 @@
                 font-size: 2em;
             }
 
-            .podium {
+            .top-winner {
                 flex-direction: column;
-                align-items: center;
-                gap: 20px;
+                text-align: center;
+                gap: 15px;
+                padding: 20px;
             }
 
-            .podium-place {
-                width: 90%;
-                max-width: 300px;
-                height: auto !important;
-                min-height: 280px;
-                transform: none !important;
+            .medal {
+                width: 70px;
+                height: 70px;
+                font-size: 36px;
             }
 
-            .podium-place.first {
-                order: 1;
+            .winner-name {
+                font-size: 20px;
             }
 
-            .podium-place.second {
-                order: 2;
+            .winner-encouragement {
+                font-size: 16px;
             }
 
-            .podium-place.third {
-                order: 3;
+            .score-number {
+                font-size: 28px;
             }
 
             .stats-overview {
@@ -536,11 +535,6 @@
                 flex-direction: column;
                 text-align: center;
                 gap: 15px;
-            }
-
-            .podium-name {
-                font-size: 16px !important;
-                min-height: 40px !important;
             }
         }
     </style>
