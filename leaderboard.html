@@ -488,6 +488,7 @@
             display: none !important;
         }
 
+        /* تحسين responsive للمنصة */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -498,24 +499,29 @@
             }
 
             .podium {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
                 gap: 20px;
-                padding: 10px;
             }
 
             .podium-place {
-                width: 100%;
+                width: 90%;
                 max-width: 300px;
-                margin: 0 auto;
+                height: auto !important;
+                min-height: 280px;
+                transform: none !important;
             }
 
-            .podium-place.first,
-            .podium-place.second,
+            .podium-place.first {
+                order: 1;
+            }
+
+            .podium-place.second {
+                order: 2;
+            }
+
             .podium-place.third {
-                height: auto;
-                min-height: 280px;
-                grid-column: 1;
-                align-self: center;
+                order: 3;
             }
 
             .stats-overview {
@@ -530,6 +536,11 @@
                 flex-direction: column;
                 text-align: center;
                 gap: 15px;
+            }
+
+            .podium-name {
+                font-size: 16px !important;
+                min-height: 40px !important;
             }
         }
     </style>
