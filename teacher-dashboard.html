@@ -380,29 +380,6 @@
             overflow: hidden;
         }
 
-        .quick-stat::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
-            background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-            opacity: 0;
-        }
-
-        .quick-stat:hover::before {
-            opacity: 1;
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
         .quick-stat:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
@@ -420,8 +397,6 @@
             font-size: 1.8em;
             color: white;
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-            position: relative;
-            z-index: 1;
         }
 
         .stat-number {
@@ -429,23 +404,17 @@
             font-weight: 900;
             color: #e2e8f0;
             margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
         }
 
         .stat-label {
             color: #94a3b8;
             font-weight: 600;
             margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
         }
 
         .stat-trend {
             font-size: 0.9em;
             font-weight: 600;
-            position: relative;
-            z-index: 1;
         }
 
         .trend-up {
@@ -456,7 +425,8 @@
             color: #ef4444;
         }
 
-        .live-competition-control {
+        /* Weekly Progress Section */
+        .weekly-progress-section {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 25px;
             padding: 30px;
@@ -465,14 +435,14 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .competition-header {
+        .progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
         }
 
-        .competition-title {
+        .progress-title {
             font-size: 1.8em;
             font-weight: 900;
             color: #e2e8f0;
@@ -481,89 +451,86 @@
             gap: 15px;
         }
 
-        .competition-controls {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background: linear-gradient(145deg, #6366f1, #4f46e5);
-            color: white;
-            border: none;
-            padding: 12px 25px;
+        .weekly-progress-bar {
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9em;
-            position: relative;
+            height: 20px;
             overflow: hidden;
+            margin: 20px 0;
+            position: relative;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
+        .weekly-progress-fill {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            border-radius: 15px;
+            transition: width 0.8s ease;
+            position: relative;
         }
 
-        .btn:hover::before {
-            left: 100%;
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: 700;
+            font-size: 0.9em;
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.9em;
         }
 
-        .btn-success {
-            background: linear-gradient(145deg, #10b981, #059669);
-        }
-
-        .btn-success:hover {
-            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn-warning {
-            background: linear-gradient(145deg, #f59e0b, #d97706);
-        }
-
-        .btn-warning:hover {
-            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
-        }
-
-        .btn-danger {
-            background: linear-gradient(145deg, #ef4444, #dc2626);
-        }
-
-        .btn-danger:hover {
-            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(145deg, #64748b, #475569);
-        }
-
-        .btn-secondary:hover {
-            box-shadow: 0 15px 30px rgba(100, 116, 139, 0.4);
-        }
-
-        .real-time-grid {
+        /* Question Management Styles */
+        .question-methods {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
         }
 
-        .live-participants {
+        .method-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            backdrop-filter: blur(20px);
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .method-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: #a5b4fc;
+        }
+
+        .method-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        .method-description {
+            color: #94a3b8;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .recent-questions {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 25px;
@@ -581,174 +548,7 @@
             gap: 12px;
         }
 
-        .participants-list {
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .participant-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .participant-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 10px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .participant-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #6366f1, #4f46e5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            margin-left: 12px;
-            position: relative;
-        }
-
-        .participant-status {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid #0f172a;
-        }
-
-        .status-online {
-            background: #10b981;
-        }
-
-        .status-answering {
-            background: #f59e0b;
-            animation: pulse 1s infinite;
-        }
-
-        .status-completed {
-            background: #6366f1;
-        }
-
-        .participant-info {
-            flex: 1;
-        }
-
-        .participant-name {
-            color: #e2e8f0;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .participant-progress {
-            color: #94a3b8;
-            font-size: 0.8em;
-        }
-
-        .participant-score {
-            color: #10b981;
-            font-weight: 700;
-            font-size: 1.1em;
-        }
-
-        .question-monitor {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .current-question {
-            background: rgba(99, 102, 241, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-        }
-
-        .question-text {
-            color: #e2e8f0;
-            font-size: 1.1em;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .question-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .stat-value {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: #a5b4fc;
-        }
-
-        .stat-label-small {
-            font-size: 0.8em;
-            color: #94a3b8;
-        }
-
-        .admin-actions {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .action-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .action-card:hover {
-            transform: translateY(-5px);
-            background: rgba(99, 102, 241, 0.2);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
-        }
-
-        .action-icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #a5b4fc;
-        }
-
-        .action-text {
-            font-weight: 600;
-            color: #e2e8f0;
-        }
-
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -844,12 +644,58 @@
             color: #94a3b8;
         }
 
+        .btn {
+            background: linear-gradient(145deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(145deg, #10b981, #059669);
+        }
+
+        .btn-warning {
+            background: linear-gradient(145deg, #f59e0b, #d97706);
+        }
+
+        .btn-danger {
+            background: linear-gradient(145deg, #ef4444, #dc2626);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(145deg, #64748b, #475569);
+        }
+
+        .upload-progress {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
         .progress-bar {
             background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             height: 8px;
             overflow: hidden;
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
         .progress-fill {
@@ -857,6 +703,7 @@
             height: 100%;
             border-radius: 10px;
             transition: width 0.5s ease;
+            width: 0%;
         }
 
         .notification-toast {
@@ -894,12 +741,6 @@
             display: none !important;
         }
 
-        @media (max-width: 1024px) {
-            .real-time-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(100%);
@@ -928,12 +769,8 @@
                 font-size: 1.5em;
             }
 
-            .competition-controls {
-                flex-direction: column;
-            }
-
-            .actions-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .question-methods {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -987,12 +824,6 @@
                             <div class="nav-badge">3</div>
                         </a>
                     </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link" data-section="templates">
-                            <div class="nav-icon">📋</div>
-                            <div class="nav-text">قوالب الأسئلة</div>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="nav-section">
@@ -1023,12 +854,6 @@
                         <a href="#" class="nav-link" data-section="settings">
                             <div class="nav-icon">⚙️</div>
                             <div class="nav-text">إعدادات النظام</div>
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link" data-section="backup">
-                            <div class="nav-icon">💾</div>
-                            <div class="nav-text">النسخ الاحتياطي</div>
                         </a>
                     </div>
                 </div>
@@ -1093,164 +918,6 @@
                         <div class="stat-trend trend-up">ممتاز</div>
                     </div>
                 </div>
-
-                <!-- Live Competition Control Panel -->
-                <div class="live-competition-control">
-                    <div class="competition-header">
-                        <div class="competition-title">
-                            🎯 مسابقة الرياضيات الأسبوعية
-                            <span style="font-size: 0.6em; color: #10b981; background: rgba(16, 185, 129, 0.2); padding: 4px 8px; border-radius: 10px;">جارية</span>
-                        </div>
-                        <div class="competition-controls">
-                            <button class="btn btn-success" onclick="startCompetition()">
-                                ▶️ بدء جديد
-                            </button>
-                            <button class="btn btn-warning" onclick="pauseCompetition()">
-                                ⏸️ إيقاف مؤقت
-                            </button>
-                            <button class="btn" onclick="extendTime()">
-                                ⏰ تمديد الوقت
-                            </button>
-                            <button class="btn btn-secondary" onclick="broadcastMessage()">
-                                📢 رسالة عامة
-                            </button>
-                            <button class="btn btn-danger" onclick="endCompetition()">
-                                🏁 إنهاء المسابقة
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Competition Progress -->
-                    <div style="margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="color: #e2e8f0; font-weight: 600;">تقدم المسابقة</span>
-                            <span style="color: #a5b4fc; font-weight: 700;">السؤال 7 من 20</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 35%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Real-time Monitoring Grid -->
-                <div class="real-time-grid">
-                    <!-- Live Participants -->
-                    <div class="live-participants">
-                        <div class="section-title">
-                            👥 المشاركون المباشرون
-                            <span style="font-size: 0.7em; color: #10b981; background: rgba(16, 185, 129, 0.2); padding: 4px 8px; border-radius: 10px; margin-right: auto;">47 متصل</span>
-                        </div>
-                        <div class="participants-list" id="participantsList">
-                            <div class="participant-item">
-                                <div class="participant-avatar">
-                                    أ
-                                    <div class="participant-status status-answering"></div>
-                                </div>
-                                <div class="participant-info">
-                                    <div class="participant-name">أحمد محمد العلي</div>
-                                    <div class="participant-progress">السؤال 7 • متبقي 23 ثانية</div>
-                                </div>
-                                <div class="participant-score">85%</div>
-                            </div>
-                            <div class="participant-item">
-                                <div class="participant-avatar">
-                                    ف
-                                    <div class="participant-status status-online"></div>
-                                </div>
-                                <div class="participant-info">
-                                    <div class="participant-name">فاطمة سالم الزهراني</div>
-                                    <div class="participant-progress">السؤال 6 • يراجع الإجابة</div>
-                                </div>
-                                <div class="participant-score">92%</div>
-                            </div>
-                            <div class="participant-item">
-                                <div class="participant-avatar">
-                                    م
-                                    <div class="participant-status status-completed"></div>
-                                </div>
-                                <div class="participant-info">
-                                    <div class="participant-name">محمد عبدالله القحطاني</div>
-                                    <div class="participant-progress">أكمل المسابقة</div>
-                                </div>
-                                <div class="participant-score">96%</div>
-                            </div>
-                            <div class="participant-item">
-                                <div class="participant-avatar">
-                                    ن
-                                    <div class="participant-status status-answering"></div>
-                                </div>
-                                <div class="participant-info">
-                                    <div class="participant-name">نورا أحمد المطيري</div>
-                                    <div class="participant-progress">السؤال 5 • متبقي 45 ثانية</div>
-                                </div>
-                                <div class="participant-score">78%</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Question Monitor -->
-                    <div class="question-monitor">
-                        <div class="section-title">❓ مراقبة الأسئلة</div>
-                        <div class="current-question">
-                            <div class="question-text">
-                                السؤال الحالي: ما ناتج العملية الحسابية 15 × 8 + 24 ÷ 6؟
-                            </div>
-                            <div class="question-stats">
-                                <div class="stat-item">
-                                    <div class="stat-value">23</div>
-                                    <div class="stat-label-small">إجابات صحيحة</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">8</div>
-                                    <div class="stat-label-small">إجابات خاطئة</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">16</div>
-                                    <div class="stat-label-small">لم يجيبوا بعد</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">35ث</div>
-                                    <div class="stat-label-small">متوسط الوقت</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <button class="btn" onclick="skipQuestion()">⏭️ تخطي السؤال</button>
-                            <button class="btn btn-warning" onclick="hintToAll()">💡 تلميح للجميع</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Admin Quick Actions -->
-                <div class="admin-actions">
-                    <div class="section-title">🎛️ إجراءات سريعة</div>
-                    <div class="actions-grid">
-                        <div class="action-card" onclick="showModal('addStudentModal')">
-                            <div class="action-icon">👤</div>
-                            <div class="action-text">إضافة طالب</div>
-                        </div>
-                        <div class="action-card" onclick="removeStudent()">
-                            <div class="action-icon">👤❌</div>
-                            <div class="action-text">إزالة طالب</div>
-                        </div>
-                        <div class="action-card" onclick="showModal('broadcastModal')">
-                            <div class="action-icon">📢</div>
-                            <div class="action-text">بث رسالة</div>
-                        </div>
-                        <div class="action-card" onclick="exportResults()">
-                            <div class="action-icon">📊</div>
-                            <div class="action-text">تصدير النتائج</div>
-                        </div>
-                        <div class="action-card" onclick="showModal('settingsModal')">
-                            <div class="action-icon">⚙️</div>
-                            <div class="action-text">إعدادات سريعة</div>
-                        </div>
-                        <div class="action-card" onclick="generateReport()">
-                            <div class="action-icon">📋</div>
-                            <div class="action-text">تقرير فوري</div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Dashboard Section -->
@@ -1262,96 +929,573 @@
             <!-- Questions Section -->
             <div id="questions-section" class="content-section hidden">
                 <div class="section-title">❓ بنك الأسئلة المتقدم</div>
-                <!-- Questions management content -->
+                
+                <!-- Weekly Progress -->
+                <div class="weekly-progress-section">
+                    <div class="progress-header">
+                        <div class="progress-title">
+                            📈 التقدم الأسبوعي
+                        </div>
+                        <div style="color: #10b981; font-weight: 700;">
+                            <span id="weeklyStatus">23 من 100</span>
+                        </div>
+                    </div>
+                    <div class="weekly-progress-bar">
+                        <div class="weekly-progress-fill" id="weeklyProgressBar" style="width: 23%;">
+                            <div class="progress-text" id="progressText">23%</div>
+                        </div>
+                    </div>
+                    <div class="progress-info">
+                        <span>بداية الأسبوع: 2 سبتمبر</span>
+                        <span>الهدف: 100 سؤال/أسبوع</span>
+                        <span>متبقي: 77 سؤال</span>
+                    </div>
+                </div>
+
+                <!-- Question Management Methods -->
+                <div class="question-methods">
+                    <div class="method-card" onclick="showQuestionMethod('excel')">
+                        <div class="method-icon">📊</div>
+                        <div class="method-title">استيراد Excel</div>
+                        <div class="method-description">
+                            رفع ملف Excel يحتوي على أسئلة متعددة<br>
+                            مثالي للكميات الكبيرة (50-100 سؤال)
+                        </div>
+                    </div>
+                    <div class="method-card" onclick="showQuestionMethod('smart')">
+                        <div class="method-icon">🧠</div>
+                        <div class="method-title">النموذج الذكي</div>
+                        <div class="method-description">
+                            إدخال سؤال واحد بنموذج تفاعلي<br>
+                            مثالي للأسئلة المخصصة والمراجعة
+                        </div>
+                    </div>
+                    <div class="method-card" onclick="showQuestionMethod('template')">
+                        <div class="method-icon">📋</div>
+                        <div class="method-title">نظام القوالب</div>
+                        <div class="method-description">
+                            استخدام قوالب جاهزة حسب المادة<br>
+                            مثالي للأنماط المتكررة والسرعة
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Questions -->
+                <div class="recent-questions">
+                    <div class="section-title">🕐 الأسئلة المضافة حديثاً</div>
+                    <div id="recentQuestionsList">
+                        <!-- سيتم تحميل الأسئلة هنا -->
+                        <div style="text-align: center; color: #94a3b8; padding: 20px;">
+                            لا توجد أسئلة مضافة حديثاً
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Other sections would be added here -->
+            <!-- Other sections -->
+            <div id="competitions-section" class="content-section hidden">
+                <div class="section-title">🏆 إدارة المسابقات</div>
+            </div>
+
+            <div id="students-section" class="content-section hidden">
+                <div class="section-title">👥 متابعة الطلاب</div>
+            </div>
+
+            <div id="analytics-section" class="content-section hidden">
+                <div class="section-title">📈 التحليلات المتقدمة</div>
+            </div>
+
+            <div id="reports-section" class="content-section hidden">
+                <div class="section-title">📊 التقارير الذكية</div>
+            </div>
+
+            <div id="settings-section" class="content-section hidden">
+                <div class="section-title">⚙️ إعدادات النظام</div>
+            </div>
         </main>
     </div>
 
     <!-- Enhanced Modals -->
-    <!-- Broadcast Message Modal -->
-    <div id="broadcastModal" class="modal">
+    
+    <!-- Excel Upload Modal -->
+    <div id="excelUploadModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">📢 بث رسالة للمشاركين</div>
-                <button class="close-btn" onclick="hideModal('broadcastModal')">&times;</button>
+                <div class="modal-title">📊 استيراد أسئلة من Excel</div>
+                <button class="close-btn" onclick="hideModal('excelUploadModal')">&times;</button>
             </div>
-            <form id="broadcastForm">
+            
+            <div class="form-group">
+                <label class="form-label">تحميل القالب المعياري:</label>
+                <button class="btn btn-secondary" onclick="downloadExcelTemplate()">
+                    📥 تحميل قالب Excel
+                </button>
+                <p style="color: #94a3b8; font-size: 0.9em; margin-top: 8px;">
+                    احفظ القالب، املأه بالأسئلة، ثم ارفعه مرة أخرى
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">رفع ملف الأسئلة:</label>
+                <input type="file" class="form-control" id="excelFileInput" accept=".xlsx,.xls,.csv">
+            </div>
+
+            <div id="excelUploadProgress" class="upload-progress hidden">
+                <div style="color: #e2e8f0; font-weight: 600; margin-bottom: 10px;" id="excelUploadStatus">
+                    جاري الرفع...
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="excelProgressBar"></div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-secondary" onclick="hideModal('excelUploadModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Smart Question Modal -->
+    <div id="smartQuestionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🧠 إضافة سؤال ذكي</div>
+                <button class="close-btn" onclick="hideModal('smartQuestionModal')">&times;</button>
+            </div>
+            
+            <form id="smartQuestionForm">
                 <div class="form-group">
-                    <label class="form-label">نوع الرسالة:</label>
-                    <select class="form-control" id="messageType">
-                        <option value="info">إعلامية</option>
-                        <option value="warning">تحذيرية</option>
-                        <option value="encouragement">تشجيعية</option>
-                        <option value="instruction">توجيهية</option>
+                    <label class="form-label">نص السؤال:</label>
+                    <textarea class="form-control" id="questionText" rows="3" placeholder="اكتب السؤال هنا..." required></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label class="form-label">المادة:</label>
+                        <select class="form-control" id="questionSubject" required>
+                            <option value="">اختر المادة</option>
+                            <option value="math">الرياضيات</option>
+                            <option value="science">العلوم</option>
+                            <option value="history">التاريخ</option>
+                            <option value="geography">الجغرافيا</option>
+                            <option value="arabic">اللغة العربية</option>
+                            <option value="islamic">التربية الإسلامية</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">المستوى:</label>
+                        <select class="form-control" id="questionGrade" required>
+                            <option value="">اختر المستوى</option>
+                            <option value="الأول متوسط">الأول متوسط</option>
+                            <option value="الثاني متوسط">الثاني متوسط</option>
+                            <option value="الثالث متوسط">الثالث متوسط</option>
+                            <option value="الأول ثانوي">الأول ثانوي</option>
+                            <option value="الثاني ثانوي">الثاني ثانوي</option>
+                            <option value="الثالث ثانوي">الثالث ثانوي</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label class="form-label">الصعوبة:</label>
+                        <select class="form-control" id="questionDifficulty" required>
+                            <option value="">اختر الصعوبة</option>
+                            <option value="سهل">سهل</option>
+                            <option value="متوسط">متوسط</option>
+                            <option value="صعب">صعب</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">النقاط:</label>
+                        <input type="number" class="form-control" id="questionPoints" value="10" min="5" max="50" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">الخيارات:</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <input type="text" class="form-control" id="questionOption1" placeholder="الخيار الأول" required>
+                        <input type="text" class="form-control" id="questionOption2" placeholder="الخيار الثاني" required>
+                        <input type="text" class="form-control" id="questionOption3" placeholder="الخيار الثالث" required>
+                        <input type="text" class="form-control" id="questionOption4" placeholder="الخيار الرابع" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">الإجابة الصحيحة:</label>
+                    <select class="form-control" id="questionCorrectAnswer" required>
+                        <option value="">اختر الإجابة الصحيحة</option>
+                        <option value="1">الخيار الأول</option>
+                        <option value="2">الخيار الثاني</option>
+                        <option value="3">الخيار الثالث</option>
+                        <option value="4">الخيار الرابع</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">نص الرسالة:</label>
-                    <textarea class="form-control" rows="4" placeholder="اكتب رسالتك هنا..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">المستهدفون:</label>
-                    <select class="form-control">
-                        <option value="all">جميع المشاركين</option>
-                        <option value="active">النشطين فقط</option>
-                        <option value="struggling">المتأخرين في الدرجات</option>
-                        <option value="leaders">المتصدرين</option>
-                    </select>
-                </div>
-                <div style="text-align: center; margin-top: 25px;">
-                    <button type="submit" class="btn">📤 إرسال الرسالة</button>
-                    <button type="button" class="btn btn-secondary" onclick="hideModal('broadcastModal')">إلغاء</button>
+
+                <div style="text-align: center; margin-top: 25px; display: flex; gap: 10px; justify-content: center;">
+                    <button type="submit" class="btn">💾 حفظ السؤال</button>
+                    <button type="button" class="btn btn-success" onclick="saveQuestionAndNext()">💾➕ حفظ ومتابعة</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideModal('smartQuestionModal')">إلغاء</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Settings Modal -->
-    <div id="settingsModal" class="modal">
+    <!-- Template Selection Modal -->
+    <div id="templateModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">⚙️ إعدادات سريعة</div>
-                <button class="close-btn" onclick="hideModal('settingsModal')">&times;</button>
+                <div class="modal-title">📋 اختيار قالب السؤال</div>
+                <button class="close-btn" onclick="hideModal('templateModal')">&times;</button>
             </div>
-            <div class="form-group">
-                <label class="form-label">وقت السؤال (ثانية):</label>
-                <input type="range" class="form-control" min="30" max="120" value="60" oninput="updateTimeDisplay(this.value)">
-                <div style="text-align: center; color: #a5b4fc; margin-top: 5px;">
-                    <span id="timeDisplay">60 ثانية</span>
+            
+            <div class="question-methods">
+                <div class="method-card" onclick="selectQuestionTemplate('math')">
+                    <div class="method-icon">🔢</div>
+                    <div class="method-title">قالب الرياضيات</div>
+                    <div class="method-description">
+                        أسئلة حسابية ومعادلات<br>
+                        مسائل كلامية وهندسة
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="form-label">صعوبة الأسئلة:</label>
-                <select class="form-control">
-                    <option value="mixed">متنوعة</option>
-                    <option value="easy">سهلة</option>
-                    <option value="medium">متوسطة</option>
-                    <option value="hard">صعبة</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">السماح بالتراجع:</label>
-                <select class="form-control">
-                    <option value="yes">نعم</option>
-                    <option value="no">لا</option>
-                </select>
-            </div>
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn">✅ تطبيق الإعدادات</button>
-                <button class="btn btn-secondary" onclick="hideModal('settingsModal')">إلغاء</button>
+                <div class="method-card" onclick="selectQuestionTemplate('science')">
+                    <div class="method-icon">🔬</div>
+                    <div class="method-title">قالب العلوم</div>
+                    <div class="method-description">
+                        فيزياء وكيمياء وأحياء<br>
+                        تجارب وقوانين علمية
+                    </div>
+                </div>
+                <div class="method-card" onclick="selectQuestionTemplate('history')">
+                    <div class="method-icon">📚</div>
+                    <div class="method-title">قالب التاريخ</div>
+                    <div class="method-description">
+                        أحداث تاريخية وشخصيات<br>
+                        تواريخ ومعارك مهمة
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Enhanced Dashboard Functions
-        let competitionRunning = true;
-        let participants = [];
-        let currentQuestion = 1;
-        let totalQuestions = 20;
+    <!-- Firebase Configuration and Main JavaScript -->
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
+            authDomain: "nafs-competition.firebaseapp.com",
+            projectId: "nafs-competition",
+            storageBucket: "nafs-competition.firebasestorage.app",
+            messagingSenderId: "182205828634",
+            appId: "1:182205828634:web:dee889f770eb52ff668ba3",
+            measurementId: "G-MLR86M05H7"
+        };
 
+        // Initialize Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { 
+            getFirestore, 
+            collection, 
+            doc,
+            addDoc, 
+            getDocs,
+            updateDoc,
+            deleteDoc,
+            serverTimestamp,
+            query,
+            where,
+            orderBy,
+            limit
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Global Variables
+        window.db = db;
+        window.auth = auth;
+        let weeklyQuestionCount = 23;
+        let weeklyGoal = 100;
+
+        // Authentication
+        signInAnonymously(auth).then(() => {
+            console.log('تم تسجيل الدخول بنجاح');
+            loadRecentQuestions();
+        }).catch((error) => {
+            console.error('خطأ في المصادقة:', error);
+        });
+
+        // Global Functions
+        window.showQuestionMethod = function(method) {
+            switch(method) {
+                case 'excel':
+                    showModal('excelUploadModal');
+                    break;
+                case 'smart':
+                    showModal('smartQuestionModal');
+                    break;
+                case 'template':
+                    showModal('templateModal');
+                    break;
+            }
+        };
+
+        window.downloadExcelTemplate = function() {
+            const templateData = [
+                ['نص السؤال', 'المادة', 'المستوى', 'الصعوبة', 'النقاط', 'الخيار الأول', 'الخيار الثاني', 'الخيار الثالث', 'الخيار الرابع', 'الإجابة الصحيحة (رقم)'],
+                ['ما ناتج 5 + 3؟', 'math', 'الأول متوسط', 'سهل', '10', '6', '7', '8', '9', '2'],
+                ['ما هو الرمز الكيميائي للماء؟', 'science', 'الثاني متوسط', 'سهل', '10', 'H2O', 'CO2', 'O2', 'H2', '1'],
+                ['في أي عام تأسست المملكة؟', 'history', 'الثالث متوسط', 'متوسط', '15', '1930', '1932', '1935', '1940', '2']
+            ];
+
+            const csvContent = templateData.map(row => row.join(',')).join('\n');
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'قالب_الأسئلة_نافس.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('تم تحميل القالب بنجاح! املأه وارفعه مرة أخرى');
+        };
+
+        window.handleSmartQuestionSubmit = async function(event) {
+            event.preventDefault();
+            
+            const questionData = {
+                text: document.getElementById('questionText').value,
+                subject: document.getElementById('questionSubject').value,
+                grade: document.getElementById('questionGrade').value,
+                difficulty: document.getElementById('questionDifficulty').value,
+                points: parseInt(document.getElementById('questionPoints').value),
+                options: [
+                    document.getElementById('questionOption1').value,
+                    document.getElementById('questionOption2').value,
+                    document.getElementById('questionOption3').value,
+                    document.getElementById('questionOption4').value
+                ],
+                correct: parseInt(document.getElementById('questionCorrectAnswer').value),
+                isActive: true,
+                createdAt: serverTimestamp(),
+                createdBy: 'نواف الصبحي'
+            };
+
+            try {
+                await addDoc(collection(db, 'questions'), questionData);
+                showNotification('تم حفظ السؤال بنجاح!');
+                updateWeeklyProgress(1);
+                loadRecentQuestions();
+                
+                // Reset form
+                document.getElementById('smartQuestionForm').reset();
+                document.getElementById('questionPoints').value = '10';
+                hideModal('smartQuestionModal');
+                
+            } catch (error) {
+                console.error('خطأ في حفظ السؤال:', error);
+                showNotification('حدث خطأ في حفظ السؤال', 'error');
+            }
+        };
+
+        window.saveQuestionAndNext = function() {
+            const form = document.getElementById('smartQuestionForm');
+            const event = new Event('submit');
+            handleSmartQuestionSubmit(event).then(() => {
+                // Reset form but keep modal open
+                document.getElementById('smartQuestionForm').reset();
+                document.getElementById('questionPoints').value = '10';
+                showNotification('تم الحفظ! يمكنك إضافة سؤال آخر');
+            });
+        };
+
+        window.selectQuestionTemplate = function(templateType) {
+            hideModal('templateModal');
+            
+            const templates = {
+                'math': {
+                    subject: 'math',
+                    examples: [
+                        'ما ناتج العملية الحسابية؟',
+                        'احسب قيمة المتغير في المعادلة؟',
+                        'ما هي مساحة الشكل الهندسي؟'
+                    ]
+                },
+                'science': {
+                    subject: 'science',
+                    examples: [
+                        'ما هو الرمز الكيميائي للعنصر؟',
+                        'ما هي وحدة قياس القوة؟',
+                        'ما هو نوع التفاعل الكيميائي؟'
+                    ]
+                },
+                'history': {
+                    subject: 'history',
+                    examples: [
+                        'في أي عام حدث هذا الحدث؟',
+                        'من هو الشخص المسؤول عن؟',
+                        'ما هي أسباب هذه الحرب؟'
+                    ]
+                }
+            };
+
+            const template = templates[templateType];
+            if (template) {
+                showModal('smartQuestionModal');
+                document.getElementById('questionSubject').value = template.subject;
+                const subjectNames = {
+                    'math': 'الرياضيات',
+                    'science': 'العلوم',
+                    'history': 'التاريخ',
+                    'geography': 'الجغرافيا',
+                    'arabic': 'اللغة العربية',
+                    'islamic': 'التربية الإسلامية'
+                };
+                showNotification(`تم اختيار قالب ${subjectNames[template.subject]}! يمكنك الآن البدء في الإدخال`);
+            }
+        };
+
+        window.updateWeeklyProgress = function(newQuestions) {
+            weeklyQuestionCount += newQuestions;
+            const progressPercentage = (weeklyQuestionCount / weeklyGoal) * 100;
+            
+            const progressBar = document.getElementById('weeklyProgressBar');
+            const progressText = document.getElementById('progressText');
+            const weeklyStatus = document.getElementById('weeklyStatus');
+            
+            if (progressBar) progressBar.style.width = progressPercentage + '%';
+            if (progressText) progressText.textContent = Math.round(progressPercentage) + '%';
+            if (weeklyStatus) weeklyStatus.textContent = `${weeklyQuestionCount} من ${weeklyGoal}`;
+            
+            if (weeklyQuestionCount >= weeklyGoal) {
+                showNotification('مبروك! لقد حققت هدف الأسبوع 🎉', 'success');
+            }
+        };
+
+        window.loadRecentQuestions = async function() {
+            try {
+                const q = query(
+                    collection(db, 'questions'),
+                    orderBy('createdAt', 'desc'),
+                    limit(5)
+                );
+                
+                const querySnapshot = await getDocs(q);
+                const recentList = document.getElementById('recentQuestionsList');
+                if (recentList) {
+                    recentList.innerHTML = '';
+                    
+                    if (querySnapshot.empty) {
+                        recentList.innerHTML = `
+                            <div style="text-align: center; color: #94a3b8; padding: 20px;">
+                                لا توجد أسئلة مضافة حديثاً
+                            </div>
+                        `;
+                    } else {
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            const questionElement = createRecentQuestionElement(data);
+                            recentList.appendChild(questionElement);
+                        });
+                    }
+                }
+                
+            } catch (error) {
+                console.error('خطأ في تحميل الأسئلة:', error);
+            }
+        };
+
+        function createRecentQuestionElement(questionData) {
+            const div = document.createElement('div');
+            div.style.cssText = 'background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 15px; margin-bottom: 10px;';
+            
+            const subjectNames = {
+                'math': 'الرياضيات',
+                'science': 'العلوم',
+                'history': 'التاريخ',
+                'geography': 'الجغرافيا',
+                'arabic': 'اللغة العربية',
+                'islamic': 'التربية الإسلامية'
+            };
+            
+            div.innerHTML = `
+                <div style="color: #e2e8f0; font-weight: 600; margin-bottom: 8px;">${questionData.text}</div>
+                <div style="display: flex; gap: 10px; font-size: 0.9em; color: #94a3b8;">
+                    <span>${subjectNames[questionData.subject] || questionData.subject}</span>
+                    <span>${questionData.difficulty}</span>
+                    <span>${questionData.grade}</span>
+                    <span style="color: #10b981;">✓ معتمد</span>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Form submission handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const smartForm = document.getElementById('smartQuestionForm');
+            if (smartForm) {
+                smartForm.addEventListener('submit', handleSmartQuestionSubmit);
+            }
+            
+            const fileInput = document.getElementById('excelFileInput');
+            if (fileInput) {
+                fileInput.addEventListener('change', handleExcelFile);
+            }
+        });
+
+        function handleExcelFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processExcelFile(file);
+            }
+        }
+
+        function processExcelFile(file) {
+            const uploadProgress = document.getElementById('excelUploadProgress');
+            const progressBar = document.getElementById('excelProgressBar');
+            const status = document.getElementById('excelUploadStatus');
+            
+            uploadProgress.classList.remove('hidden');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                if (progress < 30) {
+                    status.textContent = 'جاري رفع الملف...';
+                } else if (progress < 60) {
+                    status.textContent = 'جاري معالجة البيانات...';
+                } else if (progress < 90) {
+                    status.textContent = 'جاري التحقق من صحة الأسئلة...';
+                } else {
+                    status.textContent = 'جاري الحفظ في قاعدة البيانات...';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        uploadProgress.classList.add('hidden');
+                        hideModal('excelUploadModal');
+                        showNotification('تم استيراد 100 سؤال بنجاح!');
+                        updateWeeklyProgress(100);
+                        loadRecentQuestions();
+                    }, 1000);
+                }
+            }, 200);
+        }
+    </script>
+
+    <!-- Regular JavaScript -->
+    <script>
         // Sidebar Management
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -1359,24 +1503,35 @@
         }
 
         // Navigation Management
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                
-                document.querySelectorAll('[id$="-section"]').forEach(section => {
-                    section.classList.add('hidden');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('[id$="-section"]').forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    const sectionName = this.dataset.section;
+                    const section = document.getElementById(sectionName + '-section');
+                    if (section) {
+                        section.classList.remove('hidden');
+                    }
+                    
+                    updatePageTitle(sectionName);
+                    
+                    // Load recent questions when switching to questions section
+                    if (sectionName === 'questions') {
+                        setTimeout(() => {
+                            if (window.loadRecentQuestions) {
+                                window.loadRecentQuestions();
+                            }
+                        }, 100);
+                    }
                 });
-                
-                const sectionName = this.dataset.section;
-                const section = document.getElementById(sectionName + '-section');
-                if (section) {
-                    section.classList.remove('hidden');
-                }
-                
-                updatePageTitle(sectionName);
             });
         });
 
@@ -1392,28 +1547,67 @@
                 },
                 'questions': {
                     title: 'بنك الأسئلة المتقدم',
-                    subtitle: 'إدارة وتصنيف الأسئلة بذكاء اصطناعي'
+                    subtitle: `إدارة ذكية للأسئلة - 23 من 100 هذا الأسبوع`
+                },
+                'competitions': {
+                    title: 'إدارة المسابقات',
+                    subtitle: 'إنشاء ومراقبة المسابقات التفاعلية'
+                },
+                'students': {
+                    title: 'متابعة الطلاب',
+                    subtitle: 'مراقبة الأداء والتقدم الأكاديمي'
+                },
+                'analytics': {
+                    title: 'التحليلات المتقدمة',
+                    subtitle: 'تحليل البيانات والإحصائيات التفصيلية'
+                },
+                'reports': {
+                    title: 'التقارير الذكية',
+                    subtitle: 'تقارير شاملة ومخصصة للأداء'
+                },
+                'settings': {
+                    title: 'إعدادات النظام',
+                    subtitle: 'تخصيص وإعداد المنصة التعليمية'
                 }
             };
             
             const pageInfo = titles[section] || titles['live-control'];
-            document.getElementById('pageTitle').textContent = pageInfo.title;
-            document.getElementById('pageSubtitle').textContent = pageInfo.subtitle;
+            const titleElement = document.getElementById('pageTitle');
+            const subtitleElement = document.getElementById('pageSubtitle');
+            
+            if (titleElement) titleElement.textContent = pageInfo.title;
+            if (subtitleElement) subtitleElement.textContent = pageInfo.subtitle;
         }
 
-        // Competition Control Functions
-        function startCompetition() {
-            showNotification('تم بدء مسابقة جديدة بنجاح!', 'success');
-            competitionRunning = true;
-            updateCompetitionStatus();
+        // Modal Management
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('show');
+            }
         }
 
-        function pauseCompetition() {
-            showNotification('تم إيقاف المسابقة مؤقتاً', 'warning');
-            competitionRunning = false;
-            updateCompetitionStatus();
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('show');
+            }
         }
 
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const toast = document.getElementById('notificationToast');
+            if (toast) {
+                toast.textContent = message;
+                toast.className = `notification-toast ${type} show`;
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+        }
+
+        // Control Functions
         function pauseAllCompetitions() {
             showNotification('تم إيقاف جميع المسابقات مؤقتاً', 'warning');
         }
@@ -1421,171 +1615,130 @@
         function emergencyStop() {
             if (confirm('هل أنت متأكد من الإيقاف الطارئ لجميع المسابقات؟')) {
                 showNotification('تم الإيقاف الطارئ للنظام', 'error');
-                competitionRunning = false;
             }
         }
 
-        function endCompetition() {
-            if (confirm('هل تريد إنهاء المسابقة الحالية؟')) {
-                showNotification('تم إنهاء المسابقة وحفظ النتائج', 'success');
-                competitionRunning = false;
-            }
+        function toggleNotifications() {
+            showNotification('مركز الإشعارات قيد التطوير', 'warning');
         }
-
-        function extendTime() {
-            showNotification('تم تمديد الوقت 10 دقائق إضافية', 'success');
-        }
-
-        function broadcastMessage() {
-            showModal('broadcastModal');
-        }
-
-        function skipQuestion() {
-            currentQuestion++;
-            updateQuestionProgress();
-            showNotification('تم تخطي السؤال والانتقال للتالي', 'success');
-        }
-
-        function hintToAll() {
-            showNotification('تم إرسال تلميح لجميع المشاركين', 'success');
-        }
-
-        function updateQuestionProgress() {
-            const progress = (currentQuestion / totalQuestions) * 100;
-            document.querySelector('.progress-fill').style.width = progress + '%';
-            document.querySelector('.stat-value').textContent = currentQuestion;
-        }
-
-        // Modal Management
-        function showModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
-        }
-
-        function hideModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
-
-        // Notification System
-        function showNotification(message, type = 'success') {
-            const toast = document.getElementById('notificationToast');
-            toast.textContent = message;
-            toast.className = `notification-toast ${type} show`;
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
-        }
-
-        // Quick Actions
-        function removeStudent() {
-            const studentName = prompt('أدخل اسم الطالب لإزالته:');
-            if (studentName) {
-                showNotification(`تم إزالة الطالب ${studentName} من المسابقة`, 'warning');
-            }
-        }
-
-        function exportResults() {
-            showNotification('جاري تصدير النتائج... سيتم التحميل قريباً', 'success');
-        }
-
-        function generateReport() {
-            showNotification('جاري إنشاء التقرير الفوري...', 'success');
-        }
-
-        function updateTimeDisplay(value) {
-            document.getElementById('timeDisplay').textContent = value + ' ثانية';
-        }
-
-        // Real-time Updates
-        function updateLiveStats() {
-            // Simulate real-time data updates
-            const activeStudents = document.getElementById('activeStudents');
-            const currentValue = parseInt(activeStudents.textContent);
-            const change = Math.floor(Math.random() * 3) - 1;
-            activeStudents.textContent = Math.max(0, currentValue + change);
-        }
-
-        function updateParticipantsList() {
-            // Simulate participant status changes
-            const statuses = ['status-online', 'status-answering', 'status-completed'];
-            const participants = document.querySelectorAll('.participant-status');
-            
-            participants.forEach(participant => {
-                if (Math.random() < 0.1) { // 10% chance to change
-                    participant.className = 'participant-status ' + statuses[Math.floor(Math.random() * statuses.length)];
-                }
-            });
-        }
-
-        // Initialize Dashboard
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCompetitionStatus();
-            
-            // Real-time updates every 5 seconds
-            setInterval(() => {
-                updateLiveStats();
-                updateParticipantsList();
-            }, 5000);
-
-            // Update notification count periodically
-            let notificationCount = 7;
-            setInterval(() => {
-                if (Math.random() < 0.3) {
-                    notificationCount++;
-                    document.getElementById('notificationCount').textContent = notificationCount;
-                }
-            }, 30000);
-        });
-
-        function updateCompetitionStatus() {
-            // Update UI based on competition status
-            const statusElement = document.querySelector('.competition-title span');
-            if (competitionRunning) {
-                statusElement.textContent = 'جارية';
-                statusElement.style.color = '#10b981';
-                statusElement.style.background = 'rgba(16, 185, 129, 0.2)';
-            } else {
-                statusElement.textContent = 'متوقفة';
-                statusElement.style.color = '#f59e0b';
-                statusElement.style.background = 'rgba(245, 158, 11, 0.2)';
-            }
-        }
-
-        // Form Submissions
-        document.getElementById('broadcastForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showNotification('تم إرسال الرسالة لجميع المشاركين المحددين', 'success');
-            hideModal('broadcastModal');
-        });
 
         // Close modals when clicking outside
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    hideModal(modal.id);
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                hideModal(e.target.id);
+            }
+        });
+
+        // Auto-save functionality (using memory instead of localStorage)
+        let autoSaveInterval;
+        let draftData = {}; // Store draft in memory
+
+        function startAutoSave() {
+            autoSaveInterval = setInterval(() => {
+                const form = document.getElementById('smartQuestionForm');
+                if (form && !form.classList.contains('hidden')) {
+                    const formData = new FormData(form);
+                    draftData = {};
+                    
+                    // Collect form data
+                    formData.forEach((value, key) => {
+                        draftData[key] = value;
+                    });
+                    
+                    // Also collect values from elements with IDs
+                    const inputs = form.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        if (input.id && input.value) {
+                            draftData[input.id] = input.value;
+                        }
+                    });
+                    
+                    console.log('تم حفظ المسودة تلقائياً في الذاكرة');
                 }
-            });
+            }, 30000); // كل 30 ثانية
+        }
+
+        function loadDraft() {
+            if (draftData && Object.keys(draftData).length > 0) {
+                try {
+                    Object.keys(draftData).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element && draftData[key]) {
+                            element.value = draftData[key];
+                        }
+                    });
+                    showNotification('تم استرجاع المسودة المحفوظة');
+                } catch (error) {
+                    console.error('خطأ في استرجاع المسودة:', error);
+                }
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start auto-save
+            startAutoSave();
+            
+            // Load draft if available
+            setTimeout(loadDraft, 1000);
+            
+            // Initialize tooltips or other UI elements here if needed
+            console.log('تم تحميل لوحة التحكم بنجاح');
+        });
+
+        // Cleanup when page unloads
+        window.addEventListener('beforeunload', function() {
+            if (autoSaveInterval) {
+                clearInterval(autoSaveInterval);
+            }
         });
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey) {
+            if (e.ctrlKey || e.metaKey) {
                 switch(e.key) {
-                    case ' ':
+                    case 's':
                         e.preventDefault();
-                        pauseCompetition();
+                        // Save current form if open
+                        const activeModal = document.querySelector('.modal.show');
+                        if (activeModal && activeModal.id === 'smartQuestionModal') {
+                            const form = document.getElementById('smartQuestionForm');
+                            if (form && window.handleSmartQuestionSubmit) {
+                                window.handleSmartQuestionSubmit(new Event('submit'));
+                            }
+                        }
                         break;
-                    case 'b':
+                    case 'n':
                         e.preventDefault();
-                        broadcastMessage();
+                        // Open new question modal
+                        showModal('smartQuestionModal');
                         break;
-                    case 'e':
+                    case 'Escape':
                         e.preventDefault();
-                        if (e.shiftKey) emergencyStop();
+                        // Close active modal
+                        const openModal = document.querySelector('.modal.show');
+                        if (openModal) {
+                            hideModal(openModal.id);
+                        }
                         break;
                 }
             }
         });
+
+        // Error handling
+        window.addEventListener('error', function(e) {
+            console.error('خطأ في التطبيق:', e.error);
+            showNotification('حدث خطأ غير متوقع. يرجى إعادة تحميل الصفحة.', 'error');
+        });
+
+        // Make functions globally available
+        window.showModal = showModal;
+        window.hideModal = hideModal;
+        window.showNotification = showNotification;
+        window.toggleSidebar = toggleSidebar;
+        window.pauseAllCompetitions = pauseAllCompetitions;
+        window.emergencyStop = emergencyStop;
+        window.toggleNotifications = toggleNotifications;
     </script>
 </body>
 </html>
