@@ -1005,16 +1005,21 @@
                 const place = document.createElement('div');
                 place.className = `podium-place ${positions[index]}`;
                 
+                // تقصير الاسم إذا كان طويلاً
+                const shortName = student.studentName.length > 15 
+                    ? student.studentName.split(' ').slice(0, 2).join(' ')
+                    : student.studentName;
+                
                 place.innerHTML = `
                     <div class="podium-crown">${crowns[index]}</div>
                     <div class="podium-avatar">${getStudentIcon(student.studentName)}</div>
-                    <div class="podium-name">${student.studentName}</div>
-                    <div class="podium-score">${student.score}/${student.totalQuestions * 10}</div>
+                    <div class="podium-name" title="${student.studentName}">${shortName}</div>
+                    <div class="podium-score">${student.score}/100</div>
                     <div class="podium-details">
-                        ${student.studentGrade} - الفصل ${student.studentSection}<br>
+                        ${student.studentGrade}<br>
+                        الفصل ${student.studentSection}<br>
                         ⏱️ ${formatTime(student.timeSpent)}<br>
-                        🎯 ${student.percentage}%<br>
-                        📅 ${formatDate(student.endTime)}
+                        🎯 ${student.percentage}%
                     </div>
                 `;
 
