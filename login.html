@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - مسابقة نافس</title>
+    <meta name="description" content="منصة المسابقات التعليمية الذكية - متوسطة المنذر بن عمرو الأنصاري">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .ministry-header {
+            background: linear-gradient(135deg, #1e3a8a, #3730a3);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            line-height: 1.4;
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+        }
+
+        .school-info {
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .principal-info {
+            font-size: 0.85em;
+            opacity: 0.9;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+        
+        .logo {
+            font-size: 4em;
+            margin: 25px 0;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .title {
+            font-size: 2.5em;
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e293b, #475569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 35px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #374151;
+            font-size: 1.05em;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            font-weight: 500;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .form-control.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .link {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .link:hover {
+            color: #8b5cf6;
+            text-decoration: underline;
+        }
+        
+        .status {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 12px;
+            display: none;
+            font-weight: 600;
+            font-size: 1em;
+        }
+        
+        .status.error {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        .status.loading {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        
+        .validation-message {
+            color: #ef4444;
+            font-size: 0.9em;
+            margin-top: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .developer-info {
+            margin-top: 35px; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
+            border-radius: 15px; 
+            border-right: 4px solid #6366f1;
+            text-align: center;
+        }
+
+        .developer-name {
+            color: #6366f1; 
+            font-weight: 700; 
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .school-year {
+            color: #64748b; 
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 20px;
+                margin: 10px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+
+            .logo {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ministry-header">
+            <div class="school-info">🇸🇦 المملكة العربية السعودية - وزارة التعليم</div>
+            <div class="school-info">متوسطة المنذر بن عمرو الأنصاري</div>
+            <div class="principal-info">مدير المدرسة: خالد المطيري</div>
+        </div>
+        
+        <div class="logo">🔐</div>
+        <h1 class="title">مرحباً بعودتك!</h1>
+        <p class="subtitle">سجّل دخولك للمشاركة في المسابقة</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="fullName">👤 الاسم الرباعي:</label>
+                <input type="text" id="fullName" class="form-control" placeholder="أدخل اسمك الرباعي بالضبط" required autocomplete="name">
+                <div id="nameValidation" class="validation-message"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="pin">🔢 الرقم السري (٤ أرقام):</label>
+                <input type="number" id="pin" class="form-control" placeholder="أدخل الرقم السري" required maxlength="4" min="1000" max="9999">
+                <div id="pinValidation" class="validation-message"></div>
+            </div>
+            
+            <button type="submit" class="btn" id="submitBtn">
+                🔓 دخول المسابقة
+            </button>
+        </form>
+        
+        <div id="status" class="status"></div>
+        
+        <p style="margin-top: 25px; color: #64748b;">
+            ليس لديك حساب؟ <a href="index.html" class="link">سجّل جديداً</a>
+        </p>
+        
+        <div class="developer-info">
+            <div class="developer-name">تنفيذ وإشراف: الأستاذ نواف الصبحي</div>
+            <div class="school-year">متوسطة المنذر بن عمرو الأنصاري - 2025</div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
+            authDomain: "nafs-competition.firebaseapp.com",
+            projectId: "nafs-competition",
+            storageBucket: "nafs-competition.firebasestorage.app",
+            messagingSenderId: "182205828634",
+            appId: "1:182205828634:web:dee889f770eb52ff668ba3",
+            measurementId: "G-MLR05H7"
+        };
+
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { 
+            getFirestore, 
+            collection, 
+            query, 
+            where, 
+            getDocs
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let isSubmitting = false;
+
+        // الأمان نفسه من index.html
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                (e.ctrlKey && (e.key === 'u' || e.key === 'U'))) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // تهيئة المصادقة
+        initializeAuth();
+
+        async function initializeAuth() {
+            try {
+                await signInAnonymously(auth);
+            } catch (error) {
+                showStatus('⚠️ مشكلة في الاتصال بالخادم', 'error');
+            }
+        }
+
+        // التحقق من صحة الإدخالات
+        document.getElementById('fullName').addEventListener('input', validateName);
+        document.getElementById('pin').addEventListener('input', validatePin);
+
+        function validateName() {
+            const name = document.getElementById('fullName').value.trim();
+            const arabicRegex = /^[\u0600-\u06FF\s]+$/;
+            
+            if (!name) {
+                showValidationMessage('nameValidation', 'يجب إدخال الاسم', false);
+                return false;
+            }
+            
+            if (!arabicRegex.test(name)) {
+                showValidationMessage('nameValidation', 'يجب استخدام الأحرف العربية فقط', false);
+                return false;
+            }
+            
+            const parts = name.split(' ');
+            if (parts.length < 4) {
+                showValidationMessage('nameValidation', 'يجب إدخال الاسم الرباعي كاملاً', false);
+                return false;
+            }
+            
+            showValidationMessage('nameValidation', '✅ الاسم صحيح', true);
+            return true;
+        }
+
+        function validatePin() {
+            const pin = document.getElementById('pin').value.trim();
+            
+            if (!pin || pin.length !== 4) {
+                showValidationMessage('pinValidation', 'يجب إدخال ٤ أرقام', false);
+                return false;
+            }
+            
+            if (!/^\d{4}$/.test(pin)) {
+                showValidationMessage('pinValidation', 'يجب أن يكون الرقم مكون من ٤ أرقام فقط', false);
+                return false;
+            }
+            
+            showValidationMessage('pinValidation', '✅ الرقم صحيح', true);
+            return true;
+        }
+
+        // معالجة تسجيل الدخول
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!validateName() || !validatePin()) {
+                showStatus('⚠️ يرجى تصحيح البيانات', 'error');
+                return;
+            }
+            
+            if (isSubmitting) return;
+            isSubmitting = true;
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ جاري التحقق... <div class="loading-spinner"></div>';
+            
+            try {
+                const fullName = document.getElementById('fullName').value.trim();
+                const pin = parseInt(document.getElementById('pin').value.trim());
+                
+                showStatus('🔍 جاري البحث عن الحساب...', 'loading');
+                
+                const q = query(
+                    collection(db, 'students'), 
+                    where('fullName', '==', fullName), 
+                    where('pin', '==', pin)
+                );
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    showStatus('❌ الاسم أو الرقم السري غير صحيح', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '🔓 دخول المسابقة';
+                    isSubmitting = false;
+                    return;
+                }
+                
+                const studentData = querySnapshot.docs[0].data();
+                
+                // تحديث آخر نشاط
+                const studentRef = querySnapshot.docs[0].ref;
+                await studentRef.update({ lastActivity: serverTimestamp() });
+                
+                // حفظ البيانات محلياً
+                localStorage.setItem('nafes_student_data', JSON.stringify({
+                    ...studentData,
+                    timestamp: Date.now()
+                }));
+                
+                showStatus('✅ تم تسجيل الدخول بنجاح! جاري التوجيه...', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'thank-you.html';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('خطأ في تسجيل الدخول:', error);
+                showStatus('❌ حدث خطأ في الاتصال. حاول مرة أخرى.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '🔓 دخول المسابقة';
+                isSubmitting = false;
+            }
+        });
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            statusDiv.style.display = 'block';
+            
+            if (type === 'success' || type === 'error') {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function showValidationMessage(elementId, message, isSuccess) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `validation-message ${isSuccess ? 'success' : ''}`;
+        }
+    </script>
+</body>
+</html>
