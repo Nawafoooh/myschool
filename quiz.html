@@ -666,7 +666,7 @@
                 المملكة العربية السعودية - وزارة التعليم<br>
                 متوسطة المنذر بن عمرو الأنصاري
             </div>
-            <div class="quiz-title">🏆 نافس</div>
+            <div class="quiz-title">🏆 ناقس</div>
             <div class="student-info" id="studentInfo">
                 <span id="studentName">جاري التحميل...</span> - 
                 <span id="studentGrade">---</span> - 
@@ -691,7 +691,7 @@
 
         <div class="question-card" id="questionCard">
             <div class="question-header">
-                <div class="question-icon" id="questionIcon">📢</div>
+                <div class="question-icon" id="questionIcon">🔢</div>
                 <div class="question-meta">
                     <div class="question-category" id="questionCategory">جاري التحميل...</div>
                     <div class="question-difficulty" id="questionDifficulty">⭐⭐ متوسط</div>
@@ -780,6 +780,173 @@
         let currentUser = null;
         let isPaused = false;
 
+        // نظام إدارة الجلسات
+        const sessionManager = {
+            studentData: null,
+            isSessionValid: false,
+            sessionTimeout: 24 * 60 * 60 * 1000,
+            
+            validateSession() {
+                console.log('🔍 فحص صحة الجلسة...');
+                
+                const savedData = sessionStorage.getItem('nafes_student_data');
+                if (!savedData) {
+                    console.log('❌ لم توجد بيانات جلسة');
+                    this.redirectToRegistration('لم يتم العثور على جلسة مسجلة');
+                    return false;
+                }
+
+                try {
+                    this.studentData = JSON.parse(savedData);
+                    
+                    if (!this.studentData.studentId || !this.studentData.fullName || !this.studentData.grade || !this.studentData.section) {
+                        console.log('❌ بيانات الجلسة غير مكتملة');
+                        this.redirectToRegistration('بيانات الجلسة غير صحيحة');
+                        return false;
+                    }
+
+                    const sessionAge = Date.now() - (this.studentData.timestamp || 0);
+                    if (sessionAge > this.sessionTimeout) {
+                        console.log('❌ انتهت صلاحية الجلسة');
+                        this.clearSession();
+                        this.redirectToRegistration('انتهت صلاحية الجلسة. يرجى التسجيل مرة أخرى');
+                        return false;
+                    }
+
+                    console.log('✅ الجلسة صحيحة:', this.studentData.fullName);
+                    this.isSessionValid = true;
+                    this.updateStudentDisplay();
+                    studentData = this.studentData;
+                    return true;
+                    
+                } catch (error) {
+                    console.error('❌ خطأ في تحليل بيانات الجلسة:', error);
+                    this.clearSession();
+                    this.redirectToRegistration('خطأ في بيانات الجلسة');
+                    return false;
+                }
+            },
+
+            updateStudentDisplay() {
+                if (!this.studentData) return;
+
+                const elements = {
+                    studentName: document.getElementById('studentName'),
+                    studentGrade: document.getElementById('studentGrade'),
+                    studentSection: document.getElementById('studentSection'),
+                    studentIcon: document.getElementById('studentIcon')
+                };
+
+                if (elements.studentName) elements.studentName.textContent = this.studentData.fullName;
+                if (elements.studentGrade) elements.studentGrade.textContent = this.studentData.grade;
+                if (elements.studentSection) elements.studentSection.textContent = `الشعبة ${this.studentData.section}`;
+                if (elements.studentIcon) elements.studentIcon.textContent = this.studentData.icon;
+            },
+
+            refreshSession() {
+                if (this.studentData) {
+                    this.studentData.timestamp = Date.now();
+                    this.studentData.lastActivity = new Date().toISOString();
+                    sessionStorage.setItem('nafes_student_data', JSON.stringify(this.studentData));
+                    console.log('🔄 تم تنشيط الجلسة');
+                }
+            },
+
+            saveQuizProgress(progressData) {
+                try {
+                    const progress = {
+                        ...progressData,
+                        studentId: this.studentData.studentId,
+                        timestamp: Date.now()
+                    };
+                    
+                    sessionStorage.setItem('nafes_quiz_progress', JSON.stringify(progress));
+                    console.log('💾 تم حفظ تقدم المسابقة');
+                    return true;
+                } catch (error) {
+                    console.error('❌ خطأ في حفظ التقدم:', error);
+                    return false;
+                }
+            },
+
+            loadQuizProgress() {
+                try {
+                    const savedProgress = sessionStorage.getItem('nafes_quiz_progress');
+                    if (!savedProgress) return null;
+
+                    const progressData = JSON.parse(savedProgress);
+                    
+                    if (progressData.studentId !== this.studentData.studentId) {
+                        console.log('⚠️ تقدم المسابقة لا يخص هذا الطالب');
+                        sessionStorage.removeItem('nafes_quiz_progress');
+                        return null;
+                    }
+
+                    const progressAge = Date.now() - (progressData.timestamp || 0);
+                    if (progressAge > this.sessionTimeout) {
+                        console.log('⚠️ انتهت صلاحية تقدم المسابقة');
+                        sessionStorage.removeItem('nafes_quiz_progress');
+                        return null;
+                    }
+
+                    console.log('📁 تم استعادة تقدم المسابقة');
+                    return progressData;
+                } catch (error) {
+                    console.error('❌ خطأ في استعادة التقدم:', error);
+                    sessionStorage.removeItem('nafes_quiz_progress');
+                    return null;
+                }
+            },
+
+            clearSession() {
+                sessionStorage.removeItem('nafes_student_data');
+                sessionStorage.removeItem('nafes_quiz_progress');
+                this.studentData = null;
+                this.isSessionValid = false;
+                console.log('🗑️ تم مسح الجلسة');
+            },
+
+            redirectToRegistration(reason = '') {
+                console.log('➡️ توجيه لصفحة التسجيل:', reason);
+                
+                if (reason) {
+                    showMessage('error', `❌ ${reason}`);
+                    sessionStorage.setItem('redirect_reason', reason);
+                }
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            },
+
+            startActivityMonitoring() {
+                setInterval(() => {
+                    if (this.isSessionValid) {
+                        this.refreshSession();
+                    }
+                }, 5 * 60 * 1000);
+
+                const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+                events.forEach(event => {
+                    document.addEventListener(event, () => {
+                        if (this.isSessionValid) {
+                            this.refreshSession();
+                        }
+                    }, { passive: true });
+                });
+
+                document.addEventListener('visibilitychange', () => {
+                    if (!document.hidden && this.isSessionValid) {
+                        if (!this.validateSession()) {
+                            showMessage('error', '❌ انتهت صلاحية الجلسة. جاري التوجيه للتسجيل...');
+                        }
+                    }
+                });
+
+                console.log('👀 بدأ مراقبة نشاط الطالب');
+            }
+        };
+
         // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
@@ -788,14 +955,18 @@
         async function initializeApp() {
             try {
                 showLoading(true);
+                showMessage('info', '🔍 فحص صحة الجلسة...');
                 
-                // تسجيل دخول مجهول
+                if (!sessionManager.validateSession()) {
+                    showLoading(false);
+                    return;
+                }
+
+                sessionManager.startActivityMonitoring();
+
                 const userCredential = await signInAnonymously(auth);
                 currentUser = userCredential.user;
                 
-                await loadStudentData();
-                
-                // تحميل الأسئلة والتحقق من التقدم بالتوازي
                 const [questionsLoaded, progressChecked] = await Promise.allSettled([
                     loadQuestions(),
                     checkExistingProgress()
@@ -822,7 +993,11 @@
             } catch (error) {
                 console.error('خطأ في تهيئة التطبيق:', error);
                 
-                // في حالة فشل كامل، استخدم النظام المحلي
+                if (!sessionManager.isSessionValid) {
+                    sessionManager.redirectToRegistration('خطأ في تهيئة المسابقة');
+                    return;
+                }
+                
                 currentQuestions = getLocalQuestions();
                 setupEventListeners();
                 setupSecurity();
@@ -839,51 +1014,23 @@
             document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
         }
 
-        async function loadStudentData() {
-            // جلب بيانات الطالب من localStorage
-            const savedData = localStorage.getItem('nafes_student_data');
-            if (!savedData) {
-                window.location.href = 'index.html';
-                return;
-            }
-
-            studentData = JSON.parse(savedData);
-            
-            // التحقق من صحة البيانات في Firebase
-            try {
-                const studentDoc = await getDoc(doc(db, 'students', studentData.studentId));
-                if (!studentDoc.exists()) {
-                    localStorage.removeItem('nafes_student_data');
-                    window.location.href = 'index.html';
-                    return;
-                }
-                
-                // تحديث معلومات الطالب في الواجهة
-                updateStudentDisplay();
-                
-            } catch (error) {
-                console.error('خطأ في التحقق من بيانات الطالب:', error);
-                // استمر مع البيانات المحلية
-                updateStudentDisplay();
-            }
-        }
-
-        function updateStudentDisplay() {
-            document.getElementById('studentName').textContent = studentData.fullName;
-            document.getElementById('studentGrade').textContent = studentData.grade;
-            document.getElementById('studentSection').textContent = `الشعبة ${studentData.section}`;
-            document.getElementById('studentIcon').textContent = studentData.icon;
-        }
-
         async function checkExistingProgress() {
             try {
-                // البحث عن جلسة موجودة للطالب اليوم
+                const localProgress = sessionManager.loadQuizProgress();
+                if (localProgress) {
+                    currentQuestionIndex = localProgress.currentQuestionIndex || 0;
+                    score = localProgress.score || 0;
+                    
+                    showMessage('info', '📁 تم استعادة تقدمك المحفوظ!');
+                    return;
+                }
+
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 
                 const progressQuery = query(
                     collection(db, 'quiz_sessions'),
-                    where('studentId', '==', studentData.studentId),
+                    where('studentId', '==', sessionManager.studentData.studentId),
                     where('date', '>=', today),
                     orderBy('date', 'desc'),
                     limit(1)
@@ -900,13 +1047,11 @@
                         return;
                     }
                     
-                    // استعادة التقدم
                     currentQuestionIndex = progressData.currentQuestionIndex || 0;
                     score = progressData.score || 0;
                     
-                    showMessage('info', 'تم استعادة تقدمك السابق! استكمل من حيث توقفت.');
+                    showMessage('info', '🔄 تم استعادة تقدمك من الخادم!');
                 } else {
-                    // إنشاء جلسة جديدة
                     sessionId = generateSessionId();
                 }
                 
@@ -920,7 +1065,6 @@
             try {
                 showMessage('info', 'جاري تحميل الأسئلة...');
                 
-                // جلب الأسئلة من Firebase
                 const questionsQuery = query(
                     collection(db, 'questions'),
                     where('isActive', '==', true),
@@ -947,7 +1091,6 @@
                     });
                 });
 
-                // خلط الأسئلة
                 currentQuestions = shuffleArray(currentQuestions);
                 
             } catch (error) {
@@ -956,7 +1099,6 @@
             }
         }
 
-        // دالة الأسئلة المحلية المفقودة
         function getLocalQuestions() {
             return [
                 {
@@ -1062,11 +1204,10 @@
         }
 
         function generateSessionId() {
-            return `session_${studentData.studentId}_${Date.now()}`;
+            return `session_${sessionManager.studentData.studentId}_${Date.now()}`;
         }
 
         function setupEventListeners() {
-            // اختيار الإجابات
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.option') && !sessionCompleted && !isPaused) {
                     const option = e.target.closest('.option');
@@ -1076,17 +1217,13 @@
                 }
             });
 
-            // أزرار التحكم
             document.getElementById('submitBtn').addEventListener('click', submitAnswer);
             document.getElementById('nextBtn').addEventListener('click', nextQuestion);
             document.getElementById('skipBtn').addEventListener('click', skipQuestion);
             document.getElementById('saveExitBtn').addEventListener('click', showSaveConfirmation);
-            
-            // أزرار حوار الحفظ
             document.getElementById('confirmSaveBtn').addEventListener('click', saveAndExit);
             document.getElementById('cancelSaveBtn').addEventListener('click', hideSaveConfirmation);
 
-            // اختصارات لوحة المفاتيح
             document.addEventListener('keydown', function(e) {
                 if (sessionCompleted || isPaused) return;
                 
@@ -1108,7 +1245,6 @@
         }
 
         function setupSecurity() {
-            // منع فتح أدوات المطور
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'F12' || 
                     (e.ctrlKey && e.shiftKey && e.key === 'I') ||
@@ -1121,23 +1257,16 @@
                 }
             });
 
-            // منع النقر بالزر الأيمن
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 showMessage('error', '⚠️ النقر بالزر الأيمن غير مسموح!');
                 return false;
             });
 
-            // منع التحديد والنسخ
             document.addEventListener('selectstart', function(e) {
                 e.preventDefault();
                 return false;
             });
-
-            // تنظيف console دورياً
-            setInterval(() => {
-                console.clear();
-            }, 5000);
         }
 
         function loadQuestion() {
@@ -1149,23 +1278,19 @@
             const question = currentQuestions[currentQuestionIndex];
             questionStartTime = Date.now();
             
-            // تحديث عداد الأسئلة
             document.getElementById('questionCounter').textContent = 
                 `السؤال ${currentQuestionIndex + 1} من ${currentQuestions.length}`;
             
-            // تحديث معلومات السؤال
             document.getElementById('questionCategory').textContent = question.category || 'عام';
             document.getElementById('questionDifficulty').innerHTML = 
                 getDifficultyStars(question.difficulty) + ' ' + question.difficulty;
             document.getElementById('questionText').textContent = question.text;
 
-            // تحديث شريط التقدم
             const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
             document.getElementById('progressFill').style.width = `${progress}%`;
             document.getElementById('progressText').textContent = 
                 `تقدمك: ${Math.round(progress)}% • المتبقي: ${currentQuestions.length - currentQuestionIndex - 1} سؤال`;
 
-            // تحميل الخيارات
             loadOptions(question);
             resetQuestionState();
             updateScoreDisplay();
@@ -1234,7 +1359,6 @@
             clearInterval(timerInterval);
             const question = currentQuestions[currentQuestionIndex];
             const isCorrect = selectedAnswer === question.correct;
-            const timeSpent = Math.round((Date.now() - questionStartTime) / 1000);
             
             document.querySelectorAll('.option').forEach(opt => {
                 opt.style.pointerEvents = 'none';
@@ -1372,7 +1496,6 @@
             document.getElementById('scoreDisplay').textContent = `النقاط: ${score}`;
         }
 
-        // وظائف الحفظ والخروج
         function showSaveConfirmation() {
             document.getElementById('saveConfirmation').style.display = 'flex';
         }
@@ -1385,18 +1508,6 @@
             try {
                 showLoading(true);
                 await saveProgress();
-                
-                // حفظ البيانات المشفرة محلياً
-                const progressData = {
-                    studentId: studentData.studentId,
-                    currentQuestionIndex: currentQuestionIndex,
-                    score: score,
-                    timeLeft: timeLeft,
-                    selectedAnswer: selectedAnswer,
-                    timestamp: Date.now()
-                };
-                
-                localStorage.setItem('nafes_quiz_progress', btoa(JSON.stringify(progressData)));
                 
                 showMessage('success', '💾 تم حفظ تقدمك بنجاح! يمكنك العودة واستكمال المسابقة لاحقاً.');
                 
@@ -1415,8 +1526,8 @@
         async function saveProgress() {
             try {
                 const progressDoc = {
-                    studentId: studentData.studentId,
-                    studentName: studentData.fullName,
+                    studentId: sessionManager.studentData.studentId,
+                    studentName: sessionManager.studentData.fullName,
                     currentQuestionIndex: currentQuestionIndex,
                     score: score,
                     totalQuestions: currentQuestions.length,
@@ -1431,8 +1542,22 @@
                     await setDoc(doc(db, 'quiz_sessions', sessionId), progressDoc);
                 }
                 
+                sessionManager.saveQuizProgress({
+                    currentQuestionIndex: currentQuestionIndex,
+                    score: score,
+                    timeLeft: timeLeft,
+                    selectedAnswer: selectedAnswer
+                });
+                
             } catch (error) {
                 console.error('خطأ في حفظ التقدم:', error);
+                
+                sessionManager.saveQuizProgress({
+                    currentQuestionIndex: currentQuestionIndex,
+                    score: score,
+                    timeLeft: timeLeft,
+                    selectedAnswer: selectedAnswer
+                });
             }
         }
 
@@ -1441,8 +1566,8 @@
             clearInterval(timerInterval);
             
             const completionData = {
-                studentId: studentData.studentId,
-                studentName: studentData.fullName,
+                studentId: sessionManager.studentData.studentId,
+                studentName: sessionManager.studentData.fullName,
                 currentQuestionIndex: currentQuestions.length,
                 score: score,
                 totalQuestions: currentQuestions.length,
@@ -1456,8 +1581,7 @@
                 updateStudentStats()
             ]);
             
-            // إزالة البيانات المحفوظة محلياً
-            localStorage.removeItem('nafes_quiz_progress');
+            sessionStorage.removeItem('nafes_quiz_progress');
             
             document.getElementById('questionCard').classList.add('hidden');
             showCompletionCard();
@@ -1465,7 +1589,7 @@
 
         async function updateStudentStats() {
             try {
-                const studentRef = doc(db, 'students', studentData.studentId);
+                const studentRef = doc(db, 'students', sessionManager.studentData.studentId);
                 const studentDoc = await getDoc(studentRef);
                 
                 if (studentDoc.exists()) {
@@ -1538,34 +1662,77 @@
         // تنظيف الذاكرة عند إغلاق النافذة
         window.addEventListener('beforeunload', function() {
             clearInterval(timerInterval);
-            console.clear();
         });
 
-        // استعادة التقدم المحفوظ عند تحميل الصفحة
+        // تحديث تلقائي للجلسة عند النشاط
         window.addEventListener('load', function() {
-            const savedProgress = localStorage.getItem('nafes_quiz_progress');
-            if (savedProgress && !sessionCompleted) {
-                try {
-                    const progressData = JSON.parse(atob(savedProgress));
-                    if (progressData.studentId === studentData?.studentId && 
-                        (Date.now() - progressData.timestamp) < 24 * 60 * 60 * 1000) { // خلال 24 ساعة
-                        
-                        currentQuestionIndex = progressData.currentQuestionIndex;
-                        score = progressData.score;
-                        timeLeft = progressData.timeLeft;
-                        selectedAnswer = progressData.selectedAnswer;
-                        
-                        showMessage('info', '🔄 تم استعادة تقدمك المحفوظ!');
-                    } else {
-                        localStorage.removeItem('nafes_quiz_progress');
-                    }
-                } catch (error) {
-                    console.error('خطأ في استعادة التقدم:', error);
-                    localStorage.removeItem('nafes_quiz_progress');
-                }
+            if (sessionManager.isSessionValid) {
+                sessionManager.refreshSession();
             }
         });
 
+        // حفظ التقدم قبل إغلاق الصفحة
+        window.addEventListener('beforeunload', function(e) {
+            if (sessionManager.isSessionValid && currentQuestionIndex > 0 && !sessionCompleted) {
+                sessionManager.saveQuizProgress({
+                    currentQuestionIndex: currentQuestionIndex,
+                    score: score,
+                    timeLeft: timeLeft,
+                    selectedAnswer: selectedAnswer
+                });
+            }
+        });
+
+        // معالج الأخطاء المركزي
+        const errorHandler = {
+            log(error, context = '') {
+                console.error(`خطأ في ${context}:`, error);
+                
+                const errorLog = {
+                    error: error.message,
+                    context: context,
+                    timestamp: Date.now(),
+                    userAgent: navigator.userAgent,
+                    url: window.location.href
+                };
+                
+                const logs = JSON.parse(sessionStorage.getItem('error_logs') || '[]');
+                logs.push(errorLog);
+                
+                if (logs.length > 50) {
+                    logs.splice(0, logs.length - 50);
+                }
+                
+                sessionStorage.setItem('error_logs', JSON.stringify(logs));
+            },
+            
+            async sendLogs() {
+                try {
+                    const logs = JSON.parse(sessionStorage.getItem('error_logs') || '[]');
+                    if (logs.length > 0) {
+                        await addDoc(collection(db, 'error_reports'), {
+                            logs: logs,
+                            timestamp: serverTimestamp()
+                        });
+                        
+                        sessionStorage.removeItem('error_logs');
+                    }
+                } catch (error) {
+                    console.error('فشل في إرسال سجلات الأخطاء:', error);
+                }
+            }
+        };
+
+        // تسجيل الأخطاء والتحليلات
+        window.addEventListener('error', function(e) {
+            errorHandler.log(e.error, 'JavaScript Error');
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            errorHandler.log(e.reason, 'Unhandled Promise Rejection');
+        });
+
+        console.log('🔧 تم تحميل نظام إدارة الجلسات المحسن');
     </script>
 </body>
 </html>
