@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسابقة نافس - متوسطة المنذر بن عمرو الأنصاري</title>
+    <title>مسابقة ناقس - متوسطة المنذر بن عمرو الأنصاري</title>
     <meta name="description" content="منصة المسابقات التعليمية الذكية - متوسطة المنذر بن عمرو الأنصاري">
     <meta name="robots" content="noindex, nofollow">
     
@@ -943,6 +943,7 @@
         // فحص حالة التقدم في المسابقة
         async function checkQuizStatus(studentId) {
             try {
+                // فحص جلسات اليوم الحالي
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 
@@ -955,15 +956,45 @@
                 const progressSnapshot = await getDocs(progressQuery);
                 
                 if (!progressSnapshot.empty) {
-                    const latestSession = progressSnapshot.docs[0].data();
+                    // ترتيب الجلسات حسب التاريخ للحصول على الأحدث
+                    const sessions = [];
+                    progressSnapshot.forEach(doc => {
+                        sessions.push(doc.data());
+                    });
+                    
+                    sessions.sort((a, b) => {
+                        const aTime = a.lastUpdate?.toMillis() || a.date?.toMillis() || 0;
+                        const bTime = b.lastUpdate?.toMillis() || b.date?.toMillis() || 0;
+                        return bTime - aTime;
+                    });
+                    
+                    const latestSession = sessions[0];
                     
                     return {
                         completed: latestSession.completed || false,
-                        inProgress: !latestSession.completed && latestSession.currentQuestionIndex > 0,
+                        inProgress: !latestSession.completed && (latestSession.currentQuestionIndex || 0) > 0,
                         data: latestSession
                     };
                 }
                 
+                // فحص التقدم المحفوظ محلياً
+                const localProgress = sessionStorage.getItem('nafes_quiz_progress');
+                if (localProgress) {
+                    try {
+                        const progressData = JSON.parse(localProgress);
+                        if (progressData.studentId === studentId) {
+                            return {
+                                completed: false,
+                                inProgress: (progressData.currentQuestionIndex || 0) > 0,
+                                data: progressData
+                            };
+                        }
+                    } catch (error) {
+                        console.error('خطأ في بيانات التقدم المحلي:', error);
+                    }
+                }
+                
+                // لا توجد جلسة نشطة
                 return {
                     completed: false,
                     inProgress: false,
