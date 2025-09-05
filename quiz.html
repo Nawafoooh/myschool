@@ -1,9 +1,9 @@
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ناقس - المسابقة التفاعلية المتقدمة</title>
+    <title>نافس - المسابقة التفاعلية المتقدمة</title>
     <meta name="robots" content="noindex, nofollow">
     
     <style>
@@ -1278,7 +1278,7 @@
             document.getElementById('submitBtn').addEventListener('click', submitAnswer);
             document.getElementById('nextBtn').addEventListener('click', nextQuestion);
             document.getElementById('skipBtn').addEventListener('click', skipQuestion);
-            document.getElementById('saveExitBtn').addEventListener('click', showSaveConfirmation);
+            document.getElementById('saveExitBtn').addEventListener('click', saveAndExit);
             document.getElementById('confirmSaveBtn').addEventListener('click', saveAndExit);
             document.getElementById('cancelSaveBtn').addEventListener('click', hideSaveConfirmation);
 
@@ -1297,8 +1297,21 @@
                     skipQuestion();
                 } else if (e.ctrlKey && e.key === 's') {
                     e.preventDefault();
-                    showSaveConfirmation();
+                    saveAndExit();
                 }
+            });
+
+            // حماية روابط التنقل
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (!sessionCompleted && currentQuestionIndex > 0) {
+                        const confirmed = confirm('⚠️ لم تُنهِ المسابقة بعد! هل تريد المغادرة حقاً؟');
+                        if (!confirmed) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    }
+                });
             });
         }
 
@@ -1554,188 +1567,6 @@
             document.getElementById('scoreDisplay').textContent = `النقاط: ${score}`;
         }
 
-        function showSaveConfirmation() {
-            document.getElementById('saveConfirmation').style.display = 'flex';
-            
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                isPaused = true;
-            }
-        }
-
-        function hideSaveConfirmation() {
-            document.getElementById('saveConfirmation').style.display = 'none';
-            
-            if (isPaused && !sessionCompleted && timeLeft > 0) {
-                isPaused = false;
-                startTimer();
-            }
-        }
-
-        async function saveAndExit() {
-            try {
-                showLoading(true);
-                
-                const saveSuccess = await saveProgress(true);
-                
-                if (saveSuccess) {
-                    sessionManager.saveQuizProgress({
-                        currentQuestionIndex: currentQuestionIndex,
-                        score: score,
-                        timeLeft: timeLeft,
-                        selectedAnswer: selectedAnswer,
-                        savedForExit: true
-                    });
-                    
-                    showMessage('success', '💾 تم حفظ تقدمك بنجاح! يمكنك العودة واستكمال المسابقة لاحقاً.');
-                    
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 2500);
-                } else {
-                    throw new Error('فشل في حفظ التقدم');
-                }
-                
-            } catch (error) {
-                console.error('خطأ في الحفظ:', error);
-                
-                sessionManager.saveQuizProgress({
-                    currentQuestionIndex: currentQuestionIndex,
-                    score: score,
-                    timeLeft: timeLeft,
-                    selectedAnswer: selectedAnswer,
-                    savedForExit: true
-                });
-                
-                showMessage('error', 'حدث خطأ في حفظ التقدم على الخادم، لكن تم حفظه محلياً. يمكنك المتابعة.');
-                showLoading(false);
-                
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 3000);
-            }
-        }
-
-        async function saveProgress(isExiting = false) {
-            try {
-                const progressDoc = {
-                    studentId: sessionManager.studentData.studentId,
-                    studentName: sessionManager.studentData.fullName,
-                    currentQuestionIndex: currentQuestionIndex,
-                    score: score,
-                    totalQuestions: currentQuestions.length,
-                    completed: false,
-                    lastUpdate: Date.now(),
-                    date: new Date(),
-                    timeLeft: timeLeft,
-                    selectedAnswer: selectedAnswer,
-                    isExiting: isExiting
-                };
-
-                if (sessionId && currentUser && db && window.firebaseModules) {
-                    const { doc, setDoc, serverTimestamp } = window.firebaseModules;
-                    progressDoc.lastUpdate = serverTimestamp();
-                    await setDoc(doc(db, 'quiz_sessions', sessionId), progressDoc);
-                    console.log('✅ تم حفظ التقدم في Firebase');
-                }
-                
-                sessionManager.saveQuizProgress({
-                    currentQuestionIndex: currentQuestionIndex,
-                    score: score,
-                    timeLeft: timeLeft,
-                    selectedAnswer: selectedAnswer,
-                    isExiting: isExiting
-                });
-                
-                return true;
-                
-            } catch (error) {
-                console.error('خطأ في حفظ التقدم:', error);
-                
-                sessionManager.saveQuizProgress({
-                    currentQuestionIndex: currentQuestionIndex,
-                    score: score,
-                    timeLeft: timeLeft,
-                    selectedAnswer: selectedAnswer,
-                    isExiting: isExiting
-                });
-                
-                return isExiting;
-            }
-        }
-
-        async function completeSession() {
-            sessionCompleted = true;
-            clearInterval(timerInterval);
-            
-            const completionData = {
-                studentId: sessionManager.studentData.studentId,
-                studentName: sessionManager.studentData.fullName,
-                currentQuestionIndex: currentQuestions.length,
-                score: score,
-                totalQuestions: currentQuestions.length,
-                completed: true,
-                completionTime: Date.now(),
-                date: new Date()
-            };
-
-            try {
-                if (db && window.firebaseModules) {
-                    const { doc, setDoc, serverTimestamp } = window.firebaseModules;
-                    completionData.completionTime = serverTimestamp();
-                    
-                    await Promise.all([
-                        setDoc(doc(db, 'quiz_sessions', sessionId), completionData),
-                        updateStudentStats()
-                    ]);
-                }
-            } catch (error) {
-                console.error('خطأ في حفظ إكمال المسابقة:', error);
-            }
-            
-            sessionManager.clearQuizProgress();
-            
-            document.getElementById('questionCard').classList.add('hidden');
-            showCompletionCard();
-        }
-
-        async function updateStudentStats() {
-            try {
-                if (db && window.firebaseModules) {
-                    const { doc, getDoc, updateDoc, serverTimestamp } = window.firebaseModules;
-                    
-                    const studentRef = doc(db, 'students', sessionManager.studentData.studentId);
-                    const studentDoc = await getDoc(studentRef);
-                    
-                    if (studentDoc.exists()) {
-                        const currentData = studentDoc.data();
-                        const totalCompetitions = (currentData.totalCompetitions || 0) + 1;
-                        const totalScore = (currentData.totalScore || 0) + score;
-                        const averageScore = Math.round(totalScore / totalCompetitions);
-
-                        await updateDoc(studentRef, {
-                            totalCompetitions: totalCompetitions,
-                            totalScore: totalScore,
-                            averageScore: averageScore,
-                            lastActivity: serverTimestamp()
-                        });
-                    }
-                }
-            } catch (error) {
-                console.error('خطأ في تحديث إحصائيات الطالب:', error);
-            }
-        }
-
-        function showCompletionCard() {
-            const completionCard = document.getElementById('completionCard');
-            completionCard.classList.remove('hidden');
-            
-            const totalPossible = currentQuestions.reduce((sum, q) => sum + (q.points || 10), 0);
-            const percentage = Math.round((score / totalPossible) * 100);
-            document.getElementById('finalScore').textContent = 
-                `${score}/${totalPossible} (${percentage}%)`;
-        }
-
         function showMessage(type, text) {
             const messageContainer = document.getElementById('messageContainer');
             if (messageContainer) {
@@ -1885,3 +1716,4 @@
         console.log('🔧 تم تحميل نظام إدارة الجلسات المحسن مع الحفظ والخروج');
     </script>
 </body>
+</html>
