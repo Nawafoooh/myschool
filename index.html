@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسابقة ناقس - متوسطة المنذر بن عمرو الأنصاري</title>
+    <title>مسابقة نافس - متوسطة المنذر بن عمرو الأنصاري</title>
     <meta name="description" content="منصة المسابقات التعليمية الذكية - متوسطة المنذر بن عمرو الأنصاري">
     <meta name="robots" content="noindex, nofollow">
     
@@ -44,76 +44,62 @@
             overflow: hidden;
         }
 
-        /* تحسين تصميم لوحة الجلسة الموجودة */
+        /* إضافة رابط تسجيل الدخول */
+        .login-link-container {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #d1d5db;
+        }
+
+        .login-link {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .login-link:hover {
+            color: #8b5cf6;
+            transform: translateX(-3px);
+        }
+
+        .login-link::before {
+            content: '🔑';
+        }
+
+        /* لوحة الجلسة الموجودة */
         .existing-session {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
-            padding: 35px;
-            border-radius: 25px;
+            padding: 25px;
+            border-radius: 20px;
             margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .existing-session::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(180deg); }
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
         }
 
         .session-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 2;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+            font-size: 3em;
+            margin-bottom: 15px;
         }
 
         .session-title {
-            font-size: 2em;
-            font-weight: 800;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         .session-details {
-            font-size: 1.2em;
-            margin-bottom: 25px;
-            opacity: 0.95;
-            position: relative;
-            z-index: 2;
-            line-height: 1.6;
-        }
-
-        .student-avatar {
-            display: inline-block;
-            font-size: 2.5em;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            line-height: 80px;
-            margin: 0 15px 15px 15px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            font-size: 1em;
+            margin-bottom: 20px;
+            opacity: 0.9;
         }
 
         .session-actions {
@@ -121,72 +107,36 @@
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
         }
 
         .session-btn {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 15px 30px;
-            border-radius: 20px;
-            font-weight: 700;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            font-size: 1em;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .session-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .session-btn:hover::before {
-            left: 100%;
         }
 
         .session-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
         .session-btn.primary {
             background: rgba(255, 255, 255, 0.9);
             color: #059669;
             border-color: rgba(255, 255, 255, 0.9);
-            font-size: 1.1em;
-            padding: 18px 35px;
         }
 
         .session-btn.primary:hover {
             background: white;
             color: #047857;
-            transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .session-btn.danger {
-            background: rgba(239, 68, 68, 0.8);
-            border-color: rgba(239, 68, 68, 0.8);
-        }
-
-        .session-btn.danger:hover {
-            background: rgba(220, 38, 38, 0.9);
-            border-color: rgba(220, 38, 38, 0.9);
         }
 
         /* باقي الـ styles الأصلية */
@@ -499,41 +449,6 @@
             font-size: 1.5em;
             text-align: center;
         }
-
-        /* إضافة styles لإحصائيات الطالب */
-        .student-stats {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .stat-number {
-            font-size: 1.8em;
-            font-weight: 800;
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
         
         .hidden {
             display: none !important;
@@ -564,18 +479,9 @@
             .session-actions {
                 flex-direction: column;
             }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .session-title {
-                font-size: 1.6em;
-            }
-
-            .session-details {
-                font-size: 1em;
+            
+            .login-link-container {
+                padding: 12px;
             }
         }
     </style>
@@ -589,38 +495,25 @@
     </div>
 
     <div class="container">
-        <!-- لوحة الجلسة الموجودة - محسنة -->
+        <!-- إضافة رابط تسجيل الدخول -->
+        <div class="login-link-container">
+            <p style="margin: 0; color: #374151;">
+                لديك حساب بالفعل؟ 
+                <a href="login.html" class="login-link">سجّل دخولك الآن</a>
+            </p>
+        </div>
+
+        <!-- لوحة الجلسة الموجودة -->
         <div class="existing-session hidden" id="existingSession">
             <div class="session-icon">👋</div>
             <div class="session-title">مرحباً بعودتك!</div>
-            <div class="student-avatar" id="studentAvatar">⭐</div>
             <div class="session-details" id="sessionDetails">
                 لديك جلسة مسجلة مسبقاً
             </div>
-            
-            <!-- إحصائيات الطالب -->
-            <div class="student-stats hidden" id="studentStats">
-                <div style="font-weight: 700; margin-bottom: 10px;">📊 إحصائياتك</div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalCompetitions">0</span>
-                        <div class="stat-label">مسابقات</div>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="averageScore">0</span>
-                        <div class="stat-label">متوسط النقاط</div>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="lastRank">-</span>
-                        <div class="stat-label">الترتيب الأخير</div>
-                    </div>
-                </div>
-            </div>
-
             <div class="session-actions">
-                <a href="#" class="session-btn primary" id="continueBtn">🚀 دخول المسابقة</a>
+                <a href="#" class="session-btn primary" id="continueBtn">🚀 متابعة المسابقة</a>
+                <button class="session-btn" id="newSessionBtn">🔄 بدء جلسة جديدة</button>
                 <a href="leaderboard.html" class="session-btn">🏆 لوحة الشرف</a>
-                <button class="session-btn danger" id="logoutBtn">🚪 تسجيل خروج</button>
             </div>
         </div>
 
@@ -633,12 +526,12 @@
             </div>
             
             <div class="logo">🏆</div>
-            <h1 class="title">ناقس</h1>
+            <h1 class="title">نافس</h1>
             <p class="subtitle">منصة المسابقات التعليمية الذكية<br>تعلم، تنافس، وتفوق مع أقرانك</p>
             
             <form id="loginForm">
                 <div class="form-group">
-                    <label>🔍 الاسم الرباعي (إجباري):</label>
+                    <label>📝 الاسم الرباعي (إجباري):</label>
                     <div class="name-inputs">
                         <input type="text" id="firstName" class="form-control" placeholder="الاسم الأول" required autocomplete="off" maxlength="20">
                         <input type="text" id="fatherName" class="form-control" placeholder="اسم الأب" required autocomplete="off" maxlength="20">
@@ -683,8 +576,8 @@
                         <div class="icon-option" data-icon="🎯" style="animation-delay: 0.6s">🎯</div>
                         <div class="icon-option" data-icon="🏆" style="animation-delay: 0.7s">🏆</div>
                         <div class="icon-option" data-icon="👑" style="animation-delay: 0.8s">👑</div>
-                        <div class="icon-option" data-icon="🦅" style="animation-delay: 0.9s">🦅</div>
-                        <div class="icon-option" data-icon="🦁" style="animation-delay: 1.0s">🦁</div>
+                        <div class="icon-option" data-icon="🦁" style="animation-delay: 0.9s">🦁</div>
+                        <div class="icon-option" data-icon="🦅" style="animation-delay: 1.0s">🦅</div>
                         <div class="icon-option" data-icon="🐺" style="animation-delay: 1.1s">🐺</div>
                         <div class="icon-option" data-icon="🦖" style="animation-delay: 1.2s">🦖</div>
                         <div class="icon-option" data-icon="🌙" style="animation-delay: 1.3s">🌙</div>
@@ -757,32 +650,18 @@
             loadIconsWithDelay();
         });
 
-        // فحص الجلسة الموجودة - محسن
-        async function checkExistingSession() {
-            // فحص sessionStorage أولاً للجلسة النشطة
-            const sessionData = sessionStorage.getItem('nafes_student_data');
-            if (sessionData) {
-                try {
-                    const studentData = JSON.parse(sessionData);
-                    if (await validateSessionData(studentData)) {
-                        await showExistingSession(studentData);
-                        return true;
-                    }
-                } catch (error) {
-                    console.error('خطأ في بيانات الجلسة النشطة:', error);
-                    sessionStorage.removeItem('nafes_student_data');
-                }
-            }
-
-            // فحص localStorage للجلسة المحفوظة
+        // فحص الجلسة الموجودة
+        function checkExistingSession() {
             const savedData = localStorage.getItem('nafes_student_data');
             if (savedData) {
                 try {
                     const studentData = JSON.parse(savedData);
-                    if (await validateSessionData(studentData)) {
-                        // نسخ البيانات لـ sessionStorage للجلسة النشطة
-                        sessionStorage.setItem('nafes_student_data', JSON.stringify(studentData));
-                        await showExistingSession(studentData);
+                    
+                    // التحقق من صحة البيانات
+                    if (studentData.studentId && studentData.fullName && 
+                        (Date.now() - studentData.timestamp) < 24 * 60 * 60 * 1000) {
+                        
+                        showExistingSession(studentData);
                         return true;
                     } else {
                         // بيانات قديمة أو غير صحيحة
@@ -796,233 +675,102 @@
             return false;
         }
 
-        // التحقق من صحة بيانات الجلسة
-        async function validateSessionData(studentData) {
-            if (!studentData.studentId || !studentData.fullName || 
-                !studentData.grade || !studentData.section) {
-                return false;
-            }
-
-            // التحقق من انتهاء الصلاحية (7 أيام)
-            const sessionAge = Date.now() - (studentData.timestamp || 0);
-            const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
-            
-            if (sessionAge > SEVEN_DAYS) {
-                return false;
-            }
-
-            return true;
-        }
-
-        // عرض لوحة الجلسة الموجودة - محسنة
-        async function showExistingSession(studentData) {
+        // عرض لوحة الجلسة الموجودة
+        function showExistingSession(studentData) {
             const existingSession = document.getElementById('existingSession');
             const registrationForm = document.getElementById('registrationForm');
             const sessionDetails = document.getElementById('sessionDetails');
-            const studentAvatar = document.getElementById('studentAvatar');
 
-            // تحديث الأفتار
-            studentAvatar.textContent = studentData.icon || '⭐';
-
-            // تحديث تفاصيل الطالب
             sessionDetails.innerHTML = `
-                <strong style="font-size: 1.3em;">${studentData.fullName}</strong><br>
+                ${studentData.icon} <strong>${studentData.fullName}</strong><br>
                 ${studentData.grade} - الشعبة ${studentData.section}<br>
                 <small style="opacity: 0.8;">آخر نشاط: ${formatRelativeTime(studentData.timestamp)}</small>
             `;
-
-            // تحميل وعرض الإحصائيات
-            await loadStudentStats(studentData.studentId);
 
             existingSession.classList.remove('hidden');
             registrationForm.classList.add('hidden');
 
             // إعداد أزرار التحكم
-            setupSessionControls(studentData);
-        }
-
-        // تحميل إحصائيات الطالب
-        async function loadStudentStats(studentId) {
-            try {
-                const studentRef = doc(db, 'students', studentId);
-                const studentDoc = await getDoc(studentRef);
-                
-                if (studentDoc.exists()) {
-                    const data = studentDoc.data();
-                    
-                    document.getElementById('totalCompetitions').textContent = data.totalCompetitions || 0;
-                    document.getElementById('averageScore').textContent = data.averageScore || 0;
-                    
-                    // حساب الترتيب الأخير
-                    const rank = await calculateStudentRank(studentId, data.averageScore || 0);
-                    document.getElementById('lastRank').textContent = rank > 0 ? `#${rank}` : '-';
-                    
-                    document.getElementById('studentStats').classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('خطأ في تحميل الإحصائيات:', error);
-            }
-        }
-
-        // حساب ترتيب الطالب
-        async function calculateStudentRank(studentId, averageScore) {
-            try {
-                const studentsQuery = query(collection(db, 'students'));
-                const studentsSnapshot = await getDocs(studentsQuery);
-                
-                const students = [];
-                studentsSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    if (data.averageScore > 0) {
-                        students.push({
-                            id: doc.id,
-                            averageScore: data.averageScore
-                        });
-                    }
-                });
-
-                // ترتيب حسب المتوسط
-                students.sort((a, b) => b.averageScore - a.averageScore);
-                
-                // العثور على ترتيب الطالب
-                const rank = students.findIndex(student => student.id === studentId) + 1;
-                return rank;
-            } catch (error) {
-                console.error('خطأ في حساب الترتيب:', error);
-                return 0;
-            }
-        }
-
-        // إعداد أزرار التحكم في الجلسة
-        function setupSessionControls(studentData) {
-            // زر الدخول للمسابقة
             document.getElementById('continueBtn').addEventListener('click', function(e) {
                 e.preventDefault();
-                continueToQuiz(studentData);
+                continueToQuiz();
             });
 
-            // زر تسجيل الخروج
-            document.getElementById('logoutBtn').addEventListener('click', function() {
-                logout();
+            document.getElementById('newSessionBtn').addEventListener('click', function() {
+                startNewSession();
             });
         }
 
         // المتابعة للمسابقة
-        async function continueToQuiz(studentData) {
-            try {
-                showStatus('🔍 جاري فحص حالة المسابقة...', 'loading');
-                
-                // التحقق من حالة التقدم
-                const quizStatus = await checkQuizStatus(studentData.studentId);
-                
-                if (quizStatus.completed) {
-                    showStatus('✅ لقد أكملت مسابقة اليوم بالفعل!', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'leaderboard.html';
-                    }, 2000);
-                } else if (quizStatus.inProgress) {
-                    showStatus('🔄 جاري استكمال المسابقة من حيث توقفت...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'quiz.html';
-                    }, 1500);
-                } else {
-                    showStatus('🚀 جاري التوجيه للمسابقة...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'quiz.html';
-                    }, 1500);
+        function continueToQuiz() {
+            const savedData = localStorage.getItem('nafes_student_data');
+            if (savedData) {
+                try {
+                    const studentData = JSON.parse(savedData);
+                    
+                    // فحص حالة التقدم
+                    checkQuizProgress(studentData);
+                } catch (error) {
+                    console.error('خطأ في البيانات:', error);
+                    startNewSession();
                 }
-            } catch (error) {
-                console.error('خطأ في فحص حالة المسابقة:', error);
-                showStatus('🚀 جاري التوجيه للمسابقة...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'quiz.html';
-                }, 1500);
+            } else {
+                startNewSession();
             }
         }
 
-        // فحص حالة التقدم في المسابقة
-        async function checkQuizStatus(studentId) {
+        // فحص تقدم المسابقة
+        async function checkQuizProgress(studentData) {
             try {
-                // فحص جلسات اليوم الحالي
+                // التحقق من وجود جلسة مسابقة نشطة
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 
                 const progressQuery = query(
                     collection(db, 'quiz_sessions'),
-                    where('studentId', '==', studentId),
+                    where('studentId', '==', studentData.studentId),
                     where('date', '>=', today)
                 );
                 
                 const progressSnapshot = await getDocs(progressQuery);
                 
                 if (!progressSnapshot.empty) {
-                    // ترتيب الجلسات حسب التاريخ للحصول على الأحدث
-                    const sessions = [];
-                    progressSnapshot.forEach(doc => {
-                        sessions.push(doc.data());
-                    });
+                    const latestSession = progressSnapshot.docs[0].data();
                     
-                    sessions.sort((a, b) => {
-                        const aTime = a.lastUpdate?.toMillis() || a.date?.toMillis() || 0;
-                        const bTime = b.lastUpdate?.toMillis() || b.date?.toMillis() || 0;
-                        return bTime - aTime;
-                    });
-                    
-                    const latestSession = sessions[0];
-                    
-                    return {
-                        completed: latestSession.completed || false,
-                        inProgress: !latestSession.completed && (latestSession.currentQuestionIndex || 0) > 0,
-                        data: latestSession
-                    };
-                }
-                
-                // فحص التقدم المحفوظ محلياً
-                const localProgress = sessionStorage.getItem('nafes_quiz_progress');
-                if (localProgress) {
-                    try {
-                        const progressData = JSON.parse(localProgress);
-                        if (progressData.studentId === studentId) {
-                            return {
-                                completed: false,
-                                inProgress: (progressData.currentQuestionIndex || 0) > 0,
-                                data: progressData
-                            };
-                        }
-                    } catch (error) {
-                        console.error('خطأ في بيانات التقدم المحلي:', error);
+                    if (latestSession.completed) {
+                        // المسابقة مكتملة - اذهب لصفحة النتائج
+                        window.location.href = 'leaderboard.html';
+                        return;
+                    } else {
+                        // مسابقة غير مكتملة - اذهب لصفحة الأسئلة
+                        window.location.href = 'quiz.html';
+                        return;
                     }
                 }
                 
-                // لا توجد جلسة نشطة
-                return {
-                    completed: false,
-                    inProgress: false,
-                    data: null
-                };
+                // لا توجد جلسة - اذهب لصفحة الشكر ثم الأسئلة
+                window.location.href = 'thank-you.html';
                 
             } catch (error) {
                 console.error('خطأ في فحص التقدم:', error);
-                return {
-                    completed: false,
-                    inProgress: false,
-                    data: null
-                };
+                // في حالة الخطأ، اذهب لصفحة الشكر
+                window.location.href = 'thank-you.html';
             }
         }
 
-        // تسجيل الخروج
-        function logout() {
-            if (confirm('هل أنت متأكد من تسجيل الخروج؟\nستحتاج لإدخال بياناتك مرة أخرى للدخول.')) {
-                // حذف بيانات الجلسة
-                sessionStorage.removeItem('nafes_student_data');
+        // بدء جلسة جديدة
+        function startNewSession() {
+            if (confirm('هل أنت متأكد من بدء جلسة جديدة؟ سيتم حذف البيانات السابقة.')) {
                 localStorage.removeItem('nafes_student_data');
-                sessionStorage.removeItem('nafes_quiz_progress');
+                localStorage.removeItem('nafes_quiz_progress');
                 
-                // إعادة تحميل الصفحة
-                window.location.reload();
+                const existingSession = document.getElementById('existingSession');
+                const registrationForm = document.getElementById('registrationForm');
                 
-                showStatus('✅ تم تسجيل الخروج بنجاح', 'success');
+                existingSession.classList.add('hidden');
+                registrationForm.classList.remove('hidden');
+                
+                showStatus('تم حذف الجلسة السابقة. يمكنك التسجيل مرة أخرى.', 'success');
             }
         }
 
@@ -1043,7 +791,7 @@
             }
         }
 
-        // باقي الكود الأصلي...
+        // باقي الكود كما هو...
         function loadIconsWithDelay() {
             const icons = document.querySelectorAll('.icon-option');
             icons.forEach((icon, index) => {
@@ -1096,6 +844,7 @@
             document.addEventListener('dragstart', e => e.preventDefault());
 
             setInterval(() => console.clear(), 3000);
+            Object.freeze(window);
         }
 
         function showSecurityOverlay() {
@@ -1306,6 +1055,9 @@
                 
                 const studentId = generateStudentId(fullName, grade, section);
                 
+                // توليد الرقم السري
+                const pin = Math.floor(1000 + Math.random() * 9000);
+                
                 await setDoc(doc(db, 'students', studentId), {
                     studentId: studentId,
                     firstName: firstName,
@@ -1316,6 +1068,7 @@
                     grade: grade,
                     section: section,
                     icon: selectedIcon,
+                    pin: pin,
                     registrationTime: serverTimestamp(),
                     isActive: true,
                     totalCompetitions: 0,
@@ -1332,17 +1085,18 @@
                     grade,
                     section,
                     icon: selectedIcon,
+                    pin: pin,
                     timestamp: Date.now()
                 };
-                
-                // حفظ في كلا المكانين
                 localStorage.setItem('nafes_student_data', JSON.stringify(studentData));
-                sessionStorage.setItem('nafes_student_data', JSON.stringify(studentData));
+                
+                // عرض الرقم السري للطالب
+                alert(`✅ تم إنشاء حسابك بنجاح!\n\nرقمك السري هو: ${pin}\nاحفظ هذا الرقم جيداً، ستستخدمه لتسجيل الدخول لاحقاً.`);
                 
                 showStatus('✅ تم تسجيل دخولك بنجاح! جاري التوجيه للمسابقة...', 'success');
                 
                 setTimeout(() => {
-                    window.location.href = 'quiz.html';
+                    window.location.href = 'thank-you.html';
                 }, 2000);
                 
             } catch (error) {
@@ -1409,7 +1163,6 @@
             element.className = 'validation-message';
         }
 
-        // معالجة الأخطاء
         window.addEventListener('error', function(e) {
             console.error('JavaScript Error:', e.error);
             
@@ -1431,7 +1184,6 @@
             console.error('Unhandled Promise Rejection:', e.reason);
         });
 
-        // مراقبة الاتصال
         setInterval(async () => {
             if (currentUser) {
                 try {
@@ -1442,7 +1194,6 @@
             }
         }, 30000);
 
-        // حماية إضافية من الأمان
         let securityViolations = 0;
         const MAX_VIOLATIONS = 3;
 
