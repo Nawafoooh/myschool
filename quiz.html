@@ -5,425 +5,247 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex,nofollow">
-  <title>نافس – مسابقة متوسطة المنذر بن عمرو الأنصاري</title>
+  <title>مسابقة نافس - متوسطة المنذر بن عمرو الأنصاري</title>
 
   <!-- ========  Critical CSS (inlined)  ======== -->
   <style>
-    :root{
-      --primary:#6366f1;--success:#10b981;--danger:#ef4444;--radius:25px;
-      --shadow:0 15px 40px rgba(99,102,241,.15);
-    }
-    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
-    body{
-      display:flex;flex-direction:column;min-height:100vh;
-      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-      user-select:none;color:#fff;
-    }
+    :root{--primary:#6366f1;--success:#10b981;--danger:#ef4444;--radius:15px;--shadow:0 15px 35px rgba(99,102,241,.4)}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+    body{display:flex;min-height:100vh;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);user-select:none;color:#fff}
     .hidden{display:none!important}
-    .loading-overlay{
-      position:fixed;inset:0;background:rgba(0,0,0,.85);
-      display:flex;align-items:center;justify-content:center;z-index:9999;
-    }
-    .loading-content{
-      background:#fff;color:#111;padding:40px;border-radius:var(--radius);
-      text-align:center;box-shadow:var(--shadow);
-    }
-    .spinner{
-      width:50px;height:50px;border:5px solid #f3f4f6;
-      border-top-color:var(--primary);border-radius:50%;
-      animation:spin 1s linear infinite;margin:0 auto 15px;
-    }
+    .container{background:rgba(255,255,255,.98);padding:40px;border-radius:25px;box-shadow:var(--shadow);max-width:650px;width:100%;backdrop-filter:blur(20px)}
+    .ministry-header{background:linear-gradient(135deg,#1e3a8a,#3730a3);color:#fff;padding:20px;border-radius:var(--radius);margin-bottom:25px;font-weight:600;line-height:1.4}
+    .logo{font-size:4em;margin:25px 0;background:linear-gradient(135deg,var(--primary),#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .title{font-size:2.5em;font-weight:900;background:linear-gradient(135deg,#1e293b,#475569);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+    .subtitle{color:#64748b;margin-bottom:35px;font-size:1.1em;font-weight:500}
+    .form-group{margin-bottom:25px;text-align:right}
+    .form-label{display:block;margin-bottom:10px;font-weight:700;color:#374151;font-size:1.05em}
+    .form-control{width:100%;padding:15px;border:2px solid #e5e7eb;border-radius:12px;font-size:1em;transition:all .3s ease;background:#fafafa;font-weight:500}
+    .form-control:focus{outline:none;border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+    .form-control.error{border-color:var(--danger);background:#fef2f2;animation:shake .5s ease-in-out}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+    .btn{background:linear-gradient(135deg,var(--primary),#8b5cf6);color:#fff;border:none;padding:18px 35px;border-radius:15px;font-size:1.1em;font-weight:700;cursor:pointer;width:100%;margin-top:25px;transition:all .3s ease;box-shadow:0 8px 25px rgba(99,102,241,.3)}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 15px 35px rgba(99,102,241,.4)}
+    .btn:disabled{background:#9ca3af;cursor:not-allowed;transform:none;box-shadow:none}
+    .status{margin-top:25px;padding:18px;border-radius:12px;display:none;font-weight:600;font-size:1em}
+    .status.error{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#991b1b;border:1px solid var(--danger)}
+    .status.loading{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;border:1px solid #3b82f6}
+    .validation-message{color:var(--danger);font-size:.9em;margin-top:8px;text-align:center;font-weight:600}
+    .validation-message.success{color:var(--success)}
+    .loading-spinner{display:inline-block;width:20px;height:20px;border:2px solid #fff;border-radius:50%;border-top-color:transparent;animation:spin 1s linear infinite;margin-right:10px}
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    .quiz-container{max-width:900px;margin:0 auto;padding:20px}
-    .header{
-      background:rgba(255,255,255,.98);color:#111;border-radius:var(--radius);
-      padding:30px;margin-bottom:25px;text-align:center;box-shadow:var(--shadow);
-    }
-    .quiz-title{
-      font-size:2.4em;font-weight:900;
-      background:linear-gradient(135deg,var(--primary),#8b5cf6);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    }
-    .student-info{font-size:1.1em;margin-top:10px}
-    .progress-section{background:rgba(255,255,255,.15);border-radius:var(--radius);padding:15px 20px;margin-bottom:25px}
-    .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:700}
-    .progress-bar{height:10px;background:rgba(255,255,255,.25);border-radius:10px;overflow:hidden}
-    .progress-fill{height:100%;background:#fff;transition:width .4s}
-    .progress-text{text-align:center;font-weight:600;font-size:1.05em}
-    .question-card{
-      background:rgba(255,255,255,.98);color:#111;border-radius:30px;
-      padding:40px 30px;box-shadow:var(--shadow);
-    }
-    .question-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
-    .question-icon{font-size:2em}
-    .question-category{font-weight:700;font-size:1.1em}
-    .question-difficulty{font-size:.9em;opacity:.8}
-    .question-text{font-size:1.35em;margin-bottom:25px;line-height:1.6}
-    .options-container{display:flex;flex-direction:column;gap:12px}
-    .option{
-      display:flex;align-items:center;gap:12px;padding:15px 20px;
-      background:#f3f4f6;border-radius:15px;cursor:pointer;
-      transition:background .25s;border:2px solid transparent;
-    }
-    .option:hover{background:#e5e7eb}
-    .option.selected{background:var(--primary);color:#fff}
-    .option.correct{background:var(--success);color:#fff;border-color:#10b981}
-    .option.incorrect{background:var(--danger);color:#fff;border-color:#ef4444}
-    .option-letter{
-      width:36px;height:36px;border-radius:50%;background:#fff;color:var(--primary);
-      display:grid;place-content:center;font-weight:700;font-size:1.1em;
-    }
-    .action-buttons{margin-top:30px;display:flex;gap:15px;flex-wrap:wrap;justify-content:center}
-    .btn{
-      border:none;padding:16px 36px;border-radius:30px;font-size:1.1em;font-weight:700;
-      cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:1px;
-    }
-    .btn:disabled{opacity:.5;cursor:not-allowed}
-    .btn-primary{background:linear-gradient(135deg,var(--primary),#4f46e5);color:#fff}
-    .btn-secondary{background:#e5e7eb;color:#111}
-    .btn-warning{background:#f59e0b;color:#fff}
-    .btn-save{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
-    .message{margin-top:20px;padding:12px 18px;border-radius:12px;font-weight:700}
-    .message.success{background:var(--success);color:#fff}
-    .message.error{background:var(--danger);color:#fff}
-    .message.info{background:#3b82f6;color:#fff}
-    .completion-card{text-align:center}
-    .final-score{font-size:3.5em;font-weight:900;margin:15px 0}
-    .footer-credit{margin-top:auto;text-align:center;padding:20px;font-size:.9em;opacity:.8}
-    @media(max-width:600px){
-      .quiz-title{font-size:2em}
-      .question-text{font-size:1.15em}
-      .btn{width:100%}
-    }
+    .developer-info{margin-top:35px;padding:20px;background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-radius:15px;border-right:4px solid var(--primary);text-align:center}
+    .developer-name{color:var(--primary);font-weight:700;margin-bottom:8px;font-size:1.05em}
+    .school-year{color:#64748b;font-size:.85em;font-weight:500}
+    @media(max-width:768px){.container{padding:25px 20px;margin:10px}.title{font-size:2em}.logo{font-size:3em}}
   </style>
-
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#6366f1">
 </head>
-
 <body>
-  <!-- ===== Loading ===== -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-content">
-      <div class="spinner"></div>
-      <h3>جاري تحضير المسابقة...</h3>
-      <p>يرجى الانتظار قليلاً</p>
-    </div>
-  </div>
-
-  <!-- Save Confirmation -->
-  <div class="loading-overlay hidden" id="saveConfirmation">
-    <div class="loading-content">
-      <h3>💾 حفظ التقدم والخروج</h3>
-      <p>هل تريد حفظ تقدمك الحالي والخروج من المسابقة؟</p>
-      <div class="action-buttons">
-        <button class="btn btn-save" id="confirmSaveBtn">✅ نعم، احفظ واخرج</button>
-        <button class="btn btn-secondary" id="cancelSaveBtn">❌ إلغاء والمتابعة</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== Container ===== -->
-  <div class="quiz-container">
-    <header class="header">
-      <div class="ministry-info">وزارة التعليم • متوسطة المنذر بن عمرو الأنصاري</div>
-      <h1 class="quiz-title">🏆 مسابقة نافس التفاعلية</h1>
-      <div class="student-info">
-        <span id="stuIcon">👤</span>
-        <strong>الطالب:</strong> <span id="stuName">أحمد محمد</span> • 
-        <strong>الصف:</strong> <span id="stuGrade">الثالث المتوسط</span> • 
-        <span id="stuSec">الشعبة أ</span>
-      </div>
-    </header>
-
-    <section class="progress-section">
-      <div class="progress-header">
-        <div id="qCounter">السؤال 1 من 10</div>
-        <div id="timer">⏰ 60</div>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:10%"></div></div>
-      <div id="progressText">تقدمك: 10% • المتبقي: 9 أسئلة</div>
-    </section>
-
-    <main class="question-card" id="qCard">
-      <div class="question-header">
-        <div class="question-icon">🤔</div>
-        <div>
-          <div class="question-category" id="qCat">الرياضيات</div>
-          <div class="question-difficulty" id="qDiff">⭐⭐ متوسط</div>
-        </div>
-      </div>
-      <div class="question-text" id="qText">جاري تحميل السؤال...</div>
-      <div class="options-container" id="opts"></div>
-      <div class="message" id="msg"></div>
-      <div class="action-buttons">
-        <button class="btn btn-primary" id="submitBtn" disabled>✅ تأكيد الإجابة</button>
-        <button class="btn btn-primary hidden" id="nextBtn">⏭️ التالي</button>
-        <button class="btn btn-warning" id="skipBtn">⏭️ تخطي</button>
-        <button class="btn btn-save" id="saveExitBtn">💾 حفظ وخروج</button>
-      </div>
-    </main>
-
-    <section class="completion-card hidden" id="finishCard">
-      <h2>🎉 تهانينا! أكملت المسابقة</h2>
-      <div class="final-score" id="finalScore">0/100</div>
-      <p>سيتم توجيهك إلى لوحة النتائج...</p>
-    </section>
-
-    <footer class="footer-credit">
-      <div>تصميم وتنفيذ: نواف الصبحي</div>
+  <div class="container">
+    <div class="ministry-header">
+      <div>🇸🇦 المملكة العربية السعودية - وزارة التعليم</div>
       <div>متوسطة المنذر بن عمرو الأنصاري</div>
-    </footer>
+      <div style="font-size:.85em;opacity:.9;border-top:1px solid rgba(255,255,255,.2);padding-top:8px;margin-top:8px">مدير المدرسة: خالد المطيري</div>
+    </div>
+
+    <div class="logo">🏆</div>
+    <h1 class="title">نافس</h1>
+    <p class="subtitle">منصة المسابقات التعليمية الذكية<br>تعلم، تنافس، وتفوق مع أقرانك</p>
+
+    <form id="regForm">
+      <!-- الاسم الرباعي -->
+      <div class="form-group">
+        <label>📝 الاسم الرباعي (إجباري):</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <input type="text" id="firstName" class="form-control" placeholder="الاسم الأول" required maxlength="20">
+          <input type="text" id="fatherName" class="form-control" placeholder="اسم الأب" required maxlength="20">
+          <input type="text" id="grandFatherName" class="form-control" placeholder="اسم الجد" required maxlength="20">
+          <input type="text" id="familyName" class="form-control" placeholder="اسم العائلة" required maxlength="20">
+        </div>
+        <div id="nameValidation" class="validation-message"></div>
+      </div>
+
+      <!-- الصف والشعبة -->
+      <div class="form-group">
+        <label for="grade">🎓 الصف الدراسي:</label>
+        <select id="grade" class="form-control" required>
+          <option value="">اختر الصف الدراسي</option>
+          <option value="الأول متوسط">الأول متوسط</option>
+          <option value="الثاني متوسط">الثاني متوسط</option>
+          <option value="الثالث متوسط">الثالث متوسط</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="section">🏫 الشعبة:</label>
+        <select id="section" class="form-control" required>
+          <option value="">اختر الشعبة</option>
+          <option value="1">الشعبة الأولى</option>
+          <option value="2">الشعبة الثانية</option>
+          <option value="3">الشعبة الثالثة</option>
+          <option value="4">الشعبة الرابعة</option>
+          <option value="5">الشعبة الخامسة</option>
+          <option value="6">الشعبة السادسة</option>
+        </select>
+      </div>
+
+      <!-- اختيار الرمز -->
+      <div class="form-group">
+        <label>🎨 اختر رمزك المميز (إجباري):</label>
+        <div class="icon-selector" id="iconSelector" style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;max-height:400px;overflow-y:auto;padding:10px;border:1px solid #e5e7eb;border-radius:12px;background:#fafafa"></div>
+        <div id="iconValidation" class="validation-message"></div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">🚀 دخول المسابقة</button>
+    </form>
+
+    <div id="status" class="status"></div>
+
+    <p style="margin-top:25px;color:#64748b">لديك حساب بالفعل؟ <a href="login.html" class="link">سجّل دخولك الآن</a></p>
+
+    <div class="developer-info">
+      <div class="developer-name">تنفيذ وإشراف: الأستاذ نواف الصبحي</div>
+      <div class="school-year">متوسطة المنذر بن عمرو الأنصاري - 2025</div>
+    </div>
+  </div>
+
+  <!-- نافذة الرقم السري -->
+  <div id="pinModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🎉 تم التسجيل بنجاح!</h3>
+        <span class="pin-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>رقمك السري هو:</p>
+        <div class="pin-display" id="pinDisplay"></div>
+        <p class="pin-note">احتفظ بهذا الرقم لتسجيل الدخول لاحقاً</p>
+      </div>
+      <div class="modal-footer">
+        <button id="pinOk" class="btn-primary">موافق</button>
+      </div>
+    </div>
   </div>
 
   <script type="module">
-    /* ========== Security Lock-down ========== */
-    window.eval=null;window.open=null;console.clear=()=>{};
-    ["contextmenu","selectstart","dragstart","keydown"].forEach(ev=>{
-      document.addEventListener(ev,e=>{
-        if(ev==="keydown"){
-          if(["F12","U","I","J","C"].includes(e.key.toUpperCase())||
-            (e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key.toUpperCase()))){
-            e.preventDefault();
-          }
-        }else e.preventDefault();
-      });
+    // ========== Firebase ==========
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
+      authDomain: "nafs-competition.firebaseapp.com",
+      projectId: "nafs-competition",
+      storageBucket: "nafs-competition.firebasestorage.app",
+      messagingSenderId: "182205828634",
+      appId: "1:182205828634:web:dee889f770eb52ff668ba3"
+    };
+
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let selectedIcon = '';
+    let isSubmitting = false;
+
+    // ========== Utilities ==========
+    const showStatus = (msg, type) => {
+      const s = document.getElementById('status');
+      s.textContent = msg; s.className = `status ${type}`; s.style.display = 'block';
+      if (type === 'success' || type === 'error') setTimeout(() => s.style.display = 'none', 5000);
+    };
+    const showValidation = (id, msg, ok) => {
+      const el = document.getElementById(id);
+      el.textContent = msg; el.className = 'validation-message' + (ok ? ' success' : '');
+    };
+
+    // ========== Icons ==========
+    const icons = ['🌟','🚀','⚡','🔥','💎','🎯','🏆','👑','🦁','🦅','🐺','🦖','🌙','☀️','⭐','🌈'];
+    const iconContainer = document.getElementById('iconSelector');
+    icons.forEach((ic, i) => {
+      const div = document.createElement('div');
+      div.className = 'icon-option'; div.dataset.icon = ic; div.textContent = ic;
+      div.style.setProperty('--i', i);
+      iconContainer.appendChild(div);
     });
-
-    /* ========== App State ========== */
-    const App={
-      idx:0,score:0,time:60,sel:null,completed:!1,
-      questions:[],timer:null,
-      els:{
-        loading:document.getElementById("loadingOverlay"),
-        qCounter:document.getElementById("qCounter"),
-        qCat    :document.getElementById("qCat"),
-        qDiff   :document.getElementById("qDiff"),
-        qText   :document.getElementById("qText"),
-        opts    :document.getElementById("opts"),
-        progress:document.getElementById("progressFill"),
-        progText:document.getElementById("progressText"),
-        timerEl :document.getElementById("timer"),
-        msg     :document.getElementById("msg"),
-        submit  :document.getElementById("submitBtn"),
-        next    :document.getElementById("nextBtn"),
-        skip    :document.getElementById("skipBtn"),
-        saveExit:document.getElementById("saveExitBtn"),
-        qCard   :document.getElementById("qCard"),
-        finish  :document.getElementById("finishCard"),
-        finalScore:document.getElementById("finalScore"),
-        saveConf:document.getElementById("saveConfirmation")
-      }
-    };
-
-    /* ========== Questions Bank ========== */
-    const bank=[
-      {cat:"الرياضيات",diff:"متوسط",text:"ما ناتج 15 + 27؟",opts:["40","42","45","38"],ans:1,pts:10},
-      {cat:"العلوم",diff:"سهل",text:"كم عدد كواكب المجموعة الشمسية؟",opts:["7","8","9","10"],ans:1,pts:10},
-      {cat:"التاريخ",diff:"متوسط",text:"في أي عام تأسست المملكة العربية السعودية؟",opts:["1930","1932","1935","1940"],ans:1,pts:10},
-      {cat:"اللغة العربية",diff:"سهل",text:"ما إعراب كلمة 'محمد' في جملة 'جاء محمد'؟",opts:["مبتدأ","فاعل","مفعول به","خبر"],ans:1,pts:10},
-      {cat:"الجغرافيا",diff:"متوسط",text:"ما هي عاصمة المملكة العربية السعودية؟",opts:["جدة","الدمام","الرياض","مكة"],ans:2,pts:10},
-      {cat:"الرياضيات",diff:"صعب",text:"ما ناتج 12 × 15؟",opts:["170","180","185","190"],ans:1,pts:15},
-      {cat:"العلوم",diff:"متوسط",text:"ما هو الغاز الأكثر انتشاراً في الغلاف الجوي؟",opts:["الأكسجين","النيتروجين","ثاني أكسيد الكربون","الهيدروجين"],ans:1,pts:10},
-      {cat:"الدين",diff:"سهل",text:"كم عدد أركان الإسلام؟",opts:["4","5","6","7"],ans:1,pts:10},
-      {cat:"التاريخ",diff:"صعب",text:"من هو مؤسس الدولة السعودية الأولى؟",opts:["محمد بن سعود","عبدالعزيز آل سعود","تركي بن عبدالله","فيصل بن تركي"],ans:0,pts:15},
-      {cat:"اللغة العربية",diff:"متوسط",text:"ما معنى كلمة 'صبر' في اللغة العربية؟",opts:["التحمل","السرعة","القوة","الحكمة"],ans:0,pts:10}
-    ];
-
-    /* ========== Util ========== */
-    const rand=(a)=>a[Math.floor(Math.random()*a.length)];
-    const shuffle=(arr)=>{
-      const a=[...arr];
-      for(let i=a.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
-        [a[i],a[j]]=[a[j],a[i]];
-      }return a;
-    };
-
-    /* ========== Timer ========== */
-    const Timer={
-      start(){
-        Timer.stop();
-        App.timer=setInterval(()=>{
-          App.time--;
-          App.els.timerEl.textContent=`⏰ ${App.time}`;
-          if(App.time<=10)App.els.timerEl.classList.add("critical");
-          if(App.time<=0){Timer.stop();handleTimeUp();}
-        },1000);
-      },
-      stop(){clearInterval(App.timer);App.timer=null;}
-    };
-
-    /* ========== Render ========== */
-    function loadQuestion(){
-      if(App.idx>=App.questions.length){finish();return;}
-      const q=App.questions[App.idx];
-      App.els.qCounter.textContent=`السؤال ${App.idx+1} من ${App.questions.length}`;
-      App.els.qCat.textContent=q.cat;
-      App.els.qDiff.textContent=(q.diff==="سهل"?"⭐":q.diff==="صعب"?"⭐⭐⭐":"⭐⭐")+" "+q.diff;
-      App.els.qText.textContent=q.text;
-      App.els.opts.innerHTML="";
-      const letters=["أ","ب","ج","د"];
-      q.opts.forEach((opt,i)=>{
-        const div=document.createElement("div");
-        div.className="option";div.dataset.idx=i;
-        div.innerHTML=`<div class="option-letter">${letters[i]}</div><div>${opt}</div>`;
-        App.els.opts.appendChild(div);
-      });
-      resetState();
-      updateProgress();
-      Timer.reset();
-      Timer.start();
-    }
-    function resetState(){
-      App.sel=null;
-      App.els.submit.disabled=true;
-      App.els.next.classList.add("hidden");
-      App.els.skip.classList.remove("hidden");
-      App.els.saveExit.classList.remove("hidden");
-      App.els.msg.textContent="";
-      document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected","correct","incorrect"));
-    }
-    function updateProgress(){
-      const p=((App.idx+1)/App.questions.length)*100;
-      App.els.progress.style.width=p+"%";
-      App.els.progText.textContent=`تقدمك: ${Math.round(p)}% • المتبقي: ${App.questions.length-App.idx-1} سؤال`;
-    }
-
-    /* ========== Handlers ========== */
-    function selectOption(el){
-      document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
-      el.classList.add("selected");
-      App.sel=parseInt(el.dataset.idx);
-      App.els.submit.disabled=false;
-    }
-    async function submit(){
-      if(App.sel===null)return;
-      Timer.stop();
-      const q=App.questions[App.idx];
-      const ok=App.sel===q.ans;
-      document.querySelectorAll(".option").forEach((o,i)=>{
-        if(i===q.ans)o.classList.add("correct");
-        if(i===App.sel&&!ok)o.classList.add("incorrect");
-      });
-      if(ok){App.score+=q.pts;App.els.msg.className="message success";App.els.msg.textContent=rand(["🌟 ممتاز!","🚀 رائع!","🏆 أحسنت!","⭐ عبقري!","🎯 دقيق!"]);}
-      else{App.els.msg.className="message error";App.els.msg.textContent=rand(["💪 لا تيأس!","🌱 التعلم من الأخطاء قوة!","🔄 حاول مرة أخرى!"]);}
-      App.els.submit.classList.add("hidden");
-      App.els.skip.classList.add("hidden");
-      App.els.saveExit.classList.add("hidden");
-      App.els.next.classList.remove("hidden");
-      setTimeout(()=>next(),2500);
-    }
-    async function skip(){
-      Timer.stop();
-      const q=App.questions[App.idx];
-      document.querySelectorAll(".option").forEach((o,i)=>{if(i===q.ans)o.classList.add("correct");});
-      App.els.msg.className="message info";App.els.msg.textContent="⭐ تم التخطي!";
-      App.els.submit.classList.add("hidden");
-      App.els.skip.classList.add("hidden");
-      App.els.saveExit.classList.add("hidden");
-      App.els.next.classList.remove("hidden");
-      setTimeout(()=>next(),2000);
-    }
-    function handleTimeUp(){
-      const q=App.questions[App.idx];
-      document.querySelectorAll(".option").forEach((o,i)=>{if(i===q.ans)o.classList.add("correct");});
-      App.els.msg.className="message error";App.els.msg.textContent="⏰ انتهى الوقت!";
-      App.els.submit.classList.add("hidden");
-      App.els.skip.classList.add("hidden");
-      App.els.saveExit.classList.add("hidden");
-      App.els.next.classList.remove("hidden");
-      setTimeout(()=>next(),2000);
-    }
-    function next(){
-      App.idx++;
-      loadQuestion();
-    }
-    function finish(){
-      Timer.stop();
-      const total=App.questions.reduce((s,q)=>s+q.pts,0);
-      App.els.finalScore.textContent=`${App.score}/${total}`;
-      App.els.qCard.classList.add("hidden");
-      App.els.finish.classList.remove("hidden");
-      setTimeout(()=>window.location.href="leaderboard.html",3500);
-    }
-
-    /* ===== Save & Exit (المصلحة) ===== */
-    let isSubmitting=false;
-    async function saveAndExit(){
-      if(isSubmitting)return;
-      isSubmitting=true;
-      showLoading(true);
-      Timer.stop();                       // أوقف العداد
-      isPaused=true;                      // علّق المسابقة
-      // حفظ محلي فوري
-      const progressSnapshot={
-        currentQuestionIndex:App.idx,
-        score:App.score,
-        timeLeft:App.time,
-        selectedAnswer:App.sel,
-        completed:false,
-        savedAt:new Date().toISOString()
-      };
-      sessionStorage.setItem('nafes_quiz_progress',JSON.stringify(progressSnapshot));
-      // حفظ سحابي (إن أمكن)
-      try{
-        if(typeof db!=='undefined'&&window.firebaseModules&&sessionId){
-          const{setDoc,doc,serverTimestamp}=window.firebaseModules;
-          await setDoc(doc(db,'quiz_sessions',sessionId),{...progressSnapshot,timestamp:serverTimestamp()},{merge:true});
-        }
-      }catch(e){console.warn('⚠️ فشل الحفظ السحابي');}
-      // إخفاء الـ overlays + إشعار + توجيه
-      App.els.saveConf.classList.add("hidden");
-      showLoading(false);
-      showMessage('success','💾 تم حفظ تقدمك بنجاح! جاري التوجيه...');
-      setTimeout(()=>{
-        sessionStorage.setItem('resume','true');
-        window.location.replace('index.html');
-      },1500);
-    }
-    function hideSaveConfirmation(){App.els.saveConf.classList.add("hidden");}
-
-    /* ========== Events ========== */
-    document.addEventListener("click",e=>{
-      if(e.target.closest(".option")&&!e.target.closest(".option").classList.contains("correct"))
-        selectOption(e.target.closest(".option"));
-    });
-    App.els.submit.addEventListener("click",submit);
-    App.els.next.addEventListener("click",next);
-    App.els.skip.addEventListener("click",skip);
-    App.els.saveExit.addEventListener("click",()=>App.els.saveConf.classList.remove("hidden"));
-    document.getElementById("confirmSaveBtn").addEventListener("click",saveAndExit);
-    document.getElementById("cancelSaveBtn").addEventListener("click",hideSaveConfirmation);
-    document.addEventListener("keydown",e=>{
-      if(App.completed)return;
-      if(e.key==="Enter"&&App.sel!==null)submit();
-      if(e.key==="Escape")skip();
-      if(+e.key>=1&&+e.key<=4){
-        const opt=document.querySelector(`[data-index="${+e.key-1}"]`);
-        if(opt&&!opt.classList.contains("correct"))selectOption(opt);
+    iconContainer.addEventListener('click', e => {
+      if (e.target.classList.contains('icon-option')) {
+        iconContainer.querySelectorAll('.icon-option').forEach(x => x.classList.remove('selected'));
+        e.target.classList.add('selected');
+        selectedIcon = e.target.dataset.icon;
+        showValidation('iconValidation', '', true);
       }
     });
 
-    /* ========== Start ========== */
-    (function init(){
-      // استئناف محلي فوري إن وُجد
-      const saved=sessionStorage.getItem('nafes_quiz_progress');
-      if(saved){
-        try{
-          const p=JSON.parse(saved);
-          App.idx=p.currentQuestionIndex||0;
-          App.score=p.score||0;
-          App.time=p.timeLeft||60;
-          App.sel=p.selectedAnswer??null;
-        }catch{}
+    // ========== Validation ==========
+    const validateName = () => {
+      const parts = ['firstName', 'fatherName', 'grandFatherName', 'familyName'].map(id => document.getElementById(id).value.trim());
+      if (parts.some(p => p.length < 2)) return showValidation('nameValidation', 'يجب إدخال الاسم الرباعي كاملاً (كل جزء حرفين على الأقل)', false), false;
+      if (parts.some(p => !/^[\u0600-\u06FF\s]+$/.test(p))) return showValidation('nameValidation', 'استخدم الأحرف العربية فقط', false), false;
+      showValidation('nameValidation', '✅ الاسم صحيح', true);
+      return true;
+    };
+    document.querySelectorAll('#firstName, #fatherName, #grandFatherName, #familyName').forEach(inp => {
+      inp.addEventListener('input', e => {
+        e.target.value = e.target.value.replace(/[^\u0600-\u06FF\s]/g, '');
+        validateName();
+      });
+    });
+
+    // ========== Submit ==========
+    document.getElementById('regForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!validateName() || !document.getElementById('grade').value || !document.getElementById('section').value || !selectedIcon) {
+        showStatus('⚠️ يرجى إكمال جميع الحقول', 'error'); return;
       }
-      App.questions=shuffle(bank);
-      loadQuestion();
-      setTimeout(()=>App.els.loading.classList.add("hidden"),600);
-    })();
+      if (isSubmitting) return;
+      isSubmitting = true;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.innerHTML = '⏳ جاري التحقق...';
+
+      try {
+        await signInAnonymously(auth);
+        const parts = ['firstName', 'fatherName', 'grandFatherName', 'familyName'].map(id => document.getElementById(id).value.trim());
+        const fullName = parts.join(' ');
+        const grade = document.getElementById('grade').value;
+        const section = document.getElementById('section').value;
+        const pin = Math.floor(1000 + Math.random() * 9000);
+        const studentId = `STD_${grade.replace(/\D/g, '')}_${section}_${Date.now().toString(36)}`;
+
+        await setDoc(doc(db, 'students', studentId), {
+          studentId, firstName: parts[0], fatherName: parts[1], grandFatherName: parts[2], familyName: parts[3], fullName, grade, section, icon: selectedIcon, pin,
+          registrationTime: serverTimestamp(), isActive: true, totalCompetitions: 0, totalScore: 0, averageScore: 0, lastActivity: serverTimestamp()
+        });
+
+        // حفظ محلي + جلسة
+        const payload = { studentId, fullName, grade, section, icon: selectedIcon, timestamp: Date.now() };
+        localStorage.setItem('nafes_student_data', JSON.stringify(payload));
+        sessionStorage.setItem('nafes_student_data', JSON.stringify(payload));
+
+        // عرض الرقم السري ثم الانتقال الفوري
+        document.getElementById('pinDisplay').textContent = pin;
+        document.getElementById('pinModal').classList.remove('hidden');
+
+      } catch (err) {
+        console.error(err); showStatus('❌ حدث خطأ أثناء الحفظ', 'error');
+        btn.disabled = false; btn.innerHTML = '🚀 دخول المسابقة'; isSubmitting = false;
+      }
+    });
+
+    // ========== Pin Modal ==========
+    document.querySelector('.pin-close').onclick = () => document.getElementById('pinModal').classList.add('hidden');
+    document.getElementById('pinOk').onclick = () => {
+      document.getElementById('pinModal').classList.add('hidden');
+      showStatus('✅ تم التسجيل بنجاح! جاري التوجيه...', 'success');
+      setTimeout(() => window.location.replace('quiz.html'), 1200);
+    };
+
+    // ========== Security ==========
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) || (e.ctrlKey && ['u','U'].includes(e.key.toLowerCase()))) e.preventDefault();
+    });
   </script>
 </body>
 </html>
