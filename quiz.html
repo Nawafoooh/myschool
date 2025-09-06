@@ -2,838 +2,643 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نافس - مسابقة متوسطة المنذر بن عمرو الأنصاري</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.gstatic.com https://*.firebaseio.com; object-src 'none'; base-uri 'none';">
+  <title>نافس - مسابقة متوسطة المنذر بن عمرو الأنصاري</title>
+
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="data:text/css;base64,Lyo9PT09PT09PT09PT09PT09PT0gUm9vdCBWYXJpYWJsZXMgPT09PT09PT09PT09PT09PT09PSovIDpSb290ey0tcHJpbWFyeTojNjM2NmYxOyAtLXN1Y2Nlc3M6IzEwYjk4MTsgLS1kYW5nZXI6I2VmNDQ0NDsgLXItcmFkaXVzOjI1cHg7IC0tc2hhZG93OjAgMTVweCA0MHB4IHJnYmEoOTksMTAyLDI0MSwuMTUpfSAvKj09PT09PT09PT09PT09PT09PSBCYXNlID09PT09PT09PT09PT09PT09PT0qLyAqeyBtYXJnaW46MDsgcGFkZGluZzowOyBib3gtc2l6aW5nOmJvcmRlci1ib3ggfSBodG1sLGJvZHl7IGRpcmVjdGlvbjpydGwsgZGlzcGxheTpmbGV4OyBmbGV4LWRpcmVjdGlvbjpjb2x1bW47IG1pbmgtaGVpZ2h0OjEwMHZofSBib2R5eyBmb250LWZhbWlseTonU2Vnb2UgVUknLFRhaG9tYSxHZW5ldmEsVmVyZGFuYSxzYW5zLXNlcmlmOyBiYWNrZ3JvdW5kOmxpbmVhci1ncmFkaWVudCgxMzVkZWcsIzY2N2VlYSAwJSwjNzY0YmEyIDEwMCUpOyB1c2VyLXNlbGVjdDpub25lOyBvdmVyZmxvdy14OmhpZGRlbiB9IC5oaWRkZW57IGRpc3BsYXk6bm9uZSFpbXBvcnRhbnQgfQ==" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><style>/* inlined critical css */</style></noscript>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6366f1">
   <style>
-    /* ======== التصميم الاحترافي (كما هو) ======== */
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;direction:rtl;overflow-x:hidden;user-select:none}
-    .quiz-container{max-width:900px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
-    .header{background:rgba(255,255,255,.98);border-radius:25px;padding:30px;margin-bottom:25px;text-align:center;box-shadow:0 15px 40px rgba(99,102,241,.15);border:2px solid rgba(99,102,241,.2);backdrop-filter:blur(20px)}
-    .ministry-info{color:#6366f1;font-size:1.1em;font-weight:600;margin-bottom:15px;line-height:1.4}
-    .quiz-title{font-size:3em;font-weight:900;background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}
-    .student-info{background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(129,140,248,.05));padding:20px;border-radius:15px;display:inline-block;color:#1e293b;font-weight:600;border:1px solid rgba(99,102,241,.2)}
-    .progress-section{background:rgba(255,255,255,.98);border-radius:25px;padding:30px;margin-bottom:25px;box-shadow:0 15px 40px rgba(99,102,241,.15);border:2px solid rgba(99,102,241,.2);backdrop-filter:blur(20px)}
-    .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;flex-wrap:wrap;gap:15px}
-    .question-counter{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;padding:15px 30px;border-radius:30px;font-weight:700;font-size:1.1em}
-    .timer-container{display:flex;align-items:center;gap:20px}
-    .timer{background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:15px 30px;border-radius:30px;font-weight:700;font-size:1.4em}
-    .timer.warning{animation:timerPulse 1s infinite;background:linear-gradient(135deg,#f59e0b,#d97706)}
-    .timer.critical{animation:timerShake .5s infinite;background:linear-gradient(135deg,#ef4444,#dc2626)}
-    @keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-    @keyframes timerShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-    .score-display{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;padding:15px 30px;border-radius:30px;font-weight:700;font-size:1.1em}
-    .progress-bar{background:rgba(99,102,241,.2);height:15px;border-radius:8px;overflow:hidden;position:relative;box-shadow:inset 0 2px 4px rgba(0,0,0,.1);margin-bottom:15px}
-    .progress-fill{background:linear-gradient(90deg,#a5b4fc,#6366f1,#8b5cf6);height:100%;border-radius:8px;transition:width 1s ease;box-shadow:0 2px 8px rgba(129,140,248,.4)}
-    .progress-text{text-align:center;color:#475569;font-weight:600;font-size:1.05em}
-    .question-card{background:rgba(255,255,255,.98);border-radius:30px;padding:50px;margin-bottom:30px;box-shadow:0 25px 50px rgba(99,102,241,.15);border:2px solid rgba(99,102,241,.2);transition:.3s;position:relative;overflow:hidden;backdrop-filter:blur(20px)}
-    .question-header{display:flex;align-items:center;margin-bottom:30px;position:relative;z-index:2}
-    .question-icon{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2em;margin-left:25px;box-shadow:0 10px 25px rgba(251,191,36,.3)}
-    .question-category{color:#059669;font-size:1em;font-weight:600;text-transform:uppercase;letter-spacing:1px}
-    .question-difficulty{color:#6366f1;font-size:1em;font-weight:600;margin-top:5px}
-    .question-text{font-size:1.8em;font-weight:700;color:#1e293b;line-height:1.6;margin-bottom:40px;padding:30px;background:linear-gradient(135deg,rgba(248,250,252,.9),rgba(241,245,249,.8));border-radius:25px;border-right:6px solid #0ea5e9;box-shadow:0 8px 25px rgba(14,165,233,.1);position:relative;z-index:2}
-    .options-container{display:grid;gap:25px;margin-bottom:40px;position:relative;z-index:2}
-    .option{background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(248,250,252,.8));border:3px solid rgba(99,102,241,.2);border-radius:25px;padding:30px;cursor:pointer;transition:.4s;font-size:1.3em;font-weight:600;color:#1e293b;display:flex;align-items:center;opacity:1;transform:translateY(0)}
-    .option-letter{background:linear-gradient(135deg,#64748b,#475569);color:#fff;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2em;margin-left:25px;transition:.3s}
-    .option-text{flex:1}
-    .option:hover{border-color:#818cf8;transform:translateX(-10px);box-shadow:0 20px 40px rgba(129,140,248,.3)}
-    .option:hover .option-letter{background:linear-gradient(135deg,#818cf8,#6366f1);transform:scale(1.15)}
-    .option.selected{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border-color:#6366f1;transform:translateX(-10px);box-shadow:0 20px 40px rgba(99,102,241,.4)}
-    .option.selected .option-letter{background:linear-gradient(135deg,#fff,#f3f4f6);color:#6366f1}
-    .option.correct{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-color:#10b981;animation:correctAnswer .8s ease}
-    .option.correct .option-letter{background:linear-gradient(135deg,#fff,#f3f4f6);color:#10b981}
-    .option.incorrect{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border-color:#ef4444;animation:incorrectAnswer .8s ease}
-    .option.incorrect .option-letter{background:linear-gradient(135deg,#fff,#f3f4f6);color:#ef4444}
-    @keyframes correctAnswer{0%{transform:translateX(-10px) scale(1)}50%{transform:translateX(-10px) scale(1.05)}100%{transform:translateX(-10px) scale(1)}}
-    @keyframes incorrectAnswer{0%,100%{transform:translateX(-10px)}25%{transform:translateX(-18px)}75%{transform:translateX(-2px)}}
-    .action-buttons{display:flex;justify-content:center;gap:25px;flex-wrap:wrap}
-    .btn{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;padding:20px 45px;border-radius:30px;font-size:1.2em;font-weight:700;cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:1px;box-shadow:0 10px 25px rgba(99,102,241,.4);min-width:200px}
+    /* ======== Critical CSS inlined ======== */
+    .quiz-container{max-width:900px;margin:0 auto;padding:20px}
+    .header{background:rgba(255,255,255,.98);border-radius:var(--radius);padding:30px;margin-bottom:25px;text-align:center;box-shadow:var(--shadow)}
+    .quiz-title{font-size:3em;font-weight:900;background:linear-gradient(135deg,var(--primary),#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .question-card{background:rgba(255,255,255,.98);border-radius:30px;padding:50px;margin-bottom:30px;box-shadow:var(--shadow)}
+    .btn{background:linear-gradient(135deg,var(--primary),#4f46e5);color:#fff;border:none;padding:20px 45px;border-radius:30px;font-size:1.2em;font-weight:700;cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:1px;min-width:200px}
     .btn:disabled{background:linear-gradient(135deg,#9ca3af,#6b7280);cursor:not-allowed}
-    .btn:not(:disabled):hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(99,102,241,.5);background:linear-gradient(135deg,#4f46e5,#3730a3)}
-    .btn-secondary{background:linear-gradient(135deg,#0ea5e9,#0284c7)}
-    .btn-warning{background:linear-gradient(135deg,#f59e0b,#d97706)}
-    .btn-save{background:linear-gradient(135deg,#10b981,#059669)}
-    .message-container{margin:30px 0;min-height:80px;display:flex;align-items:center;justify-content:center}
-    .message{padding:30px;border-radius:25px;text-align:center;font-weight:700;font-size:1.4em;animation:messageSlide .8s ease;box-shadow:0 15px 35px rgba(0,0,0,.1);max-width:600px;line-height:1.4}
-    .message.success{background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(5,150,105,.15));color:#047857;border:3px solid #10b981}
-    .message.error{background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(220,38,38,.15));color:#dc2626;border:3px solid #ef4444}
-    .message.info{background:linear-gradient(135deg,rgba(14,165,233,.2),rgba(2,132,199,.15));color:#1d4ed8;border:3px solid #0ea5e9}
     .loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(5px)}
     .loading-content{background:#fff;padding:40px;border-radius:20px;text-align:center;box-shadow:0 25px 50px rgba(0,0,0,.3)}
-    .loading-spinner{width:60px;height:60px;border:6px solid #f3f4f6;border-top:6px solid #6366f1;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
-    .save-confirmation{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:40px;border-radius:20px;box-shadow:0 25px 50px rgba(0,0,0,.3);z-index:10000;text-align:center;min-width:450px;max-width:90%}
-    .save-confirmation h3{margin-bottom:20px;color:#1e293b;font-size:1.8em;font-weight:800}
-    .save-confirmation p{margin-bottom:30px;color:#64748b;line-height:1.6;font-size:1.1em}
-    .completion-card{background:rgba(255,255,255,.98);border-radius:30px;padding:50px;text-align:center;box-shadow:0 25px 50px rgba(99,102,241,.15);border:2px solid rgba(99,102,241,.2);backdrop-filter:blur(20px)}
-    .completion-card h2{font-size:2.5em;color:#6366f1;margin-bottom:20px}
-    .completion-card .final-score{font-size:3em;font-weight:900;background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:20px 0}
-    .footer-credit{margin-top:50px;padding:30px;background:rgba(255,255,255,.98);border-radius:25px;text-align:center;box-shadow:0 15px 40px rgba(0,0,0,.1);backdrop-filter:blur(15px)}
-    .footer-credit .supervisor{color:#6366f1;font-weight:700;font-size:1.3em;margin-bottom:10px}
-    .footer-credit .school{color:#64748b;font-size:1em;font-weight:500}
+    .loading-spinner{width:60px;height:60px;border:6px solid #f3f4f6;border-top:6px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
     @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-    @media(max-width:768px){.quiz-container{padding:15px}.header,.progress-section,.question-card{padding:25px 20px}.progress-header{flex-direction:column;text-align:center}.question-text{font-size:1.4em;padding:25px}.option{padding:25px;font-size:1.2em}.action-buttons{flex-direction:column;align-items:center}.btn{width:100%;max-width:350px}.save-confirmation{min-width:300px;margin:20px;padding:30px}.quiz-title{font-size:2em}}
+  </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay hidden" id="loadingOverlay">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <h3>جاري تحضير المسابقة...</h3>
-            <p>يرجى الانتظار قليلاً</p>
-        </div>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h3>جاري تحضير المسابقة...</h3>
+      <p>يرجى الانتظار قليلاً</p>
+    </div>
+  </div>
+
+  <!-- Save Confirmation Modal -->
+  <div class="loading-overlay hidden" id="saveConfirmation">
+    <div class="save-confirmation">
+      <h3>💾 حفظ التقدم والخروج</h3>
+      <p>هل تريد حفظ تقدمك الحالي والخروج من المسابقة؟<br>
+      <strong>سيتم حفظ:</strong><br>
+      ✅ السؤال الحالي ونقاطك<br>
+      ✅ إجاباتك السابقة<br>
+      ✅ الوقت المتبقي<br><br>
+      يمكنك العودة لاحقاً واستكمال من نفس النقطة.</p>
+      <div class="action-buttons">
+        <button class="btn btn-save" id="confirmSaveBtn">✅ نعم، احفظ واخرج</button>
+        <button class="btn btn-secondary" id="cancelSaveBtn">❌ إلغاء والمتابعة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="quiz-container">
+    <div class="header">
+      <div class="ministry-info">وزارة التعليم • متوسطة المنذر بن عمرو الأنصاري</div>
+      <h1 class="quiz-title">🏆 مسابقة نافس التفاعلية</h1>
+      <div class="student-info">
+        <span id="studentIcon">👤</span>
+        <strong>الطالب:</strong> <span id="studentName">أحمد محمد</span> • 
+        <strong>الصف:</strong> <span id="studentGrade">الثالث المتوسط</span> • 
+        <span id="studentSection">الشعبة أ</span>
+      </div>
     </div>
 
-    <!-- Save Confirmation Modal -->
-    <div class="loading-overlay hidden" id="saveConfirmation">
-        <div class="save-confirmation">
-            <h3>💾 حفظ التقدم والخروج</h3>
-            <p>هل تريد حفظ تقدمك الحالي والخروج من المسابقة؟<br>
-            <strong>سيتم حفظ:</strong><br>
-            ✅ السؤال الحالي ونقاطك<br>
-            ✅ إجاباتك السابقة<br>
-            ✅ الوقت المتبقي<br><br>
-            يمكنك العودة لاحقاً واستكمال من نفس النقطة.</p>
-            <div class="action-buttons">
-                <button class="btn btn-save" id="confirmSaveBtn">✅ نعم، احفظ واخرج</button>
-                <button class="btn btn-secondary" id="cancelSaveBtn">❌ إلغاء والمتابعة</button>
-            </div>
+    <div class="progress-section">
+      <div class="progress-header">
+        <div class="question-counter" id="questionCounter">السؤال 1 من 10</div>
+        <div class="timer-container">
+          <div class="timer" id="timer">⏰ 60</div>
+          <div class="score-display" id="scoreDisplay">النقاط: 0</div>
         </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:10%"></div>
+      </div>
+      <div class="progress-text" id="progressText">تقدمك: 10% • المتبقي: 9 أسئلة</div>
     </div>
 
-    <!-- Main Container -->
-    <div class="quiz-container">
-        <div class="header">
-            <div class="ministry-info">وزارة التعليم • متوسطة المنذر بن عمرو الأنصاري</div>
-            <h1 class="quiz-title">🏆 مسابقة نافس التفاعلية</h1>
-            <div class="student-info">
-                <span id="studentIcon">👤</span>
-                <strong>الطالب:</strong> <span id="studentName">أحمد محمد</span> • 
-                <strong>الصف:</strong> <span id="studentGrade">الثالث المتوسط</span> • 
-                <span id="studentSection">الشعبة أ</span>
-            </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-header">
+        <div class="question-icon">🤔</div>
+        <div>
+          <div class="question-category" id="questionCategory">الرياضيات</div>
+          <div class="question-difficulty" id="questionDifficulty">⭐⭐ متوسط</div>
         </div>
-
-        <div class="progress-section">
-            <div class="progress-header">
-                <div class="question-counter" id="questionCounter">السؤال 1 من 10</div>
-                <div class="timer-container">
-                    <div class="timer" id="timer">⏰ 60</div>
-                    <div class="score-display" id="scoreDisplay">النقاط: 0</div>
-                </div>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 10%"></div>
-            </div>
-            <div class="progress-text" id="progressText">تقدمك: 10% • المتبقي: 9 أسئلة</div>
-        </div>
-
-        <div class="question-card" id="questionCard">
-            <div class="question-header">
-                <div class="question-icon">🤔</div>
-                <div>
-                    <div class="question-category" id="questionCategory">الرياضيات</div>
-                    <div class="question-difficulty" id="questionDifficulty">⭐⭐ متوسط</div>
-                </div>
-            </div>
-            
-            <div class="question-text" id="questionText">جاري تحميل السؤال...</div>
-            
-            <div class="options-container" id="optionsContainer"></div>
-            
-            <div class="message-container" id="messageContainer"></div>
-            
-            <div class="action-buttons">
-                <button class="btn" id="submitBtn" disabled>✅ تأكيد الإجابة</button>
-                <button class="btn hidden" id="nextBtn">⏭️ السؤال التالي</button>
-                <button class="btn btn-warning" id="skipBtn">⏭️ تخطي السؤال</button>
-                <button class="btn btn-save" id="saveExitBtn">💾 حفظ وخروج</button>
-            </div>
-        </div>
-
-        <div class="completion-card hidden" id="completionCard">
-            <h2>🎉 تهانينا! لقد أكملت المسابقة</h2>
-            <div class="final-score" id="finalScore">0/100</div>
-            <p>🌟 أداء رائع! سيتم توجيهك إلى لوحة النتائج...</p>
-        </div>
-
-        <div class="footer-credit">
-            <div class="supervisor">تصميم وتنفيذ: نواف الصبحي</div>
-            <div class="school">متوسطة المنذر بن عمرو الأنصاري</div>
-        </div>
+      </div>
+      <div class="question-text" id="questionText">جاري تحميل السؤال...</div>
+      <div class="options-container" id="optionsContainer"></div>
+      <div class="message-container" id="messageContainer"></div>
+      <div class="action-buttons">
+        <button class="btn" id="submitBtn" disabled>✅ تأكيد الإجابة</button>
+        <button class="btn hidden" id="nextBtn">⏭️ السؤال التالي</button>
+        <button class="btn btn-warning" id="skipBtn">⏭️ تخطي السؤال</button>
+        <button class="btn btn-save" id="saveExitBtn">💾 حفظ وخروج</button>
+      </div>
     </div>
 
-    <script type="module">
-        // ============== Firebase Config ==============
-        const firebaseConfig = {
-            apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
-            authDomain: "nafs-competition.firebaseapp.com",
-            projectId: "nafs-competition",
-            storageBucket: "nafs-competition.firebasestorage.app",
-            messagingSenderId: "182205828634",
-            appId: "1:182205828634:web:dee889f770eb52ff668ba3"
-        };
+    <div class="completion-card hidden" id="completionCard">
+      <h2>🎉 تهانينا! لقد أكملت المسابقة</h2>
+      <div class="final-score" id="finalScore">0/100</div>
+      <p>🌟 أداء رائع! سيتم توجيهك إلى لوحة النتائج...</p>
+    </div>
 
-        // ============== Firebase Imports (مع fallback) ==============
-        let db = null, auth = null;
+    <div class="footer-credit">
+      <div class="supervisor">تصميم وتنفيذ: نواف الصبحي</div>
+      <div class="school">متوسطة المنذر بن عمرو الأنصاري</div>
+    </div>
+  </div>
+
+  <script>
+    /* ========== Security First ========== */
+    window.eval = null;
+    window.open = null;
+    console.clear = () => {};
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase()))) {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+  <!-- Core Module -->
+  <script type="module">
+    // ============== Firebase Config ==============
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5yepZwrOlqFiV_KkVHp9dBaaT65pgdRo",
+      authDomain: "nafs-competition.firebaseapp.com",
+      projectId: "nafs-competition",
+      storageBucket: "nafs-competition.firebasestorage.app",
+      messagingSenderId: "182205828634",
+      appId: "1:182205828634:web:dee889f770eb52ff668ba3"
+    };
+
+    // ============== Conditional Firebase Import ==============
+    let db = null, auth = null;
+    if (navigator.onLine) {
+      try {
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
+        const { getAuth, signInAnonymously } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+        const { getFirestore, doc, setDoc, updateDoc, query, where, getDocs, orderBy, limit, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        console.log('✅ Firebase modules loaded');
+      } catch (e) {
+        console.warn('⚠️ Firebase failed, running offline');
+      }
+    }
+
+    // ============== SafeStorage ==============
+    const SafeStorage = {
+      _memory: {},
+      setItem(k, v) {
+        try { if (typeof sessionStorage !== 'undefined') sessionStorage.setItem(k, v); else this._memory[k] = v; return true; } catch { this._memory[k] = v; }
+      },
+      getItem(k) {
+        try { if (typeof sessionStorage !== 'undefined') return sessionStorage.getItem(k); } catch {} return this._memory[k] || null;
+      },
+      removeItem(k) {
+        try { if (typeof sessionStorage !== 'undefined') sessionStorage.removeItem(k); } catch {} delete this._memory[k];
+      }
+    };
+
+    // ============== AppState ==============
+    const AppState = {
+      currentQuestionIndex: 0,
+      selectedAnswer: null,
+      score: 0,
+      timeLeft: 60,
+      timerInterval: null,
+      sessionCompleted: false,
+      questionStartTime: Date.now(),
+      currentQuestions: [],
+      studentData: null,
+      sessionId: null,
+      isPaused: false,
+      isSubmitting: false
+    };
+
+    // ============== SessionManager ==============
+    class SessionManager {
+      constructor() { this.studentData = null; this.isSessionValid = false; this.sessionTimeout = 7 * 24 * 60 * 60 * 1000; }
+      validateSession() {
+        const saved = SafeStorage.getItem('nafes_student_data');
+        if (!saved) return false;
         try {
-            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
-            const { getAuth, signInAnonymously } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
-            const { getFirestore, collection, doc, setDoc, updateDoc, addDoc, query, where, getDocs, orderBy, limit, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-            const app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            console.log('✅ Firebase modules loaded successfully');
-        } catch (error) {
-            console.warn('⚠️ Firebase failed to load, using offline mode:', error);
-        }
+          this.studentData = JSON.parse(saved);
+          if (!this.studentData?.studentId || !this.studentData?.fullName) return false;
+          if (Date.now() - (this.studentData.timestamp || 0) > this.sessionTimeout) { this.clearSession(); return false; }
+          this.isSessionValid = true;
+          AppState.studentData = this.studentData;
+          return true;
+        } catch { this.clearSession(); return false; }
+      }
+      updateStudentDisplay() {
+        if (!this.studentData) return;
+        document.getElementById('studentName').textContent = this.studentData.fullName;
+        document.getElementById('studentGrade').textContent = this.studentData.grade;
+        document.getElementById('studentSection').textContent = `الشعبة ${this.studentData.section}`;
+        document.getElementById('studentIcon').textContent = this.studentData.icon;
+      }
+      saveQuizProgress(progress) {
+        try {
+          const data = { ...progress, studentId: this.studentData.studentId, timestamp: Date.now() };
+          SafeStorage.setItem('nafes_quiz_progress', JSON.stringify(data));
+          return true;
+        } catch { return false; }
+      }
+      loadQuizProgress() {
+        try {
+          const saved = SafeStorage.getItem('nafes_quiz_progress');
+          if (!saved) return null;
+          const progress = JSON.parse(saved);
+          if (progress.studentId !== this.studentData.studentId) return null;
+          if (Date.now() - (progress.timestamp || 0) > this.sessionTimeout) { this.clearQuizProgress(); return null; }
+          return progress;
+        } catch { this.clearQuizProgress(); return null; }
+      }
+      clearQuizProgress() { SafeStorage.removeItem('nafes_quiz_progress'); }
+      clearSession() { SafeStorage.removeItem('nafes_student_data'); SafeStorage.removeItem('nafes_quiz_progress'); this.studentData = null; this.isSessionValid = false; }
+    }
 
-        // ============== Safe Storage Wrapper ==============
-        const SafeStorage = {
-            setItem(key, value) {
-                try {
-                    if (typeof Storage !== 'undefined' && window.sessionStorage) {
-                        sessionStorage.setItem(key, value);
-                        return true;
-                    }
-                } catch (e) {
-                    console.warn('SessionStorage not available, using memory storage');
-                }
-                this._memoryStorage = this._memoryStorage || {};
-                this._memoryStorage[key] = value;
-                return true;
-            },
-            getItem(key) {
-                try {
-                    if (typeof Storage !== 'undefined' && window.sessionStorage) {
-                        return sessionStorage.getItem(key);
-                    }
-                } catch (e) {}
-                return this._memoryStorage ? this._memoryStorage[key] || null : null;
-            },
-            removeItem(key) {
-                try {
-                    if (typeof Storage !== 'undefined' && window.sessionStorage) {
-                        sessionStorage.removeItem(key);
-                    }
-                } catch (e) {}
-                if (this._memoryStorage) delete this._memoryStorage[key];
-            },
-            _memoryStorage: {}
+    // ============== QuestionManager ==============
+    class QuestionManager {
+      constructor() { this.questions = []; }
+      async loadQuestions() {
+        console.log('🔄 Loading questions...');
+        if (db) {
+          try {
+            const q = query(collection(db, 'questions'), where('isActive', '==', true), limit(10));
+            const snap = await getDocs(q);
+            if (!snap.empty) {
+              this.questions = [];
+              snap.forEach(doc => { const d = doc.data(); this.questions.push({ id: doc.id, category: d.category, difficulty: d.difficulty, text: d.text, options: d.options, correct: d.correct, points: d.points || 10 }); });
+              this.questions = this.shuffleArray(this.questions);
+              console.log('✅ Firebase questions loaded'); return;
+            }
+          } catch (e) { console.warn('⚠️ Firebase failed, fallback to local'); }
+        }
+        this.questions = this.getLocalQuestions(); this.questions = this.shuffleArray(this.questions);
+        console.log('✅ Local questions loaded');
+      }
+      getLocalQuestions() {
+        return [
+          { id: "local_1", category: "الرياضيات", difficulty: "متوسط", text: "ما ناتج 15 + 27؟", options: ["40", "42", "45", "38"], correct: 1, points: 10 },
+          { id: "local_2", category: "العلوم", difficulty: "سهل", text: "كم عدد كواكب المجموعة الشمسية؟", options: ["7", "8", "9", "10"], correct: 1, points: 10 },
+          { id: "local_3", category: "التاريخ", difficulty: "متوسط", text: "في أي عام تأسست المملكة العربية السعودية؟", options: ["1930", "1932", "1935", "1940"], correct: 1, points: 10 },
+          { id: "local_4", category: "اللغة العربية", difficulty: "سهل", text: "ما إعراب كلمة 'محمد' في جملة 'جاء محمد'؟", options: ["مبتدأ", "فاعل", "مفعول به", "خبر"], correct: 1, points: 10 },
+          { id: "local_5", category: "الجغرافيا", difficulty: "متوسط", text: "ما هي عاصمة المملكة العربية السعودية؟", options: ["جدة", "الدمام", "الرياض", "مكة"], correct: 2, points: 10 },
+          { id: "local_6", category: "الرياضيات", difficulty: "صعب", text: "ما ناتج 12 × 15؟", options: ["170", "180", "185", "190"], correct: 1, points: 15 },
+          { id: "local_7", category: "العلوم", difficulty: "متوسط", text: "ما هو الغاز الأكثر انتشاراً في الغلاف الجوي؟", options: ["الأكسجين", "النيتروجين", "ثاني أكسيد الكربون", "الهيدروجين"], correct: 1, points: 10 },
+          { id: "local_8", category: "الدين", difficulty: "سهل", text: "كم عدد أركان الإسلام؟", options: ["4", "5", "6", "7"], correct: 1, points: 10 },
+          { id: "local_9", category: "التاريخ", difficulty: "صعب", text: "من هو مؤسس الدولة السعودية الأولى؟", options: ["محمد بن سعود", "عبدالعزيز آل سعود", "تركي بن عبدالله", "فيصل بن تركي"], correct: 0, points: 15 },
+          { id: "local_10", category: "اللغة العربية", difficulty: "متوسط", text: "ما معنى كلمة 'صبر' في اللغة العربية؟", options: ["التحمل", "السرعة", "القوة", "الحكمة"], correct: 0, points: 10 }
+        ];
+      }
+      shuffleArray(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+      getCurrentQuestion() { return this.questions[AppState.currentQuestionIndex]; }
+      getTotalQuestions() { return this.questions.length; }
+    }
+
+    // ============== TimerManager ==============
+    class TimerManager {
+      constructor() { this.timerElement = document.getElementById('timer'); }
+      start() {
+        this.stop();
+        AppState.timerInterval = setInterval(() => {
+          if (!AppState.isPaused) {
+            AppState.timeLeft--;
+            this.updateDisplay();
+            if (AppState.timeLeft <= 0) { this.stop(); quizController.handleTimeUp(); }
+          }
+        }, 1000);
+      }
+      stop() { if (AppState.timerInterval) { clearInterval(AppState.timerInterval); AppState.timerInterval = null; } }
+      updateDisplay() {
+        if (!this.timerElement) return;
+        this.timerElement.textContent = `⏰ ${AppState.timeLeft}`;
+        this.timerElement.className = 'timer';
+        if (AppState.timeLeft <= 10) this.timerElement.classList.add('critical');
+        else if (AppState.timeLeft <= 20) this.timerElement.classList.add('warning');
+      }
+      reset(seconds = 60) {
+        AppState.timeLeft = seconds;
+        this.timerElement.classList.remove('warning', 'critical');
+        this.updateDisplay();
+      }
+    }
+
+    // ============== UIManager ==============
+    class UIManager {
+      constructor() {
+        this.elements = {
+          questionCounter: document.getElementById('questionCounter'),
+          questionCategory: document.getElementById('questionCategory'),
+          questionDifficulty: document.getElementById('questionDifficulty'),
+          questionText: document.getElementById('questionText'),
+          optionsContainer: document.getElementById('optionsContainer'),
+          progressFill: document.getElementById('progressFill'),
+          progressText: document.getElementById('progressText'),
+          scoreDisplay: document.getElementById('scoreDisplay'),
+          messageContainer: document.getElementById('messageContainer'),
+          submitBtn: document.getElementById('submitBtn'),
+          nextBtn: document.getElementById('nextBtn'),
+          skipBtn: document.getElementById('skipBtn'),
+          saveExitBtn: document.getElementById('saveExitBtn'),
+          questionCard: document.getElementById('questionCard'),
+          completionCard: document.getElementById('completionCard'),
+          finalScore: document.getElementById('finalScore')
         };
-
-        // ============== App State ==============
-        const AppState = {
-            currentQuestionIndex: 0,
-            selectedAnswer: null,
-            score: 0,
-            timeLeft: 60,
-            timerInterval: null,
-            sessionCompleted: false,
-            questionStartTime: Date.now(),
-            currentQuestions: [],
-            studentData: null,
-            sessionId: null,
-            progressData: null,
-            isPaused: false,
-            isSubmitting: false
-        };
-
-        // ============== Session Manager ==============
-        class SessionManager {
-            constructor() {
-                this.studentData = null;
-                this.isSessionValid = false;
-                this.sessionTimeout = 7 * 24 * 60 * 60 * 1000;
-            }
-
-            validateSession() {
-                const saved = SafeStorage.getItem('nafes_student_data');
-                if (!saved) return false;
-                try {
-                    this.studentData = JSON.parse(saved);
-                    if (!this.studentData.studentId || !this.studentData.fullName) return false;
-                    const age = Date.now() - (this.studentData.timestamp || 0);
-                    if (age > this.sessionTimeout) {
-                        this.clearSession();
-                        return false;
-                    }
-                    this.isSessionValid = true;
-                    AppState.studentData = this.studentData;
-                    console.log('✅ Session validated:', this.studentData.fullName);
-                    return true;
-                } catch {
-                    this.clearSession();
-                    return false;
-                }
-            }
-
-            updateStudentDisplay() {
-                if (!this.studentData) return;
-                const el = (id) => document.getElementById(id);
-                el('studentName').textContent = this.studentData.fullName;
-                el('studentGrade').textContent = this.studentData.grade;
-                el('studentSection').textContent = `الشعبة ${this.studentData.section}`;
-                el('studentIcon').textContent = this.studentData.icon;
-            }
-
-            saveQuizProgress(progress) {
-                try {
-                    const data = { ...progress, studentId: this.studentData.studentId, timestamp: Date.now() };
-                    SafeStorage.setItem('nafes_quiz_progress', JSON.stringify(data));
-                    console.log('✅ Progress saved');
-                    return true;
-                } catch (e) {
-                    console.error('❌ Failed to save progress:', e);
-                    return false;
-                }
-            }
-
-            loadQuizProgress() {
-                try {
-                    const saved = SafeStorage.getItem('nafes_quiz_progress');
-                    if (!saved) return null;
-                    const progress = JSON.parse(saved);
-                    if (progress.studentId !== this.studentData.studentId) return null;
-                    const age = Date.now() - (progress.timestamp || 0);
-                    if (age > this.sessionTimeout) {
-                        this.clearQuizProgress();
-                        return null;
-                    }
-                    return progress;
-                } catch (e) {
-                    this.clearQuizProgress();
-                    return null;
-                }
-            }
-
-            clearQuizProgress() {
-                SafeStorage.removeItem('nafes_quiz_progress');
-            }
-
-            clearSession() {
-                SafeStorage.removeItem('nafes_student_data');
-                SafeStorage.removeItem('nafes_quiz_progress');
-                this.studentData = null;
-                this.isSessionValid = false;
-            }
-        }
-
-        // ============== Question Manager ==============
-        class QuestionManager {
-            constructor() {
-                this.questions = [];
-            }
-
-            async loadQuestions() {
-                console.log('🔄 Loading questions...');
-                if (db) {
-                    try {
-                        const q = query(collection(db, 'questions'), where('isActive', '==', true), limit(10));
-                        const snap = await getDocs(q);
-                        if (!snap.empty) {
-                            this.questions = [];
-                            snap.forEach(doc => {
-                                const d = doc.data();
-                                this.questions.push({ id: doc.id, category: d.category, difficulty: d.difficulty, text: d.text, options: d.options, correct: d.correct, points: d.points || 10 });
-                            });
-                            this.questions = this.shuffleArray(this.questions);
-                            console.log('✅ Firebase questions loaded');
-                            return;
-                        }
-                    } catch (e) {
-                        console.warn('⚠️ Firebase failed, fallback to local');
-                    }
-                }
-                this.questions = this.getLocalQuestions();
-                this.questions = this.shuffleArray(this.questions);
-                console.log('✅ Local questions loaded');
-            }
-
-            getLocalQuestions() {
-                return [
-                    { id: "local_1", category: "الرياضيات", difficulty: "متوسط", text: "ما ناتج 15 + 27؟", options: ["40", "42", "45", "38"], correct: 1, points: 10 },
-                    { id: "local_2", category: "العلوم", difficulty: "سهل", text: "كم عدد كواكب المجموعة الشمسية؟", options: ["7", "8", "9", "10"], correct: 1, points: 10 },
-                    { id: "local_3", category: "التاريخ", difficulty: "متوسط", text: "في أي عام تأسست المملكة العربية السعودية؟", options: ["1930", "1932", "1935", "1940"], correct: 1, points: 10 },
-                    { id: "local_4", category: "اللغة العربية", difficulty: "سهل", text: "ما إعراب كلمة 'محمد' في جملة 'جاء محمد'؟", options: ["مبتدأ", "فاعل", "مفعول به", "خبر"], correct: 1, points: 10 },
-                    { id: "local_5", category: "الجغرافيا", difficulty: "متوسط", text: "ما هي عاصمة المملكة العربية السعودية؟", options: ["جدة", "الدمام", "الرياض", "مكة"], correct: 2, points: 10 },
-                    { id: "local_6", category: "الرياضيات", difficulty: "صعب", text: "ما ناتج 12 × 15؟", options: ["170", "180", "185", "190"], correct: 1, points: 15 },
-                    { id: "local_7", category: "العلوم", difficulty: "متوسط", text: "ما هو الغاز الأكثر انتشاراً في الغلاف الجوي؟", options: ["الأكسجين", "النيتروجين", "ثاني أكسيد الكربون", "الهيدروجين"], correct: 1, points: 10 },
-                    { id: "local_8", category: "الدين", difficulty: "سهل", text: "كم عدد أركان الإسلام؟", options: ["4", "5", "6", "7"], correct: 1, points: 10 },
-                    { id: "local_9", category: "التاريخ", difficulty: "صعب", text: "من هو مؤسس الدولة السعودية الأولى؟", options: ["محمد بن سعود", "عبدالعزيز آل سعود", "تركي بن عبدالله", "فيصل بن تركي"], correct: 0, points: 15 },
-                    { id: "local_10", category: "اللغة العربية", difficulty: "متوسط", text: "ما معنى كلمة 'صبر' في اللغة العربية؟", options: ["التحمل", "السرعة", "القوة", "الحكمة"], correct: 0, points: 10 }
-                ];
-            }
-
-            shuffleArray(arr) {
-                const a = [...arr];
-                for (let i = a.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [a[i], a[j]] = [a[j], a[i]];
-                }
-                return a;
-            }
-
-            getCurrentQuestion() {
-                return this.questions[AppState.currentQuestionIndex];
-            }
-
-            getTotalQuestions() {
-                return this.questions.length;
-            }
-        }
-
-        // ============== Timer Manager ==============
-        class TimerManager {
-            constructor() {
-                this.timerElement = document.getElementById('timer');
-            }
-            start() {
-                this.stop();
-                AppState.timerInterval = setInterval(() => {
-                    if (!AppState.isPaused) {
-                        AppState.timeLeft--;
-                        this.updateDisplay();
-                        if (AppState.timeLeft <= 0) {
-                            this.stop();
-                            quizController.handleTimeUp();
-                        }
-                    }
-                }, 1000);
-            }
-            stop() {
-                if (AppState.timerInterval) {
-                    clearInterval(AppState.timerInterval);
-                    AppState.timerInterval = null;
-                }
-            }
-            updateDisplay() {
-                if (!this.timerElement) return;
-                this.timerElement.textContent = `⏰ ${AppState.timeLeft}`;
-                this.timerElement.className = 'timer';
-                if (AppState.timeLeft <= 10) this.timerElement.classList.add('critical');
-                else if (AppState.timeLeft <= 20) this.timerElement.classList.add('warning');
-            }
-            reset(seconds = 60) {
-                AppState.timeLeft = seconds;
-                this.updateDisplay();
-            }
-        }
-
-        // ============== UI Manager ==============
-        class UIManager {
-            constructor() {
-                this.elements = {
-                    questionCounter: document.getElementById('questionCounter'),
-                    questionCategory: document.getElementById('questionCategory'),
-                    questionDifficulty: document.getElementById('questionDifficulty'),
-                    questionText: document.getElementById('questionText'),
-                    optionsContainer: document.getElementById('optionsContainer'),
-                    progressFill: document.getElementById('progressFill'),
-                    progressText: document.getElementById('progressText'),
-                    scoreDisplay: document.getElementById('scoreDisplay'),
-                    messageContainer: document.getElementById('messageContainer'),
-                    submitBtn: document.getElementById('submitBtn'),
-                    nextBtn: document.getElementById('nextBtn'),
-                    skipBtn: document.getElementById('skipBtn'),
-                    saveExitBtn: document.getElementById('saveExitBtn'),
-                    questionCard: document.getElementById('questionCard'),
-                    completionCard: document.getElementById('completionCard'),
-                    finalScore: document.getElementById('finalScore')
-                };
-            }
-            showLoading(show) {
-                const overlay = document.getElementById('loadingOverlay');
-                if (overlay) overlay.classList.toggle('hidden', !show);
-            }
-            showSaveConfirmation() {
-                const modal = document.getElementById('saveConfirmation');
-                if (modal) modal.classList.remove('hidden');
-            }
-            hideSaveConfirmation() {
-                const modal = document.getElementById('saveConfirmation');
-                if (modal) modal.classList.add('hidden');
-            }
-            loadQuestion(question, idx, total) {
-                if (!question) return;
-                if (this.elements.questionCounter) this.elements.questionCounter.textContent = `السؤال ${idx + 1} من ${total}`;
-                if (this.elements.questionCategory) this.elements.questionCategory.textContent = question.category || 'عام';
-                if (this.elements.questionDifficulty) this.elements.questionDifficulty.innerHTML = this.getDifficultyStars(question.difficulty) + ' ' + question.difficulty;
-                if (this.elements.questionText) this.elements.questionText.textContent = question.text;
-                this.loadOptions(question);
-                this.resetQuestionState();
-                this.updateProgress(idx, total);
-                this.updateScoreDisplay();
-            }
-            loadOptions(question) {
-                if (!this.elements.optionsContainer) return;
-                this.elements.optionsContainer.innerHTML = '';
-                const letters = ['أ', 'ب', 'ج', 'د'];
-                question.options.forEach((opt, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'option';
-                    div.dataset.index = i;
-                    div.innerHTML = `<div class="option-letter">${letters[i]}</div><div class="option-text">${opt}</div>`;
-                    div.style.opacity = '0';
-                    div.style.transform = 'translateY(20px)';
-                    this.elements.optionsContainer.appendChild(div);
-                    setTimeout(() => {
-                        div.style.transition = 'all 0.6s ease';
-                        div.style.opacity = '1';
-                        div.style.transform = 'translateY(0)';
-                    }, i * 100);
-                });
-            }
-            updateProgress(current, total) {
-                const progress = ((current + 1) / total) * 100;
-                if (this.elements.progressFill) this.elements.progressFill.style.width = `${progress}%`;
-                if (this.elements.progressText) this.elements.progressText.textContent = `تقدمك: ${Math.round(progress)}% • المتبقي: ${total - current - 1} سؤال`;
-            }
-            updateScoreDisplay() {
-                if (this.elements.scoreDisplay) this.elements.scoreDisplay.textContent = `النقاط: ${AppState.score}`;
-            }
-            resetQuestionState() {
-                AppState.selectedAnswer = null;
-                AppState.isPaused = false;
-                if (this.elements.submitBtn) {
-                    this.elements.submitBtn.disabled = true;
-                    this.elements.submitBtn.classList.remove('hidden');
-                }
-                if (this.elements.nextBtn) this.elements.nextBtn.classList.add('hidden');
-                if (this.elements.skipBtn) this.elements.skipBtn.classList.remove('hidden');
-                if (this.elements.saveExitBtn) this.elements.saveExitBtn.classList.remove('hidden');
-                if (this.elements.messageContainer) this.elements.messageContainer.innerHTML = '';
-                document.querySelectorAll('.option').forEach(opt => {
-                    opt.classList.remove('selected', 'correct', 'incorrect');
-                    opt.style.pointerEvents = 'auto';
-                });
-            }
-            selectAnswer(optionElement) {
-                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-                optionElement.classList.add('selected');
-                AppState.selectedAnswer = parseInt(optionElement.dataset.index);
-                if (this.elements.submitBtn) this.elements.submitBtn.disabled = false;
-            }
-            showAnswerResults(question, isCorrect) {
-                document.querySelectorAll('.option').forEach((opt, idx) => {
-                    if (idx === question.correct) opt.classList.add('correct');
-                    if (idx === AppState.selectedAnswer && !isCorrect) opt.classList.add('incorrect');
-                });
-            }
-            updateControlButtons() {
-                if (this.elements.submitBtn) this.elements.submitBtn.classList.add('hidden');
-                if (this.elements.skipBtn) this.elements.skipBtn.classList.add('hidden');
-                if (this.elements.saveExitBtn) this.elements.saveExitBtn.classList.add('hidden');
-                if (this.elements.nextBtn) this.elements.nextBtn.classList.remove('hidden');
-            }
-            showMessage(type, text) {
-                if (this.elements.messageContainer) this.elements.messageContainer.innerHTML = `<div class="message ${type}">${text}</div>`;
-            }
-            showCompletionCard() {
-                const total = this.getTotalQuestions() * 10;
-                if (this.elements.finalScore) this.elements.finalScore.textContent = `${AppState.score}/${total}`;
-                if (this.elements.completionCard) this.elements.completionCard.classList.remove('hidden');
-                if (this.elements.questionCard) this.elements.questionCard.classList.add('hidden');
-            }
-            getDifficultyStars(difficulty) {
-                return difficulty === 'سهل' ? '⭐' : difficulty === 'صعب' ? '⭐⭐⭐' : '⭐⭐';
-            }
-            getTotalQuestions() {
-                return questionManager.getTotalQuestions();
-            }
-        }
-
-        // ============== Quiz Controller ==============
-        class QuizController {
-            constructor() {
-                this.sessionManager = new SessionManager();
-                this.questionManager = new QuestionManager();
-                this.timerManager = new TimerManager();
-                this.uiManager = new UIManager();
-            }
-
-            async initialize() {
-                try {
-                    this.uiManager.showLoading(true);
-                    if (!this.sessionManager.validateSession()) {
-                        window.location.href = 'index.html';
-                        return;
-                    }
-                    this.sessionManager.updateStudentDisplay();
-
-                    if (db && auth) await signInAnonymously(auth);
-
-                    await this.questionManager.loadQuestions();
-                    AppState.currentQuestions = this.questionManager.questions;
-
-                    const urlParams = new URLSearchParams(window.location.search);
-                    if (urlParams.has('resume')) {
-                        await this.restoreLastSession();
-                    } else {
-                        await this.checkExistingProgress();
-                    }
-
-                    this.setupEventListeners();
-                    this.setupSecurity();
-
-                    if (!AppState.sessionCompleted) {
-                        this.loadCurrentQuestion();
-                        this.timerManager.start();
-                    }
-
-                    this.uiManager.showLoading(false);
-                    this.uiManager.showMessage('success', '🚀 تم تحضير المسابقة بنجاح! ابدأ الآن');
-                } catch (error) {
-                    console.error('❌ Initialization failed:', error);
-                    this.uiManager.showLoading(false);
-                    this.showFallback();
-                }
-            }
-
-            async restoreLastSession() {
-                const progress = this.sessionManager.loadQuizProgress();
-                if (!progress) {
-                    this.uiManager.showMessage('error', '❌ لا توجد بيانات للاستئناف');
-                    return;
-                }
-                AppState.currentQuestionIndex = progress.currentQuestionIndex || 0;
-                AppState.score = progress.score || 0;
-                AppState.timeLeft = progress.timeLeft || 60;
-                AppState.selectedAnswer = progress.selectedAnswer ?? null;
-                this.loadCurrentQuestion();
-                this.uiManager.updateScoreDisplay();
-                this.timerManager.updateDisplay();
-                this.uiManager.showMessage('success', '🔄 تم استئناف المسابقة من آخر نقطة توقف!');
-            }
-
-            async checkExistingProgress() {
-                const progress = this.sessionManager.loadQuizProgress();
-                if (progress) {
-                    this.restoreProgress(progress);
-                    this.uiManager.showMessage('info', '📁 تم استعادة تقدمك المحفوظ!');
-                    return;
-                }
-                AppState.sessionId = `session_${AppState.studentData.studentId}_${Date.now()}`;
-            }
-
-            restoreProgress(progress) {
-                AppState.currentQuestionIndex = progress.currentQuestionIndex || 0;
-                AppState.score = progress.score || 0;
-                AppState.timeLeft = progress.timeLeft || 60;
-                AppState.selectedAnswer = progress.selectedAnswer ?? null;
-            }
-
-            loadCurrentQuestion() {
-                if (AppState.currentQuestionIndex >= this.questionManager.getTotalQuestions()) {
-                    this.completeSession();
-                    return;
-                }
-                const question = this.questionManager.getCurrentQuestion();
-                if (!question) return;
-                AppState.questionStartTime = Date.now();
-                this.uiManager.loadQuestion(question, AppState.currentQuestionIndex, this.questionManager.getTotalQuestions());
-                if (AppState.timeLeft <= 0) this.timerManager.reset();
-            }
-
-            async saveProgress() {
-                const progress = {
-                    currentQuestionIndex: AppState.currentQuestionIndex,
-                    score: AppState.score,
-                    timeLeft: AppState.timeLeft,
-                    selectedAnswer: AppState.selectedAnswer,
-                    answers: AppState.currentQuestions.map((q, i) => ({
-                        questionId: q.id,
-                        selected: i === AppState.currentQuestionIndex ? AppState.selectedAnswer : null,
-                        correct: q.correct
-                    })),
-                    lastUpdate: new Date().toISOString()
-                };
-                this.sessionManager.saveQuizProgress(progress);
-                if (db && AppState.sessionId) {
-                    try {
-                        await updateDoc(doc(db, 'quiz_sessions', AppState.sessionId), { ...progress, lastUpdate: serverTimestamp() });
-                        console.log('✅ Saved to Firestore');
-                    } catch (e) {
-                        console.warn('⚠️ Cloud save failed, kept locally');
-                    }
-                }
-                this.uiManager.showMessage('success', '💾 تم حفظ تقدمك بنجاح!');
-            }
-
-            async saveAndExit() {
-                if (AppState.isSubmitting) return;
-                AppState.isSubmitting = true;
-                this.uiManager.showLoading(true);
-                await this.saveProgress();
-                this.uiManager.hideSaveConfirmation();
-                setTimeout(() => {
-                    window.location.href = 'index.html?resume=true';
-                }, 1500);
-            }
-
-            async submitAnswer() {
-                if (AppState.selectedAnswer === null || AppState.isPaused) return;
-                AppState.isPaused = true;
-                this.timerManager.stop();
-                const question = this.questionManager.getCurrentQuestion();
-                const isCorrect = AppState.selectedAnswer === question.correct;
-                this.uiManager.showAnswerResults(question, isCorrect);
-                if (isCorrect) {
-                    AppState.score += question.points || 10;
-                    this.uiManager.updateScoreDisplay();
-                    this.uiManager.showMessage('success', this.getRandomSuccessMessage());
-                } else {
-                    this.uiManager.showMessage('error', this.getRandomErrorMessage());
-                }
-                this.uiManager.updateControlButtons();
-                await this.saveProgress();
-                setTimeout(() => this.nextQuestion(), 3000);
-            }
-
-            async skipQuestion() {
-                if (AppState.isPaused) return;
-                AppState.isPaused = true;
-                this.timerManager.stop();
-                const question = this.questionManager.getCurrentQuestion();
-                this.uiManager.showMessage('info', '⭐ تم تخطي السؤال! لا تقلق، يمكنك التعويض في الأسئلة القادمة!');
-                document.querySelectorAll('.option').forEach((opt, idx) => {
-                    if (idx === question.correct) opt.classList.add('correct');
-                    opt.style.pointerEvents = 'none';
-                });
-                this.uiManager.updateControlButtons();
-                await this.saveProgress();
-                setTimeout(() => this.nextQuestion(), 2500);
-            }
-
-            nextQuestion() {
-                AppState.currentQuestionIndex++;
-                document.querySelectorAll('.option').forEach(opt => {
-                    opt.style.pointerEvents = 'auto';
-                    opt.classList.remove('selected', 'correct', 'incorrect');
-                });
-                if (AppState.currentQuestionIndex >= this.questionManager.getTotalQuestions()) {
-                    this.completeSession();
-                } else {
-                    this.loadCurrentQuestion();
-                    this.timerManager.start();
-                }
-            }
-
-            handleTimeUp() {
-                if (AppState.isPaused) return;
-                AppState.isPaused = true;
-                const question = this.questionManager.getCurrentQuestion();
-                this.uiManager.showMessage('error', '⏰ انتهى الوقت! لا تقلق، ركز أكثر في السؤال التالي!');
-                document.querySelectorAll('.option').forEach((opt, idx) => {
-                    if (idx === question.correct) opt.classList.add('correct');
-                    opt.style.pointerEvents = 'none';
-                });
-                this.uiManager.updateControlButtons();
-                this.saveProgress();
-                setTimeout(() => this.nextQuestion(), 2500);
-            }
-
-            async completeSession() {
-                AppState.sessionCompleted = true;
-                this.timerManager.stop();
-                const total = this.questionManager.getTotalQuestions() * 10;
-                const percentage = Math.round((AppState.score / total) * 100);
-                if (db && AppState.sessionId) {
-                    try {
-                        await updateDoc(doc(db, 'quiz_sessions', AppState.sessionId), {
-                            completed: true,
-                            score: AppState.score,
-                            percentage,
-                            totalQuestions: this.questionManager.getTotalQuestions(),
-                            timeSpent: this.questionManager.getTotalQuestions() * 60 - AppState.timeLeft,
-                            lastUpdate: serverTimestamp()
-                        });
-                    } catch (e) {
-                        console.warn('⚠️ Final cloud save failed');
-                    }
-                }
-                this.sessionManager.clearQuizProgress();
-                this.uiManager.showCompletionCard();
-                setTimeout(() => {
-                    window.location.href = 'leaderboard.html';
-                }, 4000);
-            }
-
-            setupEventListeners() {
-                document.addEventListener('click', (e) => {
-                    if (e.target.closest('.option') && !AppState.sessionCompleted && !AppState.isPaused) {
-                        const option = e.target.closest('.option');
-                        if (!option.classList.contains('correct') && !option.classList.contains('incorrect')) {
-                            this.uiManager.selectAnswer(option);
-                        }
-                    }
-                });
-                this.uiManager.elements.submitBtn?.addEventListener('click', () => this.submitAnswer());
-                this.uiManager.elements.nextBtn?.addEventListener('click', () => this.nextQuestion());
-                this.uiManager.elements.skipBtn?.addEventListener('click', () => this.skipQuestion());
-                this.uiManager.elements.saveExitBtn?.addEventListener('click', () => this.uiManager.showSaveConfirmation());
-                document.getElementById('confirmSaveBtn')?.addEventListener('click', () => this.saveAndExit());
-                document.getElementById('cancelSaveBtn')?.addEventListener('click', () => this.uiManager.hideSaveConfirmation());
-                document.addEventListener('keydown', (e) => {
-                    if (AppState.sessionCompleted || AppState.isPaused) return;
-                    if (e.key >= '1' && e.key <= '4') {
-                        const idx = parseInt(e.key) - 1;
-                        const opt = document.querySelector(`[data-index="${idx}"]`);
-                        if (opt && !opt.classList.contains('correct') && !opt.classList.contains('incorrect')) this.uiManager.selectAnswer(opt);
-                    } else if (e.key === 'Enter' && AppState.selectedAnswer !== null) {
-                        this.submitAnswer();
-                    } else if (e.key === 'Escape') {
-                        this.skipQuestion();
-                    } else if (e.ctrlKey && e.key === 's') {
-                        e.preventDefault();
-                        this.saveAndExit();
-                    }
-                });
-                window.addEventListener('beforeunload', (e) => {
-                    if (!AppState.sessionCompleted && AppState.currentQuestionIndex > 0 && !AppState.isPaused) {
-                        e.preventDefault();
-                        e.returnValue = 'هل تريد حقاً ترك المسابقة؟ لم يتم حفظ تقدمك بعد. استخدم زر "حفظ وخروج" للحفظ الآمن.';
-                        return e.returnValue;
-                    }
-                });
-                window.addEventListener('beforeunload', () => {
-                    if (AppState.timerInterval) clearInterval(AppState.timerInterval);
-                });
-            }
-
-            setupSecurity() {
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) || (e.ctrlKey && ['u', 'U', 'a', 'A', 'c', 'C', 'v', 'V'].includes(e.key))) {
-                        e.preventDefault();
-                        this.uiManager.showMessage('error', '⚠️ هذه الميزة غير متاحة أثناء المسابقة!');
-                        return false;
-                    }
-                });
-                document.addEventListener('contextmenu', (e) => e.preventDefault());
-                document.addEventListener('selectstart', (e) => e.preventDefault());
-            }
-
-            getRandomSuccessMessage() {
-                const msgs = ["🌟 ممتاز! إجابة صحيحة تماماً!", "🚀 رائع! أنت تتقدم بثبات!", "🏆 أحسنت! واصل هذا التميز!", "⭐ عبقري! إجابة مثالية!", "🎯 دقيق جداً! أنت محترف!"];
-                return msgs[Math.floor(Math.random() * msgs.length)];
-            }
-
-            getRandomErrorMessage() {
-                const msgs = ["💪 لا تيأس! التعلم من الأخطاء قوة!", "🌱 كل خطأ خطوة نحو التفوق!", "🔄 لا بأس! المحاولة القادمة ستكون أفضل!", "🌟 الأخطاء طريق النجاح! تقدم للأمام!"];
-                return msgs[Math.floor(Math.random() * msgs.length)];
-            }
-        }
-
-        // ============== Initialize App ==============
-        let quizController;
-        document.addEventListener('DOMContentLoaded', async () => {
-            quizController = new QuizController();
-            await quizController.initialize();
+      }
+      showLoading(show) { document.getElementById('loadingOverlay').classList.toggle('hidden', !show); }
+      showSaveConfirmation() { document.getElementById('saveConfirmation').classList.remove('hidden'); }
+      hideSaveConfirmation() { document.getElementById('saveConfirmation').classList.add('hidden'); }
+      loadQuestion(question, idx, total) {
+        if (!question) return;
+        if (this.elements.questionCounter) this.elements.questionCounter.textContent = `السؤال ${idx + 1} من ${total}`;
+        if (this.elements.questionCategory) this.elements.questionCategory.textContent = question.category || 'عام';
+        if (this.elements.questionDifficulty) this.elements.questionDifficulty.innerHTML = this.getDifficultyStars(question.difficulty) + ' ' + question.difficulty;
+        if (this.elements.questionText) this.elements.questionText.textContent = question.text;
+        this.loadOptions(question);
+        this.resetQuestionState();
+        this.updateProgress(idx, total);
+        this.updateScoreDisplay();
+      }
+      loadOptions(question) {
+        if (!this.elements.optionsContainer) return;
+        this.elements.optionsContainer.innerHTML = '';
+        const letters = ['أ', 'ب', 'ج', 'د'];
+        question.options.forEach((opt, i) => {
+          const div = document.createElement('div');
+          div.className = 'option';
+          div.dataset.index = i;
+          div.innerHTML = `<div class="option-letter">${letters[i]}</div><div class="option-text">${opt}</div>`;
+          div.style.opacity = '0';
+          div.style.transform = 'translateY(20px)';
+          this.elements.optionsContainer.appendChild(div);
+          setTimeout(() => {
+            div.style.transition = 'all 0.6s ease';
+            div.style.opacity = '1';
+            div.style.transform = 'translateY(0)';
+          }, i * 100);
         });
+      }
+      updateProgress(current, total) {
+        const progress = ((current + 1) / total) * 100;
+        if (this.elements.progressFill) this.elements.progressFill.style.width = `${progress}%`;
+        if (this.elements.progressText) this.elements.progressText.textContent = `تقدمك: ${Math.round(progress)}% • المتبقي: ${total - current - 1} سؤال`;
+      }
+      updateScoreDisplay() { if (this.elements.scoreDisplay) this.elements.scoreDisplay.textContent = `النقاط: ${AppState.score}`; }
+      resetQuestionState() {
+        AppState.selectedAnswer = null;
+        AppState.isPaused = false;
+        if (this.elements.submitBtn) {
+          this.elements.submitBtn.disabled = true;
+          this.elements.submitBtn.classList.remove('hidden');
+        }
+        if (this.elements.nextBtn) this.elements.nextBtn.classList.add('hidden');
+        if (this.elements.skipBtn) this.elements.skipBtn.classList.remove('hidden');
+        if (this.elements.saveExitBtn) this.elements.saveExitBtn.classList.remove('hidden');
+        if (this.elements.messageContainer) this.elements.messageContainer.innerHTML = '';
+        document.querySelectorAll('.option').forEach(opt => {
+          opt.classList.remove('selected', 'correct', 'incorrect');
+          opt.style.pointerEvents = 'auto';
+        });
+      }
+      selectAnswer(optionElement) {
+        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+        optionElement.classList.add('selected');
+        AppState.selectedAnswer = parseInt(optionElement.dataset.index);
+        if (this.elements.submitBtn) this.elements.submitBtn.disabled = false;
+      }
+      showAnswerResults(question, isCorrect) {
+        document.querySelectorAll('.option').forEach((opt, idx) => {
+          if (idx === question.correct) opt.classList.add('correct');
+          if (idx === AppState.selectedAnswer && !isCorrect) opt.classList.add('incorrect');
+        });
+      }
+      updateControlButtons() {
+        if (this.elements.submitBtn) this.elements.submitBtn.classList.add('hidden');
+        if (this.elements.skipBtn) this.elements.skipBtn.classList.add('hidden');
+        if (this.elements.saveExitBtn) this.elements.saveExitBtn.classList.add('hidden');
+        if (this.elements.nextBtn) this.elements.nextBtn.classList.remove('hidden');
+      }
+      showMessage(type, text) {
+        if (this.elements.messageContainer) this.elements.messageContainer.innerHTML = `<div class="message ${type}">${text}</div>`;
+      }
+      showCompletionCard() {
+        const total = AppState.currentQuestions.reduce((s, q) => s + (q.points || 10), 0);
+        if (this.elements.finalScore) this.elements.finalScore.textContent = `${AppState.score}/${total}`;
+        if (this.elements.completionCard) this.elements.completionCard.classList.remove('hidden');
+        if (this.elements.questionCard) this.elements.questionCard.classList.add('hidden');
+      }
+      getDifficultyStars(difficulty) { return difficulty === 'سهل' ? '⭐' : difficulty === 'صعب' ? '⭐⭐⭐' : '⭐⭐'; }
+    }
 
-        // ============== Global Error Handlers ==============
-        window.addEventListener('error', (e) => console.error('💥 Global error:', e.error));
-        window.addEventListener('unhandledrejection', (e) => console.error('💥 Unhandled rejection:', e.reason));
-    </script>
+    // ============== QuizController ==============
+    class QuizController {
+      constructor() {
+        this.sessionManager = new SessionManager();
+        this.questionManager = new QuestionManager();
+        this.timerManager = new TimerManager();
+        this.uiManager = new UIManager();
+      }
+      async start() {
+        try {
+          this.uiManager.showLoading(true);
+          if (!this.sessionManager.validateSession()) { window.location.href = 'index.html'; return; }
+          this.sessionManager.updateStudentDisplay();
+
+          if (db && auth) await signInAnonymously(auth);
+
+          await this.questionManager.loadQuestions();
+          AppState.currentQuestions = this.questionManager.questions;
+
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.has('resume')) await this.restoreLastSession();
+          else await this.checkExistingProgress();
+
+          this.setupEventListeners();
+          this.setupSecurity();
+
+          if (!AppState.sessionCompleted) {
+            this.loadCurrentQuestion();
+            this.timerManager.start();
+          }
+
+          this.uiManager.showLoading(false);
+          this.uiManager.showMessage('success', '🚀 تم تحضير المسابقة بنجاح! ابدأ الآن');
+        } catch (error) {
+          console.error('❌ Initialization failed:', error);
+          this.uiManager.showLoading(false);
+          this.showFallback();
+        }
+      }
+      async restoreLastSession() {
+        const progress = this.sessionManager.loadQuizProgress();
+        if (!progress) { this.uiManager.showMessage('error', '❌ لا توجد بيانات للاستئناف'); return; }
+        AppState.currentQuestionIndex = progress.currentQuestionIndex || 0;
+        AppState.score = progress.score || 0;
+        AppState.timeLeft = progress.timeLeft || 60;
+        AppState.selectedAnswer = progress.selectedAnswer ?? null;
+        this.loadCurrentQuestion();
+        this.uiManager.updateScoreDisplay();
+        this.timerManager.updateDisplay();
+        this.uiManager.showMessage('success', '🔄 تم استئناف المسابقة من آخر نقطة توقف!');
+      }
+      async checkExistingProgress() {
+        const progress = this.sessionManager.loadQuizProgress();
+        if (progress) { this.restoreProgress(progress); this.uiManager.showMessage('info', '📁 تم استعادة تقدمك المحفوظ!'); return; }
+        AppState.sessionId = `session_${AppState.studentData.studentId}_${Date.now()}`;
+      }
+      restoreProgress(progress) {
+        AppState.currentQuestionIndex = progress.currentQuestionIndex || 0;
+        AppState.score = progress.score || 0;
+        AppState.timeLeft = progress.timeLeft || 60;
+        AppState.selectedAnswer = progress.selectedAnswer ?? null;
+      }
+      loadCurrentQuestion() {
+        if (AppState.currentQuestionIndex >= this.questionManager.getTotalQuestions()) { this.completeSession(); return; }
+        const question = this.questionManager.getCurrentQuestion();
+        if (!question) return;
+        AppState.questionStartTime = Date.now();
+        this.uiManager.loadQuestion(question, AppState.currentQuestionIndex, this.questionManager.getTotalQuestions());
+        if (AppState.timeLeft <= 0) this.timerManager.reset();
+      }
+      async saveProgress() {
+        const progress = {
+          currentQuestionIndex: AppState.currentQuestionIndex,
+          score: AppState.score,
+          timeLeft: AppState.timeLeft,
+          selectedAnswer: AppState.selectedAnswer,
+          answers: AppState.currentQuestions.map((q, i) => ({ questionId: q.id, selected: i === AppState.currentQuestionIndex ? AppState.selectedAnswer : null, correct: q.correct })),
+          lastUpdate: new Date().toISOString()
+        };
+        this.sessionManager.saveQuizProgress(progress);
+        if (db && AppState.sessionId) {
+          try {
+            const ref = doc(db, 'quiz_sessions', AppState.sessionId);
+            await setDoc(ref, { ...progress, lastUpdate: serverTimestamp() }, { merge: true });
+            console.log('✅ Saved to Firestore');
+          } catch (e) { console.warn('⚠️ Cloud save failed, kept locally'); }
+        }
+        this.uiManager.showMessage('success', '💾 تم حفظ تقدمك بنجاح!');
+      }
+      async saveAndExit() {
+        if (AppState.isSubmitting) return;
+        AppState.isSubmitting = true;
+        this.uiManager.showLoading(true);
+        await this.saveProgress();
+        this.uiManager.hideSaveConfirmation();
+        setTimeout(() => window.location.href = 'index.html?resume=true', 1500);
+      }
+      async submitAnswer() {
+        if (AppState.selectedAnswer === null || AppState.isPaused) return;
+        AppState.isPaused = true;
+        this.timerManager.stop();
+        const question = this.questionManager.getCurrentQuestion();
+        const isCorrect = AppState.selectedAnswer === question.correct;
+        this.uiManager.showAnswerResults(question, isCorrect);
+        if (isCorrect) {
+          AppState.score += question.points || 10;
+          this.uiManager.updateScoreDisplay();
+          this.uiManager.showMessage('success', this.getRandomSuccessMessage());
+        } else {
+          this.uiManager.showMessage('error', this.getRandomErrorMessage());
+        }
+        this.uiManager.updateControlButtons();
+        await this.saveProgress();
+        setTimeout(() => this.nextQuestion(), 3000);
+      }
+      async skipQuestion() {
+        if (AppState.isPaused) return;
+        AppState.isPaused = true;
+        this.timerManager.stop();
+        const question = this.questionManager.getCurrentQuestion();
+        this.uiManager.showMessage('info', '⭐ تم تخطي السؤال! لا تقلق، يمكنك التعويض في الأسئلة القادمة!');
+        document.querySelectorAll('.option').forEach((opt, idx) => {
+          if (idx === question.correct) opt.classList.add('correct');
+          opt.style.pointerEvents = 'none';
+        });
+        this.uiManager.updateControlButtons();
+        await this.saveProgress();
+        setTimeout(() => this.nextQuestion(), 2500);
+      }
+      nextQuestion() {
+        AppState.currentQuestionIndex++;
+        document.querySelectorAll('.option').forEach(opt => {
+          opt.style.pointerEvents = 'auto';
+          opt.classList.remove('selected', 'correct', 'incorrect');
+        });
+        if (AppState.currentQuestionIndex >= this.questionManager.getTotalQuestions()) this.completeSession();
+        else { this.loadCurrentQuestion(); this.timerManager.start(); }
+      }
+      handleTimeUp() {
+        if (AppState.isPaused) return;
+        AppState.isPaused = true;
+        const question = this.questionManager.getCurrentQuestion();
+        this.uiManager.showMessage('error', '⏰ انتهى الوقت! لا تقلق، المحاولة القادمة أفضل!');
+        document.querySelectorAll('.option').forEach((opt, idx) => {
+          if (idx === question.correct) opt.classList.add('correct');
+          opt.style.pointerEvents = 'none';
+        });
+        this.uiManager.updateControlButtons();
+        this.saveProgress();
+        setTimeout(() => this.nextQuestion(), 2500);
+      }
+      async completeSession() {
+        AppState.sessionCompleted = true;
+        this.timerManager.stop();
+        const total = AppState.currentQuestions.reduce((s, q) => s + (q.points || 10), 0);
+        const percentage = Math.round((AppState.score / total) * 100);
+        if (db && AppState.sessionId) {
+          try {
+            const ref = doc(db, 'quiz_sessions', AppState.sessionId);
+            await setDoc(ref, {
+              completed: true,
+              score: AppState.score,
+              percentage,
+              totalQuestions: this.questionManager.getTotalQuestions(),
+              timeSpent: this.questionManager.getTotalQuestions() * 60 - AppState.timeLeft,
+              lastUpdate: serverTimestamp()
+            }, { merge: true });
+          } catch (e) { console.warn('⚠️ Final cloud save failed'); }
+        }
+        this.sessionManager.clearQuizProgress();
+        this.uiManager.showCompletionCard();
+        setTimeout(() => window.location.href = 'leaderboard.html', 4000);
+      }
+      setupEventListeners() {
+        document.addEventListener('click', e => {
+          if (e.target.closest('.option') && !AppState.sessionCompleted && !AppState.isPaused) {
+            const option = e.target.closest('.option');
+            if (!option.classList.contains('correct') && !option.classList.contains('incorrect')) this.uiManager.selectAnswer(option);
+          }
+        });
+        this.uiManager.elements.submitBtn?.addEventListener('click', () => this.submitAnswer());
+        this.uiManager.elements.nextBtn?.addEventListener('click', () => this.nextQuestion());
+        this.uiManager.elements.skipBtn?.addEventListener('click', () => this.skipQuestion());
+        this.uiManager.elements.saveExitBtn?.addEventListener('click', () => this.uiManager.showSaveConfirmation());
+        document.getElementById('confirmSaveBtn')?.addEventListener('click', () => this.saveAndExit());
+        document.getElementById('cancelSaveBtn')?.addEventListener('click', () => this.uiManager.hideSaveConfirmation());
+        document.addEventListener('keydown', e => {
+          if (AppState.sessionCompleted || AppState.isPaused) return;
+          if (e.key >= '1' && e.key <= '4') {
+            const idx = parseInt(e.key) - 1;
+            const opt = document.querySelector(`[data-index="${idx}"]`);
+            if (opt && !opt.classList.contains('correct') && !opt.classList.contains('incorrect')) this.uiManager.selectAnswer(opt);
+          } else if (e.key === 'Enter' && AppState.selectedAnswer !== null) this.submitAnswer();
+          else if (e.key === 'Escape') this.skipQuestion();
+          else if (e.ctrlKey && e.key.toLowerCase() === 's') { e.preventDefault(); this.saveAndExit(); }
+        });
+        window.addEventListener('beforeunload', e => {
+          if (!AppState.sessionCompleted && AppState.currentQuestionIndex > 0 && !AppState.isPaused) {
+            e.preventDefault();
+            e.returnValue = 'هل تريد حقاً ترك المسابقة؟ لم يتم حفظ تقدمك بعد. استخدم زر "حفظ وخروج" للحفظ الآمن.';
+            return e.returnValue;
+          }
+        });
+        window.addEventListener('beforeunload', () => { if (AppState.timerInterval) clearInterval(AppState.timerInterval); });
+      }
+      setupSecurity() {
+        document.addEventListener('keydown', e => {
+          if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) || (e.ctrlKey && ['u', 'U', 'a', 'A', 'c', 'C', 'v', 'V'].includes(e.key.toLowerCase()))) {
+            e.preventDefault();
+            this.uiManager.showMessage('error', '⚠️ هذه الميزة غير متاحة أثناء المسابقة!');
+            return false;
+          }
+        });
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+      }
+      getRandomSuccessMessage() {
+        const msgs = ["🌟 ممتاز! إجابة صحيحة تماماً!", "🚀 رائع! أنت تتقدم بثبات!", "🏆 أحسنت! واصل هذا التميز!", "⭐ عبقري! إجابة مثالية!", "🎯 دقيق جداً! أنت محترف!"];
+        return msgs[Math.floor(Math.random() * msgs.length)];
+      }
+      getRandomErrorMessage() {
+        const msgs = ["💪 لا تيأس! التعلم من الأخطاء قوة!", "🌱 كل خطأ خطوة نحو التفوق!", "🔄 لا بأس! المحاولة القادمة ستكون أفضل!", "🌟 الأخطاء طريق النجاح! تقدم للأمام!"];
+        return msgs[Math.floor(Math.random() * msgs.length)];
+      }
+      showFallback() {
+        this.uiManager.showMessage('error', '⚠️ لم نتمكن من تحميل الأسئلة، تأكد من اتصالك ثم أعد التحميل.');
+      }
+    }
+
+    // ============== Initialize App ==============
+    const quizController = new QuizController();
+    await quizController.start();
+
+    // ============== Global Error Handlers ==============
+    window.addEventListener('error', e => console.error('💥 Global error:', e.error));
+    window.addEventListener('unhandledrejection', e => console.error('💥 Unhandled rejection:', e.reason));
+  </script>
 </body>
 </html>
