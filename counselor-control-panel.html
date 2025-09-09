@@ -1060,6 +1060,7 @@
                         <option value="complete">تقرير شامل</option>
                         <option value="economic">التقرير الاقتصادي</option>
                         <option value="health">التقرير الصحي</option>
+                        <option value="health-diseases">تقرير الأمراض والحالات الصحية</option>
                         <option value="social">التقرير الاجتماعي</option>
                         <option value="academic">التقرير الأكاديمي</option>
                         <option value="talents">تقرير المواهب والقدرات</option>
@@ -1799,7 +1800,7 @@
                         <div class="info-row">
                             <span class="info-label">الدخل الشهري:</span>
                             <span class="info-value">${student.monthlyIncome}</span>
-                        </div>
+                                                </div>
                         <div class="info-row">
                             <span class="info-label">محتاج ماليا:</span>
                             <span class="info-value">${student.financialNeed}</span>
@@ -2056,8 +2057,18 @@
                     <meta charset="UTF-8">
                     <title>تقرير ${reportType} - متوسطة المنذر بن عمرو الأنصاري</title>
                     <style>
-                        body { font-family: 'Cairo', Arial, sans-serif; margin: 20px; direction: rtl; line-height: 1.6; }
-                        .header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid #0d5c0d; padding-bottom: 20px; }
+                        body { 
+                            font-family: 'Cairo', Arial, sans-serif; 
+                            margin: 20px; 
+                            direction: rtl; 
+                            line-height: 1.6;
+                        }
+                        .header { 
+                            text-align: center; 
+                            margin-bottom: 30px; 
+                            border-bottom: 3px solid #0d5c0d; 
+                            padding-bottom: 20px; 
+                        }
                         .logo { font-size: 24px; color: #0d5c0d; margin-bottom: 10px; }
                         .title { font-size: 24px; font-weight: bold; margin-bottom: 8px; }
                         .subtitle { font-size: 16px; color: #666; margin-bottom: 5px; }
@@ -2078,7 +2089,7 @@
                         <div class="title">متوسطة المنذر بن عمرو الأنصاري</div>
                         <div class="subtitle">مكتب تعليم العوالي - تقرير ${reportType}</div>
                         <div class="subtitle">تاريخ الإعداد: ${new Date().toLocaleDateString('ar-SA')}</div>
-                        <div class="subtitle">المرشد الطلابي: نواف الصبحي</div>
+                        <div class="subtitle">المرشد الطلابي: محمد القحطاني</div>
                     </div>
                     
                     <div class="stats-grid">
@@ -2162,6 +2173,9 @@
                 case 'health':
                     reportData = generateHealthReport();
                     break;
+                case 'health-diseases':
+                    reportData = generateHealthDiseasesReport();
+                    break;
                 case 'social':
                     reportData = generateSocialReport();
                     break;
@@ -2176,6 +2190,36 @@
             }
             
             showReportModal(reportData, reportType);
+        }
+
+        function generateHealthDiseasesReport() {
+            // استخراج الطلاب الذين لديهم أمراض أو حالات صحية فقط
+            const sickStudents = studentsData.filter(s =>
+                (s.healthConditions === 'نعم' && s.healthConditionsDetails) ||
+                (s.healthProblems === 'نعم' && s.healthProblemsDetails) ||
+                (s.mentalHealth === 'نعم' && s.mentalHealthDetails)
+            );
+
+            // تنسيق البيانات المطلوبة
+            const reportRows = sickStudents.map(s => {
+                // دمج تفاصيل الأمراض الثلاثة (إن وجدت) في حقل واحد
+                const diseases = [
+                    s.healthConditionsDetails,
+                    s.healthProblemsDetails,
+                    s.mentalHealthDetails
+                ].filter(Boolean).join(' | ');
+                return {
+                    'اسم الطالب': s.studentName,
+                    'الصف': `${s.grade} - ${s.section}`,
+                    'نوع المرض': diseases
+                };
+            });
+
+            return {
+                title: 'تقرير الأمراض والحالات الصحية',
+                summary: { total: sickStudents.length },
+                details: reportRows
+            };
         }
 
         function generateEconomicReport() {
@@ -2357,7 +2401,7 @@
                     <div class="header">
                         <h1>بيانات الطالب: ${studentName}</h1>
                         <p>متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي</p>
-                        <p>المرشد الطلابي: نواف الصبحي</p>
+                        <p>المرشد الطلابي: محمد القحطاني</p>
                         <p>تاريخ الطباعة: ${new Date().toLocaleDateString('ar-SA')}</p>
                     </div>
                     ${modalContent}
@@ -2556,4 +2600,4 @@
         console.log('🔄 المراقبة في الوقت الفعلي مُفعلة');
     </script>
 </body>
-</html>
+</html>    
