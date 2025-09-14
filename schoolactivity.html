@@ -16,7 +16,7 @@
         
         body {
             font-family: 'Tajawal', Arial, sans-serif;
-            background: linear-gradient(135deg, #e8f4f8 0%, #f0f8ff 50%, #e6f3ff 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #2c3e50;
         }
@@ -26,13 +26,15 @@
             margin: 0 auto;
             background: white;
             min-height: 100vh;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            box-shadow: 0 0 40px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            overflow: hidden;
         }
         
         .header {
             background: linear-gradient(135deg, #2c6470 0%, #4a90a4 100%);
             color: white;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -45,74 +47,98 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
             pointer-events: none;
         }
         
         .header h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
             position: relative;
             z-index: 1;
         }
         
         .school-info {
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: 500;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #b8dce6;
             position: relative;
             z-index: 1;
         }
         
         .management-info {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 10px 20px;
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 30px;
             display: inline-block;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             z-index: 1;
+            font-size: 1.1em;
         }
         
         .activities-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 0;
-            margin: 40px 20px;
-        }
-        
-        .activities-grid.expanded {
-            grid-template-rows: repeat(5, auto);
+            gap: 2px;
+            margin: 50px 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
         .activity-card {
             background: linear-gradient(135deg, #4a90a4, #2c6470);
             color: white;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
-            font-size: 1.1em;
-            font-weight: 500;
+            font-size: 1.2em;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .activity-card:nth-child(odd) {
-            background: linear-gradient(135deg, #5ba3b8, #4a90a4);
+        .activity-card:nth-child(1) {
+            background: linear-gradient(135deg, #667eea, #764ba2);
         }
         
-        .activity-card:nth-child(even) {
-            background: linear-gradient(135deg, #3d7485, #2c6470);
+        .activity-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
         }
         
-        .activity-card:nth-child(3n) {
-            background: linear-gradient(135deg, #6bb6c9, #5ba3b8);
+        .activity-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+        
+        .activity-card:nth-child(4) {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+        }
+        
+        .activity-card:nth-child(5) {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+        }
+        
+        .activity-card:nth-child(6) {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+        }
+        
+        .activity-card:nth-child(7) {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+        
+        .activity-card:nth-child(8) {
+            background: linear-gradient(135deg, #fad0c4, #ffd1ff);
         }
         
         .activity-card::before {
@@ -122,13 +148,14 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.6s ease;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.8s ease;
         }
         
         .activity-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 10;
         }
         
         .activity-card:hover::before {
@@ -137,29 +164,30 @@
         
         .form-section {
             background: linear-gradient(135deg, #f8fbfc, #ffffff);
-            padding: 40px 20px;
-            border-top: 3px solid #4a90a4;
-            box-shadow: 0 -2px 10px rgba(74, 144, 164, 0.05);
+            padding: 50px 30px;
+            border-top: 5px solid #4a90a4;
+            box-shadow: inset 0 2px 10px rgba(74, 144, 164, 0.05);
         }
         
         .form-title {
             text-align: center;
-            font-size: 1.6em;
-            font-weight: 600;
+            font-size: 2em;
+            font-weight: 700;
             color: #2c3e50;
-            margin-bottom: 30px;
-            padding: 15px;
-            background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
-            border-radius: 10px;
-            border-left: 4px solid #4a90a4;
-            box-shadow: 0 2px 8px rgba(74, 144, 164, 0.1);
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 800px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 900px;
             margin: 0 auto;
         }
         
@@ -169,28 +197,39 @@
         }
         
         .form-group label {
-            font-weight: 500;
+            font-weight: 600;
             color: #34495e;
-            margin-bottom: 8px;
-            font-size: 0.95em;
+            margin-bottom: 10px;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-group label::before {
+            content: '●';
+            color: #4a90a4;
+            font-size: 0.8em;
         }
         
         .form-group input,
         .form-group select {
-            padding: 12px;
+            padding: 15px;
             border: 2px solid #e8f4f8;
-            border-radius: 6px;
+            border-radius: 10px;
             font-family: inherit;
-            font-size: 0.95em;
+            font-size: 1em;
             transition: all 0.3s ease;
             background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #4a90a4;
-            box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
         }
         
         .large-field {
@@ -198,115 +237,164 @@
         }
         
         .large-field textarea {
-            min-height: 100px;
-            padding: 12px;
+            min-height: 120px;
+            padding: 15px;
             border: 2px solid #e8f4f8;
-            border-radius: 6px;
+            border-radius: 10px;
             font-family: inherit;
-            font-size: 0.95em;
+            font-size: 1em;
             resize: vertical;
             background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
         
         .large-field textarea:focus {
             outline: none;
-            border-color: #4a90a4;
-            box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
         }
         
         .action-buttons {
             text-align: center;
-            margin: 30px 0;
+            margin: 40px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
         .btn {
-            background: linear-gradient(135deg, #4a90a4, #357a8a);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 14px 30px;
+            padding: 16px 35px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 1em;
-            font-weight: 500;
-            margin: 0 10px;
+            font-size: 1.1em;
+            font-weight: 600;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-decoration: none;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
         }
         
         .btn:hover {
-            background: linear-gradient(135deg, #357a8a, #2c6470);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(74, 144, 164, 0.3);
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
         
         .btn.secondary {
             background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.3);
         }
         
         .btn.secondary:hover {
             background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
+            box-shadow: 0 10px 30px rgba(149, 165, 166, 0.4);
         }
         
         .footer {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
             text-align: center;
-            padding: 25px;
+            padding: 30px;
             margin-top: auto;
         }
         
         .footer p {
-            margin: 5px 0;
+            margin: 8px 0;
             opacity: 0.9;
+            font-size: 1.1em;
         }
         
         .footer .copyright {
-            font-size: 0.9em;
-            margin-top: 10px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 1em;
+            margin-top: 15px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
         }
         
         .footer .developer {
-            color: #74b9ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 18px 25px;
+            border-radius: 12px;
+            color: white;
             font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.4s ease-out;
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .notification.info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
         }
         
         @media (max-width: 768px) {
             .activities-grid {
                 grid-template-columns: 1fr;
-                margin: 20px 10px;
+                margin: 30px 15px;
             }
             
             .activity-card {
-                padding: 30px 15px;
-                font-size: 1em;
+                padding: 35px 15px;
+                font-size: 1.1em;
+                min-height: 100px;
             }
             
             .header h1 {
-                font-size: 1.6em;
+                font-size: 2em;
             }
             
             .form-section {
-                padding: 30px 15px;
+                padding: 40px 20px;
             }
             
             .form-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
             .btn {
-                display: block;
-                margin: 10px auto;
-                width: fit-content;
+                width: 100%;
+                max-width: 300px;
             }
         }
         
-        .fade-in {
-            animation: fadeIn 0.8s ease-in;
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         
         @keyframes fadeIn {
@@ -320,114 +408,68 @@
             }
         }
         
-        .slide-in-left {
-            animation: slideInLeft 0.6s ease-out;
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
         }
         
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .pulse {
+            animation: pulse 2s infinite;
         }
         
-        .slide-in-right {
-            animation: slideInRight 0.6s ease-out;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .loading {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container fade-in">
         <!-- Header -->
-        <div class="header fade-in">
-            <h1>برامج النشاط الطلابي</h1>
+        <div class="header">
+            <h1>🎓 برامج النشاط الطلابي</h1>
             <div class="school-info">متوسطة المنذر بن عمرو الأنصاري</div>
-            <div class="management-info">رائد النشاط: عبدالله الحربي</div>
+            <div class="management-info">👨‍🏫 رائد النشاط: عبدالله الحربي</div>
         </div>
         
         <!-- Activities Grid -->
-        <div class="activities-grid expanded">
-            <div class="activity-card slide-in-right loading" onclick="openActivity('مجال الرياضة والصحة')">
-                مجال الرياضة والصحة
+        <div class="activities-grid">
+            <div class="activity-card pulse" onclick="openActivity('مجال الرياضة والصحة')">
+                🏃‍♂️ مجال الرياضة والصحة
             </div>
             
-            <div class="activity-card slide-in-left loading" onclick="openActivity('مجال المواطنة والحياة')">
-                مجال المواطنة والحياة
+            <div class="activity-card" onclick="openActivity('مجال المواطنة والحياة')">
+                🇸🇦 مجال المواطنة والحياة
             </div>
             
-            <div class="activity-card slide-in-right loading" onclick="openActivity('مجال الثقافة والفنون')">
-                مجال الثقافة والفنون
+            <div class="activity-card" onclick="openActivity('مجال الثقافة والفنون')">
+                🎨 مجال الثقافة والفنون
             </div>
             
-            <div class="activity-card slide-in-left loading" onclick="openActivity('مجال النشاط الكشفي')">
-                مجال النشاط الكشفي
+            <div class="activity-card" onclick="openActivity('مجال النشاط الكشفي')">
+                🏕️ مجال النشاط الكشفي
             </div>
             
-            <div class="activity-card slide-in-right loading" onclick="openActivity('مجال العلوم والتقنية')">
-                مجال العلوم والتقنية
+            <div class="activity-card" onclick="openActivity('مجال العلوم والتقنية')">
+                🔬 مجال العلوم والتقنية
             </div>
             
-            <div class="activity-card slide-in-left loading" onclick="openActivity('مجال النشاط الاجتماعي')">
-                مجال النشاط الاجتماعي
+            <div class="activity-card" onclick="openActivity('مجال النشاط الاجتماعي')">
+                🤝 مجال النشاط الاجتماعي
             </div>
             
-            <div class="activity-card slide-in-right loading" onclick="openActivity('مجال الأيام والمناسبات')">
-                مجال الأيام والمناسبات
+            <div class="activity-card" onclick="openActivity('مجال الأيام والمناسبات')">
+                🎉 مجال الأيام والمناسبات
             </div>
             
-            <div class="activity-card slide-in-left loading" onclick="openActivity('التقرير النهائي للأنشطة')">
-                التقرير النهائي للأنشطة
+            <div class="activity-card" onclick="openActivity('التقرير النهائي للأنشطة')">
+                📊 التقرير النهائي للأنشطة
             </div>
         </div>
         
         <!-- Form Section -->
         <div class="form-section fade-in">
-            <div class="form-title" id="form-title">مجال الرياضة والصحة</div>
+            <div class="form-title" id="form-title">🏃‍♂️ مجال الرياضة والصحة</div>
             
             <form class="form-grid" id="activity-form">
                 <div class="form-group">
@@ -537,111 +579,148 @@
                 <button class="btn secondary" onclick="clearForm()">
                     🗑️ مسح النموذج
                 </button>
+                <button class="btn secondary" onclick="saveForm()">
+                    💾 حفظ البيانات
+                </button>
             </div>
         </div>
         
         <!-- Footer -->
         <div class="footer fade-in">
-            <p>متوسطة المنذر بن عمرو الأنصاري - برامج النشاط الطلابي</p>
-            <p>رائد النشاط: عبدالله الحربي</p>
+            <p>🏫 متوسطة المنذر بن عمرو الأنصاري - برامج النشاط الطلابي</p>
+            <p>👨‍🏫 رائد النشاط: عبدالله الحربي</p>
             <div class="copyright">
-                <p>⚠️ حقوق النسخ محفوظة</p>
-                <p>إعداد وتنفيذ: <span class="developer">Nawaf AlSubhi</span></p>
+                <p>⚠️ حقوق النسخ محفوظة © 2025</p>
+                <p>إعداد وتطوير: <span class="developer">Nawaf AlSubhi</span></p>
             </div>
         </div>
     </div>
     
     <script>
+        // تهيئة النظام عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
+            initializeSystem();
+        });
+
+        function initializeSystem() {
+            // تعيين التاريخ الحالي
             const today = new Date();
             const dateInput = document.getElementById('date');
             const dayInput = document.getElementById('day');
             
             dateInput.value = today.toISOString().split('T')[0];
             
-            const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-            dayInput.value = days[today.getDay()];
+            // تحديث اليوم بناءً على التاريخ
+            updateDay(today);
             
+            // إضافة مستمع للتاريخ
             dateInput.addEventListener('change', function() {
                 const selectedDate = new Date(this.value);
-                dayInput.value = days[selectedDate.getDay()];
+                updateDay(selectedDate);
             });
             
-            setTimeout(() => {
-                document.querySelectorAll('.loading').forEach(el => {
-                    el.classList.remove('loading');
-                });
-            }, 2000);
-        });
-        
+            // استعادة البيانات المحفوظة
+            loadSavedData();
+            
+            // إضافة مستمعين للحفظ التلقائي
+            addAutoSaveListeners();
+        }
+
+        function updateDay(date) {
+            const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            document.getElementById('day').value = days[date.getDay()];
+        }
+
         function openActivity(activityName) {
             const formTitle = document.getElementById('form-title');
-            formTitle.textContent = activityName;
             
-            formTitle.style.animation = 'none';
+            // إضافة الأيقونة المناسبة
+            const icons = {
+                'مجال الرياضة والصحة': '🏃‍♂️',
+                'مجال المواطنة والحياة': '🇸🇦',
+                'مجال الثقافة والفنون': '🎨',
+                'مجال النشاط الكشفي': '🏕️',
+                'مجال العلوم والتقنية': '🔬',
+                'مجال النشاط الاجتماعي': '🤝',
+                'مجال الأيام والمناسبات': '🎉',
+                'التقرير النهائي للأنشطة': '📊'
+            };
+            
+            formTitle.innerHTML = `${icons[activityName]} ${activityName}`;
+            
+            // تأثير بصري للعنوان
+            formTitle.style.transform = 'scale(0.95)';
             setTimeout(() => {
-                formTitle.style.animation = 'fadeIn 0.5s ease-in';
-            }, 10);
+                formTitle.style.transform = 'scale(1)';
+            }, 100);
             
+            // انتقال سلس للنموذج
             document.querySelector('.form-section').scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
             
-            showNotification(`تم تحديد ${activityName} ✨`, 'success');
+            showNotification(`تم تحديد ${activityName} بنجاح! ✨`, 'success');
         }
         
         function clearForm() {
-            if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
+            if (confirm('هل أنت متأكد من مسح جميع البيانات؟ 🤔')) {
                 const form = document.getElementById('activity-form');
                 form.querySelectorAll('input:not([readonly]), select, textarea').forEach(input => {
                     input.value = '';
                 });
                 
+                // مسح البيانات المحفوظة
+                const savedData = JSON.parse(sessionStorage.getItem('formData') || '{}');
+                Object.keys(savedData).forEach(key => delete savedData[key]);
+                sessionStorage.setItem('formData', JSON.stringify({}));
+                
                 showNotification('تم مسح النموذج بنجاح! 🗑️', 'success');
+                
+                // إعادة تعيين التاريخ
+                initializeSystem();
             }
         }
         
-        const fieldOrder = [
-            'education-dept',
-            'school-name', 
-            'semester',
-            'specialization',
-            'teacher-name',
-            'grade',
-            'date',
-            'day',
-            'period',
-            'attendance',
-            'presence',
-            'venue',
-            'program-name',
-            'program-objectives',
-            'program-impact',
-            'evidence'
-        ];
+        function saveForm() {
+            const formData = {};
+            const form = document.getElementById('activity-form');
+            
+            form.querySelectorAll('input, select, textarea').forEach(element => {
+                if (element.tagName === 'SELECT') {
+                    formData[element.id] = element.options[element.selectedIndex].text;
+                } else {
+                    formData[element.id] = element.value;
+                }
+            });
+            
+            sessionStorage.setItem('formData', JSON.stringify(formData));
+            showNotification('تم حفظ البيانات بنجاح! 💾', 'success');
+        }
         
-        const fieldLabels = {
-            'education-dept': 'إدارة التعليم',
-            'school-name': 'اسم المدرسة',
-            'semester': 'الفصل الدراسي',
-            'specialization': 'التخصص', 
-            'teacher-name': 'اسم المعلم',
-            'grade': 'الصف',
-            'date': 'التاريخ',
-            'day': 'اليوم',
-            'period': 'الحصة',
-            'attendance': 'الغياب',
-            'presence': 'الحضور',
-            'venue': 'مكان التنفيذ',
-            'program-name': 'اسم البرنامج',
-            'program-objectives': 'أهداف البرنامج',
-            'program-impact': 'الأثر الإيجابي للبرنامج',
-            'evidence': 'الشواهد'
-        };
+        function loadSavedData() {
+            const savedData = JSON.parse(sessionStorage.getItem('formData') || '{}');
+            
+            Object.entries(savedData).forEach(([fieldId, value]) => {
+                const element = document.getElementById(fieldId);
+                if (element && value && !element.hasAttribute('readonly')) {
+                    element.value = value;
+                }
+            });
+        }
+        
+        function addAutoSaveListeners() {
+            document.querySelectorAll('input, select, textarea').forEach(input => {
+                input.addEventListener('change', function() {
+                    const savedData = JSON.parse(sessionStorage.getItem('formData') || '{}');
+                    savedData[this.id] = this.value;
+                    sessionStorage.setItem('formData', JSON.stringify(savedData));
+                });
+            });
+        }
         
         function generatePDF() {
-            showNotification('جاري إنشاء ملف PDF...', 'info');
+            showNotification('جاري إنشاء ملف PDF... ⏳', 'info');
             
             try {
                 const { jsPDF } = window.jspdf;
@@ -651,211 +730,325 @@
                     format: 'a4'
                 });
 
+                // إعداد الخط
                 doc.setFont('helvetica');
-                doc.setFontSize(16);
-                doc.setTextColor(44, 100, 112);
                 
-                // إضافة الشعار والعنوان
-                doc.setFillColor(44, 100, 112);
-                doc.rect(0, 0, 210, 40, 'F');
+                // رأس الوثيقة
+                createPDFHeader(doc);
                 
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(18);
-                doc.text('Ministry of Education', 150, 15);
-                doc.text('وزارة التعليم', 150, 25);
+                // محتوى النموذج
+                let yPosition = createPDFContent(doc);
                 
-                doc.setFontSize(24);
-                doc.text('برامج الأنشطة الطلابية', 105, 55, { align: 'center' });
-                
-                // عنوان النشاط
-                const activityTitle = document.getElementById('form-title').textContent;
-                doc.setFontSize(20);
-                doc.setTextColor(44, 100, 112);
-                doc.text(activityTitle, 105, 75, { align: 'center' });
-                
-                // رسم خط فاصل
-                doc.setDrawColor(74, 144, 164);
-                doc.setLineWidth(0.5);
-                doc.line(20, 85, 190, 85);
-                
-                let yPosition = 100;
-                const leftColumn = 25;
-                const rightColumn = 110;
-                
-                // جمع البيانات
-                const formData = {};
-                fieldOrder.forEach(fieldId => {
-                    const element = document.getElementById(fieldId);
-                    if (element) {
-                        if (element.tagName === 'SELECT') {
-                            const selectedOption = element.options[element.selectedIndex];
-                            formData[fieldId] = selectedOption && selectedOption.value ? selectedOption.text : '';
-                        } else {
-                            formData[fieldId] = element.value || '';
-                        }
-                    }
-                });
-                
-                // ترتيب العرض حسب الملف الأصلي (عمودين)
-                const leftFields = ['education-dept', 'semester', 'teacher-name', 'date', 'period', 'presence', 'program-name'];
-                const rightFields = ['school-name', 'specialization', 'grade', 'day', 'attendance', 'venue'];
-                
-                // رسم الحقول في العمود الأيسر
-                leftFields.forEach((fieldId, index) => {
-                    if (formData[fieldId]) {
-                        const label = fieldLabels[fieldId];
-                        const value = formData[fieldId];
-                        
-                        doc.setFontSize(12);
-                        doc.setTextColor(44, 100, 112);
-                        doc.text(label + ':', leftColumn, yPosition + (index * 15));
-                        
-                        doc.setTextColor(46, 62, 80);
-                        doc.text(value, leftColumn + 35, yPosition + (index * 15));
-                    }
-                });
-                
-                // رسم الحقول في العمود الأيمن  
-                rightFields.forEach((fieldId, index) => {
-                    if (formData[fieldId]) {
-                        const label = fieldLabels[fieldId];
-                        const value = formData[fieldId];
-                        
-                        doc.setFontSize(12);
-                        doc.setTextColor(44, 100, 112);
-                        doc.text(label + ':', rightColumn, yPosition + (index * 15));
-                        
-                        doc.setTextColor(46, 62, 80);
-                        doc.text(value, rightColumn + 35, yPosition + (index * 15));
-                    }
-                });
-                
-                // الحقول الطويلة (عرض كامل)
-                yPosition += 130;
-                
-                ['program-objectives', 'program-impact', 'evidence'].forEach(fieldId => {
-                    if (formData[fieldId]) {
-                        const label = fieldLabels[fieldId];
-                        const value = formData[fieldId];
-                        
-                        doc.setFontSize(12);
-                        doc.setTextColor(44, 100, 112);
-                        doc.text(label + ':', leftColumn, yPosition);
-                        
-                        yPosition += 8;
-                        
-                        doc.setTextColor(46, 62, 80);
-                        const lines = doc.splitTextToSize(value, 160);
-                        doc.text(lines, leftColumn, yPosition);
-                        yPosition += lines.length * 5 + 10;
-                    }
-                });
-                
-                // إضافة منطقة التوقيعات
-                yPosition += 20;
-                
-                // رسم خط فاصل
-                doc.setDrawColor(74, 144, 164);
-                doc.setLineWidth(0.5);
-                doc.line(20, yPosition, 190, yPosition);
-                
-                yPosition += 15;
-                
-                // منطقة التوقيعات
-                doc.setFontSize(14);
-                doc.setTextColor(44, 100, 112);
-                doc.text('الشواهد', 105, yPosition, { align: 'center' });
-                
-                yPosition += 25;
-                
-                // التوقيعات
-                doc.setFontSize(12);
-                doc.setTextColor(46, 62, 80);
-                
-                // خط توقيع رائد النشاط
-                doc.line(40, yPosition, 80, yPosition);
-                doc.text('رائد النشاط', 60, yPosition + 8, { align: 'center' });
-                
-                // خط توقيع مدير المدرسة
-                doc.line(130, yPosition, 170, yPosition);
-                doc.text('مدير المدرسة', 150, yPosition + 8, { align: 'center' });
-                
-                // معلومات التذييل
-                yPosition = 280;
-                doc.setFontSize(10);
-                doc.setTextColor(128, 128, 128);
-                doc.text('متوسطة المنذر بن عمرو الأنصاري - رائد النشاط: عبدالله الحربي', 105, yPosition, { align: 'center' });
-                doc.text('تاريخ الطباعة: ' + new Date().toLocaleDateString('ar-SA'), 105, yPosition + 5, { align: 'center' });
+                // تذييل الوثيقة
+                createPDFFooter(doc, yPosition);
                 
                 // حفظ الملف
-                const finalActivityTitle = document.getElementById('form-title').textContent;
-                const fileName = `${finalActivityTitle.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+                const activityTitle = document.getElementById('form-title').textContent;
+                const cleanTitle = activityTitle.replace(/[^\u0600-\u06FF\u0750-\u077F\w\s]/g, '').trim();
+                const fileName = `${cleanTitle}_${new Date().toISOString().split('T')[0]}.pdf`;
                 doc.save(fileName);
                 
-                showNotification('تم تحميل ملف PDF بنجاح!', 'success');
+                showNotification('تم تحميل ملف PDF بنجاح! 📄✨', 'success');
                 
             } catch (error) {
                 console.error('خطأ في إنشاء PDF:', error);
-                showNotification('حدث خطأ في إنشاء ملف PDF. يرجى المحاولة مرة أخرى.', 'error');
+                showNotification('حدث خطأ في إنشاء ملف PDF. يرجى المحاولة مرة أخرى. ❌', 'error');
             }
         }
         
-        function showNotification(message, type) {
-            const colors = {
-                'success': '#27ae60',
-                'error': '#e74c3c',
-                'warning': '#f39c12',
-                'info': '#3498db'
+        function createPDFHeader(doc) {
+            // خلفية الرأس
+            doc.setFillColor(44, 100, 112);
+            doc.rect(0, 0, 210, 45, 'F');
+            
+            // شعار وزارة التعليم
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(14);
+            doc.text('Ministry of Education', 15, 15);
+            doc.text('وزارة التعليم', 15, 25);
+            
+            // العنوان الرئيسي
+            doc.setFontSize(20);
+            doc.text('Student Activity Programs', 105, 20, { align: 'center' });
+            doc.text('برامج الأنشطة الطلابية', 105, 32, { align: 'center' });
+            
+            // اسم المدرسة
+            doc.setFontSize(16);
+            doc.text('Al-Mundhir Ibn Amr Al-Ansari Middle School', 105, 55, { align: 'center' });
+            doc.text('متوسطة المنذر بن عمرو الأنصاري', 105, 67, { align: 'center' });
+        }
+        
+        function createPDFContent(doc) {
+            // عنوان النشاط
+            const activityTitle = document.getElementById('form-title').textContent;
+            doc.setFontSize(18);
+            doc.setTextColor(44, 100, 112);
+            doc.text(activityTitle, 105, 85, { align: 'center' });
+            
+            // خط فاصل
+            doc.setDrawColor(74, 144, 164);
+            doc.setLineWidth(0.5);
+            doc.line(20, 95, 190, 95);
+            
+            let yPosition = 110;
+            
+            // بيانات النموذج
+            const formData = collectFormData();
+            const fieldLabels = getFieldLabels();
+            
+            // ترتيب الحقول في مجموعات
+            const basicFields = [
+                'education-dept', 'school-name', 'semester', 'specialization',
+                'teacher-name', 'grade', 'date', 'day', 'period',
+                'attendance', 'presence', 'venue', 'program-name'
+            ];
+            
+            const detailedFields = [
+                'program-objectives', 'program-impact', 'evidence'
+            ];
+            
+            // عرض البيانات الأساسية في عمودين
+            yPosition = renderBasicFields(doc, formData, fieldLabels, basicFields, yPosition);
+            
+            // عرض البيانات التفصيلية
+            yPosition = renderDetailedFields(doc, formData, fieldLabels, detailedFields, yPosition);
+            
+            return yPosition;
+        }
+        
+        function renderBasicFields(doc, formData, fieldLabels, fields, startY) {
+            let yPosition = startY;
+            const leftColumn = 25;
+            const rightColumn = 115;
+            const rowHeight = 12;
+            
+            doc.setFontSize(11);
+            
+            for (let i = 0; i < fields.length; i++) {
+                const fieldId = fields[i];
+                if (formData[fieldId] && formData[fieldId].trim()) {
+                    const label = fieldLabels[fieldId];
+                    const value = formData[fieldId];
+                    
+                    const xPosition = (i % 2 === 0) ? leftColumn : rightColumn;
+                    const currentY = yPosition + Math.floor(i / 2) * rowHeight;
+                    
+                    // تسمية الحقل
+                    doc.setTextColor(44, 100, 112);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(label + ':', xPosition, currentY);
+                    
+                    // قيمة الحقل
+                    doc.setTextColor(46, 62, 80);
+                    doc.setFont('helvetica', 'normal');
+                    const maxWidth = 80;
+                    const lines = doc.splitTextToSize(value, maxWidth);
+                    doc.text(lines, xPosition, currentY + 8);
+                }
+            }
+            
+            return yPosition + Math.ceil(fields.length / 2) * rowHeight + 20;
+        }
+        
+        function renderDetailedFields(doc, formData, fieldLabels, fields, startY) {
+            let yPosition = startY;
+            const leftMargin = 25;
+            const maxWidth = 160;
+            
+            doc.setFontSize(12);
+            
+            fields.forEach(fieldId => {
+                if (formData[fieldId] && formData[fieldId].trim()) {
+                    const label = fieldLabels[fieldId];
+                    const value = formData[fieldId];
+                    
+                    // عنوان القسم
+                    doc.setTextColor(44, 100, 112);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(label + ':', leftMargin, yPosition);
+                    
+                    yPosition += 10;
+                    
+                    // محتوى القسم
+                    doc.setTextColor(46, 62, 80);
+                    doc.setFont('helvetica', 'normal');
+                    const lines = doc.splitTextToSize(value, maxWidth);
+                    doc.text(lines, leftMargin, yPosition);
+                    
+                    yPosition += (lines.length * 6) + 15;
+                    
+                    // التأكد من عدم تجاوز الصفحة
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                }
+            });
+            
+            return yPosition;
+        }
+        
+        function createPDFFooter(doc, yPosition) {
+            // منطقة التوقيعات
+            if (yPosition > 220) {
+                doc.addPage();
+                yPosition = 50;
+            }
+            
+            yPosition += 20;
+            
+            // خط فاصل
+            doc.setDrawColor(74, 144, 164);
+            doc.setLineWidth(0.5);
+            doc.line(20, yPosition, 190, yPosition);
+            
+            yPosition += 15;
+            
+            // عنوان قسم التوقيعات
+            doc.setFontSize(14);
+            doc.setTextColor(44, 100, 112);
+            doc.text('التوقيعات والاعتمادات', 105, yPosition, { align: 'center' });
+            
+            yPosition += 25;
+            
+            // التوقيعات
+            doc.setFontSize(12);
+            doc.setTextColor(46, 62, 80);
+            
+            // توقيع رائد النشاط
+            doc.line(40, yPosition, 80, yPosition);
+            doc.text('رائد النشاط', 60, yPosition + 8, { align: 'center' });
+            doc.text('عبدالله الحربي', 60, yPosition + 16, { align: 'center' });
+            
+            // توقيع مدير المدرسة
+            doc.line(130, yPosition, 170, yPosition);
+            doc.text('مدير المدرسة', 150, yPosition + 8, { align: 'center' });
+            
+            // تذييل الصفحة
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.setTextColor(128, 128, 128);
+                doc.text(`تاريخ الطباعة: ${new Date().toLocaleDateString('ar-SA')}`, 105, 280, { align: 'center' });
+                doc.text(`صفحة ${i} من ${pageCount}`, 105, 290, { align: 'center' });
+            }
+        }
+        
+        function collectFormData() {
+            const formData = {};
+            const form = document.getElementById('activity-form');
+            
+            form.querySelectorAll('input, select, textarea').forEach(element => {
+                if (element.tagName === 'SELECT') {
+                    const selectedOption = element.options[element.selectedIndex];
+                    formData[element.id] = selectedOption && selectedOption.value ? selectedOption.text : '';
+                } else {
+                    formData[element.id] = element.value || '';
+                }
+            });
+            
+            return formData;
+        }
+        
+        function getFieldLabels() {
+            return {
+                'education-dept': 'إدارة التعليم',
+                'school-name': 'اسم المدرسة',
+                'semester': 'الفصل الدراسي',
+                'specialization': 'التخصص',
+                'teacher-name': 'اسم المعلم',
+                'grade': 'الصف',
+                'date': 'التاريخ',
+                'day': 'اليوم',
+                'period': 'الحصة',
+                'attendance': 'عدد الغائبين',
+                'presence': 'عدد الحاضرين',
+                'venue': 'مكان التنفيذ',
+                'program-name': 'اسم البرنامج',
+                'program-objectives': 'أهداف البرنامج',
+                'program-impact': 'الأثر الإيجابي للبرنامج',
+                'evidence': 'الشواهد والأدلة'
             };
+        }
+        
+        function showNotification(message, type) {
+            // إزالة التنبيهات السابقة
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
             
             const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${colors[type] || colors.info};
-                color: white;
-                padding: 15px 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                z-index: 1000;
-                font-weight: 500;
-                max-width: 300px;
-                animation: slideInRight 0.3s ease-out;
-            `;
+            notification.className = `notification ${type}`;
             notification.textContent = message;
             
             document.body.appendChild(notification);
             
+            // إزالة التنبيه تلقائياً بعد 4 ثواني
             setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease-in';
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
                 setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
         
-        document.querySelectorAll('input, select, textarea').forEach(input => {
-            input.addEventListener('change', function() {
-                const autoSaveData = {
-                    field: this.id,
-                    value: this.value,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem('autosave_activity', JSON.stringify(autoSaveData));
+        // إضافة تأثيرات بصرية للبطاقات
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.activity-card');
+            
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+                
+                card.addEventListener('click', function() {
+                    // تأثير النقر
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // إضافة تأثير المرور بالماوس للأزرار
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
             });
         });
         
-        const autoSaveData = localStorage.getItem('autosave_activity');
-        if (autoSaveData) {
-            try {
-                const data = JSON.parse(autoSaveData);
-                const field = document.getElementById(data.field);
-                if (field && data.value) {
-                    field.value = data.value;
-                }
-            } catch (error) {
-                console.log('خطأ في استرداد البيانات المحفوظة');
+        // إضافة اختصارات لوحة المفاتيح
+        document.addEventListener('keydown', function(e) {
+            // Ctrl + S للحفظ
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveForm();
             }
-        }
+            
+            // Ctrl + P لطباعة PDF
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                generatePDF();
+            }
+            
+            // Ctrl + R لمسح النموذج
+            if (e.ctrlKey && e.key === 'r') {
+                e.preventDefault();
+                clearForm();
+            }
+        });
+        
+        // تحسين الأداء - تأخير تحميل بعض العناصر
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                // إزالة تأثير النبض من البطاقة الأولى بعد التحميل
+                document.querySelector('.activity-card.pulse').classList.remove('pulse');
+            }, 3000);
+        });
     </script>
 </body>
 </html>
