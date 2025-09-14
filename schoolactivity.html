@@ -86,6 +86,10 @@
             margin: 40px 20px;
         }
         
+        .activities-grid.expanded {
+            grid-template-rows: repeat(5, auto);
+        }
+        
         .activity-card {
             background: linear-gradient(135deg, #4a90a4, #2c6470);
             color: white;
@@ -130,6 +134,119 @@
         
         .activity-card:hover::before {
             left: 100%;
+        }
+        
+        /* Schedule Section */
+        .schedule-section {
+            background: linear-gradient(135deg, #f8fbfc, #ffffff);
+            padding: 40px 20px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(74, 144, 164, 0.1);
+            border: 2px solid #e8f4f8;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        .schedule-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .schedule-header h2 {
+            color: #2c6470;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+            border-radius: 10px;
+            border-left: 4px solid #4a90a4;
+        }
+        
+        .schedule-header p {
+            color: #4a90a4;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        
+        .schedule-image-container {
+            text-align: center;
+            position: relative;
+        }
+        
+        .schedule-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #e8f4f8;
+        }
+        
+        .schedule-image-container img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(74, 144, 164, 0.2);
+        }
+        
+        .schedule-note {
+            margin-top: 15px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        /* Modal for full-size image */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+        
+        .modal img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        
+        .close:hover {
+            opacity: 0.7;
+        }
+        
+        .modal-title {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         /* Form Section */
@@ -468,7 +585,7 @@
         </div>
         
         <!-- Activities Grid -->
-        <div class="activities-grid">
+        <div class="activities-grid expanded">
             <div class="activity-card slide-in-right loading" onclick="openActivity('citizenship')">
                 مجال المواطنة و الحياة
             </div>
@@ -499,6 +616,23 @@
             
             <div class="activity-card slide-in-left loading" onclick="openActivity('evaluation')">
                 التقرير النهائي للأنشطة
+            </div>
+            
+            <div class="activity-card slide-in-right loading" onclick="viewSchedule()" style="grid-column: 1 / -1; background: linear-gradient(135deg, #2c6470, #4a90a4);">
+                <span style="font-size: 1.1em;">📅</span>
+                خطة توزيع حصة النشاط الطلابي
+            </div>
+        </div>
+        
+        <!-- Schedule Image Section -->
+        <div class="schedule-section" id="schedule-section" style="display: none;">
+            <div class="schedule-header">
+                <h2>خطة توزيع حصة النشاط الطلابي للفصل الدراسي الأول 1447هـ</h2>
+                <p>متوسطة المنذر بن عمرو الأنصاري</p>
+            </div>
+            <div class="schedule-image-container">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=" alt="خطة توزيع حصة النشاط الطلابي" id="schedule-img">
+                <p class="schedule-note">يمكنك النقر على الصورة لعرضها بحجم أكبر</p>
             </div>
         </div>
         
@@ -696,9 +830,8 @@
             };
         }
         
-        // إضافة مستمع الحدث للصورة عند تحميل الصفحة
+        // تحديد التاريخ الحالي واليوم
         document.addEventListener('DOMContentLoaded', function() {
-            // الكود السابق للتاريخ...
             const today = new Date();
             const dateInput = document.getElementById('date');
             const dayInput = document.getElementById('day');
@@ -723,7 +856,7 @@
                 });
             }, 2000);
             
-            // إضافة مستمع الحدث لصورة الجدول عند إنشائها
+            // إضافة مستمع الحدث لصورة الجدول
             setTimeout(() => {
                 const scheduleImg = document.getElementById('schedule-img');
                 if (scheduleImg) {
@@ -1038,3 +1171,6 @@
                 console.log('خطأ في استرداد البيانات المحفوظة');
             }
         }
+    </script>
+</body>
+</html>
