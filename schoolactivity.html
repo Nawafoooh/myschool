@@ -788,8 +788,8 @@
                 doc.text('تاريخ الطباعة: ' + new Date().toLocaleDateString('ar-SA'), 105, yPosition + 5, { align: 'center' });
                 
                 // حفظ الملف
-                const activityTitle = document.getElementById('form-title').textContent;
-                const fileName = `${activityTitle.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+                const finalActivityTitle = document.getElementById('form-title').textContent;
+                const fileName = `${finalActivityTitle.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
                 doc.save(fileName);
                 
                 showNotification('تم تحميل ملف PDF بنجاح!', 'success');
