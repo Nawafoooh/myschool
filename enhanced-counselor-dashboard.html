@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المرشد الطلابي - متوسطة المنذر بن عمرو الأنصاري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #0d5c0d 0%, #1a7a1a 50%, #2d8f2d 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><pattern id="grain" width="100" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.05"/><circle cx="90" cy="10" r="1" fill="white" opacity="0.05"/><circle cx="50" cy="5" r="1" fill="white" opacity="0.05"/><circle cx="30" cy="15" r="1" fill="white" opacity="0.05"/><circle cx="70" cy="15" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="20" fill="url(%23grain)"/></svg>');
+        }
+
+        .logo-section {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .saudi-emblem {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border: 4px solid rgba(255,255,255,0.9);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-info {
+            font-size: 15px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Refresh indicator */
+        .refresh-indicator {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .refresh-indicator.loading {
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            padding: 35px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #0d5c0d, #2d8f2d);
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(13, 92, 13, 0.03), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .stat-card:hover::after {
+            opacity: 1;
+            top: -100%;
+            right: -100%;
+        }
+
+        .stat-icon {
+            font-size: 42px;
+            margin-bottom: 20px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(13, 92, 13, 0.1), rgba(45, 143, 45, 0.1));
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            width: 70px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #0d5c0d;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(13, 92, 13, 0.1);
+        }
+
+        .stat-label {
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .stat-change {
+            font-size: 13px;
+            margin-top: 12px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .stat-change.positive {
+            background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+            color: #2f855a;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(13, 92, 13, 0.1);
+        }
+
+        .panel-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0d5c0d;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 1px 1px 2px rgba(13, 92, 13, 0.1);
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .control-input, .control-select {
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            color: #2d3748;
+        }
+
+        .control-input:focus, .control-select:focus {
+            outline: none;
+            border-color: #0d5c0d;
+            box-shadow: 0 0 0 4px rgba(13, 92, 13, 0.1);
+            background: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .control-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%230d5c0d"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: left 15px center;
+            background-size: 18px;
+            padding-left: 45px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+            min-width: 160px;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0d5c0d 0%, #2d8f2d 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(13, 92, 13, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(237, 137, 54, 0.3);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(229, 62, 62, 0.3);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .action-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Students Section */
+        .students-section {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border: 1px solid rgba(13, 92, 13, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0d5c0d;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 1px 1px 2px rgba(13, 92, 13, 0.1);
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .view-btn {
+            padding: 10px 20px;
+            border: 2px solid #e2e8f0;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .view-btn.active {
+            border-color: #0d5c0d;
+            background: linear-gradient(135deg, #0d5c0d 0%, #2d8f2d 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(13, 92, 13, 0.3);
+        }
+
+        .view-btn:hover:not(.active) {
+            border-color: #0d5c0d;
+            background: rgba(13, 92, 13, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .students-list {
+            display: none;
+        }
+
+        .students-list.active {
+            display: block;
+        }
+
+        .students-grid.active {
+            display: grid;
+        }
+
+        .student-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #f0f4f8;
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .student-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #0d5c0d, #2d8f2d);
+        }
+
+        .student-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(13, 92, 13, 0.03), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .student-card:hover {
+            border-color: #0d5c0d;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .student-card:hover::after {
+            opacity: 1;
+            top: -100%;
+            right: -100%;
+        }
+
+        .student-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .student-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0d5c0d;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(13, 92, 13, 0.1);
+        }
+
+        .student-id {
+            font-size: 13px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .student-status {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-normal { background: linear-gradient(135deg, #c6f6d5, #9ae6b4); color: #2f855a; }
+        .status-needs-help { background: linear-gradient(135deg, #fed7d7, #fbb6ce); color: #c53030; }
+        .status-disability { background: linear-gradient(135deg, #bee3f8, #90cdf4); color: #2b77cb; }
+        .status-talented { background: linear-gradient(135deg, #faf089, #f6e05e); color: #744210; }
+
+        .student-info {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .student-btn {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-view { 
+            background: linear-gradient(135deg, #4299e1, #3182ce); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+        }
+        .btn-edit { 
+            background: linear-gradient(135deg, #ed8936, #dd6b20); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+        }
+        .btn-delete { 
+            background: linear-gradient(135deg, #e53e3e, #c53030); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+        }
+
+        .student-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Student List View */
+        .student-list-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .student-list-item:hover {
+            border-color: #0d5c0d;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .list-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0d5c0d, #2d8f2d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin-left: 20px;
+            font-size: 18px;
+        }
+
+        .list-info {
+            flex: 1;
+        }
+
+        .list-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0d5c0d;
+            margin-bottom: 6px;
+        }
+
+        .list-details {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .list-status {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+        .list-actions {
+            display: flex;
+            gap: 8px;
+            margin-left: 20px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 25px;
+            width: 95%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid rgba(13, 92, 13, 0.1);
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0d5c0d;
+            text-shadow: 1px 1px 2px rgba(13, 92, 13, 0.1);
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
+        }
+
+        .modal-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .info-section {
+            background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid rgba(13, 92, 13, 0.1);
+        }
+
+        .section-title-modal {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0d5c0d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 1px 1px 2px rgba(13, 92, 13, 0.1);
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        /* Export Options */
+        .export-options {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(13, 92, 13, 0.1);
+        }
+
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        /* Loading States */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            color: #4a5568;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #0d5c0d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 30px;
+            color: #718096;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 25px;
+            opacity: 0.7;
+        }
+
+        .empty-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+
+        .empty-description {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .connection-status.disconnected {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            box-shadow: 0 8px 25px rgba(245, 101, 101, 0.3);
+        }
+
+        .connection-status.connecting {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            box-shadow: 0 8px 25px rgba(237, 137, 54, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .dashboard-header {
+                padding: 25px 20px;
+            }
+
+            .header-title {
+                font-size: 26px;
+            }
+
+            .control-panel, .students-section, .export-options {
+                padding: 25px 20px;
+            }
+
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-btn {
+                min-width: unset;
+            }
+
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+            }
+
+            .modal-content {
+                margin: 20px;
+                width: calc(100% - 40px);
+                padding: 25px;
+            }
+
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+
+            .connection-status {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+        🔗 متصل بقاعدة البيانات
+    </div>
+
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="refresh-indicator" id="refreshIndicator">
+            آخر تحديث: <span id="lastUpdate">جاري التحميل...</span>
+        </div>
+        <div class="logo-section">
+            <div class="saudi-emblem">🇸🇦</div>
+        </div>
+        <h1 class="header-title">لوحة تحكم المرشد الطلابي</h1>
+        <div class="header-subtitle">متوسطة المنذر بن عمرو الأنصاري</div>
+        <div class="header-subtitle">مكتب تعليم العوالي</div>
+        <div class="header-info">مدير المدرسة: خالد سعود المطيري</div>
+    </div>
+
+    <div class="main-container">
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalStudents">0</div>
+                <div class="stat-label">إجمالي الطلاب المسجلين</div>
+                <div class="stat-change positive" id="totalChange">+0 هذا الشهر</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number" id="studentsNeedHelp">0</div>
+                <div class="stat-label">طلاب محتاجون مالياً</div>
+                <div class="stat-change positive" id="needHelpPercentage">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">♿</div>
+                <div class="stat-number" id="studentsWithDisabilities">0</div>
+                <div class="stat-label">طلاب ذوو إعاقة</div>
+                <div class="stat-change positive" id="disabilityPercentage">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number" id="studentsWithTalents">0</div>
+                <div class="stat-label">طلاب موهوبون</div>
+                <div class="stat-change positive" id="talentsPercentage">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🚨</div>
+                <div class="stat-number" id="studentsWithProblems">0</div>
+                <div class="stat-label">حالات تحتاج متابعة</div>
+                <div class="stat-change positive" id="problemsPercentage">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👨‍👩‍👧‍👦</div>
+                <div class="stat-number" id="orphanStudents">0</div>
+                <div class="stat-label">أيتام وحالات خاصة</div>
+                <div class="stat-change positive" id="orphanPercentage">0%</div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <h2 class="panel-title">🔍 البحث والفلترة المتقدمة</h2>
+            <div class="control-grid">
+                <div class="control-group">
+                    <label class="control-label">البحث بالاسم أو رقم الهوية</label>
+                    <input type="text" id="searchInput" class="control-input" placeholder="ابحث عن طالب...">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">الصف</label>
+                    <select id="filterGrade" class="control-select">
+                        <option value="">جميع الصفوف</option>
+                        <option value="أول متوسط">أول متوسط</option>
+                        <option value="ثاني متوسط">ثاني متوسط</option>
+                        <option value="ثالث متوسط">ثالث متوسط</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">الشعبة</label>
+                    <select id="filterSection" class="control-select">
+                        <option value="">جميع الشعب</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">الحالة الاقتصادية</label>
+                    <select id="filterEconomic" class="control-select">
+                        <option value="">جميع المستويات</option>
+                        <option value="مرتفع">مرتفع</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="دون المتوسط">دون المتوسط</option>
+                        <option value="منخفض">منخفض</option>
+                        <option value="ضعيف">ضعيف</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">الحالة الخاصة</label>
+                    <select id="filterSpecial" class="control-select">
+                        <option value="">جميع الحالات</option>
+                        <option value="محتاج مالياً">محتاج مالياً</option>
+                        <option value="من ذوي الإعاقة">من ذوي الإعاقة</option>
+                        <option value="موهوب">موهوب</option>
+                        <option value="يتيم">يتيم</option>
+                        <option value="مشاكل نفسية">مشاكل نفسية</option>
+                        <option value="مشاكل صحية">مشاكل صحية</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">المنطقة السكنية</label>
+                    <select id="filterNeighborhood" class="control-select">
+                        <option value="">جميع الأحياء</option>
+                    </select>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn btn-primary" onclick="applyFilters()">
+                    🔍 تطبيق الفلتر
+                </button>
+                <button class="action-btn btn-secondary" onclick="clearFilters()">
+                    🔄 مسح الفلتر
+                </button>
+                <button class="action-btn btn-success" onclick="exportFilteredData()">
+                    📊 تصدير النتائج
+                </button>
+                <button class="action-btn btn-warning" onclick="generateReport()">
+                    📋 تقرير شامل
+                </button>
+                <button class="action-btn btn-info" onclick="refreshData()">
+                    🔄 تحديث البيانات
+                </button>
+                <button class="action-btn btn-danger" onclick="deleteFilteredStudents()">
+                    🗑️ مسح البيانات المفلترة
+                </button>
+                <button class="action-btn btn-danger" onclick="deleteAllStudents()">
+                    💀 مسح جميع البيانات
+                </button>
+            </div>
+        </div>
+
+        <!-- Export Options -->
+        <div class="export-options">
+            <h2 class="panel-title">📤 خيارات التصدير والتقارير المتقدمة</h2>
+            <div class="export-grid">
+                <div class="control-group">
+                    <label class="control-label">نوع التقرير</label>
+                    <select id="reportType" class="control-select">
+                        <option value="complete">تقرير شامل</option>
+                        <option value="economic">التقرير الاقتصادي</option>
+                        <option value="health">التقرير الصحي</option>
+                        <option value="health-diseases">تقرير الأمراض والحالات الصحية</option>
+                        <option value="social">التقرير الاجتماعي</option>
+                        <option value="academic">التقرير الأكاديمي</option>
+                        <option value="talents">تقرير المواهب والقدرات</option>
+                        <option value="attendance">تقرير الحضور والغياب</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">تنسيق التصدير</label>
+                    <select id="exportFormat" class="control-select">
+                        <option value="excel">Excel (.xlsx)</option>
+                        <option value="pdf">PDF</option>
+                        <option value="csv">CSV</option>
+                        <option value="word">Word Document</option>
+                        <option value="print">طباعة مباشرة</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">فترة التقرير</label>
+                    <select id="reportPeriod" class="control-select">
+                        <option value="current">الفصل الحالي</option>
+                        <option value="semester1">الفصل الأول</option>
+                        <option value="semester2">الفصل الثاني</option>
+                        <option value="year">العام الكامل</option>
+                        <option value="custom">فترة مخصصة</option>
+                    </select>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn btn-success" onclick="exportByGrade()">
+                    📊 تصدير حسب الصف
+                </button>
+                <button class="action-btn btn-success" onclick="exportByEconomicStatus()">
+                    💰 تصدير حسب الحالة الاقتصادية
+                </button>
+                <button class="action-btn btn-success" onclick="exportSpecialCases()">
+                    ⭐ تصدير الحالات الخاصة
+                </button>
+                
+                <button class="action-btn btn-success" onclick="exportHealthCases()">
+                    🏥 تصدير الحالات المرضية
+                </button>
+<button class="action-btn btn-warning" onclick="exportContactList()">
+                    📞 قائمة أرقام الاتصال
+                </button>
+                <button class="action-btn btn-info" onclick="generateStatisticalReport()">
+                    📈 تقرير إحصائي
+                </button>
+            </div>
+        </div>
+
+        <!-- Students Section -->
+        <div class="students-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    👥 قائمة الطلاب المسجلين
+                    <span id="studentsCount" style="font-size: 16px; color: #718096; font-weight: 500;">(0 طالب)</span>
+                </h2>
+                <div class="view-controls">
+                    <button class="view-btn active" id="gridViewBtn" onclick="switchView('grid')">عرض الشبكة</button>
+                    <button class="view-btn" id="listViewBtn" onclick="switchView('list')">عرض القائمة</button>
+                    <select id="sortBy" class="control-select" style="width: auto; min-width: 180px;">
+                        <option value="name">ترتيب بالاسم (أ-ي)</option>
+                        <option value="grade">ترتيب بالصف</option>
+                        <option value="economic">ترتيب بالحالة الاقتصادية</option>
+                        <option value="date">ترتيب بتاريخ التسجيل</option>
+                        <option value="status">ترتيب بالحالة الخاصة</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid View -->
+            <div class="students-grid active" id="studentsGrid">
+                <!-- Students will be populated here -->
+            </div>
+
+            <!-- List View -->
+            <div class="students-list" id="studentsList">
+                <!-- Students will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Details Modal -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalStudentName">تفاصيل الطالب</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Student details will be populated here -->
+            </div>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
+                <button class="action-btn btn-primary" onclick="printStudentDetails()">🖨️ طباعة البيانات</button>
+                <button class="action-btn btn-secondary" onclick="editStudentFromModal()">✏️ تعديل البيانات</button>
+                <button class="action-btn btn-warning" onclick="exportStudentData()">💾 تصدير كملف</button>
+                <button class="action-btn btn-info" onclick="sendNotification()">📧 إرسال إشعار</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase and JavaScript -->
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMkhB9tjAnWHBJo3pa7LHRGTfjLRg0yB4",
+            authDomain: "nawafalsubhi3-f4abf.firebaseapp.com",
+            projectId: "nawafalsubhi3-f4abf",
+            storageBucket: "nawafalsubhi3-f4abf.firebasestorage.app",
+            messagingSenderId: "409217413356",
+            appId: "1:409217413356:web:d1e0dd6f584c66255875c9",
+            measurementId: "G-BVP04DLPM9"
+        };
+
+        // Import Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, updateDoc, serverTimestamp, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+
+        // Global variables
+        let studentsData = [];
+        let filteredData = [];
+        let currentView = 'grid';
+        let isConnected = true;
+
+        // Connection status management
+        function updateConnectionStatus(connected, message = '') {
+            const statusElement = document.getElementById('connectionStatus');
+            if (connected) {
+                statusElement.className = 'connection-status';
+                statusElement.innerHTML = '🔗 متصل بقاعدة البيانات' + (message ? ' - ' + message : '');
+            } else {
+                statusElement.className = 'connection-status disconnected';
+                statusElement.innerHTML = '❌ انقطع الاتصال' + (message ? ' - ' + message : '');
+            }
+            isConnected = connected;
+        }
+
+        // Real-time Firebase listener
+        function setupRealtimeListener() {
+            const q = query(collection(db, 'students_data'), orderBy('timestamp', 'desc'));
+            
+            onSnapshot(q, (snapshot) => {
+                studentsData = [];
+                snapshot.forEach((doc) => {
+                    studentsData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                updateStatistics();
+                populateNeighborhoodFilter();
+                filteredData = [...studentsData];
+                renderStudents();
+                updateLastRefreshTime();
+                updateConnectionStatus(true, 'تم التحديث بنجاح');
+                
+                console.log(`تم تحديث البيانات: ${studentsData.length} طالب`);
+            }, (error) => {
+                console.error('خطأ في الاستماع للتحديثات:', error);
+                updateConnectionStatus(false, 'فشل في التحديث');
+            });
+        }
+
+        // Firebase Functions
+        async function loadStudentsFromFirebase() {
+            try {
+                updateConnectionStatus(true, 'جاري التحميل...');
+                const q = query(collection(db, 'students_data'), orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                studentsData = [];
+                querySnapshot.forEach((doc) => {
+                    studentsData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                updateConnectionStatus(true, `تم تحميل ${studentsData.length} طالب`);
+                return { success: true };
+            } catch (error) {
+                console.error('Error loading students:', error);
+                updateConnectionStatus(false, 'فشل التحميل');
+                return { success: false, error: error.message };
+            }
+        }
+
+        async function deleteStudentFromFirebase(studentId) {
+            try {
+                await deleteDoc(doc(db, 'students_data', studentId));
+                return { success: true };
+            } catch (error) {
+                console.error('Error deleting student:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        async function saveReportToFirebase(reportData) {
+            try {
+                const docRef = await addDoc(collection(db, 'counselor_reports'), {
+                    ...reportData,
+                    timestamp: serverTimestamp(),
+                    createdAt: new Date().toISOString()
+                });
+                return { success: true, id: docRef.id };
+            } catch (error) {
+                console.error('Error saving report:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Delete Functions
+        window.deleteAllStudents = async function() {
+            // تأكيد مضاعف للأمان
+            const firstConfirm = confirm(
+                "⚠️ تحذير مهم: هذا الإجراء خطير جداً!\n\n" +
+                "ستقوم بمسح جميع بيانات الطلاب نهائياً من قاعدة البيانات.\n" +
+                "لا يمكن التراجع عن هذا الإجراء أبداً.\n\n" +
+                "هل أنت متأكد من أنك تريد المتابعة؟"
+            );
+            
+            if (!firstConfirm) return;
+            
+            const secondConfirm = confirm(
+                "تأكيد نهائي: هل تريد فعلاً مسح جميع بيانات الطلاب؟\n\n" +
+                "هذا الإجراء لا يمكن التراجع عنه نهائياً."
+            );
+            
+            if (!secondConfirm) return;
+            
+            // طلب كلمة مرور إضافية للأمان
+            const password = prompt("أدخل كلمة المرور للتأكيد (counselor123):");
+            
+            if (password !== "counselor123") {
+                alert("كلمة المرور غير صحيحة. تم إلغاء العملية.");
+                return;
+            }
+            
+            try {
+                updateConnectionStatus(true, 'جاري مسح البيانات...');
+                
+                // الحصول على جميع المستندات
+                const querySnapshot = await getDocs(collection(db, 'students_data'));
+                
+                if (querySnapshot.empty) {
+                    alert("لا توجد بيانات لمسحها.");
+                    return;
+                }
+                
+                const totalDocs = querySnapshot.size;
+                let deletedCount = 0;
+                
+                // مسح كل مستند على حدة
+                const deletePromises = [];
+                querySnapshot.forEach((document) => {
+                    deletePromises.push(
+                        deleteDoc(doc(db, 'students_data', document.id))
+                        .then(() => {
+                            deletedCount++;
+                            console.log(`تم مسح الطالب ${deletedCount}/${totalDocs}`);
+                        })
+                    );
+                });
+                
+                // انتظار اكتمال جميع عمليات المسح
+                await Promise.all(deletePromises);
+                
+                // إعادة تحميل البيانات لتحديث الواجهة
+                await loadStudentsFromFirebase();
+                updateStatistics();
+                renderStudents();
+                
+                alert(`✅ تم مسح جميع البيانات بنجاح!\n\nتم مسح ${deletedCount} طالب من قاعدة البيانات.`);
+                updateConnectionStatus(true, 'تم مسح جميع البيانات بنجاح');
+                
+            } catch (error) {
+                console.error('خطأ في مسح البيانات:', error);
+                alert('حدث خطأ أثناء مسح البيانات: ' + error.message);
+                updateConnectionStatus(false, 'فشل في مسح البيانات');
+            }
+        }
+
+        // دالة مسح بيانات مفلترة فقط
+        window.deleteFilteredStudents = async function() {
+            if (filteredData.length === 0) {
+                alert("لا توجد بيانات مفلترة لمسحها.");
+                return;
+            }
+            
+            const confirm = window.confirm(
+                `هل تريد مسح ${filteredData.length} طالب من النتائج المفلترة؟\n\n` +
+                "هذا الإجراء لا يمكن التراجع عنه."
+            );
+            
+            if (!confirm) return;
+            
+            try {
+                updateConnectionStatus(true, 'جاري مسح البيانات المفلترة...');
+                
+                const deletePromises = filteredData.map(student => 
+                    deleteDoc(doc(db, 'students_data', student.id))
+                );
+                
+                await Promise.all(deletePromises);
+                
+                // تحديث البيانات
+                await loadStudentsFromFirebase();
+                updateStatistics();
+                applyFilters();
+                
+                alert(`تم مسح ${filteredData.length} طالب بنجاح!`);
+                updateConnectionStatus(true, 'تم مسح البيانات المفلترة بنجاح');
+                
+            } catch (error) {
+                console.error('خطأ في مسح البيانات المفلترة:', error);
+                alert('حدث خطأ: ' + error.message);
+                updateConnectionStatus(false, 'فشل في مسح البيانات');
+            }
+        }
+
+        // Update last refresh time
+        function updateLastRefreshTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('lastUpdate').textContent = timeString;
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadDashboard();
+            setupEventListeners();
+            setupRealtimeListener();
+        });
+
+        async function loadDashboard() {
+            showLoading(true);
+            
+            try {
+                const result = await loadStudentsFromFirebase();
+                if (result.success) {
+                    updateStatistics();
+                    populateNeighborhoodFilter();
+                    filteredData = [...studentsData];
+                    renderStudents();
+                    updateLastRefreshTime();
+                    showLoading(false);
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                showError('خطأ في تحميل البيانات: ' + error.message);
+                showLoading(false);
+            }
+        }
+
+        function showLoading(show) {
+            const containers = [
+                document.getElementById('studentsGrid'),
+                document.getElementById('studentsList')
+            ];
+            
+            const loadingHTML = `
+                <div class="loading">
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">⏳</div>
+                        <div style="font-size: 20px; margin-bottom: 15px;">جاري تحميل البيانات...</div>
+                        <div style="font-size: 14px; color: #718096;">يرجى الانتظار</div>
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            `;
+            
+            containers.forEach(container => {
+                if (container) {
+                    if (show) {
+                        container.innerHTML = loadingHTML;
+                        container.style.gridColumn = '1 / -1';
+                    } else {
+                        container.style.gridColumn = '';
+                    }
+                }
+            });
+
+            const refreshIndicator = document.getElementById('refreshIndicator');
+            if (show) {
+                refreshIndicator.classList.add('loading');
+                refreshIndicator.querySelector('#lastUpdate').textContent = 'جاري التحديث...';
+            } else {
+                refreshIndicator.classList.remove('loading');
+            }
+        }
+
+        function showError(message) {
+            const errorHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">❌</div>
+                    <div class="empty-title">خطأ في النظام</div>
+                    <div class="empty-description">${message}</div>
+                    <div style="margin-top: 20px;">
+                        <button onclick="refreshData()" class="action-btn btn-primary">
+                            🔄 إعادة المحاولة
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('studentsGrid').innerHTML = errorHTML;
+            document.getElementById('studentsList').innerHTML = errorHTML;
+        }
+
+        window.refreshData = async function() {
+            const refreshIndicator = document.getElementById('refreshIndicator');
+            refreshIndicator.classList.add('loading');
+            refreshIndicator.querySelector('#lastUpdate').textContent = 'جاري التحديث...';
+            
+            try {
+                const result = await loadStudentsFromFirebase();
+                if (result.success) {
+                    updateStatistics();
+                    applyFilters();
+                    updateConnectionStatus(true, 'تم التحديث بنجاح');
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                updateConnectionStatus(false, 'فشل في التحديث: ' + error.message);
+            } finally {
+                refreshIndicator.classList.remove('loading');
+                updateLastRefreshTime();
+            }
+        }
+
+        window.deleteStudent = async function(id) {
+            const student = studentsData.find(s => s.id === id);
+            if (!student) return;
+            
+            if (confirm(`هل أنت متأكد من حذف بيانات الطالب: ${student.studentName}؟\n\nسيتم حذف البيانات من قاعدة البيانات نهائياً ولا يمكن التراجع عن هذا الإجراء.`)) {
+                try {
+                    const result = await deleteStudentFromFirebase(id);
+                    if (result.success) {
+                        alert('تم حذف بيانات الطالب بنجاح');
+                    } else {
+                        throw new Error(result.error);
+                    }
+                } catch (error) {
+                    alert('خطأ في الحذف: ' + error.message);
+                }
+            }
+        }
+
+        function setupEventListeners() {
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(applyFilters, 300);
+            });
+            
+            document.getElementById('filterGrade').addEventListener('change', applyFilters);
+            document.getElementById('filterSection').addEventListener('change', applyFilters);
+            document.getElementById('filterEconomic').addEventListener('change', applyFilters);
+            document.getElementById('filterSpecial').addEventListener('change', applyFilters);
+            document.getElementById('filterNeighborhood').addEventListener('change', applyFilters);
+            document.getElementById('sortBy').addEventListener('change', applyFilters);
+        }
+
+        function updateStatistics() {
+            const total = studentsData.length;
+            const needHelp = studentsData.filter(s => s.financialNeed === 'نعم').length;
+            const withDisabilities = studentsData.filter(s => s.studentDisability === 'نعم').length;
+            const withTalents = studentsData.filter(s => s.hasTalents === 'نعم').length;
+            const withProblems = studentsData.filter(s => 
+                s.psychologicalProblems === 'نعم' || 
+                s.healthProblems === 'نعم' || 
+                s.healthConditions === 'نعم' || 
+                s.mentalHealth === 'نعم'
+            ).length;
+            const orphans = studentsData.filter(s => 
+                s.fatherStatus === 'متوفي' || 
+                s.motherStatus === 'متوفية' || 
+                s.fatherSpecialStatus === 'مفقود' ||
+                s.fatherSpecialStatus === 'مجهول'
+            ).length;
+
+            animateNumber('totalStudents', total);
+            animateNumber('studentsNeedHelp', needHelp);
+            animateNumber('studentsWithDisabilities', withDisabilities);
+            animateNumber('studentsWithTalents', withTalents);
+            animateNumber('studentsWithProblems', withProblems);
+            animateNumber('orphanStudents', orphans);
+
+            document.getElementById('needHelpPercentage').textContent = total ? `${Math.round((needHelp/total)*100)}% من المجموع` : '0%';
+            document.getElementById('disabilityPercentage').textContent = total ? `${Math.round((withDisabilities/total)*100)}% من المجموع` : '0%';
+            document.getElementById('talentsPercentage').textContent = total ? `${Math.round((withTalents/total)*100)}% من المجموع` : '0%';
+            document.getElementById('problemsPercentage').textContent = total ? `${Math.round((withProblems/total)*100)}% من المجموع` : '0%';
+            document.getElementById('orphanPercentage').textContent = total ? `${Math.round((orphans/total)*100)}% من المجموع` : '0%';
+        }
+
+        function animateNumber(elementId, targetNumber) {
+            const element = document.getElementById(elementId);
+            const currentNumber = parseInt(element.textContent) || 0;
+            const duration = 1000;
+            const startTime = Date.now();
+            
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentValue = Math.round(currentNumber + (targetNumber - currentNumber) * progress);
+                
+                element.textContent = currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            update();
+        }
+
+        function populateNeighborhoodFilter() {
+            const neighborhoods = [...new Set(studentsData.map(s => s.neighborhood).filter(n => n))].sort();
+            const select = document.getElementById('filterNeighborhood');
+            
+            select.innerHTML = '<option value="">جميع الأحياء</option>';
+            
+            neighborhoods.forEach(neighborhood => {
+                const option = document.createElement('option');
+                option.value = neighborhood;
+                option.textContent = neighborhood;
+                select.appendChild(option);
+            });
+        }
+
+        window.applyFilters = function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const gradeFilter = document.getElementById('filterGrade').value;
+            const sectionFilter = document.getElementById('filterSection').value;
+            const economicFilter = document.getElementById('filterEconomic').value;
+            const specialFilter = document.getElementById('filterSpecial').value;
+            const neighborhoodFilter = document.getElementById('filterNeighborhood').value;
+            const sortBy = document.getElementById('sortBy').value;
+
+            filteredData = studentsData.filter(student => {
+                const matchesSearch = !searchTerm || 
+                    student.studentName.toLowerCase().includes(searchTerm) ||
+                    student.nationalId.includes(searchTerm);
+                
+                const matchesGrade = !gradeFilter || student.grade === gradeFilter;
+                const matchesSection = !sectionFilter || student.section === sectionFilter;
+                const matchesEconomic = !economicFilter || student.economicLevel === economicFilter;
+                const matchesNeighborhood = !neighborhoodFilter || student.neighborhood === neighborhoodFilter;
+                
+                let matchesSpecial = true;
+                if (specialFilter) {
+                    switch(specialFilter) {
+                        case 'محتاج مالياً':
+                            matchesSpecial = student.financialNeed === 'نعم';
+                            break;
+                        case 'من ذوي الإعاقة':
+                            matchesSpecial = student.studentDisability === 'نعم';
+                            break;
+                        case 'موهوب':
+                            matchesSpecial = student.hasTalents === 'نعم';
+                            break;
+                        case 'يتيم':
+                            matchesSpecial = student.fatherStatus === 'متوفي' || student.motherStatus === 'متوفية';
+                            break;
+                        case 'مشاكل نفسية':
+                            matchesSpecial = student.psychologicalProblems === 'نعم' || student.mentalHealth === 'نعم';
+                            break;
+                        case 'مشاكل صحية':
+                            matchesSpecial = student.healthProblems === 'نعم' || student.healthConditions === 'نعم';
+                            break;
+                    }
+                }
+
+                return matchesSearch && matchesGrade && matchesSection && matchesEconomic && matchesNeighborhood && matchesSpecial;
+            });
+
+            filteredData.sort((a, b) => {
+                switch(sortBy) {
+                    case 'name':
+                        return a.studentName.localeCompare(b.studentName, 'ar');
+                    case 'grade':
+                        const gradeOrder = {'أول متوسط': 1, 'ثاني متوسط': 2, 'ثالث متوسط': 3};
+                        return gradeOrder[a.grade] - gradeOrder[b.grade];
+                    case 'economic':
+                        const economicOrder = {'مرتفع': 5, 'متوسط': 4, 'دون المتوسط': 3, 'منخفض': 2, 'ضعيف': 1};
+                        return economicOrder[b.economicLevel] - economicOrder[a.economicLevel];
+                    case 'date':
+                        return new Date(b.submittedAt || b.createdAt) - new Date(a.submittedAt || a.createdAt);
+                    case 'status':
+                        return getStudentPriority(b) - getStudentPriority(a);
+                    default:
+                        return 0;
+                }
+            });
+
+            renderStudents();
+        }
+
+        function getStudentPriority(student) {
+            let priority = 0;
+            if (student.financialNeed === 'نعم') priority += 4;
+            if (student.studentDisability === 'نعم') priority += 3;
+            if (student.fatherStatus === 'متوفي' || student.motherStatus === 'متوفية') priority += 5;
+            if (student.psychologicalProblems === 'نعم' || student.mentalHealth === 'نعم') priority += 3;
+            if (student.hasTalents === 'نعم') priority += 2;
+            return priority;
+        }
+
+        window.clearFilters = function() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterGrade').value = '';
+            document.getElementById('filterSection').value = '';
+            document.getElementById('filterEconomic').value = '';
+            document.getElementById('filterSpecial').value = '';
+            document.getElementById('filterNeighborhood').value = '';
+            document.getElementById('sortBy').value = 'name';
+            
+            filteredData = [...studentsData];
+            renderStudents();
+        }
+
+        window.switchView = function(view) {
+            currentView = view;
+            
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(view + 'ViewBtn').classList.add('active');
+            
+            document.getElementById('studentsGrid').classList.toggle('active', view === 'grid');
+            document.getElementById('studentsList').classList.toggle('active', view === 'list');
+            
+            renderStudents();
+        }
+
+        function renderStudents() {
+            const count = filteredData.length;
+            document.getElementById('studentsCount').textContent = `(${count} طالب)`;
+
+            if (count === 0) {
+                const emptyState = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <div class="empty-title">لا توجد نتائج مطابقة</div>
+                        <div class="empty-description">لم يتم العثور على طلاب يطابقون معايير البحث المحددة<br>يرجى تعديل الفلاتر أو مسح البحث</div>
+                    </div>
+                `;
+                document.getElementById('studentsGrid').innerHTML = emptyState;
+                document.getElementById('studentsList').innerHTML = emptyState;
+                return;
+            }
+
+            if (currentView === 'grid') {
+                renderGridView();
+            } else {
+                renderListView();
+            }
+        }
+
+        function renderGridView() {
+            const container = document.getElementById('studentsGrid');
+            container.innerHTML = filteredData.map(student => {
+                const status = getStudentStatus(student);
+                return `
+                    <div class="student-card" onclick="viewStudentDetails('${student.id}')">
+                        <div class="student-header">
+                            <div>
+                                <div class="student-name">${student.studentName}</div>
+                                <div class="student-id">هوية: ${student.nationalId}</div>
+                            </div>
+                            <div class="student-status ${status.class}">${status.text}</div>
+                        </div>
+                        <div class="student-info">
+                            <div class="info-row">
+                                <span class="info-label">الصف:</span>
+                                <span class="info-value">${student.grade} - ${student.section}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">ولي الأمر:</span>
+                                <span class="info-value">${student.guardianName}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">الجوال:</span>
+                                <span class="info-value">${student.guardianPhone}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">الحي:</span>
+                                <span class="info-value">${student.neighborhood || 'غير محدد'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">الحالة الاقتصادية:</span>
+                                <span class="info-value">${student.economicLevel || 'غير محدد'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">محتاج مالياً:</span>
+                                <span class="info-value">${student.financialNeed || 'غير محدد'}</span>
+                            </div>
+                        </div>
+                        <div class="student-actions" onclick="event.stopPropagation()">
+                            <button class="student-btn btn-view" onclick="viewStudentDetails('${student.id}')">عرض</button>
+                            <button class="student-btn btn-edit" onclick="editStudent('${student.id}')">تعديل</button>
+                            <button class="student-btn btn-delete" onclick="deleteStudent('${student.id}')">حذف</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderListView() {
+            const container = document.getElementById('studentsList');
+            container.innerHTML = filteredData.map(student => {
+                const status = getStudentStatus(student);
+                const initials = student.studentName.split(' ').map(n => n[0]).join('').substring(0, 2);
+                return `
+                    <div class="student-list-item" onclick="viewStudentDetails('${student.id}')">
+                        <div class="list-avatar">${initials}</div>
+                        <div class="list-info">
+                            <div class="list-name">${student.studentName}</div>
+                            <div class="list-details">
+                                ${student.grade} - ${student.section} | ${student.guardianName} | ${student.guardianPhone}<br>
+                                ${student.neighborhood || 'غير محدد'} | ${student.economicLevel || 'غير محدد'}
+                            </div>
+                        </div>
+                        <div class="list-status">
+                            <span class="student-status ${status.class}">${status.text}</span>
+                        </div>
+                        <div class="list-actions" onclick="event.stopPropagation()">
+                            <button class="student-btn btn-view" onclick="viewStudentDetails('${student.id}')">عرض</button>
+                            <button class="student-btn btn-edit" onclick="editStudent('${student.id}')">تعديل</button>
+                            <button class="student-btn btn-delete" onclick="deleteStudent('${student.id}')">حذف</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getStudentStatus(student) {
+            if (student.fatherStatus === 'متوفي' || student.motherStatus === 'متوفية') {
+                return { class: 'status-needs-help', text: 'يتيم' };
+            }
+            if (student.financialNeed === 'نعم') {
+                return { class: 'status-needs-help', text: 'محتاج' };
+            }
+            if (student.studentDisability === 'نعم') {
+                return { class: 'status-disability', text: 'إعاقة' };
+            }
+            if (student.psychologicalProblems === 'نعم' || student.mentalHealth === 'نعم') {
+                return { class: 'status-needs-help', text: 'متابعة نفسية' };
+            }
+            if (student.healthConditions === 'نعم' || student.healthProblems === 'نعم') {
+                return { class: 'status-needs-help', text: 'متابعة صحية' };
+            }
+            if (student.hasTalents === 'نعم') {
+                return { class: 'status-talented', text: 'موهوب' };
+            }
+            return { class: 'status-normal', text: 'عادي' };
+        }
+
+        window.viewStudentDetails = function(id) {
+            const student = studentsData.find(s => s.id === id);
+            if (!student) return;
+
+            document.getElementById('modalStudentName').textContent = student.studentName;
+            
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="info-section">
+                    <div class="section-title-modal">📋 البيانات الأساسية</div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <span class="info-label">الاسم الكامل:</span>
+                            <span class="info-value">${student.studentName}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">رقم الهوية:</span>
+                            <span class="info-value">${student.nationalId}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">الجنسية:</span>
+                            <span class="info-value">${student.nationality}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">العمر:</span>
+                            <span class="info-value">${student.age} سنة</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">الصف والشعبة:</span>
+                            <span class="info-value">${student.grade} - ${student.section}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title-modal">👨‍👩‍👧‍👦 بيانات ولي الأمر</div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <span class="info-label">اسم ولي الأمر:</span>
+                            <span class="info-value">${student.guardianName}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">جوال ولي الأمر:</span>
+                            <span class="info-value">${student.guardianPhone}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">هاتف العمل:</span>
+                            <span class="info-value">${student.workPhone || 'غير متوفر'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">عنوان العمل:</span>
+                            <span class="info-value">${student.workAddress || 'غير متوفر'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title-modal">💰 البيانات الاقتصادية</div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <span class="info-label">مستوى الأسرة:</span>
+                            <span class="info-value">${student.economicLevel}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">مصدر الدخل:</span>
+                            <span class="info-value">${student.incomeSource}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">الدخل الشهري:</span>
+                            <span class="info-value">${student.monthlyIncome}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">محتاج مالياً:</span>
+                            <span class="info-value">${student.financialNeed}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">عدد المعالين:</span>
+                            <span class="info-value">${student.dependentsCount}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title-modal">🏠 البيانات الاجتماعية</div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <span class="info-label">الحي:</span>
+                            <span class="info-value">${student.neighborhood}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">المسافة من المدرسة:</span>
+                            <span class="info-value">${student.distanceFromSchool} كم</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">نوع السكن:</span>
+                            <span class="info-value">${student.housingType} - ${student.buildingType}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">حالة الأب:</span>
+                            <span class="info-value">${student.fatherStatus}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">حالة الأم:</span>
+                            <span class="info-value">${student.motherStatus}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">يعيش مع:</span>
+                            <span class="info-value">${student.livesWith}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title-modal">🥼 البيانات الصحية</div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <span class="info-label">مشاكل صحية:</span>
+                            <span class="info-value">${student.healthConditions}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">عمليات جراحية:</span>
+                            <span class="info-value">${student.surgeries}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">مشاكل نفسية:</span>
+                            <span class="info-value">${student.mentalHealth}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">من ذوي الإعاقة:</span>
+                            <span class="info-value">${student.studentDisability}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-title-modal">🌟 بيانات إضافية</div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <span class="info-label">لديه مواهب:</span>
+                            <span class="info-value">${student.hasTalents}</span>
+                        </div>
+                        ${student.talentsDetails ? `
+                        <div class="info-row">
+                            <span class="info-label">المواهب:</span>
+                            <span class="info-value">${student.talentsDetails}</span>
+                        </div>
+                        ` : ''}
+                        ${student.additionalNotes ? `
+                        <div class="info-row">
+                            <span class="info-label">ملاحظات:</span>
+                            <span class="info-value">${student.additionalNotes}</span>
+                        </div>
+                        ` : ''}
+                        <div class="info-row">
+                            <span class="info-label">تاريخ التسجيل:</span>
+                            <span class="info-value">${student.submittedAt || student.createdAt}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('studentModal').style.display = 'block';
+        }
+
+        window.closeModal = function() {
+            document.getElementById('studentModal').style.display = 'none';
+        }
+
+        // Export Functions
+        window.exportFilteredData = function() {
+            const format = document.getElementById('exportFormat').value;
+            const reportType = document.getElementById('reportType').value;
+            
+            if (filteredData.length === 0) {
+                alert('لا توجد بيانات للتصدير. يرجى التأكد من وجود طلاب في النتائج المفلترة.');
+                return;
+            }
+            
+            if (format === 'excel' || format === 'csv') {
+                exportToCSV(filteredData, `تقرير_${reportType}_${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}`);
+            } else if (format === 'pdf') {
+                exportToPDF(filteredData, reportType);
+            } else if (format === 'print') {
+                printReport(filteredData, reportType);
+            } else {
+                alert('تنسيق التصدير المحدد سيكون متوفراً قريباً');
+            }
+        }
+
+        window.exportByGrade = function() {
+            const grades = ['أول متوسط', 'ثاني متوسط', 'ثالث متوسط'];
+            grades.forEach(grade => {
+                const gradeData = studentsData.filter(s => s.grade === grade);
+                if (gradeData.length > 0) {
+                    exportToCSV(gradeData, `طلاب_${grade.replace(' ', '_')}_${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}`);
+                }
+            });
+        }
+
+        window.exportByEconomicStatus = function() {
+            const levels = ['ضعيف', 'منخفض', 'دون المتوسط', 'متوسط', 'مرتفع'];
+            levels.forEach(level => {
+                const levelData = studentsData.filter(s => s.economicLevel === level);
+                if (levelData.length > 0) {
+                    exportToCSV(levelData, `مستوى_${level}_${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}`);
+                }
+            });
+        }
+
+        window.exportSpecialCases = function() {
+            const specialCases = {
+                'محتاجون_مالياً': studentsData.filter(s => s.financialNeed === 'نعم'),
+                'ذوو_اعاقة': studentsData.filter(s => s.studentDisability === 'نعم'),
+                'موهوبون': studentsData.filter(s => s.hasTalents === 'نعم'),
+                'ايتام': studentsData.filter(s => s.fatherStatus === 'متوفي' || s.motherStatus === 'متوفية'),
+                'حالات_خاصة': studentsData.filter(s => 
+                    s.psychologicalProblems === 'نعم' || 
+                    s.healthProblems === 'نعم' || 
+                    s.healthConditions === 'نعم' ||
+                    s.mentalHealth === 'نعم'
+                )
+            };
+
+            Object.entries(specialCases).forEach(([key, data]) => {
+                if (data.length > 0) {
+                    exportToCSV(data, `${key}_${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}`);
+                }
+            });
+        }
+
+        window.exportContactList = function() {
+            const contactData = studentsData.map(s => ({
+                'اسم الطالب': s.studentName,
+                'اسم ولي الأمر': s.guardianName,
+                'جوال ولي الأمر': s.guardianPhone,
+                'جوال الطالب': s.studentPhone || 'غير متوفر',
+                'هاتف العمل': s.workPhone || 'غير متوفر',
+                'الصف': s.grade,
+                'الشعبة': s.section,
+                'الحي': s.neighborhood || 'غير محدد'
+            }));
+            
+            exportToCSV(contactData, `قائمة_الاتصال_${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}`);
+        }
+
+        window.generateStatisticalReport = function() {
+            const stats = generateDetailedStatistics();
+            exportToCSV([stats], `التقرير_الاحصائي_${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}`);
+        }
+
+        function generateDetailedStatistics() {
+            const total = studentsData.length;
+            return {
+                'إجمالي الطلاب': total,
+                'طلاب محتاجون مالياً': studentsData.filter(s => s.financialNeed === 'نعم').length,
+                'طلاب ذوو إعاقة': studentsData.filter(s => s.studentDisability === 'نعم').length,
+                'طلاب موهوبون': studentsData.filter(s => s.hasTalents === 'نعم').length,
+                'أيتام': studentsData.filter(s => s.fatherStatus === 'متوفي' || s.motherStatus === 'متوفية').length,
+                'مشاكل نفسية': studentsData.filter(s => s.psychologicalProblems === 'نعم' || s.mentalHealth === 'نعم').length,
+                'مشاكل صحية': studentsData.filter(s => s.healthProblems === 'نعم' || s.healthConditions === 'نعم').length,
+                'أول متوسط': studentsData.filter(s => s.grade === 'أول متوسط').length,
+                'ثاني متوسط': studentsData.filter(s => s.grade === 'ثاني متوسط').length,
+                'ثالث متوسط': studentsData.filter(s => s.grade === 'ثالث متوسط').length,
+                'مستوى اقتصادي مرتفع': studentsData.filter(s => s.economicLevel === 'مرتفع').length,
+                'مستوى اقتصادي متوسط': studentsData.filter(s => s.economicLevel === 'متوسط').length,
+                'مستوى اقتصادي منخفض': studentsData.filter(s => s.economicLevel === 'منخفض' || s.economicLevel === 'ضعيف').length
+            };
+        }
+
+        function exportToCSV(data, filename) {
+            if (data.length === 0) {
+                alert('لا توجد بيانات للتصدير');
+                return;
+            }
+
+            let csvContent = '\uFEFF';
+            
+            const headers = Object.keys(data[0]);
+            csvContent += headers.join(',') + '\n';
+            
+            data.forEach(row => {
+                const values = headers.map(header => {
+                    let value = row[header] || '';
+                    value = String(value);
+                    if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+                        value = '"' + value.replace(/"/g, '""') + '"';
+                    }
+                    return value;
+                });
+                csvContent += values.join(',') + '\n';
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename + '.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        window.exportToPDF = function(data, reportType) {
+            alert('ميزة التصدير لـ PDF ستكون متوفرة قريباً');
+        }
+
+        window.printReport = function(data, reportType) {
+            const printWindow = window.open('', '_blank');
+            const content = generatePrintContent(data, reportType);
+            printWindow.document.write(content);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function generatePrintContent(data, reportType) {
+            const stats = generateDetailedStatistics();
+            return `
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>تقرير ${reportType} - متوسطة المنذر بن عمرو الأنصاري</title>
+                    <style>
+                        body { 
+                            font-family: 'Cairo', Arial, sans-serif; 
+                            margin: 20px; 
+                            direction: rtl; 
+                            line-height: 1.6;
+                        }
+                        .header { 
+                            text-align: center; 
+                            margin-bottom: 30px; 
+                            border-bottom: 3px solid #0d5c0d; 
+                            padding-bottom: 20px; 
+                        }
+                        .logo { font-size: 24px; color: #0d5c0d; margin-bottom: 10px; }
+                        .title { font-size: 24px; font-weight: bold; margin-bottom: 8px; }
+                        .subtitle { font-size: 16px; color: #666; margin-bottom: 5px; }
+                        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 30px 0; }
+                        .stat-item { text-align: center; padding: 15px; border: 2px solid #0d5c0d; border-radius: 10px; }
+                        .stat-number { font-size: 28px; font-weight: bold; color: #0d5c0d; }
+                        .stat-label { font-size: 14px; color: #666; margin-top: 5px; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+                        th, td { border: 1px solid #ddd; padding: 8px; text-align: right; }
+                        th { background-color: #f8f9fa; font-weight: bold; color: #0d5c0d; }
+                        .page-break { page-break-before: always; }
+                        @media print { body { margin: 0; } .no-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="logo">🇸🇦 المملكة العربية السعودية</div>
+                        <div class="title">متوسطة المنذر بن عمرو الأنصاري</div>
+                        <div class="subtitle">مكتب تعليم العوالي - تقرير ${reportType}</div>
+                        <div class="subtitle">تاريخ الإعداد: ${new Date().toLocaleDateString('ar-SA')}</div>
+                        <div class="subtitle">المرشد الطلابي: محمد القحطاني</div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">${stats['إجمالي الطلاب']}</div>
+                            <div class="stat-label">إجمالي الطلاب</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${stats['طلاب محتاجون مالياً']}</div>
+                            <div class="stat-label">محتاجون مالياً</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${stats['طلاب ذوو إعاقة']}</div>
+                            <div class="stat-label">ذوو إعاقة</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${stats['طلاب موهوبون']}</div>
+                            <div class="stat-label">موهوبون</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${stats['أيتام']}</div>
+                            <div class="stat-label">أيتام</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${stats['مشاكل نفسية']}</div>
+                            <div class="stat-label">مشاكل نفسية</div>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم الطالب</th>
+                                <th>رقم الهوية</th>
+                                <th>الصف</th>
+                                <th>الشعبة</th>
+                                <th>ولي الأمر</th>
+                                <th>الجوال</th>
+                                <th>الحالة الاقتصادية</th>
+                                <th>محتاج مالياً</th>
+                                <th>الحي</th>
+                                <th>الحالة الخاصة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.map(student => `
+                                <tr>
+                                    <td>${student.studentName}</td>
+                                    <td>${student.nationalId}</td>
+                                    <td>${student.grade}</td>
+                                    <td>${student.section}</td>
+                                    <td>${student.guardianName}</td>
+                                    <td>${student.guardianPhone}</td>
+                                    <td>${student.economicLevel || 'غير محدد'}</td>
+                                    <td>${student.financialNeed || 'غير محدد'}</td>
+                                    <td>${student.neighborhood || 'غير محدد'}</td>
+                                    <td>${getStudentStatus(student).text}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    
+                    <div class="page-break"></div>
+                    <div style="text-align: center; margin-top: 50px; color: #666;">
+                        <p>انتهى التقرير</p>
+                        <p style="font-size: 12px;">تم إنشاؤه بواسطة نظام إدارة بيانات الطلاب - تطوير نواف الصبحي</p>
+                    </div>
+                </body>
+                </html>
+            `;
+        }
+
+        window.generateReport = function() {
+            const reportType = document.getElementById('reportType').value;
+            let reportData = [];
+            
+            switch(reportType) {
+                case 'economic':
+                    reportData = generateEconomicReport();
+                    break;
+                case 'health':
+                    reportData = generateHealthReport();
+                    break;
+                case 'health-diseases':
+                    reportData = generateHealthDiseasesReport();
+                    break;
+                case 'social':
+                    reportData = generateSocialReport();
+                    break;
+                case 'academic':
+                    reportData = generateAcademicReport();
+                    break;
+                case 'talents':
+                    reportData = generateTalentsReport();
+                    break;
+                default:
+                    reportData = generateCompleteReport();
+            }
+            
+            showReportModal(reportData, reportType);
+        }
+
+        function generateHealthDiseasesReport() {
+            const sickStudents = studentsData.filter(s =>
+                (s.healthConditions === 'نعم' && s.healthConditionsDetails) ||
+                (s.healthProblems === 'نعم' && s.healthProblemsDetails) ||
+                (s.mentalHealth === 'نعم' && s.mentalHealthDetails)
+            );
+
+            const reportRows = sickStudents.map(s => {
+                const diseases = [
+                    s.healthConditionsDetails,
+                    s.healthProblemsDetails,
+                    s.mentalHealthDetails
+                ].filter(Boolean).join(' | ');
+                return {
+                    'اسم الطالب': s.studentName,
+                    'الصف': `${s.grade} - ${s.section}`,
+                    'نوع المرض': diseases
+                };
+            });
+
+            return {
+                title: 'تقرير الأمراض والحالات الصحية',
+                summary: { total: sickStudents.length },
+                details: reportRows
+            };
+        }
+
+        function generateEconomicReport() {
+            return {
+                title: 'التقرير الاقتصادي',
+                summary: {
+                    total: studentsData.length,
+                    needHelp: studentsData.filter(s => s.financialNeed === 'نعم').length,
+                    highIncome: studentsData.filter(s => s.economicLevel === 'مرتفع').length,
+                    lowIncome: studentsData.filter(s => s.economicLevel === 'ضعيف' || s.economicLevel === 'منخفض').length
+                },
+                details: studentsData.map(s => ({
+                    name: s.studentName,
+                    grade: s.grade,
+                    economicLevel: s.economicLevel,
+                    monthlyIncome: s.monthlyIncome,
+                    financialNeed: s.financialNeed,
+                    dependents: s.dependentsCount,
+                    incomeSource: s.incomeSource
+                }))
+            };
+        }
+
+        function generateHealthReport() {
+            return {
+                title: 'التقرير الصحي',
+                summary: {
+                    total: studentsData.length,
+                    withDisabilities: studentsData.filter(s => s.studentDisability === 'نعم').length,
+                    healthProblems: studentsData.filter(s => s.healthConditions === 'نعم').length,
+                    mentalHealth: studentsData.filter(s => s.mentalHealth === 'نعم').length,
+                    surgeries: studentsData.filter(s => s.surgeries === 'نعم').length
+                },
+                details: studentsData.filter(s => 
+                    s.studentDisability === 'نعم' || 
+                    s.healthConditions === 'نعم' || 
+                    s.mentalHealth === 'نعم' || 
+                    s.surgeries === 'نعم'
+                )
+            };
+        }
+
+        function generateSocialReport() {
+            return {
+                title: 'التقرير الاجتماعي',
+                summary: {
+                    total: studentsData.length,
+                    orphans: studentsData.filter(s => s.fatherStatus === 'متوفي' || s.motherStatus === 'متوفية').length,
+                    singleParent: studentsData.filter(s => s.fatherStatus === 'مطلق' || s.motherStatus === 'مطلقة').length,
+                    specialCases: studentsData.filter(s => s.fatherSpecialStatus && s.fatherSpecialStatus !== 'طبيعي').length
+                },
+                details: studentsData.map(s => ({
+                    name: s.studentName,
+                    grade: s.grade,
+                    fatherStatus: s.fatherStatus,
+                    motherStatus: s.motherStatus,
+                    livesWith: s.livesWith,
+                    neighborhood: s.neighborhood,
+                    housingType: s.housingType
+                }))
+            };
+        }
+
+        function generateTalentsReport() {
+            return {
+                title: 'تقرير المواهب',
+                summary: {
+                    total: studentsData.length,
+                    talented: studentsData.filter(s => s.hasTalents === 'نعم').length,
+                    percentage: Math.round((studentsData.filter(s => s.hasTalents === 'نعم').length / studentsData.length) * 100)
+                },
+                details: studentsData.filter(s => s.hasTalents === 'نعم')
+            };
+        }
+
+        function generateAcademicReport() {
+            return {
+                title: 'التقرير الأكاديمي',
+                summary: {
+                    total: studentsData.length,
+                    psychProblems: studentsData.filter(s => s.psychologicalProblems === 'نعم').length,
+                    healthProblems: studentsData.filter(s => s.healthProblems === 'نعم').length
+                },
+                details: studentsData.filter(s => 
+                    s.psychologicalProblems === 'نعم' || 
+                    s.healthProblems === 'نعم'
+                )
+            };
+        }
+
+        function generateCompleteReport() {
+            return {
+                title: 'التقرير الشامل',
+                summary: generateDetailedStatistics(),
+                details: studentsData
+            };
+        }
+
+        function showReportModal(reportData, reportType) {
+            const message = `
+تم إنشاء ${reportData.title} بنجاح!
+
+📊 إحصائيات سريعة:
+• إجمالي الطلاب: ${reportData.summary.total || 0}
+• ${Object.entries(reportData.summary).slice(1, 4).map(([key, value]) => `${key}: ${value}`).join('\n• ')}
+
+يمكنك الآن تصدير التقرير بالتنسيق المطلوب من قائمة خيارات التصدير.
+            `;
+            alert(message);
+        }
+
+        // Other utility functions
+        window.editStudent = function(id) {
+            alert('ميزة التعديل قيد التطوير. ستكون متوفرة في التحديث القادم.\n\nيمكنك حالياً عرض التفاصيل وحذف الطالب إذا لزم الأمر.');
+        }
+
+        window.printStudentDetails = function() {
+            const modalContent = document.getElementById('modalBody').innerHTML;
+            const studentName = document.getElementById('modalStudentName').textContent;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>بيانات الطالب - ${studentName}</title>
+                    <style>
+                        body { 
+                            font-family: 'Cairo', Arial, sans-serif; 
+                            margin: 20px; 
+                            direction: rtl; 
+                            line-height: 1.6;
+                        }
+                        .header { 
+                            text-align: center; 
+                            margin-bottom: 30px; 
+                            border-bottom: 3px solid #0d5c0d; 
+                            padding-bottom: 20px; 
+                        }
+                        .info-section { 
+                            margin-bottom: 25px; 
+                            padding: 20px; 
+                            border: 2px solid #e2e8f0; 
+                            border-radius: 10px; 
+                            background: #f8f9fa;
+                        }
+                        .section-title-modal { 
+                            font-size: 18px; 
+                            font-weight: bold; 
+                            color: #0d5c0d; 
+                            margin-bottom: 15px; 
+                            border-bottom: 2px solid #0d5c0d;
+                            padding-bottom: 5px;
+                        }
+                        .info-row { 
+                            display: flex; 
+                            justify-content: space-between; 
+                            padding: 8px 0; 
+                            border-bottom: 1px solid #e2e8f0; 
+                        }
+                        .info-label { 
+                            font-weight: bold; 
+                            color: #4a5568; 
+                            width: 40%;
+                        }
+                        .info-value { 
+                            color: #2d3748; 
+                            width: 60%;
+                            text-align: left;
+                        }
+                        @media print { 
+                            body { margin: 0; } 
+                            .info-section { break-inside: avoid; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>بيانات الطالب: ${studentName}</h1>
+                        <p>متوسطة المنذر بن عمرو الأنصاري - مكتب تعليم العوالي</p>
+                        <p>المرشد الطلابي: محمد القحطاني</p>
+                        <p>تاريخ الطباعة: ${new Date().toLocaleDateString('ar-SA')}</p>
+                    </div>
+                    ${modalContent}
+                    <div style="text-align: center; margin-top: 30px; color: #666; font-size: 12px;">
+                        <p>تم إنشاؤه بواسطة نظام إدارة بيانات الطلاب</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        window.editStudentFromModal = function() {
+            alert('ميزة التعديل قيد التطوير وستكون متوفرة قريباً');
+        }
+
+        window.exportStudentData = function() {
+            const studentName = document.getElementById('modalStudentName').textContent;
+            const student = studentsData.find(s => s.studentName === studentName);
+            if (student) {
+                exportToCSV([student], `بيانات_${studentName.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}`);
+            }
+        }
+
+        window.sendNotification = function() {
+            alert('ميزة إرسال الإشعارات ستكون متوفرة في التحديث القادم.\n\nستتمكن من:\n• إرسال رسائل SMS\n• إرسال إيميلات\n• إشعارات داخل النظام');
+        }
+
+        // Click outside modal to close
+        window.onclick = function(event) {
+            const modal = document.getElementById('studentModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+            
+            if (event.ctrlKey && event.key === 'f') {
+                event.preventDefault();
+                document.getElementById('searchInput').focus();
+                document.getElementById('searchInput').select();
+            }
+            
+            if (event.ctrlKey && event.key === 'r') {
+                event.preventDefault();
+                refreshData();
+            }
+
+            if (event.ctrlKey && event.key === 'e') {
+                event.preventDefault();
+                exportFilteredData();
+            }
+        });
+
+        // Auto-save search preferences
+        function saveSearchPreferences() {
+            const preferences = {
+                lastSearch: document.getElementById('searchInput').value,
+                lastGradeFilter: document.getElementById('filterGrade').value,
+                lastEconomicFilter: document.getElementById('filterEconomic').value,
+                lastSpecialFilter: document.getElementById('filterSpecial').value,
+                lastView: currentView,
+                lastSort: document.getElementById('sortBy').value
+            };
+            localStorage.setItem('counselorPreferences', JSON.stringify(preferences));
+        }
+
+        function loadSearchPreferences() {
+            try {
+                const preferences = JSON.parse(localStorage.getItem('counselorPreferences') || '{}');
+                
+                if (preferences.lastSearch) {
+                    document.getElementById('searchInput').value = preferences.lastSearch;
+                }
+                if (preferences.lastGradeFilter) {
+                    document.getElementById('filterGrade').value = preferences.lastGradeFilter;
+                }
+                if (preferences.lastEconomicFilter) {
+                    document.getElementById('filterEconomic').value = preferences.lastEconomicFilter;
+                }
+                if (preferences.lastSpecialFilter) {
+                    document.getElementById('filterSpecial').value = preferences.lastSpecialFilter;
+                }
+                if (preferences.lastSort) {
+                    document.getElementById('sortBy').value = preferences.lastSort;
+                }
+                if (preferences.lastView) {
+                    switchView(preferences.lastView);
+                }
+            } catch (error) {
+                console.log('Could not load preferences:', error);
+            }
+        }
+
+        // Performance monitoring
+        let performanceTimer = {
+            start: function() {
+                this.startTime = performance.now();
+            },
+            end: function(operation) {
+                const endTime = performance.now();
+                const duration = Math.round(endTime - this.startTime);
+                console.log(`${operation} استغرق ${duration}ms`);
+                return duration;
+            }
+        };
+
+        // Enhanced initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            performanceTimer.start();
+            
+            loadDashboard().then(() => {
+                setupEventListeners();
+                loadSearchPreferences();
+                
+                ['searchInput', 'filterGrade', 'filterEconomic', 'filterSpecial', 'sortBy'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('change', saveSearchPreferences);
+                        element.addEventListener('input', saveSearchPreferences);
+                    }
+                });
+
+                performanceTimer.end('تحميل لوحة التحكم');
+            });
+
+            addTooltips();
+        });
+
+        function addTooltips() {
+            const tooltips = {
+                'searchInput': 'يمكنك البحث بالاسم الكامل أو جزء منه، أو برقم الهوية',
+                'filterGrade': 'فلترة الطلاب حسب الصف الدراسي',
+                'filterSection': 'فلترة حسب رقم الشعبة (1-6)',
+                'filterEconomic': 'فلترة حسب المستوى الاقتصادي للأسرة',
+                'filterSpecial': 'فلترة الطلاب ذوي الحالات الخاصة',
+                'filterNeighborhood': 'فلترة حسب الحي السكني',
+                'sortBy': 'ترتيب النتائج حسب المعيار المحدد'
+            };
+
+            Object.entries(tooltips).forEach(([id, text]) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.title = text;
+                    element.setAttribute('data-tooltip', text);
+                }
+            });
+        }
+
+        // Error handling
+        window.addEventListener('error', function(event) {
+            console.error('خطأ في التطبيق:', event.error);
+            updateConnectionStatus(false, 'خطأ في التطبيق');
+        });
+
+        // Connection monitoring
+        window.addEventListener('online', function() {
+            updateConnectionStatus(true, 'تم استعادة الاتصال');
+            setTimeout(refreshData, 1000);
+        });
+
+        window.addEventListener('offline', function() {
+            updateConnectionStatus(false, 'لا يوجد اتصال بالإنترنت');
+        });
+
+        // Add periodic connection check
+        setInterval(() => {
+            if (isConnected) {
+                getDocs(query(collection(db, 'students_data'), orderBy('timestamp', 'desc')))
+                .then(() => {
+                    if (!isConnected) {
+                        updateConnectionStatus(true, 'تم استعادة الاتصال');
+                    }
+                })
+                .catch(() => {
+                    updateConnectionStatus(false, 'مشكلة في الاتصال');
+                });
+            }
+        }, 30000);
+
+        console.log('✅ تم تحميل لوحة التحكم المحسنة بنجاح');
+        console.log('🔗 الاتصال بـ Firebase مفعل');
+        console.log('🔄 المراقبة في الوقت الفعلي مفعلة');
+    
+// دالة لتصدير الحالات المرضية فقط (استبعاد من ليس لديهم حالة)
+window.exportHealthCases = function() {
+    if (studentsData.length === 0) {
+        alert("لا توجد بيانات لتصديرها.");
+        return;
+    }
+
+    const rows = [["اسم الطالب", "الحالة المرضية"]];
+    studentsData.forEach(student => {
+        let healthStatus = null;
+
+        if (student.healthProblems === "نعم") {
+            healthStatus = "مشاكل صحية";
+        } else if (student.healthConditions === "نعم") {
+            healthStatus = "حالة صحية";
+        } else if (student.psychologicalProblems === "نعم" || student.mentalHealth === "نعم") {
+            healthStatus = "مشاكل نفسية";
+        }
+
+        if (healthStatus) {
+            rows.push([student.studentName, healthStatus]);
+        }
+    });
+
+    if (rows.length === 1) {
+        alert("لا توجد حالات مرضية مسجلة حالياً.");
+        return;
+    }
+
+    const worksheet = XLSX.utils.aoa_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "الحالات المرضية");
+    XLSX.writeFile(workbook, "health_cases.xlsx");
+};
+</script>
+</body>
+</html> 
