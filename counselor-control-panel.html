@@ -916,6 +916,7 @@
             }
         }
     </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
     <!-- Connection Status -->
@@ -1110,7 +1111,11 @@
                 <button class="action-btn btn-success" onclick="exportSpecialCases()">
                     ⭐ تصدير الحالات الخاصة
                 </button>
-                <button class="action-btn btn-warning" onclick="exportContactList()">
+                
+                <button class="action-btn btn-success" onclick="exportHealthCases()">
+                    🏥 تصدير الحالات المرضية
+                </button>
+<button class="action-btn btn-warning" onclick="exportContactList()">
                     📞 قائمة أرقام الاتصال
                 </button>
                 <button class="action-btn btn-info" onclick="generateStatisticalReport()">
@@ -2691,6 +2696,42 @@
         console.log('✅ تم تحميل لوحة التحكم المحسنة بنجاح');
         console.log('🔗 الاتصال بـ Firebase مفعل');
         console.log('🔄 المراقبة في الوقت الفعلي مفعلة');
-    </script>
+    
+// دالة لتصدير الحالات المرضية فقط (استبعاد من ليس لديهم حالة)
+window.exportHealthCases = function() {
+    if (studentsData.length === 0) {
+        alert("لا توجد بيانات لتصديرها.");
+        return;
+    }
+
+    const rows = [["اسم الطالب", "الحالة المرضية"]];
+    studentsData.forEach(student => {
+        let healthStatus = null;
+
+        if (student.healthProblems === "نعم") {
+            healthStatus = "مشاكل صحية";
+        } else if (student.healthConditions === "نعم") {
+            healthStatus = "حالة صحية";
+        } else if (student.psychologicalProblems === "نعم" || student.mentalHealth === "نعم") {
+            healthStatus = "مشاكل نفسية";
+        }
+
+        if (healthStatus) {
+            rows.push([student.studentName, healthStatus]);
+        }
+    });
+
+    if (rows.length === 1) {
+        alert("لا توجد حالات مرضية مسجلة حالياً.");
+        return;
+    }
+
+    const worksheet = XLSX.utils.aoa_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "الحالات المرضية");
+    XLSX.writeFile(workbook, "health_cases.xlsx");
+};
+</script>
 </body>
 </html> 
+
